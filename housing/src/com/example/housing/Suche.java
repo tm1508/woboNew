@@ -75,6 +75,9 @@ public class Suche extends VerticalLayout implements View{
 			h5.setSpacing(true);
 		h1.addComponent(v4);
 		v4.addComponent(new Label("Art der Unterkunft"));
+	
+		
+		
 		h2.setSpacing(true);
 		v4.addComponent(h2);
 		h2.addComponent(new Label("WG-Zimmer"));
