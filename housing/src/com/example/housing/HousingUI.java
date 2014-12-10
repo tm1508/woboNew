@@ -28,8 +28,8 @@ public class HousingUI extends UI {
 		setContent(layout);
 		
 		navigator = new Navigator(this, this);
-		String name = "Startseite";
-		navigator.addView(name, new Startseite());
+		String name = "Einzelansicht";
+		navigator.addView(name, new Einzelansicht());
 		navigator.navigateTo(name);
 	}
 
