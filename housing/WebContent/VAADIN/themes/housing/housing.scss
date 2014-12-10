@@ -35,10 +35,37 @@
 // For more information, see: https://vaadin.com/book/-/page/themes.valo.html
 // Example variants can be copy/pasted from https://vaadin.com/wiki/-/wiki/Main/Valo+Examples
 
+
+$v-background-color: #F7F7F7;
+ $v-focus-color:#e2001a;
+ $v-app-margin-top: 0px;
+ $v-app-loading-text: "Seite wird geladen...";
+ $v-font-family: "Source Sans Pro", sans-serif;
+  
 @import "../valo/valo.scss";
 
 @mixin housing {
   @include valo;
 
   // Insert your own theme rules here
+  
+     .v-panel-test {
+     	background-color: #F7F7F7;
+     	box-shadow: none;
+  	}
+	
+    .v-label-title {
+  		font-size: 30px;
+  		color: #e2001a;
+  		margin-bottom: 30px;
+  	}
+  
+  	.v-textfield{
+  		margin-bottom: 15px;
+  		margin-right: 30px;
+  	}
+  	
+
+  
 }
+
