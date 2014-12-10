@@ -78,7 +78,7 @@ public class HousingUI extends UI {
 		v4.addComponent(new Label("Art der Unterkunft"));
 		h2.setSpacing(true);
 		v4.addComponent(h2);
-		h2.addComponent(new Label("Zimmer"));
+		h2.addComponent(new Label("WG-Zimmer"));
 		h2.addComponent(new CheckBox());
 		v4.addComponent(h3);
 		h3.addComponent(new Label("Wohnung"));
