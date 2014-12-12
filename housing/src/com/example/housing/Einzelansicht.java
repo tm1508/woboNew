@@ -54,23 +54,16 @@ public class Einzelansicht extends VerticalLayout implements View {
 		//titel
 		String titel = "Helle 3 ZKB Wohnung in Karlsruhe Oststadt";
 		Label lTitel= new Label(titel);
+		lTitel.addStyleName("ImportantTitle");
 		content.addComponent(lTitel);
 		
 		//adresse
-		GridLayout gridAddress = new GridLayout (3,1);
-
-		content.addComponent(gridAddress);
 		String adress = "Teststraﬂe 123";
-		String zip = "762222";
+		String zip = "76227";
 		String city = "Karlsruhe";
-		Label lAdress = new Label(adress + "  ");
-		Label lZip = new Label(zip +"  ");
-		Label lCity = new Label(city + "  ");
-				
-		gridAddress.addComponent(lAdress, 0, 0);
-		gridAddress.addComponent(lZip, 1, 0);
-		gridAddress.addComponent(lCity, 2, 0);
-		
+		Label lAdress = new Label(adress + "   " + zip + "   " + city);
+
+		content.addComponent(lAdress);
 		
 		//pictures
 		GridLayout gridPictures = new GridLayout(8, 8);
@@ -221,10 +214,13 @@ public class Einzelansicht extends VerticalLayout implements View {
         gridInfos.addComponent(new Label("Beschreibung  "), 0, 13);
         gridInfos.addComponent(t, 1,13);
         
+        
         Button bearbeiten = new Button("Bearbeiten");
+        bearbeiten.addStyleName("BearbeitenButton");
         gridInfos.addComponent(bearbeiten, 0 , 14);
         
         Button anfrage = new Button("Anfrage");
+        anfrage.addStyleName("AnfrageButton");
         gridInfos.addComponent(anfrage, 1 , 14);
 
 
