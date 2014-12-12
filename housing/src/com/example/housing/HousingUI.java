@@ -29,6 +29,7 @@ public class HousingUI extends UI {
 		
 		navigator = new Navigator(this, this);
 		String name = "Startseite";
+		//Für Testzwecke Navigation direkt auf Suchen-Seite
 		navigator.addView(name, new Suche());
 		navigator.navigateTo(name);
 	}
