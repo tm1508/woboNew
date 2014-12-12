@@ -105,7 +105,7 @@ public class Einzelansicht extends VerticalLayout implements View {
 
 		
 		    
-		GridLayout gridInfos = new GridLayout(2,14); 
+		GridLayout gridInfos = new GridLayout(2,15); 
 		gridInfos.setWidth("60%");
 		content.addComponent(gridInfos);
 		//Date
@@ -216,6 +216,11 @@ public class Einzelansicht extends VerticalLayout implements View {
         gridInfos.addComponent(new Label("Beschreibung  "), 0, 13);
         gridInfos.addComponent(t, 1,13);
         
+        Button bearbeiten = new Button("Bearbeiten");
+        gridInfos.addComponent(bearbeiten, 0 , 14);
+        
+        Button anfrage = new Button("Anfrage");
+        gridInfos.addComponent(anfrage, 1 , 14);
 
 
 	}
