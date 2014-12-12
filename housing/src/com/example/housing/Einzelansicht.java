@@ -190,13 +190,18 @@ public class Einzelansicht extends VerticalLayout implements View {
         int n = 1;
         petsAllowed.setValue( n!= 0);
         
-        //isFemale        - nicht Checkbox, ausschreiben, bearbeiten button!!
-        CheckBox isFemale = new CheckBox("");       
-        gridInfos.addComponent(new Label("Frauen WG"), 0, 11);
-        gridInfos.addComponent(isFemale, 1,11);
-        isFemale.setEnabled(false);
+        //male / female   
+        Label maleFemale = new Label(""); 
         int q = 1;
-        isFemale.setValue( q!= 0);
+        if( q!= 0){
+    	   maleFemale.setValue("Frauen-WG");
+        }
+        if (q == 0){
+    	   maleFemale.setValue("Männer-WG");
+        }
+        gridInfos.addComponent(new Label("Art der WG"), 0, 11);
+        gridInfos.addComponent(maleFemale, 1,11);
+
         
         //bond
         float bond =  (float) 600.50;
