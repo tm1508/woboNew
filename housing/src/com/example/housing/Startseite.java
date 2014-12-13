@@ -1,5 +1,7 @@
 package com.example.housing;
 
+import com.example.housing.data.model.User;
+import com.example.housing.data.provider.UserProvider;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.server.FontAwesome;
@@ -158,6 +160,7 @@ public class Startseite extends VerticalLayout implements View{
 		VerticalLayout v = new VerticalLayout();
 		v.setMargin(true);
 		
+		
         Table tabelle = new Table();
         tabelle.setSizeFull();
         tabelle.setSelectable(true);
@@ -167,6 +170,25 @@ public class Startseite extends VerticalLayout implements View{
 		p.setContent(v);
 		
 		content.addComponent(p);
+		
+		/*
+		//Datenbank-Test: Versuche User auszugeben aus Datenbank
+		User user = new UserProvider().doQueryOneResult(Long.getLong("1"));
+		Panel p = new Panel("User: " + user.getEmail());
+		VerticalLayout v = new VerticalLayout();
+		v.setMargin(true);
+		
+		
+        Table tabelle = new Table();
+        tabelle.setSizeFull();
+        tabelle.setSelectable(true);
+        tabelle.setMultiSelect(true);
+        tabelle.setImmediate(true);
+        v.addComponent(tabelle);
+		p.setContent(v);
+		
+		content.addComponent(p);
+		*/
 		
 	}
 	
