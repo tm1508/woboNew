@@ -46,17 +46,23 @@ public class AngebotErstellen extends VerticalLayout implements View {
 		hl.setWidth("60%");
 		Label ltitel = new Label("Titel");
 		ltitel.setWidth("10%");
+		ltitel.addStyleName("AbschnittLabel");
 		TextField titel = new TextField();
 		titel.setWidth("90%");
+		titel.addStyleName("ImportantTitle");
 		hl.addComponent(ltitel);
 		hl.addComponent(titel);
 		Label adress = new Label("Adresse");
+		adress.addStyleName("AbschnittLabel");
 		TextField street = new TextField("Straße, Hausnummer");
+		street.addStyleName("AngeboteTextField");
 		HorizontalLayout hl0 = new HorizontalLayout();
 		hl0.setWidth("50%");
 		TextField zip = new TextField("PLZ");
 		zip.setWidth("50%");
+		zip.addStyleName("AngeboteTextField");
 		TextField city = new TextField("Ort");
+		city.addStyleName("AngeboteTextField");
 		city.setWidth("50%");
 		hl0.addComponent(zip);
 		hl0.addComponent(city);
@@ -79,20 +85,26 @@ public class AngebotErstellen extends VerticalLayout implements View {
 		HorizontalLayout z3 = new HorizontalLayout();
 		z3.setWidth("100%");
 		Label allgInfo = new Label("Allgemeine Angaben zur Wohnung");
+		allgInfo.addStyleName("AbschnittLabel");
 		label.addComponent(allgInfo);
 		ComboBox isShared = new ComboBox("Art");
 		isShared.addItem("Wohnung");
 		isShared.addItem("Zimmer");
 		isShared.addItem("WG-Zimmer");
+		isShared.addStyleName("AngeboteTextField");
 		z1.addComponent(isShared);
 		TextField squareMetre = new TextField("Größe (in m²)");
+		squareMetre.addStyleName("AngeboteTextField");
 		z2.addComponent(squareMetre);
 		TextField roomMates = new TextField("Anzahl Mitbewohner:");
+		roomMates.addStyleName("AngeboteTextField");
 		z3.addComponent(roomMates);
 		Label date = new Label("Verfügbarkeit");
 		DateField startDate = new DateField("von:");
 		DateField endDate = new DateField("bis:");
 		HorizontalLayout hl1 = new HorizontalLayout();
+		startDate.addStyleName("AngeboteTextField");
+		endDate.addStyleName("AngeboteTextField");
 		hl1.setWidth("50%");
 		hl1.addComponent(startDate);
 		hl1.addComponent(endDate);
@@ -102,12 +114,16 @@ public class AngebotErstellen extends VerticalLayout implements View {
 		
 		//Kosten
 		Label costs = new Label("Kosten");
+		costs.addStyleName("AbschnittLabel");
 		label.addComponent(costs);
 		TextField price = new TextField("Warmmiete:");
+		price.addStyleName("AngeboteTextField");
 		z1.addComponent(price);
 		TextField bond = new TextField ("Kaution:");
+		bond.addStyleName("AngeboteTextField");
 		z2.addComponent(bond);
 		TextField cost = new TextField("Sonstige Kosten:");
+		cost.addStyleName("AngeboteTextField");
 		z3.addComponent(cost);
 		
 		content.addComponent(label);
@@ -123,21 +139,28 @@ public class AngebotErstellen extends VerticalLayout implements View {
 		
 		//weitere Angaben
 		Label angaben = new Label("Weitere Details");
+		angaben.addStyleName("AbschnittLabel");
 		HorizontalLayout hl2 = new HorizontalLayout();
 		hl2.setWidth("100%");
 		CheckBox internet = new CheckBox("Internet");
 		internet.setWidth("20%");
+		internet.addStyleName("AngeboteTextField");
 		CheckBox furnished = new CheckBox("Möbliert");
 		furnished.setWidth("20%");
+		furnished.addStyleName("AngeboteTextField");
 		CheckBox kitchen = new CheckBox("Küche");
 		kitchen.setWidth("20%");
+		kitchen.addStyleName("AngeboteTextField");
 		CheckBox smoker = new CheckBox("Raucher");
 		smoker.setWidth("20%");
+		smoker.addStyleName("AngeboteTextField");
 		CheckBox pets = new CheckBox("Haustiere");
 		pets.setWidth("20%");
+		pets.addStyleName("AngeboteTextField");
 		ComboBox gender = new ComboBox("Bevorzugtes Geschlecht:");
 		gender.addItem("männlich");
 		gender.addItem("weiblich");
+		gender.addStyleName("AngeboteTextField");
 		
 		hl2.addComponent(internet);
 		hl2.addComponent(furnished);
@@ -153,6 +176,7 @@ public class AngebotErstellen extends VerticalLayout implements View {
 		
 		//Anzeigetext
 		Label anzeigetext = new Label("Anzeigetext");
+		anzeigetext.addStyleName("AbschnittLabel");
 		RichTextArea text = new RichTextArea();
 		text.setWidth("100%");
 		
@@ -163,7 +187,9 @@ public class AngebotErstellen extends VerticalLayout implements View {
 		
 		HorizontalLayout buttons = new HorizontalLayout();
 		Button save = new Button("speichern");
+		save.addStyleName("BearbeitenButton");
 		Button activate = new Button ("deaktivieren");
+		activate.addStyleName("BearbeitenButton");
 		
 		buttons.addComponent(activate);
 		buttons.addComponent(save);		

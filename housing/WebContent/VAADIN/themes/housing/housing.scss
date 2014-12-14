@@ -65,6 +65,8 @@ $v-background-color: #F7F7F7;
   		margin-right: 30px;
   	}
   	
+  	//Startseite
+  	
   	//Einzelansicht 
   	.v-label-ImportantTitle {
  		font-size: 20px;
@@ -91,6 +93,25 @@ $v-background-color: #F7F7F7;
 	.v-button-SuchButton{
 		margin-top:20px;
 	}
+	
+	//AngebotErstellen
+	.v-button-Button{
+		margin-top:10px;
+	}
+	
+	.v-label-AbschnittLabel{
+		font-size: 20px;
+		font-weight: bolder;
+		margin-bottom: 10px;
+	}
+	
+	.v-label-AngeboteTextField{
+		font-size: 10px;
+	}
+	
+	//AngebotAnzeigen
+	
+
   
 }
 
