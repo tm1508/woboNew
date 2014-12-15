@@ -5,6 +5,7 @@ import com.example.housing.data.provider.UserProvider;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.server.FontAwesome;
+import com.vaadin.server.VaadinSession;
 import com.vaadin.ui.Accordion;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Component;
@@ -31,6 +32,18 @@ public class Startseite extends VerticalLayout implements View{
 	public Startseite(){
 		Navigation nav = new Navigation();
 		addComponent(nav);
+		
+		NavigationPublic navPublic = new NavigationPublic();
+		addComponent(navPublic);
+		
+		if(VaadinSession.getCurrent().getAttribute("login").equals(true)){
+			nav.setVisible(true);
+			navPublic.setVisible(false);
+		}else{
+			nav.setVisible(false);
+			navPublic.setVisible(true);
+		}
+			
 		
 		setContent();
 		addComponent(content);
