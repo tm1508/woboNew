@@ -40,25 +40,25 @@ public class HousingUI extends UI {
 	@VaadinServletConfiguration(productionMode = false, ui = HousingUI.class)
 	public static class Servlet extends VaadinServlet implements SessionInitListener, SessionDestroyListener{
 
-			@Override
-			protected void servletInitialized() throws ServletException {
+		@Override
+		protected void servletInitialized() throws ServletException {
 			super.servletInitialized();
 			getService().addSessionInitListener(this);
 			getService().addSessionDestroyListener(this);
-			}
-			@Override
-			public void sessionInit(SessionInitEvent event)
-			throws ServiceException {
-			
-				event.getSession().setAttribute("login", false);
-				event.getSession().setAttribute("user", null);
-				event.getSession().setAttribute("dhstud", false);
+		}
+		
+		@Override
+		public void sessionInit(SessionInitEvent event)throws ServiceException {
+			event.getSession().setAttribute("login", false);
+			event.getSession().setAttribute("user", null);
+			event.getSession().setAttribute("dhstud", false);
 				
-			}
-			@Override
-			public void sessionDestroy(SessionDestroyEvent event) {
+		}
+		
+		@Override
+		public void sessionDestroy(SessionDestroyEvent event) {
 			
-			}
+		}
 	}
 
 	@Override
@@ -68,8 +68,8 @@ public class HousingUI extends UI {
 		setContent(layout);
 		
 		navigator = new Navigator(this, this);
-		String name = "Registrierung";
-		navigator.addView(name, new Registrierung());
+		String name = "Startseite";
+		navigator.addView(name, new Startseite());
 		navigator.navigateTo(name);
 	}
 

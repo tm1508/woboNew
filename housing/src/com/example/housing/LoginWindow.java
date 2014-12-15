@@ -24,13 +24,9 @@ public class LoginWindow extends Window{
 	
 	public LoginWindow() {
 		super("Bitte loggen Sie sich ein...");
-	
 		initialisieren();
+	}
 
-	}
-	public void stop(){
-		this.close();
-	}
 	
 	public void initialisieren(){
 		this.center();
