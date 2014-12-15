@@ -7,6 +7,7 @@ import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.server.FileResource;
 import com.vaadin.server.VaadinService;
+import com.vaadin.server.VaadinSession;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.DateField;
@@ -34,6 +35,18 @@ public class Einzelansicht extends VerticalLayout implements View {
 	
 	addComponent(content);
 	content.addComponent(nav);
+	
+	NavigationPublic navPublic = new NavigationPublic();
+	addComponent(navPublic);
+	
+	//falls der Benutzer eingelogt ist verändert sich die Navigation
+	if(VaadinSession.getCurrent().getAttribute("login").equals(true)){
+		nav.setVisible(true);
+		navPublic.setVisible(false);
+	}else{
+		nav.setVisible(false);
+		navPublic.setVisible(true);
+	}
 	setContent();
 
 
