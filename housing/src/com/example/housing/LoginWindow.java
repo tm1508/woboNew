@@ -83,7 +83,7 @@ public class LoginWindow extends Window{
 					if(email_1.getValue().equals("max.mustermann@test.de")){
 						Notification.show("Login erfolgreich.",Type.HUMANIZED_MESSAGE);
 						VaadinSession.getCurrent().setAttribute("login", true);
-						System.out.println(VaadinSession.getCurrent().getAttribute("login").toString());
+						//System.out.println(VaadinSession.getCurrent().getAttribute("login").toString());
 						Page.getCurrent().reload();
 					}else{
 						Notification.show("Login fehlgeschlagen!","Bitte überprüfen Sie Benutzername und Passwort.", Type.HUMANIZED_MESSAGE);

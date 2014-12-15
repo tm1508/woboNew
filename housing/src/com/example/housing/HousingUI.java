@@ -68,8 +68,8 @@ public class HousingUI extends UI {
 		setContent(layout);
 		
 		navigator = new Navigator(this, this);
-		String name = "Startseite";
-		navigator.addView(name, new Startseite());
+		String name = "Registrierung";
+		navigator.addView(name, new Registrierung());
 		navigator.navigateTo(name);
 	}
 

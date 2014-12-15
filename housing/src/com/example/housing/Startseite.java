@@ -36,6 +36,7 @@ public class Startseite extends VerticalLayout implements View{
 		NavigationPublic navPublic = new NavigationPublic();
 		addComponent(navPublic);
 		
+		//falls der Benutzer eingelogt ist verändert sich die Navigation
 		if(VaadinSession.getCurrent().getAttribute("login").equals(true)){
 			nav.setVisible(true);
 			navPublic.setVisible(false);
