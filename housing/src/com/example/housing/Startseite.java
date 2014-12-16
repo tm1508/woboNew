@@ -1,10 +1,14 @@
 package com.example.housing;
 
+import com.example.housing.data.model.User;
+import com.example.housing.data.provider.UserProvider;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.server.FontAwesome;
+import com.vaadin.server.VaadinSession;
 import com.vaadin.ui.Accordion;
 import com.vaadin.ui.Button;
+import com.vaadin.ui.Component;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Link;
@@ -12,6 +16,7 @@ import com.vaadin.ui.Panel;
 import com.vaadin.ui.Table;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
+import com.vaadin.ui.Button.ClickEvent;
 
 public class Startseite extends VerticalLayout implements View{
 
@@ -27,6 +32,19 @@ public class Startseite extends VerticalLayout implements View{
 	public Startseite(){
 		Navigation nav = new Navigation();
 		addComponent(nav);
+		
+		NavigationPublic navPublic = new NavigationPublic();
+		addComponent(navPublic);
+		
+		//falls der Benutzer eingelogt ist verändert sich die Navigation
+		if(VaadinSession.getCurrent().getAttribute("login").equals(true)){
+			nav.setVisible(true);
+			navPublic.setVisible(false);
+		}else{
+			nav.setVisible(false);
+			navPublic.setVisible(true);
+		}
+			
 		
 		setContent();
 		addComponent(content);
@@ -166,6 +184,25 @@ public class Startseite extends VerticalLayout implements View{
 		p.setContent(v);
 		
 		content.addComponent(p);
+		
+		/*
+		//Datenbank-Test: Versuche User auszugeben aus Datenbank
+		User user = new UserProvider().doQueryOneResult(Long.getLong("1"));
+		Panel p = new Panel("User: " + user.getEmail());
+		VerticalLayout v = new VerticalLayout();
+		v.setMargin(true);
+		
+		
+        Table tabelle = new Table();
+        tabelle.setSizeFull();
+        tabelle.setSelectable(true);
+        tabelle.setMultiSelect(true);
+        tabelle.setImmediate(true);
+        v.addComponent(tabelle);
+		p.setContent(v);
+		
+		content.addComponent(p);
+		*/
 		
 	}
 	

@@ -10,6 +10,7 @@ import com.vaadin.data.Property.ValueChangeListener;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.server.FontAwesome;
+import com.vaadin.server.VaadinSession;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.CheckBox;
@@ -62,6 +63,18 @@ public class Registrierung extends VerticalLayout implements View{
 		nav.setWidth("100%");
 		nav.addStyleName("navigation");
 		addComponent(nav);
+		
+		NavigationPublic navPublic = new NavigationPublic();
+		addComponent(navPublic);
+		
+		//falls der Benutzer eingelogt ist verändert sich die Navigation
+		if(VaadinSession.getCurrent().getAttribute("login").equals(true)){
+			nav.setVisible(true);
+			navPublic.setVisible(false);
+		}else{
+			nav.setVisible(false);
+			navPublic.setVisible(true);
+		}
 		
 		//Inhalt hinzufuegen
 		content = new VerticalLayout();
