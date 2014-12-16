@@ -8,7 +8,6 @@ public abstract class BaseProvider<T> {
 
 	@PersistenceContext(name="wobo")
 	private static EntityManagerFactory emf;
-	//@PersistenceContext(name="wobo")
 	EntityManager em;
 	
 	public BaseProvider() {
@@ -37,7 +36,6 @@ public abstract class BaseProvider<T> {
 	protected abstract Class<T> getEntityClass();
 
 	public T find(Integer id) {
-		System.out.println("###############################################################" + em.toString());
 		return (T) em.find(getEntityClass(), id);
 	}
 	
