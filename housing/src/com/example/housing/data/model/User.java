@@ -1,27 +1,34 @@
 package com.example.housing.data.model;
 
+import java.util.List;
+
 import javax.persistence.*;
 
 @Entity
 @Table(name="user")
-@NamedQueries(@NamedQuery(name = "firstUser", query = "SELECT u FROM User u"))
 public class User {
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
-	private long idUser;
+	private Integer idUser;
 	private String firstname;
 	private String lastname;
 	private String email;
 	private String mobile;
 	private String password;
 	private String dhMail;
-	private int accessLevel;
+	private Integer accessLevel;
+	@OneToMany(mappedBy="offer_idUser")
+	private List<Offer> offers;
+	@OneToMany(mappedBy="request_idUser")
+	private List<Request> requests;
+	@OneToMany(mappedBy="favorit_idUser")
+	private List<Favorit> favorits;
 	
-	public long getIdUser() {
+	public Integer getIdUser() {
 		return idUser;
 	}
-	public void setIdUser(long idUser) {
+	public void setIdUser(Integer idUser) {
 		this.idUser = idUser;
 	}
 	public String getFirstname() {
@@ -65,6 +72,24 @@ public class User {
 	}
 	public void setAccessLevel(int accessLevel) {
 		this.accessLevel = accessLevel;
+	}
+	public List<Offer> getOffers() {
+		return offers;
+	}
+	public void setOffers(List<Offer> offers) {
+		this.offers = offers;
+	}
+	public List<Request> getRequests() {
+		return requests;
+	}
+	public void setRequests(List<Request> requests) {
+		this.requests = requests;
+	}
+	public List<Favorit> getFavorits() {
+		return favorits;
+	}
+	public void setFavorits(List<Favorit> favorits) {
+		this.favorits = favorits;
 	}
 
 }

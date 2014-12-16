@@ -4,14 +4,18 @@
      	<provider>org.hibernate.ejb.HibernatePersistence</provider>
      	
      	<class>com.example.housing.data.model.User</class>
+     	<class>com.example.housing.data.model.Offer</class>
+     	<class>com.example.housing.data.model.Photo</class>
+     	<class>com.example.housing.data.model.Request</class>
+     	<class>com.example.housing.data.model.Favorit</class>
      	
      	<properties>
 			<property name="hibernate.connection.url" value="jdbc:mysql://localhost:3306/wobo"/>
 			<property name="hibernate.connection.driver_class" value="com.mysql.jdbc.Driver"/>
 			<property name="hibernate.connection.username" value="root"/>
-			<property name="hibernate.connection.password" value=""/> <!-- Euer Passwort für den root-Account für MySQL-Zugriff eintragen!!! -->
+			<property name="hibernate.connection.password" value="6746"/> <!-- Euer Passwort für den root-Account für MySQL-Zugriff eintragen!!! -->
 
-			<property name="hibernate.hbm2ddl.auto" value="update"/> <!-- create-drop -->
+			<!-- <property name="hibernate.hbm2ddl.auto" value="update"/> --> <!-- create-drop -->
 			<property name='hibernate.show_sql' value='true' />
 			<property name='hibernate.format_sql' value='true' />
 			<property name='hibernate.dialect' value='org.hibernate.dialect.MySQLDialect' />

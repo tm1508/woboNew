@@ -40,8 +40,8 @@ public class HousingUI extends UI {
 		setContent(layout);
 		
 		navigator = new Navigator(this, this);
-		String name = "AngebotErstellen";
-		navigator.addView(name, new AngebotErstellen());
+		String name = "Test";
+		navigator.addView(name, new Test());
 		navigator.navigateTo(name);
 	}
 
