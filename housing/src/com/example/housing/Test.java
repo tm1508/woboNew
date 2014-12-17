@@ -21,10 +21,18 @@ import com.vaadin.ui.Table;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class Test.
+ */
 public class Test extends VerticalLayout implements View{
 	
+/** The content. */
 VerticalLayout content;
 	
+	/* (non-Javadoc)
+	 * @see com.vaadin.navigator.View#enter(com.vaadin.navigator.ViewChangeListener.ViewChangeEvent)
+	 */
 	@Override
 	public void enter(ViewChangeEvent event) {
 		// TODO Auto-generated method stub
@@ -32,6 +40,9 @@ VerticalLayout content;
 		
 	}
 	
+	/**
+	 * Instantiates a new test.
+	 */
 	public Test(){
 		Navigation nav = new Navigation();
 		addComponent(nav);
@@ -43,6 +54,9 @@ VerticalLayout content;
 		addComponent(f);
 	}
 	
+	/**
+	 * Sets the content.
+	 */
 	public void setContent(){
 		
 		content = new VerticalLayout();
