@@ -13,7 +13,9 @@
 			<property name="hibernate.connection.url" value="jdbc:mysql://localhost:3306/wobo"/>
 			<property name="hibernate.connection.driver_class" value="com.mysql.jdbc.Driver"/>
 			<property name="hibernate.connection.username" value="root"/>
-			<property name="hibernate.connection.password" value="kochbuch"/> <!-- Euer Passwort für den root-Account für MySQL-Zugriff eintragen!!! -->
+
+			<property name="hibernate.connection.password" value=""/> <!-- Euer Passwort für den root-Account für MySQL-Zugriff eintragen!!! -->
+
 
 			<!-- <property name="hibernate.hbm2ddl.auto" value="update"/> --> <!-- create-drop -->
 			<property name='hibernate.show_sql' value='true' />
