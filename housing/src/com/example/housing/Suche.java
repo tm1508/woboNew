@@ -44,11 +44,6 @@ public class Suche extends VerticalLayout implements View{
 		
 		Footer f = new Footer();
 		addComponent(f);
-		
-		setContent();
-		addComponent(content);
-		
-	
 	}
 	
 	public void setContent(){
