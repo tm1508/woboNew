@@ -108,10 +108,10 @@ public class Suche extends VerticalLayout implements View{
 		gridSuche.addComponent(new Label("Raucher"), 3 ,4);
 		CheckBox rauchen = new CheckBox();
 		gridSuche.addComponent(rauchen, 4 ,4);
-		gridSuche.addComponent(new Label("moebliert"), 1 ,5);
+		gridSuche.addComponent(new Label("möbliert"), 1 ,5);
 		CheckBox moebliert = new CheckBox();
 		gridSuche.addComponent(moebliert, 2 ,5);
-		gridSuche.addComponent(new Label("K�che"), 3 ,5);
+		gridSuche.addComponent(new Label("Küche"), 3 ,5);
 		CheckBox kueche = new CheckBox();
 		gridSuche.addComponent(kueche, 4 ,5);
 		
