@@ -12,7 +12,9 @@ import com.vaadin.ui.CustomComponent;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Image;
 import com.vaadin.ui.MenuBar;
+import com.vaadin.ui.Notification;
 import com.vaadin.ui.MenuBar.MenuItem;
+import com.vaadin.ui.Notification.Type;
 import com.vaadin.ui.VerticalLayout;
 
 public class Navigation extends CustomComponent {
@@ -59,6 +61,7 @@ public class Navigation extends CustomComponent {
 				
 				//TODO 
 				VaadinSession.getCurrent().setAttribute("login", false);
+				Notification.show("Logout erfolgreich.", Type.HUMANIZED_MESSAGE);
 				Page.getCurrent().reload();
 			}  
 		};

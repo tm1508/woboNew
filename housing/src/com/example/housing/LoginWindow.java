@@ -1,5 +1,7 @@
 package com.example.housing;
 
+import com.example.housing.data.model.User;
+import com.example.housing.data.provider.UserProvider;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.server.Page;
 import com.vaadin.server.VaadinSession;
@@ -74,16 +76,33 @@ public class LoginWindow extends Window{
 			loginButton.setWidth("-1px");
 			loginButton.setHeight("-1px");
 			content.addComponent(loginButton);
+			
+			
+			
 			loginButton.addClickListener(new Button.ClickListener() {
 				public void buttonClick(ClickEvent event) {
-					if(email_1.getValue().equals("max.mustermann@test.de")){
-						Notification.show("Login erfolgreich.",Type.HUMANIZED_MESSAGE);
-						VaadinSession.getCurrent().setAttribute("login", true);
-						//System.out.println(VaadinSession.getCurrent().getAttribute("login").toString());
-						Page.getCurrent().reload();
-					}else{
-						Notification.show("Login fehlgeschlagen!","Bitte überprüfen Sie Benutzername und Passwort.", Type.HUMANIZED_MESSAGE);
+					try{
+						//TODO Datenbankanbindung
+						UserProvider up = new UserProvider();
+						User u = new User();
+						u=up.doQueryOneResult(null);
+						//System.out.println(u.getEmail());
+						//System.out.println(u.getPassword());
+						
+						if(email_1.getValue().equals(u.getEmail()) && password_1.getValue().equals(u.getPassword())){
+							Notification.show("Login erfolgreich.",Type.HUMANIZED_MESSAGE);
+							VaadinSession.getCurrent().setAttribute("login", true);
+							//System.out.println(VaadinSession.getCurrent().getAttribute("login").toString());
+							Page.getCurrent().reload();
+						}else{
+							//Fehlermeldung bei falschem Benutzername oder Passwort
+							Notification.show("Login fehlgeschlagen!","Bitte überprüfen Sie Benutzername und/oder Passwort.", Type.HUMANIZED_MESSAGE);
+						}
+					}catch(Exception e){
+						//Fehlermeldung bei Datenbankproblemen
+						Notification.show("Login fehlgeschlagen!","Bitte versuchen Sie es später erneut.", Type.HUMANIZED_MESSAGE);
 					}
+					
 
 				}
 			});
