@@ -1,10 +1,11 @@
 package com.example.housing;
-
 /**
  * Registrierung der Nutzer, enthaelt ein Registrierungsformular
+ * 
+ * @author MWI Wohungsbörse 2014
+ * @version 1.0
+ * @see com.example.housing.HousingUI
  */
-
-
 import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;
 import com.vaadin.navigator.View;
