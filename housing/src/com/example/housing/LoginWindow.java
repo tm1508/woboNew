@@ -83,9 +83,11 @@ public class LoginWindow extends Window{
 				public void buttonClick(ClickEvent event) {
 					try{
 						//TODO Datenbankanbindung
-						UserProvider up = new UserProvider();
+						//UserProvider up = new UserProvider();
 						User u = new User();
-						u=up.doQueryOneResult(null);
+						u.setEmail("max.mustermann@test.de");
+						u.setPassword("123");
+						//u=up.findbyID(1);
 						//System.out.println(u.getEmail());
 						//System.out.println(u.getPassword());
 						
