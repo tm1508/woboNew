@@ -65,17 +65,64 @@ public class Navigation extends CustomComponent {
 				Page.getCurrent().reload();
 			}  
 		};
+		
+		MenuBar.Command mycommand1 = new MenuBar.Command() {
+			public void menuSelected(MenuItem selectedItem) {
+				String name = "Startseite";
+				getUI().getNavigator().addView(name, new Startseite());
+				getUI().getNavigator().navigateTo(name);
+				
+			}  
+		};
+		
+		
+		//Navigator navigator = new Navigator(null, h);
+		MenuBar.Command mycommand2 = new MenuBar.Command() {
+			public void menuSelected(MenuItem selectedItem) {
+				String name = "Suche";
+				getUI().getNavigator().addView(name, new Suche());
+				getUI().getNavigator().navigateTo(name);
+				
+			}  
+		};
+		
+		MenuBar.Command mycommand3 = new MenuBar.Command() {
+			public void menuSelected(MenuItem selectedItem) {
+				String name = "AngebotErstellen";
+				getUI().getNavigator().addView(name, new AngebotErstellen());
+				getUI().getNavigator().navigateTo(name);
+				
+			}  
+		};
+		
+		
+		//Navigator navigator = new Navigator(null, h);
+		MenuBar.Command mycommand4 = new MenuBar.Command() {
+			public void menuSelected(MenuItem selectedItem) {
+				String name = "AngebotAnzeigen";
+				getUI().getNavigator().addView(name, new AngebotAnzeigen());
+				getUI().getNavigator().navigateTo(name);
+				
+			}  
+		};
+		
+		
+		
+				
+			
+				
+		
 					
 		//Navigationsschaltflächen
-		MenuItem nav0 = menuBar_1.addItem("Startseite", FontAwesome.HOME, null);
-		MenuItem nav1 = menuBar_1.addItem("Suche", FontAwesome.SEARCH, null);
-		MenuItem nav2 = menuBar_1.addItem("Wohnung einstellen", FontAwesome.HOME, null);
-			nav2.addItem("Neue Wohnung anbieten", FontAwesome.PENCIL, null);
-			nav2.addItem("Wohnungsangebote verwalten", FontAwesome.WRENCH, null);
-		MenuItem nav5 = menuBar_1.addItem("Persönliche Daten", FontAwesome.CHILD, null);
+		MenuItem nav0 = menuBar_1.addItem("Startseite", FontAwesome.HOME, mycommand1); //Startesite
+		MenuItem nav1 = menuBar_1.addItem("Suche", FontAwesome.SEARCH, mycommand2); //Suche
+		MenuItem nav2 = menuBar_1.addItem("Wohnung einstellen", FontAwesome.HOME, null); 
+			nav2.addItem("Neue Wohnung anbieten", FontAwesome.PENCIL, mycommand3); //AngebotErstellen
+			nav2.addItem("Wohnungsangebote verwalten", FontAwesome.WRENCH, mycommand4); //AngebotAnzeigen
+		MenuItem nav5 = menuBar_1.addItem("Persönliche Daten", FontAwesome.CHILD, null); 
 			nav5.addItem("Meine Favoriten", FontAwesome.STAR_O, null);
 			nav5.addItem("Meine Anfragen", FontAwesome.STAR_O, null);
-			nav5.addItem("Meine Profildaten", FontAwesome.USER, null);
+			nav5.addItem("Meine Profildaten", FontAwesome.USER, null); 
 		MenuItem nav6 = menuBar_1.addItem("Logout", FontAwesome.UNLOCK_ALT, mycommand);//Navigation
 		
 		mainLayout.addComponent(menuBar_1);
