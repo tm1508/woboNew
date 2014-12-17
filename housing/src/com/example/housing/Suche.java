@@ -12,16 +12,27 @@ import com.vaadin.ui.PopupDateField;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class Suche.
+ */
 public class Suche extends VerticalLayout implements View{
 
+	/** The content. */
 	VerticalLayout content;
 	
+	/* (non-Javadoc)
+	 * @see com.vaadin.navigator.View#enter(com.vaadin.navigator.ViewChangeListener.ViewChangeEvent)
+	 */
 	@Override
 	public void enter(ViewChangeEvent event) {
 		// TODO Auto-generated method stub
 		
 	}
 	
+	/**
+	 * Instantiates a new suche.
+	 */
 	public Suche(){
 		Navigation nav = new Navigation();
 		addComponent(nav);
@@ -46,6 +57,9 @@ public class Suche extends VerticalLayout implements View{
 		addComponent(f);
 	}
 	
+	/**
+	 * Sets the content.
+	 */
 	public void setContent(){
 		
 		content = new VerticalLayout();

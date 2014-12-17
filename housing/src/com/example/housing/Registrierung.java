@@ -24,28 +24,63 @@ import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class Registrierung.
+ */
 @SuppressWarnings("serial")
 public class Registrierung extends VerticalLayout implements View{
 	
+	/** The content. */
 	private VerticalLayout content;//Layout fuer den Inhalt
 	
 	//Felder des Registrierungsformulars
+	/** The title. */
 	private Label title;
+	
+	/** The lastname. */
 	private TextField lastname;
+	
+	/** The prename. */
 	private TextField prename;
+	
+	/** The email_1. */
 	private TextField email_1;
+	
+	/** The email_2. */
 	private TextField email_2;
+	
+	/** The password_1. */
 	private PasswordField password_1;
+	
+	/** The password_2. */
 	private PasswordField password_2;
+	
+	/** The handy. */
 	private TextField handy;
+	
+	/** The dhstud. */
 	private CheckBox dhstud;
+	
+	/** The moodlename. */
 	private TextField moodlename;
+	
+	/** The passwordmoodle. */
 	private PasswordField passwordmoodle;
+	
+	/** The agbs. */
 	private CheckBox agbs;
+	
+	/** The link_1. */
 	private Link link_1;
+	
+	/** The button. */
 	private Button button;
 
 
+	/* (non-Javadoc)
+	 * @see com.vaadin.navigator.View#enter(com.vaadin.navigator.ViewChangeListener.ViewChangeEvent)
+	 */
 	@Override
 	public void enter(ViewChangeEvent event) {
 		// TODO Auto-generated method stub
@@ -53,7 +88,7 @@ public class Registrierung extends VerticalLayout implements View{
 	
 	/**
 	 * Konstruktor der Klasse Registrierung
-	 * fuegt die Navigation, den Inhalt und die Fusszeile hinzu
+	 * fuegt die Navigation, den Inhalt und die Fusszeile hinzu.
 	 */
 	public Registrierung(){
 		setMargin(true);
@@ -91,7 +126,7 @@ public class Registrierung extends VerticalLayout implements View{
 	}
 	
 	/**
-	 * Methode zum Befuellen des Inhalts der Seite
+	 * Methode zum Befuellen des Inhalts der Seite.
 	 */
 	public void setContent(){
 		

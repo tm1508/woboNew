@@ -14,20 +14,37 @@ import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Notification.Type;
 
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class LoginWindow.
+ */
 public class LoginWindow extends Window{
 	
+	/** The title. */
 	public static Label title;
+	
+	/** The email_1. */
 	public static TextField email_1;
+	
+	/** The password_1. */
 	public static PasswordField password_1;
+	
+	/** The login button. */
 	public static Button loginButton;
 	
 	
+	/**
+	 * Instantiates a new login window.
+	 */
 	public LoginWindow() {
 		super("Bitte loggen Sie sich ein...");
 		initialisieren();
 	}
 
 	
+	/**
+	 * Initialisieren.
+	 */
 	public void initialisieren(){
 		this.center();
 		this.setHeight("50%");

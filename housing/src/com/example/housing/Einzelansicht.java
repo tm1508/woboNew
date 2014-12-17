@@ -19,9 +19,18 @@ import com.vaadin.ui.TextArea;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Button.ClickEvent;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class Einzelansicht.
+ */
 public class Einzelansicht extends VerticalLayout implements View {
+	
+	/** The content. */
 	VerticalLayout content;
 	
+	/**
+	 * Instantiates a new einzelansicht.
+	 */
 	public Einzelansicht(){
 	
 	content = new VerticalLayout();
@@ -58,6 +67,9 @@ public class Einzelansicht extends VerticalLayout implements View {
 	}
 
 
+	/**
+	 * Sets the content.
+	 */
 	@SuppressWarnings("deprecation")
 	public void setContent(){
 		
@@ -239,6 +251,9 @@ public class Einzelansicht extends VerticalLayout implements View {
 
 	}
 
+	/* (non-Javadoc)
+	 * @see com.vaadin.navigator.View#enter(com.vaadin.navigator.ViewChangeListener.ViewChangeEvent)
+	 */
 	@Override
 	public void enter(ViewChangeEvent event) {
 		// TODO Auto-generated method stub

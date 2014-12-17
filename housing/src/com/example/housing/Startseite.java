@@ -18,10 +18,18 @@ import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Button.ClickEvent;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class Startseite.
+ */
 public class Startseite extends VerticalLayout implements View{
 
+	/** The content. */
 	VerticalLayout content;
 	
+	/* (non-Javadoc)
+	 * @see com.vaadin.navigator.View#enter(com.vaadin.navigator.ViewChangeListener.ViewChangeEvent)
+	 */
 	@Override
 	public void enter(ViewChangeEvent event) {
 		// TODO Auto-generated method stub
@@ -29,6 +37,9 @@ public class Startseite extends VerticalLayout implements View{
 		
 	}
 	
+	/**
+	 * Instantiates a new startseite.
+	 */
 	public Startseite(){
 		Navigation nav = new Navigation();
 		addComponent(nav);
@@ -53,6 +64,9 @@ public class Startseite extends VerticalLayout implements View{
 		addComponent(f);
 	}
 	
+	/**
+	 * Sets the content.
+	 */
 	public void setContent(){
 		
 		content = new VerticalLayout();
