@@ -17,13 +17,14 @@ public class User {
 	private String mobile;
 	private String password;
 	private String dhMail;
-	private Integer accessLevel;
+	private int accessLevel;
 	@OneToMany(mappedBy="offer_idUser")
 	private List<Offer> offers;
 	@OneToMany(mappedBy="request_idUser")
 	private List<Request> requests;
 	@OneToMany(mappedBy="favorit_idUser")
 	private List<Favorit> favorits;
+	private boolean activated;
 	
 	public Integer getIdUser() {
 		return idUser;
@@ -90,6 +91,12 @@ public class User {
 	}
 	public void setFavorits(List<Favorit> favorits) {
 		this.favorits = favorits;
+	}
+	public boolean getActivated() {
+		return activated;
+	}
+	public void setActivated(boolean activated) {
+		this.activated = activated;
 	}
 
 }

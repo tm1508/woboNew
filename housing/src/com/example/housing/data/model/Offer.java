@@ -22,7 +22,7 @@ public class Offer {
 	private Date endDate;
 	private float squareMetre;
 	private float price;
-	private boolean isShared;
+	private int gender;
 	private int numberOfRoommate;
 	private boolean internet;
 	private boolean furnished;
@@ -32,7 +32,7 @@ public class Offer {
 	private boolean isFemale;
 	@Lob
 	private String text;
-	private Float bond;
+	private float bond;
 	private boolean inactive;
 	@ManyToOne
 	@JoinColumn(name="offer_idUser")
@@ -41,6 +41,10 @@ public class Offer {
 	private List<Photo> photos;
 	@OneToMany(mappedBy="favorit_idOffer")
 	private List<Favorit> favorits;
+	@Temporal(value=TemporalType.TIMESTAMP)
+	private Date offerTime;
+	private float latitude;
+	private float longitude;
 	
 	public Integer getIdOffer() {
 		return idOffer;
@@ -96,11 +100,11 @@ public class Offer {
 	public void setPrice(float price) {
 		this.price = price;
 	}
-	public boolean isShared() {
-		return isShared;
+	public int getGender() {
+		return gender;
 	}
-	public void setShared(boolean isShared) {
-		this.isShared = isShared;
+	public void setGender(int gender) {
+		this.gender = gender;
 	}
 	public int getNumberOfRoommate() {
 		return numberOfRoommate;
@@ -179,6 +183,24 @@ public class Offer {
 	}
 	public void setFavorits(List<Favorit> favorits) {
 		this.favorits = favorits;
+	}
+	public Date getOfferTime() {
+		return offerTime;
+	}
+	public void setOfferTime(Date offerTime) {
+		this.offerTime = offerTime;
+	}
+	public float getLatitude() {
+		return latitude;
+	}
+	public void setLatitude(float latitude) {
+		this.latitude = latitude;
+	}
+	public float getLongitude() {
+		return longitude;
+	}
+	public void setLongitude(float longitude) {
+		this.longitude = longitude;
 	}
 
 }

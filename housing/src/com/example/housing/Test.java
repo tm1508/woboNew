@@ -66,7 +66,7 @@ VerticalLayout content;
 		List<Favorit> favs = user.getFavorits();/*new FavoritProvider().findByUser(user);*/
 		Panel p = new Panel("DATENBANKABFRAGE:"
 				+ "User: " + user.getEmail()
-				+ "     Favorit(en): " + favs.get(0).getFavorit_idOffer().getTitle());
+				+ "     Favorit(en): " + favs.get(1).getFavorit_idOffer().getTitle());
 		VerticalLayout v = new VerticalLayout();
 		v.setMargin(true);
 		
