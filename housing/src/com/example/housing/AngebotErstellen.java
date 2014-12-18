@@ -11,20 +11,32 @@ import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.RichTextArea;
 import com.vaadin.ui.TextField;
+import com.vaadin.ui.Upload;
 import com.vaadin.ui.VerticalLayout;
 
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class AngebotErstellen.
+ */
 public class AngebotErstellen extends VerticalLayout implements View {
 
 	
+	/** The content. */
 	VerticalLayout content;
 
+	/* (non-Javadoc)
+	 * @see com.vaadin.navigator.View#enter(com.vaadin.navigator.ViewChangeListener.ViewChangeEvent)
+	 */
 	@Override
 	public void enter(ViewChangeEvent event) {
 		// TODO Auto-generated method stub
 
 	}
 
+	/**
+	 * Instantiates a new angebot erstellen.
+	 */
 	public AngebotErstellen() {
 		Navigation nav = new Navigation();
 		addComponent(nav);
@@ -49,6 +61,9 @@ public class AngebotErstellen extends VerticalLayout implements View {
 		addComponent(f);
 	}
 
+	/**
+	 * Sets the content.
+	 */
 	public void setContent() {
 
 		content = new VerticalLayout();
@@ -187,17 +202,26 @@ public class AngebotErstellen extends VerticalLayout implements View {
 		content.addComponent(gender);
 		content.addComponent(new Label());
 		
-		//Anzeigetext
+		//Anzeigetext + Wohnungsbilder
 		Label anzeigetext = new Label("Anzeigetext");
 		anzeigetext.addStyleName("AbschnittLabel");
 		RichTextArea text = new RichTextArea();
 		text.setWidth("100%");
+		Label bilder = new Label("Bilder hinzufügen");
+		bilder.addStyleName("AbschnittLabel");
+		Upload bilderup = new Upload();
+			bilderup.setButtonCaption("hochladen");
 		
 		content.addComponent(anzeigetext);
 		content.addComponent(new Label());
 		content.addComponent(text);
 		content.addComponent(new Label());
+		content.addComponent(bilder);
+		content.addComponent(new Label());
+		content.addComponent(bilderup);
+		content.addComponent(new Label());
 		
+		//Button speichern/aktivieren/deaktivieren
 		HorizontalLayout buttons = new HorizontalLayout();
 		Button save = new Button("speichern");
 		save.addStyleName("BearbeitenButton");

@@ -3,13 +3,11 @@ package com.example.housing;
 import java.util.Map;
 
 import javax.persistence.Cache;
-import javax.persistence.EntityGraph;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.PersistenceUnitUtil;
 import javax.persistence.Query;
-import javax.persistence.SynchronizationType;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.metamodel.Metamodel;
 import javax.servlet.ServletException;
@@ -30,16 +28,27 @@ import com.vaadin.server.VaadinServlet;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class HousingUI.
+ */
 @SuppressWarnings("serial")
 @Theme("housing")
 public class HousingUI extends UI {
 
+	/** The navigator. */
 	Navigator navigator;
 	
+	/**
+	 * The Class Servlet.
+	 */
 	@WebServlet(value = "/*", asyncSupported = true)
 	@VaadinServletConfiguration(productionMode = false, ui = HousingUI.class)
 	public static class Servlet extends VaadinServlet implements SessionInitListener, SessionDestroyListener{
 
+		/* (non-Javadoc)
+		 * @see com.vaadin.server.VaadinServlet#servletInitialized()
+		 */
 		@Override
 		protected void servletInitialized() throws ServletException {
 			super.servletInitialized();
@@ -47,6 +56,9 @@ public class HousingUI extends UI {
 			getService().addSessionDestroyListener(this);
 		}
 		
+		/* (non-Javadoc)
+		 * @see com.vaadin.server.SessionInitListener#sessionInit(com.vaadin.server.SessionInitEvent)
+		 */
 		@Override
 		public void sessionInit(SessionInitEvent event)throws ServiceException {
 			event.getSession().setAttribute("login", false);
@@ -55,12 +67,18 @@ public class HousingUI extends UI {
 				
 		}
 		
+		/* (non-Javadoc)
+		 * @see com.vaadin.server.SessionDestroyListener#sessionDestroy(com.vaadin.server.SessionDestroyEvent)
+		 */
 		@Override
 		public void sessionDestroy(SessionDestroyEvent event) {
 			
 		}
 	}
 
+	/* (non-Javadoc)
+	 * @see com.vaadin.ui.UI#init(com.vaadin.server.VaadinRequest)
+	 */
 	@Override
 	protected void init(VaadinRequest request) {
 		final VerticalLayout layout = new VerticalLayout();
@@ -68,8 +86,8 @@ public class HousingUI extends UI {
 		setContent(layout);
 		
 		navigator = new Navigator(this, this);
-		String name = "Test";
-		navigator.addView(name, new Test());
+		String name = "Startseite";
+		navigator.addView(name, new Startseite());
 		navigator.navigateTo(name);
 	}
 

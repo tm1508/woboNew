@@ -12,16 +12,27 @@ import com.vaadin.ui.PopupDateField;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class Suche.
+ */
 public class Suche extends VerticalLayout implements View{
 
+	/** The content. */
 	VerticalLayout content;
 	
+	/* (non-Javadoc)
+	 * @see com.vaadin.navigator.View#enter(com.vaadin.navigator.ViewChangeListener.ViewChangeEvent)
+	 */
 	@Override
 	public void enter(ViewChangeEvent event) {
 		// TODO Auto-generated method stub
 		
 	}
 	
+	/**
+	 * Instantiates a new suche.
+	 */
 	public Suche(){
 		Navigation nav = new Navigation();
 		addComponent(nav);
@@ -29,7 +40,7 @@ public class Suche extends VerticalLayout implements View{
 		NavigationPublic navPublic = new NavigationPublic();
 		addComponent(navPublic);
 		
-		//falls der Benutzer eingelogt ist verändert sich die Navigation
+		//falls der Benutzer eingelogt ist verï¿½ndert sich die Navigation
 		if(VaadinSession.getCurrent().getAttribute("login").equals(true)){
 			nav.setVisible(true);
 			navPublic.setVisible(false);
@@ -44,13 +55,11 @@ public class Suche extends VerticalLayout implements View{
 		
 		Footer f = new Footer();
 		addComponent(f);
-		
-		setContent();
-		addComponent(content);
-		
-	
 	}
 	
+	/**
+	 * Sets the content.
+	 */
 	public void setContent(){
 		
 		content = new VerticalLayout();
@@ -64,7 +73,7 @@ public class Suche extends VerticalLayout implements View{
 	//	gridSuche.setWidth("40%");
 		gridSuche.addStyleName("LayoutSuche");
 		
-		//Größe
+		//Grï¿½ï¿½e
 		gridSuche.addComponent(new Label("Quadratmeter:  "), 0 ,0);
 		gridSuche.addComponent(new Label("von  "), 1 ,0);
 		TextField sucheVon = new TextField();
@@ -108,12 +117,12 @@ public class Suche extends VerticalLayout implements View{
 		gridSuche.addComponent(new Label("Raucher"), 3 ,4);
 		CheckBox rauchen = new CheckBox();
 		gridSuche.addComponent(rauchen, 4 ,4);
-		gridSuche.addComponent(new Label("Möbliert"), 1 ,5);
-		CheckBox möbliert = new CheckBox();
-		gridSuche.addComponent(möbliert, 2 ,5);
-		gridSuche.addComponent(new Label("Küche"), 3 ,5);
-		CheckBox küche = new CheckBox();
-		gridSuche.addComponent(küche, 4 ,5);
+		gridSuche.addComponent(new Label("mÃ¶bliert"), 1 ,5);
+		CheckBox moebliert = new CheckBox();
+		gridSuche.addComponent(moebliert, 2 ,5);
+		gridSuche.addComponent(new Label("KÃ¼che"), 3 ,5);
+		CheckBox kueche = new CheckBox();
+		gridSuche.addComponent(kueche, 4 ,5);
 		
 		Button suchButton = new Button("Suchen");
 		suchButton.addStyleName("SuchButton");
@@ -180,7 +189,7 @@ public class Suche extends VerticalLayout implements View{
 //		h5.addComponent(new Label("Rauchen erlaubt"));
 //		h5.addComponent(new CheckBox());
 //		
-		//TODO Inhalt einfügen
+		//TODO Inhalt einfï¿½gen
 		
 	}
 
