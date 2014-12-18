@@ -53,8 +53,31 @@ public class OfferProvider extends BaseProvider<Offer> {
 		if(minPrice != 0.0){
 			filter.append("o.price >=:" + minPrice + " AND ");
 		}
-		//TODO:
-		//NOCH NICHT FERTIG!!!
+		if(maxPrice != 0.0){
+			filter.append("o.price <=:"+ maxPrice + " AND ");
+		}
+		if(type != 0){
+			filter.append("o.type =:" + type + " AND ");
+		}
+		if(internet){
+			filter.append("o.internet =:" + internet + " AND ");
+		}
+		if(furnished){
+			filter.append("o.furnished =:" + furnished + " AND ");
+		}
+		if(kitchen){
+			filter.append("o.kitchen =:" + kitchen + " AND ");
+		}
+		if(smoker){
+			filter.append("o.smoker =:" + smoker + " AND ");
+		}
+		if(pets){
+			filter.append("o.pets =:" + pets + " AND ");
+		}
+		if(!city.equals("")){
+			filter.append("o.city =:" + city);
+		}
+
 		if(filter.lastIndexOf("AND ") == filter.length()-5){
 			filter.delete(filter.length()-5, filter.length()-1);
 		} else if(filter.lastIndexOf("WHERE ") == filter.length()-7){
