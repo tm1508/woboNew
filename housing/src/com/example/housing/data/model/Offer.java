@@ -44,8 +44,8 @@ public class Offer {
 	/** The price. */
 	private float price;
 	
-	/** The is shared. */
-	private boolean isShared;
+	/** The type. */
+	private int type;
 	
 	/** The number of roommate. */
 	private int numberOfRoommate;
@@ -65,15 +65,15 @@ public class Offer {
 	/** The pets. */
 	private boolean pets;
 	
-	/** The is female. */
-	private boolean isFemale;
+	/** The gender. */
+	private int gender;
 	
 	/** The text. */
 	@Lob
 	private String text;
 	
 	/** The bond. */
-	private Float bond;
+	private float bond;
 	
 	/** The inactive. */
 	private boolean inactive;
@@ -82,6 +82,13 @@ public class Offer {
 	@ManyToOne
 	@JoinColumn(name="offer_idUser")
 	private User offer_idUser;
+	
+	@Temporal(value=TemporalType.TIMESTAMP)
+	private Date offerTime;
+	
+	private float latitude;
+	
+	private float longitude;
 	
 	/** The photos. */
 	@OneToMany(mappedBy="photo_idOffer")
@@ -258,8 +265,8 @@ public class Offer {
 	 *
 	 * @return true, if is shared
 	 */
-	public boolean isShared() {
-		return isShared;
+	public int getType() {
+		return type;
 	}
 	
 	/**
@@ -267,8 +274,8 @@ public class Offer {
 	 *
 	 * @param isShared the new shared
 	 */
-	public void setShared(boolean isShared) {
-		this.isShared = isShared;
+	public void setType(int type) {
+		this.type = type;
 	}
 	
 	/**
@@ -380,21 +387,21 @@ public class Offer {
 	}
 	
 	/**
-	 * Checks if is female.
+	 * Gets the gender.
 	 *
-	 * @return true, if is female
+	 * @return the gender
 	 */
-	public boolean isFemale() {
-		return isFemale;
+	public int getGender() {
+		return gender;
 	}
 	
 	/**
-	 * Sets the female.
+	 * Sets the gender.
 	 *
-	 * @param isFemale the new female
+	 * @param gender the new gender
 	 */
-	public void setFemale(boolean isFemale) {
-		this.isFemale = isFemale;
+	public void setGender(int gender) {
+		this.gender = gender;
 	}
 	
 	/**
@@ -503,6 +510,30 @@ public class Offer {
 	 */
 	public void setFavorits(List<Favorit> favorits) {
 		this.favorits = favorits;
+	}
+
+	public Date getOfferTime() {
+		return offerTime;
+	}
+
+	public void setOfferTime(Date offerTime) {
+		this.offerTime = offerTime;
+	}
+
+	public float getLatitude() {
+		return latitude;
+	}
+
+	public void setLatitude(float latitude) {
+		this.latitude = latitude;
+	}
+
+	public float getLongitude() {
+		return longitude;
+	}
+
+	public void setLongitude(float longitude) {
+		this.longitude = longitude;
 	}
 
 }
