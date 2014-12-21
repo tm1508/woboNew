@@ -15,6 +15,8 @@ import javax.servlet.annotation.WebServlet;
 
 
 
+
+import com.example.housing.data.model.User;
 import com.vaadin.annotations.Theme;
 import com.vaadin.annotations.VaadinServletConfiguration;
 import com.vaadin.navigator.Navigator;
@@ -61,9 +63,7 @@ public class HousingUI extends UI {
 		 */
 		@Override
 		public void sessionInit(SessionInitEvent event)throws ServiceException {
-			event.getSession().setAttribute("login", false);
-			event.getSession().setAttribute("user", null);
-			event.getSession().setAttribute("dhstud", false);
+			event.getSession().setAttribute(User.class, null);
 				
 		}
 		
