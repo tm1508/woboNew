@@ -6,11 +6,19 @@ package com.example.housing;
  * @version 1.0
  * @see com.example.housing.HousingUI
  */
+import com.example.housing.data.model.User;
+import com.example.housing.utility.DHStudValidator;
 import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;
+import com.vaadin.data.Validator.InvalidValueException;
+import com.vaadin.data.validator.CompositeValidator;
+import com.vaadin.data.validator.EmailValidator;
+import com.vaadin.data.validator.NullValidator;
+import com.vaadin.data.validator.StringLengthValidator;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.server.FontAwesome;
+import com.vaadin.server.UserError;
 import com.vaadin.server.VaadinSession;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
@@ -145,14 +153,16 @@ public class Registrierung extends VerticalLayout implements View{
 		// prename
 		prename = new TextField();
 		prename.setCaption("Vorname");
-		prename.setImmediate(false);
+		prename.setRequiredError("Das Feld darf nicht leer sein.");
 		prename.setDescription("Bitte Vorname angeben");
 		prename.setWidth("220px");
 		prename.setHeight("-1px");
-		prename.setRequired(true);
 		prename.setIcon(FontAwesome.USER);
 		prename.setInputPrompt("Max");
 		prename.addStyleName("textfield");
+		prename.setRequired(true);
+		prename.setRequiredError("Das Feld darf nicht leer sein.");
+		prename.setImmediate(false);
 		content.addComponent(prename);
 		
 		// lastname
@@ -163,11 +173,12 @@ public class Registrierung extends VerticalLayout implements View{
 		lastname.setWidth("221px");
 		lastname.setHeight("-1px");
 		lastname.setRequired(true);
+		lastname.setRequiredError("Das Feld darf nicht leer sein.");
 		lastname.setIcon(FontAwesome.USER);
 		lastname.setInputPrompt("Mustermann");
 		content.addComponent(lastname);
 		
-		//E-Mail mit eigenenm Layout
+		//E-Mail mit eigenem Layout
 		HorizontalLayout emailLayout = new HorizontalLayout();
 			// email_1
 			email_1 = new TextField();
@@ -177,8 +188,10 @@ public class Registrierung extends VerticalLayout implements View{
 			email_1.setWidth("221px");
 			email_1.setHeight("-1px");
 			email_1.setRequired(true);
+			email_1.setRequiredError("Das Feld darf nicht leer sein.");
 			email_1.setIcon(FontAwesome.ENVELOPE);
 			email_1.setInputPrompt("max.mustermann@test.de");
+			email_1.addValidator(new EmailValidator("Das iste keine gültige E-Mail Adresse."));
 			emailLayout.addComponent(email_1);
 					
 			// email_2
@@ -189,8 +202,10 @@ public class Registrierung extends VerticalLayout implements View{
 			email_2.setWidth("221px");
 			email_2.setHeight("-1px");
 			email_2.setRequired(true);
+			email_2.setRequiredError("Das Feld darf nicht leer sein.");
 			email_2.setIcon(FontAwesome.ENVELOPE);
 			email_2.setInputPrompt("max.mustermann@test.de");
+			email_2.addValidator(new EmailValidator("Das iste keine gültige E-Mail Adresse."));
 			emailLayout.addComponent(email_2);
 		
 		content.addComponent(emailLayout);
@@ -205,6 +220,8 @@ public class Registrierung extends VerticalLayout implements View{
 			password_1.setWidth("220px");
 			password_1.setHeight("-1px");
 			password_1.setRequired(true);
+			password_1.setRequiredError("Das Feld darf nicht leer sein.");
+			password_1.addValidator(new StringLengthValidator("Das Passwort ist zu kurz. Es muss mindestens 5 Zeichen lang sein.", 5, null, false));
 			password_1.setIcon(FontAwesome.KEY);
 			passwordLayout.addComponent(password_1);
 					
@@ -216,6 +233,8 @@ public class Registrierung extends VerticalLayout implements View{
 			password_2.setWidth("221px");
 			password_2.setHeight("-1px");
 			password_2.setRequired(true);
+			password_2.setRequiredError("Das Feld darf nicht leer sein.");
+			password_2.addValidator(new StringLengthValidator("Das Passwort ist zu kurz. Es muss mindestens 5 Zeichen lang sein.", 5, null, false));
 			password_2.setIcon(FontAwesome.KEY);
 			passwordLayout.addComponent(password_2);
 		
@@ -249,9 +268,17 @@ public class Registrierung extends VerticalLayout implements View{
 	                if(value==true){
 	                	moodlename.setVisible(true);
 	                	passwordmoodle.setVisible(true);
+	                	moodlename.setRequired(true);
+	                	moodlename.setRequiredError("Das Feld darf nicht leer sein.");
+	                	passwordmoodle.setRequired(true);
+	                	passwordmoodle.setRequiredError("Das Feld darf nicht leer sein.");
+	                	
 	                }else{
 	                	moodlename.setVisible(false);
 	                	passwordmoodle.setVisible(false);
+	                	
+	                	moodlename.setRequired(false);
+	                	passwordmoodle.setRequired(false);
 	                }
 	                
 	            }
@@ -260,7 +287,7 @@ public class Registrierung extends VerticalLayout implements View{
 		// moodlename
 		moodlename = new TextField();
 		moodlename.setCaption("Moodle Anmeldenamen");
-		moodlename.setEnabled(false);
+	
 		moodlename.setImmediate(false);
 		moodlename.setVisible(false);
 		moodlename.setDescription("Bitte Ihren Moodle Anmeldenamen (nachname.vorname) angeben");
@@ -273,7 +300,7 @@ public class Registrierung extends VerticalLayout implements View{
 		// passwordmoodle
 		passwordmoodle = new PasswordField();
 		passwordmoodle.setCaption("Moodle Passwort");
-		passwordmoodle.setEnabled(false);
+	
 		passwordmoodle.setImmediate(false);
 		passwordmoodle.setVisible(false);
 		passwordmoodle.setDescription("Bitte Ihr Moodle Kennwort angeben");
@@ -289,7 +316,8 @@ public class Registrierung extends VerticalLayout implements View{
 		agbs.setDescription("Sie müssen die AGBs akzeptieren damit Sie sich registrieren können");
 		agbs.setWidth("-1px");
 		agbs.setHeight("-1px");
-		agbs.setRequired(true);
+		//agbs.setRequired(true);
+		//agbs.setRequiredError("Die AGBs müssen akzeptiert werden, sonst können Sie die Registrierung nicht abschließen.");
 		content.addComponent(agbs);
 		
 		// link_1
@@ -313,17 +341,104 @@ public class Registrierung extends VerticalLayout implements View{
 		button.addClickListener(new Button.ClickListener() {
 			public void buttonClick(ClickEvent event) {
 				
+				
+					boolean validate = validate();
+				
+					if(validate){
+						String name = "Startseite";
+						getUI().getNavigator().addView(name, new Startseite());
+						getUI().getNavigator().navigateTo(name);
+						Notification.show("Die Registrierung war erfolgreich. Sie können sich jetzt anmelden.",Type.HUMANIZED_MESSAGE);
+					}
+					
+					
+					
+					User u = new User();
+					u.setFirstname(prename.getValue());
+	
 				//TODO Registrierung
-				Notification.show("Die Registrierung war erfolgreich. Sie können sich jetzt anmelden.",Type.HUMANIZED_MESSAGE);
+				//Notification.show("Die Registrierung war erfolgreich. Sie können sich jetzt anmelden.",Type.HUMANIZED_MESSAGE);
 
-			}
+					}
 		});
 		
 
 	}
 	
 	
-	
-
+	public boolean validate(){
+		boolean erfolgreich=true;
+		try {
+			
+			prename.validate();
+		} catch (InvalidValueException e) {
+			erfolgreich=false;
+			
+			}
+		
+		try {
+			
+			lastname.validate();
+		} catch (InvalidValueException e) {
+			erfolgreich=false;
+			
+			}
+		
+		
+		try {
+			
+				email_1.validate();
+		} catch (InvalidValueException e) {
+			erfolgreich=false;
+			
+			}
+		
+		try {
+			
+			email_2.validate();
+	} catch (InvalidValueException e) {
+		erfolgreich=false;
+		
+		}
+		
+		
+			
+			
+			if(!email_1.getValue().equals(email_2.getValue())){
+				email_1.setComponentError(new UserError("Die beiden E-Mail Adressen stimmen nicht überein."));
+				email_2.setComponentError(new UserError("Die beiden E-Mail Adressen stimmen nicht überein."));
+				erfolgreich=false;
+			}
+			
+			
+			if(!password_1.getValue().equals(password_2.getValue())){
+				System.out.println(password_1.getValue());
+				System.out.println(password_2.getValue());
+				password_1.setComponentError(new UserError("Die beiden Passwörter stimmen nicht überein."));
+				password_2.setComponentError(new UserError("Die beiden Passwörter stimmen nicht überein."));
+				erfolgreich=false;
+			}
+			
+			if(dhstud.getValue()){
+				if(!DHStudValidator.validate(moodlename.getValue(), passwordmoodle.getValue())){
+					moodlename.setComponentError(new UserError("Ihre Moodleanmeldedaten stimmen nicht."));
+					passwordmoodle.setComponentError(new UserError("Ihre Moodleanmeldedaten stimmen nicht."));
+				}
+			}
+			
+			
+			
+			if(!agbs.getValue()){
+				agbs.setComponentError(new UserError("Sie müssen die AGBs akzeptieren um sich anmelden zu können."));
+				erfolgreich=false;
+			}
+			else{
+				agbs.setComponentError(null);
+			}
+				
+		
+		return erfolgreich;
+		
+	}
 
 }
