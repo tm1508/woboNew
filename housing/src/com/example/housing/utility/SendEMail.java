@@ -1,0 +1,62 @@
+package com.example.housing.utility;
+
+import java.util.Properties;
+import javax.mail.Authenticator;
+import javax.mail.Message;
+import javax.mail.PasswordAuthentication;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import com.sun.mail.smtp.SMTPMessage;
+
+public class SendEMail {
+
+	// Properties für das Versenden von E-Mails
+	static Properties properties = new Properties();
+	
+	//Methode wird nur zum Testen verwendet
+	public static void main(String args[]){
+		String to = "kochbuchAG@web.de";
+		String from = "kochbuchAG@web.de";
+		String subject = "Test";
+		String text = "123";
+		send(to, from, subject, text);
+	}
+	public static void send(String to, String from, String subject, String text){
+		
+				// Properties setzen
+				properties.put("mail.smtp.host", "smtp.web.de");// SMTP-Server von web.de
+				properties.put("mail.smtp.auth", "true");// Authentifikation erforderlich
+				properties.put("mail.smtp.port", "587");// Port des SMTP-Servers
+				properties.put("mail.smtp.starttls.enable", "true");// SSLv3/TLSv1
+
+
+				// Authentifizierung
+				Authenticator auth = new javax.mail.Authenticator() {
+					@Override
+					public PasswordAuthentication getPasswordAuthentication() {
+						return new PasswordAuthentication("kochbuchAG@web.de", "kochbuch");// Unsere E-Mail-Adresse und unser Passwort
+					}
+				};
+
+				// Session erstellen mit den oben gesetzten Properties und der Authentifikation
+				Session session = Session.getDefaultInstance(properties, auth);
+
+				// neue Message erzeugen
+				SMTPMessage message = (SMTPMessage) new SMTPMessage(session);
+				try {
+					
+					message.setEnvelopeFrom("kochbuchAG@web.de");// tatsächlicher Absender (E-Mail wird von uns an uns selbst geschickt, unter dem Namen bzw. der E-Mail-Adresse des Nutzers)
+					message.setFrom(new InternetAddress(from));// E-Mail-Adresse des Benutzers
+					message.setRecipients(Message.RecipientType.TO,InternetAddress.parse(to));// E-Mail-Adresse des Empfängers
+					message.setSubject(subject);// Betreff
+					message.setContent(text, "text/html");// Text der E-Mail (mit html Code für den Style)
+
+					// E-Mail senden
+					Transport.send(message);
+
+				} catch (Exception e) {
+					System.out.println(e);
+				}
+	}
+}
