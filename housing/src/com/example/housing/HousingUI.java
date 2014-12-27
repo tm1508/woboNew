@@ -63,6 +63,7 @@ public class HousingUI extends UI {
 		 */
 		@Override
 		public void sessionInit(SessionInitEvent event)throws ServiceException {
+			event.getSession().setAttribute("login", false);
 			event.getSession().setAttribute(User.class, null);
 				
 		}

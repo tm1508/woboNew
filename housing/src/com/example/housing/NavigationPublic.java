@@ -69,7 +69,6 @@ public class NavigationPublic extends CustomComponent {
 		
 		MenuBar.Command mycommand = new MenuBar.Command() {
 			public void menuSelected(MenuItem selectedItem) {
-				
 				LoginWindow w = new LoginWindow();
 				UI.getCurrent().addWindow(w);
 			}  

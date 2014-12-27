@@ -1,9 +1,10 @@
 package com.example.housing;
 
 import com.example.housing.data.model.User;
-import com.example.housing.data.provider.UserProvider;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.server.Page;
+import com.vaadin.server.VaadinRequest;
+import com.vaadin.server.VaadinService;
 import com.vaadin.server.VaadinSession;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Label;
@@ -20,6 +21,7 @@ import com.vaadin.ui.Notification.Type;
 /**
  * The Class LoginWindow.
  */
+@SuppressWarnings("serial")
 public class LoginWindow extends Window{
 	
 	/** The title. */
@@ -94,29 +96,57 @@ public class LoginWindow extends Window{
 			loginButton.setHeight("-1px");
 			content.addComponent(loginButton);
 			
-			
+		
 			
 			loginButton.addClickListener(new Button.ClickListener() {
 				public void buttonClick(ClickEvent event) {
 					try{
-						//TODO Datenbankanbindung
-						//UserProvider up = new UserProvider();
-						User u = new User();
-						u.setEmail("max.mustermann@test.de");
-						u.setPassword("123");
-						//u=up.findbyID(1);
-						//System.out.println(u.getEmail());
-						//System.out.println(u.getPassword());
 						
-						if(email_1.getValue().equals(u.getEmail()) && password_1.getValue().equals(u.getPassword())){
-							Notification.show("Login erfolgreich.",Type.HUMANIZED_MESSAGE);
-							VaadinSession.getCurrent().setAttribute("login", true);
-							//System.out.println(VaadinSession.getCurrent().getAttribute("login").toString());
-							Page.getCurrent().reload();
-						}else{
-							//Fehlermeldung bei falschem Benutzername oder Passwort
-							Notification.show("Login fehlgeschlagen!","Bitte überprüfen Sie Benutzername und/oder Passwort.", Type.HUMANIZED_MESSAGE);
+						VaadinRequest vaadinRequest = VaadinService.getCurrentRequest();
+						System.out.println(vaadinRequest.getAttribute("test"));
+						//1. User aus der Datenbank auslesen
+						//TODO Datenbankanbindung
+						User u = test();
+
+						//2. Prüfen ob das Konto aktiviert ist
+						if(!u.isActivated()){
+							System.out.println(Page.getCurrent().getLocation().toString());
+							System.out.println(Page.getCurrent().getUriFragment().toString());
+							
+							
+							String[] msgs = Page.getCurrent().getUriFragment().split("/");
+		
+							if(msgs.length < 2){
+								Notification.show("Login fehlgeschlagen!","Ihr Konto ist nicht freigeschalten. Bitte folgen Sie dem Link in der E-Mail, die Sie erhalten haben.", Type.HUMANIZED_MESSAGE);
+							
+							}else{
+								if(email_1.getValue().equals(u.getEmail()) && email_1.getValue().equals(msgs[1])){
+									u.setActivated(true);
+								}else{
+									Notification.show("Login fehlgeschlagen!","Ihr Konto ist nicht freigeschalten. Bitte folgen Sie dem Link in der E-Mail, die Sie erhalten haben.", Type.HUMANIZED_MESSAGE);
+									
+								}
+							}
+							
+							//Notification.show("Login fehlgeschlagen!","Ihr Konto ist nicht freigeschalten. Bitte folgen Sie dem Link in der E-Mail, die Sie erhalten haben.", Type.HUMANIZED_MESSAGE);
+							
 						}
+						
+						//3. Prüfen ob Benutzer und Passwort stimmen (nur wenn das Konto aktiviert ist)
+						if(!u.isActivated()){
+							if(email_1.getValue().equals(u.getEmail()) && password_1.getValue().equals(u.getPassword())){
+								Notification.show("Login erfolgreich.",Type.HUMANIZED_MESSAGE);
+								VaadinSession.getCurrent().setAttribute(User.class, u);
+								VaadinSession.getCurrent().setAttribute("login", true);
+							
+								Page.getCurrent().reload();
+							}else{
+								//Fehlermeldung bei falschem Benutzername oder Passwort
+								Notification.show("Login fehlgeschlagen!","Bitte überprüfen Sie Benutzername und/oder Passwort.", Type.HUMANIZED_MESSAGE);
+							}
+						}
+						
+						
 					}catch(Exception e){
 						//Fehlermeldung bei Datenbankproblemen
 						Notification.show("Login fehlgeschlagen!","Bitte versuchen Sie es später erneut.", Type.HUMANIZED_MESSAGE);
@@ -131,6 +161,21 @@ public class LoginWindow extends Window{
 	       
 	}
 	
-	
+	//diese Methode ist nur zum Testen !!!
+	public User test(){
+		User u = new User();
+		u.setFirstname("Max");
+		u.setLastname("Mustermann");
+		u.setEmail("max.mustermann@test.de");
+		u.setPassword("12345");
+		u.setMobile("12345678");
+		u.setDhMail(null);
+		u.setActivated(false);
+		u.setAccessLevel(0);
+		return u;
+	}
+
+
+
 	
 }

@@ -1,19 +1,11 @@
 package com.example.housing;
-/**
- * Registrierung der Nutzer, enthaelt ein Registrierungsformular
- * 
- * @author MWI Wohungsbörse 2014
- * @version 1.0
- * @see com.example.housing.HousingUI
- */
+
 import com.example.housing.data.model.User;
 import com.example.housing.utility.DHStudValidator;
 import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;
 import com.vaadin.data.Validator.InvalidValueException;
-import com.vaadin.data.validator.CompositeValidator;
 import com.vaadin.data.validator.EmailValidator;
-import com.vaadin.data.validator.NullValidator;
 import com.vaadin.data.validator.StringLengthValidator;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
@@ -32,10 +24,12 @@ import com.vaadin.ui.PasswordField;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 
-
-// TODO: Auto-generated Javadoc
 /**
  * The Class Registrierung.
+ * 
+ * @author MWI Wohungsbörse 2014
+ * @version 1.0
+ * @see com.example.housing.HousingUI
  */
 @SuppressWarnings("serial")
 public class Registrierung extends VerticalLayout implements View{
@@ -96,8 +90,7 @@ public class Registrierung extends VerticalLayout implements View{
 	}
 	
 	/**
-	 * Konstruktor der Klasse Registrierung
-	 * fuegt die Navigation, den Inhalt und die Fusszeile hinzu.
+	 * Instantiates a new Registrierung.
 	 */
 	public Registrierung(){
 		setMargin(true);
@@ -338,105 +331,111 @@ public class Registrierung extends VerticalLayout implements View{
 		button.setWidth("-1px");
 		button.setHeight("-1px");
 		content.addComponent(button);
+		//Abschließen der Registrierung
 		button.addClickListener(new Button.ClickListener() {
 			public void buttonClick(ClickEvent event) {
-				
-				
-					boolean validate = validate();
-				
-					if(validate){
-						String name = "Startseite";
-						getUI().getNavigator().addView(name, new Startseite());
-						getUI().getNavigator().navigateTo(name);
-						Notification.show("Die Registrierung war erfolgreich. Sie können sich jetzt anmelden.",Type.HUMANIZED_MESSAGE);
-					}
+				//Validierung der Felder
+				boolean validate = validate();
+				if(validate){//falls alle Felder richtig ausgefüllt wurden
 					
+					//Werte in der DB speichern
+					safeToDB();
 					
+					//Navigation zur Startseite
+					String name = "Startseite";
+					getUI().getNavigator().addView(name, new Startseite());
+					getUI().getNavigator().navigateTo(name);
 					
-					User u = new User();
-					u.setFirstname(prename.getValue());
+					Notification.show("Die Registrierung war erfolgreich. Sie können sich jetzt anmelden.",Type.HUMANIZED_MESSAGE);//Meldung an den Nutzer
+				}else{//Registrierung nicht erfolgreich
+					Notification.show("Die Registrierung war nicht erfolgreich. Bitte überprüfen Sie Ihre Eingaben.",Type.HUMANIZED_MESSAGE);//Meldung an den Nutzer
+				}
 	
-				//TODO Registrierung
-				//Notification.show("Die Registrierung war erfolgreich. Sie können sich jetzt anmelden.",Type.HUMANIZED_MESSAGE);
-
-					}
+			}
 		});
 		
-
 	}
 	
-	
+	/**
+	 * Stores a new User to Database.
+	 */
+	protected void safeToDB() {
+		
+		User u = new User();
+		u.setFirstname(prename.getValue());
+		u.setLastname(lastname.getValue());
+		u.setEmail(email_1.getValue());
+		u.setPassword(password_1.getValue());
+		u.setMobile(handy.getValue());
+		u.setActivated(false);
+		if(dhstud.getValue()){
+			u.setAccessLevel(1);
+		}else{
+			u.setAccessLevel(0);
+		}
+		//TODO entsprechende Methode in UserProvider aufrufen
+		
+	}
+
+	/**
+	 * Validates the user input
+	 * @return boolean
+	 */
 	public boolean validate(){
-		boolean erfolgreich=true;
+		boolean erfolgreich=true;//wird auf false gesetzt, falls ein Wert nicht richtig ist
 		try {
-			
 			prename.validate();
 		} catch (InvalidValueException e) {
 			erfolgreich=false;
-			
-			}
+		}
 		
 		try {
-			
 			lastname.validate();
 		} catch (InvalidValueException e) {
 			erfolgreich=false;
-			
-			}
-		
-		
-		try {
-			
-				email_1.validate();
-		} catch (InvalidValueException e) {
-			erfolgreich=false;
-			
-			}
-		
-		try {
-			
-			email_2.validate();
-	} catch (InvalidValueException e) {
-		erfolgreich=false;
-		
 		}
 		
+		try {
+			email_1.validate();
+		} catch (InvalidValueException e) {
+			erfolgreich=false;
+		}
 		
-			
-			
-			if(!email_1.getValue().equals(email_2.getValue())){
-				email_1.setComponentError(new UserError("Die beiden E-Mail Adressen stimmen nicht überein."));
-				email_2.setComponentError(new UserError("Die beiden E-Mail Adressen stimmen nicht überein."));
-				erfolgreich=false;
-			}
-			
-			
-			if(!password_1.getValue().equals(password_2.getValue())){
-				System.out.println(password_1.getValue());
-				System.out.println(password_2.getValue());
-				password_1.setComponentError(new UserError("Die beiden Passwörter stimmen nicht überein."));
-				password_2.setComponentError(new UserError("Die beiden Passwörter stimmen nicht überein."));
-				erfolgreich=false;
-			}
-			
-			if(dhstud.getValue()){
-				if(!DHStudValidator.validate(moodlename.getValue(), passwordmoodle.getValue())){
-					moodlename.setComponentError(new UserError("Ihre Moodleanmeldedaten stimmen nicht."));
-					passwordmoodle.setComponentError(new UserError("Ihre Moodleanmeldedaten stimmen nicht."));
-				}
-			}
-			
-			
-			
-			if(!agbs.getValue()){
-				agbs.setComponentError(new UserError("Sie müssen die AGBs akzeptieren um sich anmelden zu können."));
-				erfolgreich=false;
-			}
-			else{
-				agbs.setComponentError(null);
-			}
-				
+		try {
+			email_2.validate();
+		} catch (InvalidValueException e) {
+			erfolgreich=false;
+		}
 		
+		if(!email_1.getValue().equals(email_2.getValue())){
+			email_1.setComponentError(new UserError("Die beiden E-Mail Adressen stimmen nicht überein."));
+			email_2.setComponentError(new UserError("Die beiden E-Mail Adressen stimmen nicht überein."));
+			erfolgreich=false;
+		}
+			
+			
+		if(!password_1.getValue().equals(password_2.getValue())){
+			System.out.println(password_1.getValue());
+			System.out.println(password_2.getValue());
+			password_1.setComponentError(new UserError("Die beiden Passwörter stimmen nicht überein."));
+			password_2.setComponentError(new UserError("Die beiden Passwörter stimmen nicht überein."));
+			erfolgreich=false;
+		}
+			
+		if(dhstud.getValue()){
+			if(!DHStudValidator.validate(moodlename.getValue(), passwordmoodle.getValue())){
+				moodlename.setComponentError(new UserError("Ihre Moodleanmeldedaten stimmen nicht."));
+				passwordmoodle.setComponentError(new UserError("Ihre Moodleanmeldedaten stimmen nicht."));
+			}
+		}
+		
+		if(!agbs.getValue()){
+			agbs.setComponentError(new UserError("Sie müssen die AGBs akzeptieren um sich anmelden zu können."));
+			erfolgreich=false;
+		}else{
+			agbs.setComponentError(null);
+		}
+
 		return erfolgreich;
 		
 	}

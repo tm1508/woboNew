@@ -10,6 +10,7 @@ import com.vaadin.data.validator.StringLengthValidator;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.server.FontAwesome;
+import com.vaadin.server.Page;
 import com.vaadin.server.UserError;
 import com.vaadin.server.VaadinSession;
 import com.vaadin.ui.Button;
@@ -64,6 +65,9 @@ public class Profile extends VerticalLayout implements View{
 	
 	/** The dhstud. */
 	private CheckBox dhstud;
+	
+	/** The dh. */
+	private Label dh;
 	
 	/** The moodlename. */
 	private TextField moodlename;
@@ -210,6 +214,7 @@ public class Profile extends VerticalLayout implements View{
 		
 		//Passwort mit eigenem Layout
 		HorizontalLayout passwordLayout = new HorizontalLayout();
+		passwordLayout.setVisible(false);
 			// password_1
 			password_1 = new PasswordField();
 			password_1.setCaption("Passwort");
@@ -221,7 +226,6 @@ public class Profile extends VerticalLayout implements View{
 			password_1.setRequiredError("Das Feld darf nicht leer sein.");
 			password_1.addValidator(new StringLengthValidator("Das Passwort ist zu kurz. Es muss mindestens 5 Zeichen lang sein.", 5, null, false));
 			password_1.setIcon(FontAwesome.KEY);
-			password_1.setVisible(false);
 			passwordLayout.addComponent(password_1);
 					
 			// password_2
@@ -235,7 +239,6 @@ public class Profile extends VerticalLayout implements View{
 			password_2.setRequiredError("Das Feld darf nicht leer sein.");
 			password_2.addValidator(new StringLengthValidator("Das Passwort ist zu kurz. Es muss mindestens 5 Zeichen lang sein.", 5, null, false));
 			password_2.setIcon(FontAwesome.KEY);
-			password_2.setVisible(false);
 			passwordLayout.addComponent(password_2);
 		
 		content.addComponent(passwordLayout);
@@ -251,6 +254,14 @@ public class Profile extends VerticalLayout implements View{
 		handy.setEnabled(false);
 		content.addComponent(handy);
 		
+		// dh
+		dh = new Label();
+		dh.setWidth("-1px");
+		dh.setHeight("-1px");
+		dh.setValue("Sie sind als Dualer Student der DHBW Karlsruhe registriert.");
+		dh.setVisible(false);
+		content.addComponent(dh);
+		
 		// dhstud
 		dhstud = new CheckBox();
 		dhstud.setCaption("Ich bin Dualer Student an der DH Karlsruhe.");
@@ -259,6 +270,7 @@ public class Profile extends VerticalLayout implements View{
 		dhstud.setWidth("-1px");
 		dhstud.setEnabled(false);
 		dhstud.setHeight("-1px");
+		dhstud.setVisible(false);
 		content.addComponent(dhstud);
 		//wenn dhstud angekreuzt wird, werden die Felder fuer die Moodle-Anmeldedaten sichtbar
 		dhstud.addValueChangeListener(new ValueChangeListener() {
@@ -319,6 +331,7 @@ public class Profile extends VerticalLayout implements View{
 		button_1.setDescription("Abschlieﬂen der Registrierung, danach kˆnnen Sie sich anmelden");
 		button_1.setWidth("-1px");
 		button_1.setHeight("-1px");
+		setVisible(false);
 		content.addComponent(button_1);
 		//Abschlieﬂen der Registrierung
 		button_1.addClickListener(new Button.ClickListener() {
@@ -351,6 +364,7 @@ public class Profile extends VerticalLayout implements View{
 		button_2.setDescription("Abschlieﬂen der Registrierung, danach kˆnnen Sie sich anmelden");
 		button_2.setWidth("-1px");
 		button_2.setHeight("-1px");
+		button_2.setVisible(false);
 		content.addComponent(button_2);
 		//Abschlieﬂen der Registrierung
 		button_2.addClickListener(new Button.ClickListener() {
@@ -372,12 +386,15 @@ public class Profile extends VerticalLayout implements View{
 		//Abschlieﬂen der Registrierung
 		button_2.addClickListener(new Button.ClickListener() {
 			public void buttonClick(ClickEvent event) {
-				
+				prename.setEnabled(true);
+				lastname.setEnabled(true);
+				email_1.setEnabled(true);
+				email_2.setVisible(true);
 	
 			}
 		});
 		
-		test();
+		daten();
 	}
 	
 	
@@ -385,10 +402,13 @@ public class Profile extends VerticalLayout implements View{
 	
 	
 	
-	private void test() {
+	private void daten() {
 		// TODO Auto-generated method stub
-		prename.setValue("Max");
-		lastname.setValue("Mustermann");
+		prename.setValue(VaadinSession.getCurrent().getAttribute(User.class).getFirstname());
+		lastname.setValue(VaadinSession.getCurrent().getAttribute(User.class).getLastname());
+		email_1.setValue(VaadinSession.getCurrent().getAttribute(User.class).getEmail());
+		email_2.setValue(VaadinSession.getCurrent().getAttribute(User.class).getEmail());
+		
 		
 	}
 

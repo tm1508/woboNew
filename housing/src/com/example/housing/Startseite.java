@@ -34,7 +34,6 @@ public class Startseite extends VerticalLayout implements View{
 	public void enter(ViewChangeEvent event) {
 		// TODO Auto-generated method stub
 
-		
 	}
 	
 	/**
