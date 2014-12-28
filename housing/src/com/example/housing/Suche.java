@@ -153,13 +153,18 @@ public class Suche extends VerticalLayout implements View{
 					a = 3;
 				}else{
 					a = 4;
-					Notification.show("Bitte Art der Unterkunft wählen");
+					Notification.show("Bitte Art der Unterkunft wählen!");
 				}
-				
 				OfferProvider of = new OfferProvider();
-				of.filter(zeitVon.getValue(), zeitBis.getValue(), Float.parseFloat(sucheVon.getValue()), Float.parseFloat(sucheBis.getValue()), 
-						Float.parseFloat(preisVon.getValue()) ,Float.parseFloat(preisBis.getValue()), a, internet.getValue(), moebliert.getValue(), kueche.getValue(),rauchen.getValue(),
-						haustiere.getValue(), stadt.getValue());
+				of.filter(zeitVon.getValue(), 
+						zeitBis.getValue(),
+						(sucheVon.getValue()=="") ? (float)0.0 : Float.parseFloat(sucheVon.getValue()),
+						(sucheBis.getValue()=="") ? (float)0.0 : Float.parseFloat(sucheBis.getValue()), 
+						(preisVon.getValue()=="") ? (float)0.0 : Float.parseFloat(preisVon.getValue()),
+						(preisBis.getValue()=="") ? (float)0.0 : Float.parseFloat(preisBis.getValue()),
+						a, internet.getValue(), moebliert.getValue(), kueche.getValue(),rauchen.getValue(),
+						haustiere.getValue(),
+						stadt.getValue());
 			}
 		});
 		

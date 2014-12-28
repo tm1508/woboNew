@@ -38,10 +38,10 @@ public class OfferProvider extends BaseProvider<Offer> {
 			float maxPrice, int type, boolean internet, boolean furnished, boolean kitchen, boolean smoker, boolean pets, String city) {
 		StringBuffer filter = new StringBuffer();
 		filter.append("SELECT o FROM Offer o WHERE ");
-		if(!startDate.equals(new Date(0))){
+		if(startDate != null && !startDate.equals(new Date(0))){
 			filter.append("o.startDate <=:"+startDate + " AND "); //Formatierung?
 		}
-		if(!endDate.equals(new Date(0))){
+		if(endDate != null && !endDate.equals(new Date(0))){
 			filter.append("o.endDate >=:"+endDate + " AND ");
 		}
 		if(minSquareMetre != 0.0){
