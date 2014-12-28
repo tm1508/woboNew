@@ -82,9 +82,9 @@ public class OfferProvider extends BaseProvider<Offer> {
 			filter.delete(filter.length()-5, filter.length()-1);
 		} else if(filter.lastIndexOf("WHERE ") == filter.length()-7){
 			filter.delete(filter.length()-7, filter.length()-1);
-		}
+		}	
 		filter.append(");");
-		
+		//TODO: createQuery mit Übergabe des filters führt zu einer Exception.  
 		Query filterAbfrage = em.createQuery(filter.toString());
 		@SuppressWarnings("unchecked")
 		List<Offer> filterErgebnis = (List<Offer>) filterAbfrage.getResultList();
