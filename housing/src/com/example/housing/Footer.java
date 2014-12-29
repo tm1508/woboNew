@@ -67,7 +67,8 @@ public class Footer extends CustomComponent {
 		mainLayout.setImmediate(false);
 
 		mainLayout.setMargin(true);
-		mainLayout.setSizeFull();
+		mainLayout.setSpacing(true);
+//		mainLayout.setSizeFull();
 		
 		
 
