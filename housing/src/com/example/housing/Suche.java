@@ -1,5 +1,7 @@
 package com.example.housing;
 
+import java.util.Date;
+
 import com.example.housing.data.provider.OfferProvider;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
@@ -140,7 +142,7 @@ public class Suche extends VerticalLayout implements View{
 		gridSuche.addComponent(suchButton, 0 ,8);
 		
 		//Suchfunktion
-
+	
 
 		suchButton.addClickListener(new Button.ClickListener() {
 			public void buttonClick(ClickEvent event) {
@@ -155,8 +157,10 @@ public class Suche extends VerticalLayout implements View{
 					a = 4;
 					Notification.show("Bitte Art der Unterkunft wählen!");
 				}
+
+				
 				OfferProvider of = new OfferProvider();
-				of.filter(zeitVon.getValue(), 
+				of.filter(zeitVon.getValue(),
 						zeitBis.getValue(),
 						(sucheVon.getValue()=="") ? (float)0.0 : Float.parseFloat(sucheVon.getValue()),
 						(sucheBis.getValue()=="") ? (float)0.0 : Float.parseFloat(sucheBis.getValue()), 
