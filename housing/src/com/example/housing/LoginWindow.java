@@ -3,8 +3,6 @@ package com.example.housing;
 import com.example.housing.data.model.User;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.server.Page;
-import com.vaadin.server.VaadinRequest;
-import com.vaadin.server.VaadinService;
 import com.vaadin.server.VaadinSession;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Label;
@@ -15,7 +13,6 @@ import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Notification.Type;
-
 
 // TODO: Auto-generated Javadoc
 /**
@@ -35,7 +32,6 @@ public class LoginWindow extends Window{
 	
 	/** The login button. */
 	public static Button loginButton;
-	
 	
 	/**
 	 * Instantiates a new login window.
@@ -102,38 +98,34 @@ public class LoginWindow extends Window{
 				public void buttonClick(ClickEvent event) {
 					try{
 						
-						VaadinRequest vaadinRequest = VaadinService.getCurrentRequest();
-						System.out.println(vaadinRequest.getAttribute("test"));
 						//1. User aus der Datenbank auslesen
 						//TODO Datenbankanbindung
 						User u = test();
 
 						//2. Prüfen ob das Konto aktiviert ist
 						if(!u.isActivated()){
-							System.out.println(Page.getCurrent().getLocation().toString());
-							System.out.println(Page.getCurrent().getUriFragment().toString());
-							
+							//System.out.println(Page.getCurrent().getLocation().toString());
+							//System.out.println(Page.getCurrent().getUriFragment().toString());
 							
 							String[] msgs = Page.getCurrent().getUriFragment().split("/");
+
 		
-							if(msgs.length < 2){
+							if(msgs.length == 1){
 								Notification.show("Login fehlgeschlagen!","Ihr Konto ist nicht freigeschalten. Bitte folgen Sie dem Link in der E-Mail, die Sie erhalten haben.", Type.HUMANIZED_MESSAGE);
-							
 							}else{
 								if(email_1.getValue().equals(u.getEmail()) && email_1.getValue().equals(msgs[1])){
+									//TODO Aktivierung in DB speichern
 									u.setActivated(true);
 								}else{
 									Notification.show("Login fehlgeschlagen!","Ihr Konto ist nicht freigeschalten. Bitte folgen Sie dem Link in der E-Mail, die Sie erhalten haben.", Type.HUMANIZED_MESSAGE);
-									
 								}
 							}
 							
-							//Notification.show("Login fehlgeschlagen!","Ihr Konto ist nicht freigeschalten. Bitte folgen Sie dem Link in der E-Mail, die Sie erhalten haben.", Type.HUMANIZED_MESSAGE);
 							
 						}
 						
 						//3. Prüfen ob Benutzer und Passwort stimmen (nur wenn das Konto aktiviert ist)
-						if(!u.isActivated()){
+						if(u.isActivated()){
 							if(email_1.getValue().equals(u.getEmail()) && password_1.getValue().equals(u.getPassword())){
 								Notification.show("Login erfolgreich.",Type.HUMANIZED_MESSAGE);
 								VaadinSession.getCurrent().setAttribute(User.class, u);
@@ -170,7 +162,7 @@ public class LoginWindow extends Window{
 		u.setPassword("12345");
 		u.setMobile("12345678");
 		u.setDhMail(null);
-		u.setActivated(false);
+		u.setActivated(true);
 		u.setAccessLevel(0);
 		return u;
 	}

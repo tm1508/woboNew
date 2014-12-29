@@ -67,8 +67,7 @@ public class Navigation extends CustomComponent {
 		
 		MenuBar.Command mycommand = new MenuBar.Command() {
 			public void menuSelected(MenuItem selectedItem) {
-				
-				//TODO 
+ 
 				VaadinSession.getCurrent().setAttribute("login", false);
 				Notification.show("Logout erfolgreich.", Type.HUMANIZED_MESSAGE);
 				Page.getCurrent().reload();
