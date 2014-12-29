@@ -2,6 +2,7 @@ package com.example.housing;
 
 import com.example.housing.data.model.User;
 import com.example.housing.utility.DHStudValidator;
+import com.example.housing.utility.SendEMail;
 import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;
 import com.vaadin.data.Validator.InvalidValueException;
@@ -86,7 +87,7 @@ public class Registrierung extends VerticalLayout implements View{
 	 */
 	@Override
 	public void enter(ViewChangeEvent event) {
-		// TODO Auto-generated method stub
+	
 	}
 	
 	/**
@@ -128,11 +129,9 @@ public class Registrierung extends VerticalLayout implements View{
 	}
 	
 	/**
-	 * Methode zum Befuellen des Inhalts der Seite.
+	 * Sets the Content of the page.
 	 */
 	public void setContent(){
-		
-		//TODO Inhalt einfügen
 		
 		// title
 		title = new Label();
@@ -309,8 +308,6 @@ public class Registrierung extends VerticalLayout implements View{
 		agbs.setDescription("Sie müssen die AGBs akzeptieren damit Sie sich registrieren können");
 		agbs.setWidth("-1px");
 		agbs.setHeight("-1px");
-		//agbs.setRequired(true);
-		//agbs.setRequiredError("Die AGBs müssen akzeptiert werden, sonst können Sie die Registrierung nicht abschließen.");
 		content.addComponent(agbs);
 		
 		// link_1
@@ -334,12 +331,16 @@ public class Registrierung extends VerticalLayout implements View{
 		//Abschließen der Registrierung
 		button.addClickListener(new Button.ClickListener() {
 			public void buttonClick(ClickEvent event) {
+				
 				//Validierung der Felder
 				boolean validate = validate();
 				if(validate){//falls alle Felder richtig ausgefüllt wurden
 					
 					//Werte in der DB speichern
 					safeToDB();
+					
+					//E-Mail an den Nutzer senden
+					sendEMail();
 					
 					//Navigation zur Startseite
 					String name = "Startseite";
@@ -438,6 +439,19 @@ public class Registrierung extends VerticalLayout implements View{
 
 		return erfolgreich;
 		
+	}
+	
+	/**
+	 * Sends an EMail to the User.
+	 */
+	public void sendEMail(){
+		// Text der E-Mail mit Style-Informationen
+		String body = "<span style='color: #000000' 'font-family: Arial, sans-serif''font-size: 16pt' >Sehr geehrte Nutzerin, sehr geehrter Nutzer,"
+					 +"<br/><br/>vielen Dank, dass Sie sich für uns entschieden haben. Damit Sie sich erstmalig anmelden könne folgen Sie bitte dem folgenden Link. Dadurch wird sichergestellt, dass keine Unbefungten Ihre E-Mail-Adresse dazu verwenden können, um sich bei uns zu Registrieren.</span>"
+					 +"<br/><span style='color: #e2001a' 'font-family: Arial, sans-serif''font-size: 20pt' >"
+						+"http://localhost:8080/housing/servlet/com.example.housing.HousingUI$Servlet#!Startseite/"+email_1.getValue()
+						+ "</span><br/><br/>Mit freundlichen Grüßen<br/>ihr DHBW Wohungsbörsen-Team<p/><span style='color: #e2001a' 'font-family: Arial, sans-serif''font-size: 8pt' >Anschrift:<br/>DHBW KarlsruheBaden-Wuerttemberg Cooperative State University Karlsruhe<br />Erzbergerstraße 121 . 76133 Karlsruhe <br />Postfach 10 01 36 . 76231 Karlsruhe   <br />Telefon +49.721.9735-5 <br />Telefax +49.721.9735-600 <br />E-Mail: dreischer@dhbw-karlsruhe.de<br /><br/><br/>Ansprechpartner:<br/> <br />Dr. Anita Dreischer<br /><br/><b>Copyright DHBW Karlsruhe. Alle Rechte vorbehalten.</b></span>";
+		SendEMail.send(email_1.getValue(), "KochbuchAG@web.de", "Danke für Ihre Registrierung", body);
 	}
 
 }
