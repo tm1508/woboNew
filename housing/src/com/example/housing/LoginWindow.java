@@ -14,9 +14,11 @@ import com.vaadin.ui.Window;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Notification.Type;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class LoginWindow.
+ * @author MWI Wohungsbörse 2014
+ * @version 1.0
+ * @see com.example.housing.Registrierung
  */
 @SuppressWarnings("serial")
 public class LoginWindow extends Window{
@@ -40,10 +42,10 @@ public class LoginWindow extends Window{
 		super("Bitte loggen Sie sich ein...");
 		initialisieren();
 	}
-
 	
 	/**
 	 * Initialisieren.
+	 * @see com.vaadin.ui.Window
 	 */
 	public void initialisieren(){
 		this.center();
@@ -82,7 +84,6 @@ public class LoginWindow extends Window{
 			password_1.setIcon(FontAwesome.KEY);
 			content.addComponent(password_1);
 				
-				
 			// loginButton
 			Button loginButton = new Button();
 			loginButton.setCaption("Login");
@@ -91,9 +92,6 @@ public class LoginWindow extends Window{
 			loginButton.setWidth("-1px");
 			loginButton.setHeight("-1px");
 			content.addComponent(loginButton);
-			
-		
-			
 			loginButton.addClickListener(new Button.ClickListener() {
 				public void buttonClick(ClickEvent event) {
 					try{
@@ -107,50 +105,42 @@ public class LoginWindow extends Window{
 							//System.out.println(Page.getCurrent().getLocation().toString());
 							//System.out.println(Page.getCurrent().getUriFragment().toString());
 							
-							String[] msgs = Page.getCurrent().getUriFragment().split("/");
-
-		
-							if(msgs.length == 1){
+							String[] msgs = Page.getCurrent().getUriFragment().split("/");//Request Parameter auslesen (wurde bei der Registrierung verschickt)
+							
+							if(msgs.length == 1){//es gibt keinen Parameter -> kein Login möglich
 								Notification.show("Login fehlgeschlagen!","Ihr Konto ist nicht freigeschalten. Bitte folgen Sie dem Link in der E-Mail, die Sie erhalten haben.", Type.HUMANIZED_MESSAGE);
 							}else{
-								if(email_1.getValue().equals(u.getEmail()) && email_1.getValue().equals(msgs[1])){
+								if(email_1.getValue().equals(u.getEmail()) && email_1.getValue().equals(msgs[1])){//richtiger Parameter wurde übergeben
 									//TODO Aktivierung in DB speichern
 									u.setActivated(true);
 								}else{
 									Notification.show("Login fehlgeschlagen!","Ihr Konto ist nicht freigeschalten. Bitte folgen Sie dem Link in der E-Mail, die Sie erhalten haben.", Type.HUMANIZED_MESSAGE);
 								}
 							}
-							
-							
 						}
 						
 						//3. Prüfen ob Benutzer und Passwort stimmen (nur wenn das Konto aktiviert ist)
 						if(u.isActivated()){
-							if(email_1.getValue().equals(u.getEmail()) && password_1.getValue().equals(u.getPassword())){
-								Notification.show("Login erfolgreich.",Type.HUMANIZED_MESSAGE);
-								VaadinSession.getCurrent().setAttribute(User.class, u);
-								VaadinSession.getCurrent().setAttribute("login", true);
+							if(email_1.getValue().equals(u.getEmail()) && password_1.getValue().equals(u.getPassword())){//prüfen ob Passwort und E-Mail stimmen
+								Notification.show("Login erfolgreich.",Type.HUMANIZED_MESSAGE);//Meldung an den Nutzer
+								VaadinSession.getCurrent().setAttribute(User.class, u);//User-Objekt in der Session speichern
+								VaadinSession.getCurrent().setAttribute("login", true);//Login-Attribut auf true setzen (wird auf jeder Seite abgefragt, um zu prüfen welche Navigationsleiste angezeigt werden soll)
 							
-								Page.getCurrent().reload();
+								Page.getCurrent().reload();//Seite erneut Laden (damit die Navigationsleiste verändert wird)
 							}else{
 								//Fehlermeldung bei falschem Benutzername oder Passwort
 								Notification.show("Login fehlgeschlagen!","Bitte überprüfen Sie Benutzername und/oder Passwort.", Type.HUMANIZED_MESSAGE);
 							}
 						}
-						
-						
+	
 					}catch(Exception e){
 						//Fehlermeldung bei Datenbankproblemen
 						Notification.show("Login fehlgeschlagen!","Bitte versuchen Sie es später erneut.", Type.HUMANIZED_MESSAGE);
 					}
-					
-
 				}
 			});
 				
-			this.setContent(content);
-	        
-	       
+			this.setContent(content);    
 	}
 	
 	//diese Methode ist nur zum Testen !!!
@@ -167,7 +157,4 @@ public class LoginWindow extends Window{
 		return u;
 	}
 
-
-
-	
 }

@@ -10,7 +10,6 @@ import com.vaadin.data.validator.StringLengthValidator;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.server.FontAwesome;
-import com.vaadin.server.Page;
 import com.vaadin.server.UserError;
 import com.vaadin.server.VaadinSession;
 import com.vaadin.ui.Button;
@@ -18,7 +17,6 @@ import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
-import com.vaadin.ui.Link;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.Notification.Type;
 import com.vaadin.ui.PasswordField;
@@ -66,8 +64,11 @@ public class Profile extends VerticalLayout implements View{
 	/** The dhstud. */
 	private CheckBox dhstud;
 	
-	/** The dh. */
-	private Label dh;
+	/** The dh_1. */
+	private Label dh_1;
+	
+	/** The dh_2. */
+	private Label dh_2;
 	
 	/** The moodlename. */
 	private TextField moodlename;
@@ -75,7 +76,8 @@ public class Profile extends VerticalLayout implements View{
 	/** The passwordmoodle. */
 	private PasswordField passwordmoodle;
 	
-	
+	/** The passwordLayout. */
+	private HorizontalLayout passwordLayout;
 	
 	/** The button_1. */
 	private Button button_1;
@@ -92,7 +94,7 @@ public class Profile extends VerticalLayout implements View{
 	 */
 	@Override
 	public void enter(ViewChangeEvent event) {
-		// TODO Auto-generated method stub
+		
 	}
 	
 	/**
@@ -129,17 +131,13 @@ public class Profile extends VerticalLayout implements View{
 		//Footer hinzufuegen
 		Footer f = new Footer();
 		addComponent(f);
-		
-		
 	}
 	
 	/**
-	 * Methode zum Befuellen des Inhalts der Seite.
+	 * Sets the Content of the page.
 	 */
 	public void setContent(){
-		
-		//TODO Inhalt einfügen
-		
+				
 		// title
 		title = new Label();
 		title.setImmediate(false);
@@ -161,7 +159,6 @@ public class Profile extends VerticalLayout implements View{
 		prename.setRequiredError("Das Feld darf nicht leer sein.");
 		prename.setImmediate(false);
 		prename.setEnabled(false);
-
 		content.addComponent(prename);
 		
 		// lastname
@@ -206,14 +203,13 @@ public class Profile extends VerticalLayout implements View{
 			email_2.setIcon(FontAwesome.ENVELOPE);
 			email_2.setInputPrompt("max.mustermann@test.de");
 			email_2.addValidator(new EmailValidator("Das iste keine gültige E-Mail Adresse."));
-		
 			email_2.setVisible(false);
 			emailLayout.addComponent(email_2);
 		
 		content.addComponent(emailLayout);
 		
 		//Passwort mit eigenem Layout
-		HorizontalLayout passwordLayout = new HorizontalLayout();
+		passwordLayout = new HorizontalLayout();
 		passwordLayout.setVisible(false);
 			// password_1
 			password_1 = new PasswordField();
@@ -255,12 +251,20 @@ public class Profile extends VerticalLayout implements View{
 		content.addComponent(handy);
 		
 		// dh
-		dh = new Label();
-		dh.setWidth("-1px");
-		dh.setHeight("-1px");
-		dh.setValue("Sie sind als Dualer Student der DHBW Karlsruhe registriert.");
-		dh.setVisible(false);
-		content.addComponent(dh);
+		dh_1 = new Label();
+		dh_1.setWidth("-1px");
+		dh_1.setHeight("-1px");
+		dh_1.setValue("Sie sind als Dualer Student der DHBW Karlsruhe registriert.");
+		dh_1.setVisible(false);
+		content.addComponent(dh_1);
+		
+		// dh
+		dh_2 = new Label();
+		dh_2.setWidth("-1px");
+		dh_2.setHeight("-1px");
+		dh_2.setValue("Sie sind nicht als Dualer Student der DHBW Karlsruhe registriert.");
+		dh_2.setVisible(false);
+		content.addComponent(dh_2);
 		
 		// dhstud
 		dhstud = new CheckBox();
@@ -268,34 +272,30 @@ public class Profile extends VerticalLayout implements View{
 		dhstud.setImmediate(false);
 		dhstud.setDescription("Als Dualer Student können Sie mehr Funktionen nutzen. Moodle Anmeldedaten zur Validierung erforderlich");
 		dhstud.setWidth("-1px");
-		dhstud.setEnabled(false);
+		dhstud.setEnabled(true);
 		dhstud.setHeight("-1px");
 		dhstud.setVisible(false);
 		content.addComponent(dhstud);
 		//wenn dhstud angekreuzt wird, werden die Felder fuer die Moodle-Anmeldedaten sichtbar
 		dhstud.addValueChangeListener(new ValueChangeListener() {
-	            @Override
-	            public void valueChange(final ValueChangeEvent event) {
-	                final boolean value = (boolean) event.getProperty().getValue();
-	                
-	                if(value==true){
-	                	moodlename.setVisible(true);
-	                	passwordmoodle.setVisible(true);
-	                	moodlename.setRequired(true);
-	                	moodlename.setRequiredError("Das Feld darf nicht leer sein.");
-	                	passwordmoodle.setRequired(true);
-	                	passwordmoodle.setRequiredError("Das Feld darf nicht leer sein.");
-	                	
-	                }else{
-	                	moodlename.setVisible(false);
-	                	passwordmoodle.setVisible(false);
-	                	
-	                	moodlename.setRequired(false);
-	                	passwordmoodle.setRequired(false);
-	                }
-	                
-	            }
-	        });
+			@Override
+	        public void valueChange(final ValueChangeEvent event) {
+	        final boolean value = (boolean) event.getProperty().getValue();
+	        	if(value==true){
+	        		moodlename.setVisible(true);
+	        		passwordmoodle.setVisible(true);
+	        		moodlename.setRequired(true);
+	        		moodlename.setRequiredError("Das Feld darf nicht leer sein.");
+	        		passwordmoodle.setRequired(true);
+	        		passwordmoodle.setRequiredError("Das Feld darf nicht leer sein.");
+	        	}else{
+	        		moodlename.setVisible(false);
+	                passwordmoodle.setVisible(false);
+	                moodlename.setRequired(false);
+	                passwordmoodle.setRequired(false);
+	        	}
+	        }
+		});
 		
 		// moodlename
 		moodlename = new TextField();
@@ -307,7 +307,7 @@ public class Profile extends VerticalLayout implements View{
 		moodlename.setHeight("-1px");
 		moodlename.setIcon(FontAwesome.GRADUATION_CAP);
 		moodlename.setInputPrompt("nachname.vorname");
-		moodlename.setEnabled(false);
+		moodlename.setEnabled(true);
 		content.addComponent(moodlename);
 		
 		// passwordmoodle
@@ -319,123 +319,125 @@ public class Profile extends VerticalLayout implements View{
 		passwordmoodle.setWidth("211px");
 		passwordmoodle.setHeight("-1px");
 		passwordmoodle.setIcon(FontAwesome.KEY);
-		passwordmoodle.setEnabled(false);
+		passwordmoodle.setEnabled(true);
 		content.addComponent(passwordmoodle);
-		
-	
 		
 		// button_1
 		button_1 = new Button();
-		button_1.setCaption("Änderungen speichern");
+		button_1.setCaption("Profildaten bearbeiten");
 		button_1.setImmediate(true);
-		button_1.setDescription("Abschließen der Registrierung, danach können Sie sich anmelden");
+		button_1.setDescription("Bearbeiten Ihrer Profildaten.");
 		button_1.setWidth("-1px");
 		button_1.setHeight("-1px");
-		setVisible(false);
+		button_1.setVisible(true);
 		content.addComponent(button_1);
-		//Abschließen der Registrierung
+		//Bearbeitung aktivieren
 		button_1.addClickListener(new Button.ClickListener() {
 			public void buttonClick(ClickEvent event) {
-				//Validierung der Felder
-				boolean validate = validate();
-				if(validate){//falls alle Felder richtig ausgefüllt wurden
-					
-					//Werte in der DB speichern
-					safeToDB();
-					
-					//Navigation zur Startseite
-					String name = "Startseite";
-					getUI().getNavigator().addView(name, new Startseite());
-					getUI().getNavigator().navigateTo(name);
-					
-					Notification.show("Die Registrierung war erfolgreich. Sie können sich jetzt anmelden.",Type.HUMANIZED_MESSAGE);//Meldung an den Nutzer
-				}else{//Registrierung nicht erfolgreich
-					Notification.show("Die Registrierung war nicht erfolgreich. Bitte überprüfen Sie Ihre Eingaben.",Type.HUMANIZED_MESSAGE);//Meldung an den Nutzer
+				//Felder anzeigen und bearbeitbar machen
+				button_1.setVisible(false);
+				button_2.setVisible(true);
+				button_3.setVisible(true);
+				prename.setEnabled(true);
+				lastname.setEnabled(true);
+				email_1.setEnabled(true);
+				email_2.setVisible(true);
+				email_2.setEnabled(true);
+				passwordLayout.setVisible(true);
+				handy.setEnabled(true);
+				if(VaadinSession.getCurrent().getAttribute(User.class).getAccessLevel()==0){
+					dhstud.setVisible(true);
 				}
-	
 			}
 		});
-		
 		
 		// button_2
 		button_2 = new Button();
 		button_2.setCaption("Abbrechen");
 		button_2.setImmediate(true);
-		button_2.setDescription("Abschließen der Registrierung, danach können Sie sich anmelden");
+		button_2.setDescription("Abbrechen der Bearbeitung. Ihre Änderungen werden nicht gespeichert.");
 		button_2.setWidth("-1px");
 		button_2.setHeight("-1px");
 		button_2.setVisible(false);
 		content.addComponent(button_2);
-		//Abschließen der Registrierung
 		button_2.addClickListener(new Button.ClickListener() {
 			public void buttonClick(ClickEvent event) {
-				
-	
+				//ursprüngliche Daten wieder laden
+				daten();
+				//Felder ausbelden und nicht bearbeitbar machen
+				button_1.setVisible(true);
+				button_2.setVisible(false);
+				button_3.setVisible(false);
+				prename.setEnabled(false);
+				lastname.setEnabled(false);
+				email_1.setEnabled(false);
+				email_2.setVisible(false);
+				email_2.setEnabled(false);
+				passwordLayout.setVisible(false);
+				handy.setVisible(false);
+				dhstud.setVisible(false);	
 			}
 		});
-		
 		
 		// button_3
 		button_3 = new Button();
-		button_3.setCaption("Profildaten bearbeiten");
+		button_3.setVisible(false);
+		button_3.setCaption("Änderungen speichern");
 		button_3.setImmediate(true);
-		button_3.setDescription("Abschließen der Registrierung, danach können Sie sich anmelden");
+		button_3.setDescription("Speichern der Änderungen.");
 		button_3.setWidth("-1px");
 		button_3.setHeight("-1px");
 		content.addComponent(button_3);
-		//Abschließen der Registrierung
-		button_2.addClickListener(new Button.ClickListener() {
+		button_3.addClickListener(new Button.ClickListener() {
 			public void buttonClick(ClickEvent event) {
-				prename.setEnabled(true);
-				lastname.setEnabled(true);
-				email_1.setEnabled(true);
-				email_2.setVisible(true);
-	
+				//Validierung der Felder
+				boolean validate = validate();
+				if(validate){//falls alle Felder richtig ausgefüllt wurden
+					
+					//TODO Werte in der DB speichern
+					//TODO neues User-Objekt in der Session speichern
+					
+					//Navigation zur Profilseite
+					String name = "Profile";
+					getUI().getNavigator().addView(name, new Profile());
+					getUI().getNavigator().navigateTo(name);
+					
+					Notification.show("Ihre Änderungen wurden erfolgreich gespeichert.",Type.HUMANIZED_MESSAGE);//Meldung an den Nutzer
+				}else{//Registrierung nicht erfolgreich
+					Notification.show("Die Speicherung Ihrer Änderungen war nicht erfolgreich. Bitte überprüfen Sie Ihre Eingaben.",Type.HUMANIZED_MESSAGE);//Meldung an den Nutzer
+				}
 			}
 		});
-		
-		daten();
+		daten();//Felder mit Daten befüllen
 	}
 	
-	
-
-	
-	
-	
+	/**
+	 * Gets the data from the User-Session-Object.
+	 * @see com.vaadin.server.VaadinSession
+	 */
 	private void daten() {
-		// TODO Auto-generated method stub
 		prename.setValue(VaadinSession.getCurrent().getAttribute(User.class).getFirstname());
 		lastname.setValue(VaadinSession.getCurrent().getAttribute(User.class).getLastname());
 		email_1.setValue(VaadinSession.getCurrent().getAttribute(User.class).getEmail());
 		email_2.setValue(VaadinSession.getCurrent().getAttribute(User.class).getEmail());
-		
-		
-	}
-
-	/**
-	 * Stores a new User to Database.
-	 */
-	protected void safeToDB() {
-		
-		User u = new User();
-		u.setFirstname(prename.getValue());
-		u.setLastname(lastname.getValue());
-		u.setEmail(email_1.getValue());
-		u.setPassword(password_1.getValue());
-		u.setMobile(handy.getValue());
-		u.setActivated(false);
-		if(dhstud.getValue()){
-			u.setAccessLevel(1);
+		password_1.setValue(VaadinSession.getCurrent().getAttribute(User.class).getPassword());
+		password_2.setValue(VaadinSession.getCurrent().getAttribute(User.class).getPassword());
+		handy.setValue(VaadinSession.getCurrent().getAttribute(User.class).getMobile());
+		if(VaadinSession.getCurrent().getAttribute(User.class).getAccessLevel()==0){
+			dh_2.setVisible(true);
+			dh_1.setVisible(false);
 		}else{
-			u.setAccessLevel(0);
+			dh_1.setVisible(true);
+			dh_2.setVisible(false);
 		}
-		//TODO entsprechende Methode in UserProvider aufrufen
-		
 	}
 
 	/**
 	 * Validates the user input
 	 * @return boolean
+	 * @see com.vaadin.data.validator.EmailValidator
+	 * @see com.vaadin.data.validator.StringLengthValidator;
+	 * @see com.example.housing.utility.DHStudValidator;
 	 */
 	public boolean validate(){
 		boolean erfolgreich=true;//wird auf false gesetzt, falls ein Wert nicht richtig ist
@@ -469,7 +471,6 @@ public class Profile extends VerticalLayout implements View{
 			erfolgreich=false;
 		}
 			
-			
 		if(!password_1.getValue().equals(password_2.getValue())){
 			System.out.println(password_1.getValue());
 			System.out.println(password_2.getValue());
@@ -477,18 +478,14 @@ public class Profile extends VerticalLayout implements View{
 			password_2.setComponentError(new UserError("Die beiden Passwörter stimmen nicht überein."));
 			erfolgreich=false;
 		}
-			
+		
+		System.out.println(dhstud.getValue());
 		if(dhstud.getValue()){
 			if(!DHStudValidator.validate(moodlename.getValue(), passwordmoodle.getValue())){
 				moodlename.setComponentError(new UserError("Ihre Moodleanmeldedaten stimmen nicht."));
 				passwordmoodle.setComponentError(new UserError("Ihre Moodleanmeldedaten stimmen nicht."));
 			}
 		}
-		
-	
-
 		return erfolgreich;
-		
 	}
-
 }

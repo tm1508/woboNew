@@ -123,9 +123,7 @@ public class Registrierung extends VerticalLayout implements View{
 		
 		//Footer hinzufuegen
 		Footer f = new Footer();
-		addComponent(f);
-		
-		
+		addComponent(f);	
 	}
 	
 	/**
@@ -257,7 +255,7 @@ public class Registrierung extends VerticalLayout implements View{
 	            public void valueChange(final ValueChangeEvent event) {
 	                final boolean value = (boolean) event.getProperty().getValue();
 	                
-	                if(value==true){
+	                if(value==true){//Anzeigen der Moodle Felder sobald das Kontrollkästchen angekreuzt wird
 	                	moodlename.setVisible(true);
 	                	passwordmoodle.setVisible(true);
 	                	moodlename.setRequired(true);
@@ -265,21 +263,18 @@ public class Registrierung extends VerticalLayout implements View{
 	                	passwordmoodle.setRequired(true);
 	                	passwordmoodle.setRequiredError("Das Feld darf nicht leer sein.");
 	                	
-	                }else{
+	                }else{//ausblednen der Felder wenn das Kästchen nicht angekreuzt ist
 	                	moodlename.setVisible(false);
 	                	passwordmoodle.setVisible(false);
-	                	
 	                	moodlename.setRequired(false);
 	                	passwordmoodle.setRequired(false);
 	                }
-	                
 	            }
 	        });
 		
 		// moodlename
 		moodlename = new TextField();
 		moodlename.setCaption("Moodle Anmeldenamen");
-	
 		moodlename.setImmediate(false);
 		moodlename.setVisible(false);
 		moodlename.setDescription("Bitte Ihren Moodle Anmeldenamen (nachname.vorname) angeben");
@@ -292,7 +287,6 @@ public class Registrierung extends VerticalLayout implements View{
 		// passwordmoodle
 		passwordmoodle = new PasswordField();
 		passwordmoodle.setCaption("Moodle Passwort");
-	
 		passwordmoodle.setImmediate(false);
 		passwordmoodle.setVisible(false);
 		passwordmoodle.setDescription("Bitte Ihr Moodle Kennwort angeben");
@@ -331,7 +325,6 @@ public class Registrierung extends VerticalLayout implements View{
 		//Abschließen der Registrierung
 		button.addClickListener(new Button.ClickListener() {
 			public void buttonClick(ClickEvent event) {
-				
 				//Validierung der Felder
 				boolean validate = validate();
 				if(validate){//falls alle Felder richtig ausgefüllt wurden
@@ -351,7 +344,6 @@ public class Registrierung extends VerticalLayout implements View{
 				}else{//Registrierung nicht erfolgreich
 					Notification.show("Die Registrierung war nicht erfolgreich. Bitte überprüfen Sie Ihre Eingaben.",Type.HUMANIZED_MESSAGE);//Meldung an den Nutzer
 				}
-	
 			}
 		});
 		
@@ -361,7 +353,6 @@ public class Registrierung extends VerticalLayout implements View{
 	 * Stores a new User to Database.
 	 */
 	protected void safeToDB() {
-		
 		User u = new User();
 		u.setFirstname(prename.getValue());
 		u.setLastname(lastname.getValue());
@@ -381,6 +372,9 @@ public class Registrierung extends VerticalLayout implements View{
 	/**
 	 * Validates the user input
 	 * @return boolean
+	 * @see com.vaadin.data.validator.EmailValidator
+	 * @see com.vaadin.data.validator.StringLengthValidator;
+	 * @see com.example.housing.utility.DHStudValidator;
 	 */
 	public boolean validate(){
 		boolean erfolgreich=true;//wird auf false gesetzt, falls ein Wert nicht richtig ist
@@ -443,6 +437,7 @@ public class Registrierung extends VerticalLayout implements View{
 	
 	/**
 	 * Sends an EMail to the User.
+	 * @see com.example.housing.utility.SendEMail
 	 */
 	public void sendEMail(){
 		// Text der E-Mail mit Style-Informationen
@@ -451,6 +446,7 @@ public class Registrierung extends VerticalLayout implements View{
 					 +"<br/><span style='color: #e2001a' 'font-family: Arial, sans-serif''font-size: 20pt' >"
 						+"http://localhost:8080/housing/servlet/com.example.housing.HousingUI$Servlet#!Startseite/"+email_1.getValue()
 						+ "</span><br/><br/>Mit freundlichen Grüßen<br/>ihr DHBW Wohungsbörsen-Team<p/><span style='color: #e2001a' 'font-family: Arial, sans-serif''font-size: 8pt' >Anschrift:<br/>DHBW KarlsruheBaden-Wuerttemberg Cooperative State University Karlsruhe<br />Erzbergerstraße 121 . 76133 Karlsruhe <br />Postfach 10 01 36 . 76231 Karlsruhe   <br />Telefon +49.721.9735-5 <br />Telefax +49.721.9735-600 <br />E-Mail: dreischer@dhbw-karlsruhe.de<br /><br/><br/>Ansprechpartner:<br/> <br />Dr. Anita Dreischer<br /><br/><b>Copyright DHBW Karlsruhe. Alle Rechte vorbehalten.</b></span>";
+		//E-Mail senden
 		SendEMail.send(email_1.getValue(), "KochbuchAG@web.de", "Danke für Ihre Registrierung", body);
 	}
 
