@@ -16,7 +16,6 @@
 			<property name="hibernate.connection.password" value=""/> <!-- Euer Passwort für den root-Account für MySQL-Zugriff eintragen!!! -->
 
 
-
 			<!-- <property name="hibernate.hbm2ddl.auto" value="update"/> --> <!-- create-drop -->
 			<property name='hibernate.show_sql' value='true' />
 			<property name='hibernate.format_sql' value='true' />
