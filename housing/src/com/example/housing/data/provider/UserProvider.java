@@ -48,4 +48,10 @@ public class UserProvider extends BaseProvider<User>{
 		return (User) super.find(id);
 	}
 	
+	public User findByEmail(String email) {
+		Query q = em.createQuery("SELECT u FROM User u WHERE u.email =:email");
+		q.setParameter("email", email);
+		return (User) q.getSingleResult();
+	}
+	
 }

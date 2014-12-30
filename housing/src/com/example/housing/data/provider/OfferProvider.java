@@ -22,6 +22,15 @@ public class OfferProvider extends BaseProvider<Offer> {
 	protected Class<Offer> getEntityClass() {
 		return Offer.class;
 	}
+	
+	public void addOffer(Offer newOffer) {
+		if(!super.save(newOffer)) {
+			
+			System.out.println("Datensatz konnte nicht in die Datenbank gespeichert werden!");
+			
+		}
+		
+	}
 
 	/**
 	 * Find by id.
@@ -90,4 +99,5 @@ public class OfferProvider extends BaseProvider<Offer> {
 		List<Offer> filterErgebnis = (List<Offer>) filterAbfrage.getResultList();
 		return filterErgebnis;
 	}
+
 }
