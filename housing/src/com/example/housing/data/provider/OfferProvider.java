@@ -1,5 +1,6 @@
 package com.example.housing.data.provider;
 
+import java.text.DateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -45,19 +46,21 @@ public class OfferProvider extends BaseProvider<Offer> {
 
 	public List<Offer> filter(Date startDate, Date endDate, float minSquareMetre, float maxSquareMetre, float minPrice,
 			float maxPrice, int type, boolean internet, boolean furnished, boolean kitchen, boolean smoker, boolean pets, String city) {
+		DateFormat df = DateFormat.getDateInstance(DateFormat.MEDIUM);
 		StringBuffer filter = new StringBuffer();
 		filter.append("SELECT o FROM Offer o WHERE ");
+	//	filter.append("from Offer as o WHERE ");
 		if(startDate != null && !startDate.equals(new Date(0))){
-			filter.append("o.startDate <=:"+startDate + " AND "); //Formatierung?
+			filter.append("o.startDate <=:"+df.format(startDate) + " AND "); //Formatierung?
 		}
 		if(endDate != null && !endDate.equals(new Date(0))){
-			filter.append("o.endDate >=:"+endDate + " AND ");
+			filter.append("o.endDate >=:"+ df.format(endDate) + " AND ");
 		}
 		if(minSquareMetre != 0.0){
 			filter.append("o.squareMetre >=:" + minSquareMetre + " AND ");
 		}
 		if(maxSquareMetre != 0.0){
-			filter.append("o.squareMetre <=;" + maxSquareMetre + " AND ");
+			filter.append("o.squareMetre <=:" + maxSquareMetre + " AND ");
 		}
 		if(minPrice != 0.0){
 			filter.append("o.price >=:" + minPrice + " AND ");
