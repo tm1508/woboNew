@@ -49,45 +49,44 @@ public class OfferProvider extends BaseProvider<Offer> {
 		DateFormat df = DateFormat.getDateInstance(DateFormat.MEDIUM);
 		StringBuffer filter = new StringBuffer();
 		filter.append("SELECT o FROM Offer o WHERE ");
-	//	filter.append("from Offer as o WHERE ");
 		if(startDate != null && !startDate.equals(new Date(0))){
-			filter.append("o.startDate <=:"+df.format(startDate) + " AND "); //Formatierung?
+			filter.append("o.startDate <= "+df.format(startDate) + " AND "); //Formatierung?
 		}
 		if(endDate != null && !endDate.equals(new Date(0))){
-			filter.append("o.endDate >=:"+ df.format(endDate) + " AND ");
+			filter.append("o.endDate >= "+ df.format(endDate) + " AND ");
 		}
 		if(minSquareMetre != 0.0){
-			filter.append("o.squareMetre >=:" + minSquareMetre + " AND ");
+			filter.append("o.squareMetre >= " + minSquareMetre + " AND ");
 		}
 		if(maxSquareMetre != 0.0){
-			filter.append("o.squareMetre <=:" + maxSquareMetre + " AND ");
+			filter.append("o.squareMetre <= " + maxSquareMetre + " AND ");
 		}
 		if(minPrice != 0.0){
-			filter.append("o.price >=:" + minPrice + " AND ");
+			filter.append("o.price >= " + minPrice + " AND ");
 		}
 		if(maxPrice != 0.0){
-			filter.append("o.price <=:"+ maxPrice + " AND ");
+			filter.append("o.price <= "+ maxPrice + " AND ");
 		}
 		if(type != 0){
-			filter.append("o.type =:" + type + " AND ");
+			filter.append("o.type = " + type + " AND ");
 		}
 		if(internet){
-			filter.append("o.internet =:" + internet + " AND ");
+			filter.append("o.internet = " + internet + " AND ");
 		}
 		if(furnished){
-			filter.append("o.furnished =:" + furnished + " AND ");
+			filter.append("o.furnished = " + furnished + " AND ");
 		}
 		if(kitchen){
-			filter.append("o.kitchen =:" + kitchen + " AND ");
+			filter.append("o.kitchen = " + kitchen + " AND ");
 		}
 		if(smoker){
-			filter.append("o.smoker =:" + smoker + " AND ");
+			filter.append("o.smoker = " + smoker + " AND ");
 		}
 		if(pets){
-			filter.append("o.pets =:" + pets + " AND ");
+			filter.append("o.pets = " + pets + " AND ");
 		}
 		if(!city.equals("")){
-			filter.append("o.city =:" + city);
+			filter.append("o.city = '" + city + "'");
 		}
 
 		if(filter.lastIndexOf("AND ") == filter.length()-5){
@@ -95,8 +94,15 @@ public class OfferProvider extends BaseProvider<Offer> {
 		} else if(filter.lastIndexOf("WHERE ") == filter.length()-7){
 			filter.delete(filter.length()-7, filter.length()-1);
 		}	
-		filter.append(");");
-		//TODO: createQuery mit Übergabe des filters führt zu einer Exception.  
+		filter.append(")");
+		//TODO: createQuery mit Übergabe des filters führt zu einer Exception. 
+		
+		if(!em.isOpen()) {
+			
+			em = getEmf().createEntityManager();
+		
+		}
+
 		Query filterAbfrage = em.createQuery(filter.toString());
 		@SuppressWarnings("unchecked")
 		List<Offer> filterErgebnis = (List<Offer>) filterAbfrage.getResultList();
