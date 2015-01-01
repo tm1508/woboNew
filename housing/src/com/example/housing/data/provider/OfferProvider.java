@@ -1,6 +1,7 @@
 package com.example.housing.data.provider;
 
 import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -46,14 +47,14 @@ public class OfferProvider extends BaseProvider<Offer> {
 
 	public List<Offer> filter(Date startDate, Date endDate, float minSquareMetre, float maxSquareMetre, float minPrice,
 			float maxPrice, int type, boolean internet, boolean furnished, boolean kitchen, boolean smoker, boolean pets, String city) {
-		DateFormat df = DateFormat.getDateInstance(DateFormat.MEDIUM);
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		StringBuffer filter = new StringBuffer();
 		filter.append("SELECT o FROM Offer o WHERE ");
 		if(startDate != null && !startDate.equals(new Date(0))){
-			filter.append("o.startDate <= "+df.format(startDate) + " AND "); //Formatierung?
+			filter.append("o.startDate < "+ sdf.format(startDate) + " AND "); //Formatierung?
 		}
 		if(endDate != null && !endDate.equals(new Date(0))){
-			filter.append("o.endDate >= "+ df.format(endDate) + " AND ");
+			filter.append("o.endDate > "+ sdf.format(endDate) + " AND ");
 		}
 		if(minSquareMetre != 0.0){
 			filter.append("o.squareMetre >= " + minSquareMetre + " AND ");
