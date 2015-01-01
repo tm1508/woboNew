@@ -90,8 +90,8 @@ public class OfferProvider extends BaseProvider<Offer> {
 			filter.append("o.city = '" + city + "'");
 		}
 
-		if(filter.lastIndexOf("AND ") == filter.length()-5){
-			filter.delete(filter.length()-5, filter.length()-1);
+		if(filter.lastIndexOf("AND ") == filter.length()-4){
+			filter.delete(filter.length()-4, filter.length());
 		} else if(filter.lastIndexOf("WHERE ") == filter.length()-7){
 			filter.delete(filter.length()-7, filter.length()-1);
 		}	

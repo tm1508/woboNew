@@ -2,6 +2,7 @@ package com.example.housing;
 
 import java.util.Date;
 
+import com.example.housing.data.model.Offer;
 import com.example.housing.data.provider.OfferProvider;
 import com.vaadin.navigator.Navigator;
 import com.vaadin.navigator.View;
@@ -17,6 +18,8 @@ import com.vaadin.ui.Notification;
 import com.vaadin.ui.PopupDateField;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
+
+import java.util.List;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -147,32 +150,34 @@ public class Suche extends VerticalLayout implements View{
 
 		suchButton.addClickListener(new Button.ClickListener() {
 			public void buttonClick(ClickEvent event) {
-//				final int a;
-//				if(wg.getValue()){
-//					a = 1;
-//				}else if (wg.getValue()&& wohnung.getValue()){
-//					a = 2;
-//				}else if (wohnung.getValue()){
-//					a = 3;
-//				}else{
-//					a = 4;
-//					Notification.show("Bitte Art der Unterkunft wählen!");
-//				}
-//
-//				
-//				OfferProvider of = new OfferProvider();
-//				of.filter(zeitVon.getValue(),
-//						zeitBis.getValue(),
-//						(sucheVon.getValue()=="") ? (float)0.0 : Float.parseFloat(sucheVon.getValue()),
-//						(sucheBis.getValue()=="") ? (float)0.0 : Float.parseFloat(sucheBis.getValue()), 
-//						(preisVon.getValue()=="") ? (float)0.0 : Float.parseFloat(preisVon.getValue()),
-//						(preisBis.getValue()=="") ? (float)0.0 : Float.parseFloat(preisBis.getValue()),
-//						a, internet.getValue(), moebliert.getValue(), kueche.getValue(),rauchen.getValue(),
-//						haustiere.getValue(),
-//						stadt.getValue());
+				final int a;
+				if(wg.getValue()){
+					a = 1;
+				}else if (wg.getValue()&& wohnung.getValue()){
+					a = 2;
+				}else if (wohnung.getValue()){
+					a = 3;
+				}else{
+					a = 4;
+					Notification.show("Bitte Art der Unterkunft wählen!");
+				}
+
+				
+				OfferProvider of = new OfferProvider();
+				List<Offer> ergebnisse;
+				ergebnisse =
+						of.filter(zeitVon.getValue(),
+						zeitBis.getValue(),
+						(sucheVon.getValue()=="") ? (float)0.0 : Float.parseFloat(sucheVon.getValue()),
+						(sucheBis.getValue()=="") ? (float)0.0 : Float.parseFloat(sucheBis.getValue()), 
+						(preisVon.getValue()=="") ? (float)0.0 : Float.parseFloat(preisVon.getValue()),
+						(preisBis.getValue()=="") ? (float)0.0 : Float.parseFloat(preisBis.getValue()),
+						a, internet.getValue(), moebliert.getValue(), kueche.getValue(),rauchen.getValue(),
+						haustiere.getValue(),
+						stadt.getValue());
 				
 				String name = "AngebotAnzeigen";
-				getUI().getNavigator().addView(name, new Suchergebnis());
+				getUI().getNavigator().addView(name, new Suchergebnis(ergebnisse));
 				getUI().getNavigator().navigateTo(name);
 			}
 		});
