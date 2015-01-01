@@ -77,7 +77,7 @@ public class Suche extends VerticalLayout implements View{
 		content.addComponent(suche);
 		content.setMargin(true);
 		
-		GridLayout gridSuche = new GridLayout(5,9); 
+		GridLayout gridSuche = new GridLayout(5,10); 
 		gridSuche.setSpacing(true);
 	//	gridSuche.setWidth("40%");
 		gridSuche.addStyleName("LayoutSuche");
@@ -115,7 +115,7 @@ public class Suche extends VerticalLayout implements View{
 		gridSuche.addComponent(zeitBis, 4,3);
 		
 		//Art der Unterkunft
-		gridSuche.addComponent(new Label("Unterkunft:"), 0 ,4);
+		gridSuche.addComponent(new Label("Unterkunft: *"), 0 ,4);
 		gridSuche.addComponent(new Label("WG"), 1 ,4);
 		final CheckBox wg = new CheckBox();
 		gridSuche.addComponent(wg, 2 ,4);
@@ -131,19 +131,20 @@ public class Suche extends VerticalLayout implements View{
 		gridSuche.addComponent(new Label("Raucher"), 3 ,5);
 		final CheckBox rauchen = new CheckBox();
 		gridSuche.addComponent(rauchen, 4 ,5);
-		gridSuche.addComponent(new Label("mÃ¶bliert"), 1 ,6);
+		gridSuche.addComponent(new Label("möbliert"), 1 ,6);
 		final CheckBox moebliert = new CheckBox();
 		gridSuche.addComponent(moebliert, 2, 6);
-		gridSuche.addComponent(new Label("KÃ¼che"), 3 ,6);
+		gridSuche.addComponent(new Label("Küche"), 3 ,6);
 		final CheckBox kueche = new CheckBox();
 		gridSuche.addComponent(kueche, 4 ,6);
 		gridSuche.addComponent(new Label("Internet"), 1 ,7);
 		final CheckBox internet = new CheckBox();
 		gridSuche.addComponent(internet, 2 ,7);
 		
+		gridSuche.addComponent(new Label("* Mussfelder"), 0, 8);
 		Button suchButton = new Button("Suchen");
 		suchButton.addStyleName("SuchButton");
-		gridSuche.addComponent(suchButton, 0 ,8);
+		gridSuche.addComponent(suchButton, 0 ,9);
 		
 		//Suchfunktion
 	
