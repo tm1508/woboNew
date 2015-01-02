@@ -8,6 +8,8 @@ import java.util.List;
 import javax.swing.GroupLayout.Alignment;
 
 import com.example.housing.data.model.Offer;
+import com.vaadin.event.LayoutEvents.LayoutClickEvent;
+import com.vaadin.event.LayoutEvents.LayoutClickListener;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.server.FileResource;
@@ -84,9 +86,35 @@ public class Suchergebnis extends VerticalLayout implements View {
 	 */
 	@SuppressWarnings("deprecation")
 	public void setContent(){
+		
+		//testDaten
+		Offer b = new Offer();
+		b.setCity("Karlsruhe");
+		b.setTitle("schön");
+		b.setPrice((float)400.00);
+		b.setSquareMetre((float)80.40);
+		b.setType(1);
+		b.setStartDate(new Date(10,10,2015));
+		b.setEndDate(new Date(20,10,2015));
+	
+		angebote.add(b);
+		
+		Offer c = new Offer();
+		c.setCity("München");
+		c.setTitle("schön");
+		c.setPrice((float)400.00);
+		c.setSquareMetre((float)80.40);
+		c.setType(1);
+		c.setStartDate(new Date(10,10,2015));
+		c.setEndDate(new Date(20,10,2015));
+		angebote.add(c);
+		
 		// Anzahl der gefundenen Ergebnisse
-		int anzahl = 5;
-				//angebote.size();
+		int anzahl = angebote.size();
+		for(int i = 0; i<anzahl;i++){
+			Offer o = angebote.get(i);
+		
+	
 
 		GridLayout ergebnisLayout = new GridLayout(6,3);
 		ergebnisLayout.setMargin(false);
@@ -94,17 +122,19 @@ public class Suchergebnis extends VerticalLayout implements View {
 		FileResource resource = new FileResource(new File(basepath + "/WEB-INF/image/dh.jpg"));
 		Image image = new Image("",resource);
 		ergebnisLayout.addComponent(image,0,0,2,2);
-		String title = "Schöne TestWohnung";
-		Label l = new Label(title);
+		
+		String title = o.getTitle();
+		Label l = new Label(title + " in "+ o.getCity());
 		ergebnisLayout.addComponent(l,4,0);
-		float price = (float) 400.20;		
-		Label l2 = new Label(Float.toString(price)+ "€");
+		float price = o.getPrice();		
+		Label l2 = new Label(Float.toString(price)+ " €");
 		ergebnisLayout.addComponent(l2,3,1);
 		
-		float sm =  (float) 80.12;
-		String sSm = Float.toString(sm) + "m²";
+		float sm = o.getSquareMetre();
+		String sSm = Float.toString(sm) + " m²";
 		ergebnisLayout.addComponent(new Label(sSm),4,1);
-		int a = 2;
+		
+		int a = o.getType();
 		String s;
 		if(a ==1){
 			s = "WG";
@@ -114,28 +144,26 @@ public class Suchergebnis extends VerticalLayout implements View {
 			s="";
 		}
 		ergebnisLayout.addComponent(new Label(s),5,1);
-		Date start= new Date(2015,01,30);
+		
+		
+//		Date start= new Date(2015,01,30);
+		Date start = (Date) o.getStartDate();
 		ergebnisLayout.addComponent(new Label(start.toString()),3,2);
-		Date end= new Date(2015,04,30);
+//		Date end= new Date(2015,04,30);
+		Date end = (Date) o.getEndDate();
 		ergebnisLayout.addComponent(new Label(end.toString()),5,2);
-//		GridLayout list = new GridLayout(1,anzahl);
-//		List<GridLayout> liste_ergebnisse = new ArrayList<GridLayout>();
-		VerticalLayout hl = new VerticalLayout();
-		for(int i = 0; i<anzahl;i++){
-			
-			hl.addComponent(ergebnisLayout);
-		//	hl.addComponent(new Label("Zahl" + i));
+		
+		ergebnisLayout.addLayoutClickListener(new LayoutClickListener(){
+			 public void layoutClick(LayoutClickEvent event) {
+				 //TODO: entsprechendes Angebot mitgeben zur Einzelansicht
+					String name = "Einzelansicht";
+					getUI().getNavigator().addView(name, new Einzelansicht());
+					getUI().getNavigator().navigateTo(name);
+	            }
+		});
+		
+		content.addComponent(ergebnisLayout);
 		}
-//		for(int i = 0; i<anzahl;i++){
-//			//list = new GridLayout(1,i);
-//			list.addComponent(liste_ergebnisse.get(i),0,i);
-//			
-//		}
-
-		content.addComponent(hl);
-
-		
-		
 
 
 	}
