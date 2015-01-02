@@ -25,14 +25,14 @@ public class OfferProvider extends BaseProvider<Offer> {
 	protected Class<Offer> getEntityClass() {
 		return Offer.class;
 	}
-	
+
 	public void addOffer(Offer newOffer) {
-		if(!super.save(newOffer)) {
-			
+		if (!super.save(newOffer)) {
+
 			System.out.println("Datensatz konnte nicht in die Datenbank gespeichert werden!");
-			
+
 		}
-		
+
 	}
 
 	/**
@@ -45,73 +45,83 @@ public class OfferProvider extends BaseProvider<Offer> {
 	public Offer findById(Integer id) {
 		return (Offer) super.find(id);
 	}
-	
+
 	public List<Offer> filter(Date startDate, Date endDate, float minSquareMetre, float maxSquareMetre, float minPrice,
-			float maxPrice, int type, boolean internet, boolean furnished, boolean kitchen, boolean smoker, boolean pets, String city) {
+			float maxPrice, int type, boolean internet, boolean furnished, boolean kitchen, boolean smoker,
+			boolean pets, String city) {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		StringBuffer filter = new StringBuffer();
 		filter.append("SELECT o FROM Offer o WHERE ");
-		if(startDate != null && !startDate.equals(new Date(0))){
-			filter.append("o.startDate < "+ sdf.format(startDate) + " AND "); //Formatierung?
+		if (startDate != null && !startDate.equals(new Date(0))) {
+			filter.append("o.startDate < " + sdf.format(startDate) + " AND "); // Formatierung?
 		}
-		if(endDate != null && !endDate.equals(new Date(0))){
-			filter.append("o.endDate > "+ sdf.format(endDate) + " AND ");
+		if (endDate != null && !endDate.equals(new Date(0))) {
+			filter.append("o.endDate > " + sdf.format(endDate) + " AND ");
 		}
-		if(minSquareMetre != 0.0){
+		if (minSquareMetre != 0.0) {
 			filter.append("o.squareMetre >= " + minSquareMetre + " AND ");
 		}
-		if(maxSquareMetre != 0.0){
+		if (maxSquareMetre != 0.0) {
 			filter.append("o.squareMetre <= " + maxSquareMetre + " AND ");
 		}
-		if(minPrice != 0.0){
+		if (minPrice != 0.0) {
 			filter.append("o.price >= " + minPrice + " AND ");
 		}
-		if(maxPrice != 0.0){
-			filter.append("o.price <= "+ maxPrice + " AND ");
+		if (maxPrice != 0.0) {
+			filter.append("o.price <= " + maxPrice + " AND ");
 		}
-		if(type != 0){
+		if (type != 0) {
 			filter.append("o.type = " + type + " AND ");
 		}
-		if(internet){
+		if (internet) {
 			filter.append("o.internet = " + internet + " AND ");
 		}
-		if(furnished){
+		if (furnished) {
 			filter.append("o.furnished = " + furnished + " AND ");
 		}
-		if(kitchen){
+		if (kitchen) {
 			filter.append("o.kitchen = " + kitchen + " AND ");
 		}
-		if(smoker){
+		if (smoker) {
 			filter.append("o.smoker = " + smoker + " AND ");
 		}
-		if(pets){
+		if (pets) {
 			filter.append("o.pets = " + pets + " AND ");
 		}
-		if(!city.equals("")){
+		if (!city.equals("")) {
 			filter.append("o.city = '" + city + "'");
 		}
 
-		if(filter.lastIndexOf("AND ") == filter.length()-4){
-			filter.delete(filter.length()-4, filter.length());
-		} else if(filter.lastIndexOf("WHERE ") == filter.length()-7){
-			filter.delete(filter.length()-7, filter.length()-1);
-		}	
+		if (filter.lastIndexOf("AND ") == filter.length() - 4) {
+			filter.delete(filter.length() - 4, filter.length());
+		} else if (filter.lastIndexOf("WHERE ") == filter.length() - 7) {
+			filter.delete(filter.length() - 7, filter.length() - 1);
+		}
 		filter.append(")");
-		//TODO: createQuery mit Übergabe des filters führt zu einer Exception. 
-		
-		if(!em.isOpen()) {
-			
+		// TODO: createQuery mit Übergabe des filters führt zu einer Exception.
+
+		if (!em.isOpen()) {
+
 			em = getEmf().createEntityManager();
-		
+
 		}
 
 		Query filterAbfrage = em.createQuery(filter.toString());
 		@SuppressWarnings("unchecked")
 		List<Offer> filterErgebnis = (List<Offer>) filterAbfrage.getResultList();
 		return filterErgebnis;
+	}
+
+	public Offer getByidOffer(int idOffer) {
+		StringBuffer searchById = new StringBuffer();
+		searchById.append("SELECT o FROM Offer o WHERE ");
+		searchById.append("o.id = '" + idOffer + "'");
+		if (!em.isOpen()) {
+			em = getEmf().createEntityManager();
 		}
-	
-	
+		Query searchedOffer = em.createQuery(searchById.toString());
+		Offer offer = (Offer) searchedOffer.getSingleResult();
+		return offer;
+	}
 
 }
-

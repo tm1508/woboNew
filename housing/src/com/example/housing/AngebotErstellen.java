@@ -275,8 +275,9 @@ public class AngebotErstellen extends VerticalLayout implements View {
 				//newOffer.setPhotos();
 				of.addOffer(newOffer);
 				String name = "AngebotAnzeigen";
-				getUI().getNavigator().addView(name, new AngebotAnzeigen());
+				getUI().getNavigator().addView(name, new AngebotAnzeigen(newOffer.getIdOffer()));
 				getUI().getNavigator().navigateTo(name);
+				
 			}
 		});
 
