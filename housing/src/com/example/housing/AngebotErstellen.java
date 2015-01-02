@@ -1,5 +1,7 @@
 package com.example.housing;
 
+import com.example.housing.data.model.Offer;
+import com.example.housing.data.provider.OfferProvider;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.server.VaadinSession;
@@ -13,7 +15,7 @@ import com.vaadin.ui.RichTextArea;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.Upload;
 import com.vaadin.ui.VerticalLayout;
-
+import com.vaadin.ui.Button.ClickEvent;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -21,12 +23,15 @@ import com.vaadin.ui.VerticalLayout;
  */
 public class AngebotErstellen extends VerticalLayout implements View {
 
-	
 	/** The content. */
 	VerticalLayout content;
 
-	/* (non-Javadoc)
-	 * @see com.vaadin.navigator.View#enter(com.vaadin.navigator.ViewChangeListener.ViewChangeEvent)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.vaadin.navigator.View#enter(com.vaadin.navigator.ViewChangeListener
+	 * .ViewChangeEvent)
 	 */
 	@Override
 	public void enter(ViewChangeEvent event) {
@@ -40,16 +45,16 @@ public class AngebotErstellen extends VerticalLayout implements View {
 	public AngebotErstellen() {
 		Navigation nav = new Navigation();
 		addComponent(nav);
-		//setSizeFull();
-		
+		// setSizeFull();
+
 		NavigationPublic navPublic = new NavigationPublic();
 		addComponent(navPublic);
-		
-		//falls der Benutzer eingelogt ist verändert sich die Navigation
-		if(VaadinSession.getCurrent().getAttribute("login").equals(true)){
+
+		// falls der Benutzer eingelogt ist verändert sich die Navigation
+		if (VaadinSession.getCurrent().getAttribute("login").equals(true)) {
 			nav.setVisible(true);
 			navPublic.setVisible(false);
-		}else{
+		} else {
 			nav.setVisible(false);
 			navPublic.setVisible(true);
 		}
@@ -75,21 +80,21 @@ public class AngebotErstellen extends VerticalLayout implements View {
 		Label ltitel = new Label("Titel");
 		ltitel.setWidth("10%");
 		ltitel.addStyleName("AbschnittLabel");
-		TextField titel = new TextField();
+		final TextField titel = new TextField();
 		titel.setWidth("90%");
 		titel.addStyleName("ImportantTitle");
 		hl.addComponent(ltitel);
 		hl.addComponent(titel);
 		Label adress = new Label("Adresse");
 		adress.addStyleName("AbschnittLabel");
-		TextField street = new TextField("Straße, Hausnummer");
+		final TextField street = new TextField("Straße, Hausnummer");
 		street.addStyleName("AngeboteTextField");
 		HorizontalLayout hl0 = new HorizontalLayout();
 		hl0.setWidth("50%");
-		TextField zip = new TextField("PLZ");
+		final TextField zip = new TextField("PLZ");
 		zip.setWidth("50%");
 		zip.addStyleName("AngeboteTextField");
-		TextField city = new TextField("Ort");
+		final TextField city = new TextField("Ort");
 		city.addStyleName("AngeboteTextField");
 		city.setWidth("50%");
 		hl0.addComponent(zip);
@@ -115,81 +120,79 @@ public class AngebotErstellen extends VerticalLayout implements View {
 		Label allgInfo = new Label("Allgemeine Angaben zur Wohnung");
 		allgInfo.addStyleName("AbschnittLabel");
 		label.addComponent(allgInfo);
-		ComboBox isShared = new ComboBox("Art");
+		final ComboBox isShared = new ComboBox("Art");
+		isShared.setInputPrompt("Wohnung");
 		isShared.addItem("Wohnung");
 		isShared.addItem("Zimmer");
 		isShared.addItem("WG-Zimmer");
 		isShared.addStyleName("AngeboteTextField");
 		z1.addComponent(isShared);
-		TextField squareMetre = new TextField("Größe (in m²)");
+		final TextField squareMetre = new TextField("Größe (in m²)");
 		squareMetre.addStyleName("AngeboteTextField");
 		z2.addComponent(squareMetre);
-		TextField roomMates = new TextField("Anzahl Mitbewohner:");
+		final TextField roomMates = new TextField("Anzahl Mitbewohner:");
 		roomMates.addStyleName("AngeboteTextField");
 		z3.addComponent(roomMates);
 		Label date = new Label("Verfügbarkeit");
-		DateField startDate = new DateField("von:");
-		DateField endDate = new DateField("bis:");
+		final DateField startDate = new DateField("von:");
+		final DateField endDate = new DateField("bis:");
 		HorizontalLayout hl1 = new HorizontalLayout();
 		startDate.addStyleName("AngeboteTextField");
 		endDate.addStyleName("AngeboteTextField");
 		hl1.setWidth("50%");
 		hl1.addComponent(startDate);
 		hl1.addComponent(endDate);
-		
 
-
-		
-		//Kosten
+		// Kosten
 		Label costs = new Label("Kosten");
 		costs.addStyleName("AbschnittLabel");
 		label.addComponent(costs);
-		TextField price = new TextField("Warmmiete:");
+		final TextField price = new TextField("Warmmiete:");
 		price.addStyleName("AngeboteTextField");
 		z1.addComponent(price);
-		TextField bond = new TextField ("Kaution:");
+		final TextField bond = new TextField("Kaution:");
 		bond.addStyleName("AngeboteTextField");
 		z2.addComponent(bond);
 		TextField cost = new TextField("Sonstige Kosten:");
 		cost.addStyleName("AngeboteTextField");
 		z3.addComponent(cost);
-		
+
 		content.addComponent(label);
 		content.addComponent(new Label());
 		content.addComponent(z1);
 		content.addComponent(z2);
 		content.addComponent(z3);
 		content.addComponent(new Label());
-		
+
 		content.addComponent(date);
 		content.addComponent(hl1);
 		content.addComponent(new Label());
-		
-		//weitere Angaben
+
+		// weitere Angaben
 		Label angaben = new Label("Weitere Details");
 		angaben.addStyleName("AbschnittLabel");
 		HorizontalLayout hl2 = new HorizontalLayout();
 		hl2.setWidth("100%");
-		CheckBox internet = new CheckBox("Internet");
+		final CheckBox internet = new CheckBox("Internet");
 		internet.setWidth("20%");
 		internet.addStyleName("AngeboteTextField");
-		CheckBox furnished = new CheckBox("Möbliert");
+		final CheckBox furnished = new CheckBox("Möbliert");
 		furnished.setWidth("20%");
 		furnished.addStyleName("AngeboteTextField");
-		CheckBox kitchen = new CheckBox("Küche");
+		final CheckBox kitchen = new CheckBox("Küche");
 		kitchen.setWidth("20%");
 		kitchen.addStyleName("AngeboteTextField");
-		CheckBox smoker = new CheckBox("Raucher");
+		final CheckBox smoker = new CheckBox("Raucher");
 		smoker.setWidth("20%");
 		smoker.addStyleName("AngeboteTextField");
-		CheckBox pets = new CheckBox("Haustiere");
+		final CheckBox pets = new CheckBox("Haustiere");
 		pets.setWidth("20%");
 		pets.addStyleName("AngeboteTextField");
-		ComboBox gender = new ComboBox("Bevorzugtes Geschlecht:");
-		gender.addItem("männlich");
-		gender.addItem("weiblich");
-		gender.addStyleName("AngeboteTextField");
-		
+		final ComboBox genders = new ComboBox("Bevorzugtes Geschlecht:");
+		genders.addItem("männlich");
+		genders.addItem("weiblich");
+		genders.addStyleName("AngeboteTextField");
+
 		hl2.addComponent(internet);
 		hl2.addComponent(furnished);
 		hl2.addComponent(kitchen);
@@ -199,19 +202,19 @@ public class AngebotErstellen extends VerticalLayout implements View {
 		content.addComponent(new Label());
 		content.addComponent(hl2);
 		content.addComponent(new Label());
-		content.addComponent(gender);
+		content.addComponent(genders);
 		content.addComponent(new Label());
-		
-		//Anzeigetext + Wohnungsbilder
+
+		// Anzeigetext + Wohnungsbilder
 		Label anzeigetext = new Label("Anzeigetext");
 		anzeigetext.addStyleName("AbschnittLabel");
-		RichTextArea text = new RichTextArea();
+		final RichTextArea text = new RichTextArea();
 		text.setWidth("100%");
 		Label bilder = new Label("Bilder hinzufügen");
 		bilder.addStyleName("AbschnittLabel");
 		Upload bilderup = new Upload();
-			bilderup.setButtonCaption("hochladen");
-		
+		bilderup.setButtonCaption("hochladen");
+
 		content.addComponent(anzeigetext);
 		content.addComponent(new Label());
 		content.addComponent(text);
@@ -220,18 +223,65 @@ public class AngebotErstellen extends VerticalLayout implements View {
 		content.addComponent(new Label());
 		content.addComponent(bilderup);
 		content.addComponent(new Label());
+
+		// Button speichern/aktivieren/deaktivieren
+		final CheckBox inactive = new CheckBox("deaktivieren");
 		
-		//Button speichern/aktivieren/deaktivieren
-		HorizontalLayout buttons = new HorizontalLayout();
 		Button save = new Button("speichern");
 		save.addStyleName("BearbeitenButton");
-		Button activate = new Button ("deaktivieren");
-		activate.addStyleName("BearbeitenButton");
+		save.addClickListener(new Button.ClickListener() {
+			public void buttonClick(ClickEvent event) {
+				int type = 1;
+				if (isShared.getValue().equals("Wohnung")) {
+					type = 1;
+				} else if (isShared.getValue().equals("Zimmer")) {
+					type = 2;
+				} else if (isShared.getValue().equals("WG-Zimmer")) {
+					type = 3;
+				}
+				int gender = 1;
+				if (genders.getValue().equals("männlich")) {
+					gender = 2;
+				} else if (genders.getValue().equals("weiblich")) {
+					gender = 3;
+				}
+				OfferProvider of = new OfferProvider();
+				Offer newOffer = new Offer();
+				
+				newOffer.setTitle(titel.getValue());
+				newOffer.setStreet(street.getValue());
+				newOffer.setZip(zip.getValue());
+				newOffer.setCity(city.getValue());
+				newOffer.setStartDate(startDate.getValue());
+				newOffer.setEndDate(endDate.getValue());
+				newOffer.setSquareMetre(Float.parseFloat(squareMetre.getValue()));
+				newOffer.setPrice(Float.parseFloat(price.getValue()));
+				newOffer.setType(type);
+				newOffer.setNumberOfRoommate(Integer.parseInt(roomMates.getValue()));
+				newOffer.setInternet(internet.getValue());
+				newOffer.setFurnished(furnished.getValue());
+				newOffer.setKitchen(kitchen.getValue());
+				newOffer.setSmoker(smoker.getValue());
+				newOffer.setPets(pets.getValue());
+				newOffer.setGender(gender);
+				newOffer.setText(text.getValue());
+				newOffer.setBond(Float.parseFloat(bond.getValue()));
+				newOffer.setInactive(inactive.getValue());
+				//newOffer.setLatitude(latitude);
+				//newOffer.setLongitude(longitude);
+				//newOffer.setPhotos(photos);
+				of.addOffer(newOffer);
+
+				String name = "AngebotAnzeigen";
+				getUI().getNavigator().addView(name, new AngebotAnzeigen());
+				getUI().getNavigator().navigateTo(name);
+			}
+		});
+
+		content.addComponent(inactive);
+		content.addComponent(save);
 		
-		buttons.addComponent(activate);
-		buttons.addComponent(save);		
-		content.addComponent(buttons);
-		
+
 	}
 
 }

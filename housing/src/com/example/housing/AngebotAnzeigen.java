@@ -197,7 +197,7 @@ public class AngebotAnzeigen extends VerticalLayout implements View {
 		
 		//Anzeigetext
 		Label anzeigetext = new Label("Anzeigetext");
-		RichTextArea text = new RichTextArea();
+		Label text = new Label();
 		text.setWidth("100%");
 		text.setEnabled(false);
 		

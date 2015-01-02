@@ -8,6 +8,7 @@ import java.util.List;
 import javax.persistence.Query;
 
 import com.example.housing.data.model.Offer;
+import com.example.housing.data.model.Photo;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -44,7 +45,7 @@ public class OfferProvider extends BaseProvider<Offer> {
 	public Offer findById(Integer id) {
 		return (Offer) super.find(id);
 	}
-
+	
 	public List<Offer> filter(Date startDate, Date endDate, float minSquareMetre, float maxSquareMetre, float minPrice,
 			float maxPrice, int type, boolean internet, boolean furnished, boolean kitchen, boolean smoker, boolean pets, String city) {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -108,6 +109,9 @@ public class OfferProvider extends BaseProvider<Offer> {
 		@SuppressWarnings("unchecked")
 		List<Offer> filterErgebnis = (List<Offer>) filterAbfrage.getResultList();
 		return filterErgebnis;
-	}
+		}
+	
+	
 
 }
+
