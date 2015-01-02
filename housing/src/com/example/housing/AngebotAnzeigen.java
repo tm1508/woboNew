@@ -12,6 +12,7 @@ import com.vaadin.ui.Label;
 import com.vaadin.ui.RichTextArea;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
+import com.vaadin.ui.Button.ClickEvent;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -19,12 +20,15 @@ import com.vaadin.ui.VerticalLayout;
  */
 public class AngebotAnzeigen extends VerticalLayout implements View {
 
-	
 	/** The content. */
 	VerticalLayout content;
 
-	/* (non-Javadoc)
-	 * @see com.vaadin.navigator.View#enter(com.vaadin.navigator.ViewChangeListener.ViewChangeEvent)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.vaadin.navigator.View#enter(com.vaadin.navigator.ViewChangeListener
+	 * .ViewChangeEvent)
 	 */
 	@Override
 	public void enter(ViewChangeEvent event) {
@@ -38,15 +42,15 @@ public class AngebotAnzeigen extends VerticalLayout implements View {
 	public AngebotAnzeigen() {
 		Navigation nav = new Navigation();
 		addComponent(nav);
-		//setSizeFull();
+		// setSizeFull();
 		NavigationPublic navPublic = new NavigationPublic();
 		addComponent(navPublic);
-		
-		//falls der Benutzer eingelogt ist verändert sich die Navigation
-		if(VaadinSession.getCurrent().getAttribute("login").equals(true)){
+
+		// falls der Benutzer eingelogt ist verändert sich die Navigation
+		if (VaadinSession.getCurrent().getAttribute("login").equals(true)) {
 			nav.setVisible(true);
 			navPublic.setVisible(false);
-		}else{
+		} else {
 			nav.setVisible(false);
 			navPublic.setVisible(true);
 		}
@@ -68,7 +72,7 @@ public class AngebotAnzeigen extends VerticalLayout implements View {
 
 		// Titel + Adresse
 		HorizontalLayout hl = new HorizontalLayout();
-		//hl.setWidth("100%");
+		// hl.setWidth("100%");
 		Label ltitel = new Label("Titel");
 		ltitel.setWidth("10%");
 		TextField titel = new TextField();
@@ -131,35 +135,32 @@ public class AngebotAnzeigen extends VerticalLayout implements View {
 		hl1.setWidth("50%");
 		hl1.addComponent(startDate);
 		hl1.addComponent(endDate);
-		
 
-
-		
-		//Kosten
+		// Kosten
 		Label costs = new Label("Kosten");
 		label.addComponent(costs);
 		TextField price = new TextField("Warmmiete:");
 		price.setEnabled(false);
 		z1.addComponent(price);
-		TextField bond = new TextField ("Kaution:");
+		TextField bond = new TextField("Kaution:");
 		bond.setEnabled(false);
 		z2.addComponent(bond);
 		TextField cost = new TextField("Sonstige Kosten:");
 		cost.setEnabled(false);
 		z3.addComponent(cost);
-		
+
 		content.addComponent(label);
 		content.addComponent(new Label());
 		content.addComponent(z1);
 		content.addComponent(z2);
 		content.addComponent(z3);
 		content.addComponent(new Label());
-		
+
 		content.addComponent(date);
 		content.addComponent(hl1);
 		content.addComponent(new Label());
-		
-		//weitere Angaben
+
+		// weitere Angaben
 		Label angaben = new Label("Weitere Details");
 		HorizontalLayout hl2 = new HorizontalLayout();
 		hl2.setWidth("100%");
@@ -182,7 +183,7 @@ public class AngebotAnzeigen extends VerticalLayout implements View {
 		gender.addItem("männlich");
 		gender.addItem("weiblich");
 		gender.setEnabled(false);
-		
+
 		hl2.addComponent(internet);
 		hl2.addComponent(furnished);
 		hl2.addComponent(kitchen);
@@ -194,27 +195,31 @@ public class AngebotAnzeigen extends VerticalLayout implements View {
 		content.addComponent(new Label());
 		content.addComponent(gender);
 		content.addComponent(new Label());
-		
-		//Anzeigetext
+
+		// Anzeigetext
 		Label anzeigetext = new Label("Anzeigetext");
 		Label text = new Label();
 		text.setWidth("100%");
 		text.setEnabled(false);
-		
+
 		content.addComponent(anzeigetext);
 		content.addComponent(new Label());
 		content.addComponent(text);
 		content.addComponent(new Label());
-		
+
 		HorizontalLayout buttons = new HorizontalLayout();
-		Button save = new Button("bearbeiten");
-		Button activate = new Button ("deaktivieren");
-		activate.setVisible(false);
-		
-		buttons.addComponent(activate);
-		buttons.addComponent(save);		
+		Button change = new Button("bearbeiten");
+		change.addClickListener(new Button.ClickListener() {
+			public void buttonClick(ClickEvent event) {
+				String name = "AngebotErstellen";
+				getUI().getNavigator().addView(name, new AngebotErstellen()); // momentan angezeigten Angebot soll übergeben werden...
+				getUI().getNavigator().navigateTo(name);
+			}
+		});
+
+		buttons.addComponent(change);
 		content.addComponent(buttons);
-		
+
 	}
 
 }

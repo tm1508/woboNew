@@ -121,7 +121,7 @@ public class AngebotErstellen extends VerticalLayout implements View {
 		allgInfo.addStyleName("AbschnittLabel");
 		label.addComponent(allgInfo);
 		final ComboBox isShared = new ComboBox("Art");
-		isShared.setInputPrompt("Wohnung");
+		isShared.setNullSelectionItemId("Wohnung");
 		isShared.addItem("Wohnung");
 		isShared.addItem("Zimmer");
 		isShared.addItem("WG-Zimmer");
@@ -131,6 +131,7 @@ public class AngebotErstellen extends VerticalLayout implements View {
 		squareMetre.addStyleName("AngeboteTextField");
 		z2.addComponent(squareMetre);
 		final TextField roomMates = new TextField("Anzahl Mitbewohner:");
+		roomMates.setValue("0");
 		roomMates.addStyleName("AngeboteTextField");
 		z3.addComponent(roomMates);
 		Label date = new Label("Verfügbarkeit");
@@ -189,6 +190,8 @@ public class AngebotErstellen extends VerticalLayout implements View {
 		pets.setWidth("20%");
 		pets.addStyleName("AngeboteTextField");
 		final ComboBox genders = new ComboBox("Bevorzugtes Geschlecht:");
+		genders.setNullSelectionItemId("egal");
+		genders.addItem("egal");
 		genders.addItem("männlich");
 		genders.addItem("weiblich");
 		genders.addStyleName("AngeboteTextField");
@@ -269,9 +272,8 @@ public class AngebotErstellen extends VerticalLayout implements View {
 				newOffer.setInactive(inactive.getValue());
 				//newOffer.setLatitude(latitude);
 				//newOffer.setLongitude(longitude);
-				//newOffer.setPhotos(photos);
+				//newOffer.setPhotos();
 				of.addOffer(newOffer);
-
 				String name = "AngebotAnzeigen";
 				getUI().getNavigator().addView(name, new AngebotAnzeigen());
 				getUI().getNavigator().navigateTo(name);
