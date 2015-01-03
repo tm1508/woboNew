@@ -56,6 +56,93 @@ public abstract class BaseProvider<T> {
 	 * @return the entity class
 	 */
 	protected abstract Class<T> getEntityClass();
+	
+	public boolean save(T obj) {
+		
+		if(!em.isOpen()) {
+			
+			em = getEmf().createEntityManager();
+		
+		}
+		
+		try {
+			
+			em.getTransaction().begin();
+			em.persist(obj);
+			//em.flush();
+			em.getTransaction().commit();
+			em.close();
+			
+			return true;
+			
+		} catch (Exception e) {
+			
+			System.out.println(e);
+			em.getTransaction().rollback();
+			em.close();
+			return false;
+			
+		}
+	
+	}
+	
+	public boolean update(T obj) {
+		
+		if(!em.isOpen()) {
+			
+			em = getEmf().createEntityManager();
+		
+		}
+		
+		try {
+			
+			em.getTransaction().begin();
+			em.merge(obj);
+			//em.flush();
+			em.getTransaction().commit();
+			em.close();
+			
+			return true;
+			
+		} catch(Exception e) {
+			
+			System.out.println(e);
+			em.getTransaction().rollback();
+			em.close();
+			return false;
+			
+		}
+		
+	}
+	
+	public boolean delete(T obj) {
+		
+		if(!em.isOpen()) {
+			
+			em = getEmf().createEntityManager();
+		
+		}
+		
+		try {
+			
+			em.getTransaction().begin();
+			em.remove(obj);
+			//em.flush();
+			em.getTransaction().commit();
+			em.close();
+			
+			return true;
+			
+		} catch(Exception e) {
+			
+			System.out.println(e);
+			em.getTransaction().rollback();
+			em.close();
+			return false;
+			
+		}
+		
+	}
 
 	/**
 	 * Find.

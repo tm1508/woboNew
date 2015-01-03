@@ -36,7 +36,9 @@ public class User {
 	private String dhMail;
 	
 	/** The access level. */
-	private Integer accessLevel;
+	private int accessLevel;
+	
+	private boolean activated;
 	
 	/** The offers. */
 	@OneToMany(mappedBy="offer_idUser")
@@ -246,6 +248,14 @@ public class User {
 	 */
 	public void setFavorits(List<Favorit> favorits) {
 		this.favorits = favorits;
+	}
+
+	public boolean isActivated() {
+		return activated;
+	}
+
+	public void setActivated(boolean activated) {
+		this.activated = activated;
 	}
 
 }

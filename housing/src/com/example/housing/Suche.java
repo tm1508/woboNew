@@ -1,16 +1,25 @@
 package com.example.housing;
 
+import java.util.Date;
+
+import com.example.housing.data.model.Offer;
+import com.example.housing.data.provider.OfferProvider;
+import com.vaadin.navigator.Navigator;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.server.VaadinSession;
 import com.vaadin.ui.Button;
+import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.GridLayout;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
+import com.vaadin.ui.Notification;
 import com.vaadin.ui.PopupDateField;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
+
+import java.util.List;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -68,66 +77,111 @@ public class Suche extends VerticalLayout implements View{
 		content.addComponent(suche);
 		content.setMargin(true);
 		
-		GridLayout gridSuche = new GridLayout(5,7); 
+		GridLayout gridSuche = new GridLayout(5,10); 
 		gridSuche.setSpacing(true);
 	//	gridSuche.setWidth("40%");
 		gridSuche.addStyleName("LayoutSuche");
 		
+		//Stadt
+		gridSuche.addComponent(new Label("Stadt:  "), 0 ,0);
+		final TextField stadt = new TextField();
+		gridSuche.addComponent(stadt,1 ,0);
+
 		//Grï¿½ï¿½e
-		gridSuche.addComponent(new Label("Quadratmeter:  "), 0 ,0);
-		gridSuche.addComponent(new Label("von  "), 1 ,0);
-		TextField sucheVon = new TextField();
-		gridSuche.addComponent(sucheVon, 2,0);
-		gridSuche.addComponent(new Label("bis  "), 3 , 0);
-		TextField sucheBis = new TextField();
-		gridSuche.addComponent(sucheBis, 4,0);
+		gridSuche.addComponent(new Label("Quadratmeter:  "), 0 ,1);
+		gridSuche.addComponent(new Label("von  "), 1 ,1);
+		final TextField sucheVon = new TextField();
+		gridSuche.addComponent(sucheVon, 2,1);
+		gridSuche.addComponent(new Label("bis  "), 3 , 1);
+		final TextField sucheBis = new TextField();
+		gridSuche.addComponent(sucheBis, 4,1);
 		
 		//Preis
-		gridSuche.addComponent(new Label("Preis:  "), 0 ,1);
-		gridSuche.addComponent(new Label("von  "), 1 ,1);
-		TextField preisVon = new TextField();
-		gridSuche.addComponent(preisVon, 2,1);
-		gridSuche.addComponent(new Label("bis  "), 3 , 1);
-		TextField preisBis = new TextField();
-		gridSuche.addComponent(preisBis, 4,1);
+		gridSuche.addComponent(new Label("Preis:  "), 0 ,2);
+		gridSuche.addComponent(new Label("von  "), 1 ,2);
+		final TextField preisVon = new TextField();
+		gridSuche.addComponent(preisVon, 2,2);
+		gridSuche.addComponent(new Label("bis  "), 3 , 2);
+		final TextField preisBis = new TextField();
+		gridSuche.addComponent(preisBis, 4,2);
 		
 		//Zeitraum
-		gridSuche.addComponent(new Label("Zeitraum:  "), 0 ,2);
-		gridSuche.addComponent(new Label("von  "), 1 ,2);
-		PopupDateField zeitVon = new PopupDateField();
-		gridSuche.addComponent(zeitVon, 2,2);
-		gridSuche.addComponent(new Label("bis  "), 3 , 2);
-		PopupDateField zeitBis = new PopupDateField();
-		gridSuche.addComponent(zeitBis, 4,2);
+		gridSuche.addComponent(new Label("Zeitraum:  "), 0 ,3);
+		gridSuche.addComponent(new Label("von  "), 1 ,3);
+		final PopupDateField zeitVon = new PopupDateField();
+		gridSuche.addComponent(zeitVon, 2,3);
+		gridSuche.addComponent(new Label("bis  "), 3 , 3);
+		final PopupDateField zeitBis = new PopupDateField();
+		gridSuche.addComponent(zeitBis, 4,3);
 		
 		//Art der Unterkunft
-		gridSuche.addComponent(new Label("Unterkunft:"), 0 ,3);
-		gridSuche.addComponent(new Label("WG"), 1 ,3);
-		CheckBox wg = new CheckBox();
-		gridSuche.addComponent(wg, 2 ,3);
-		gridSuche.addComponent(new Label("Wohnung"), 3 ,3);
-		CheckBox wohnung = new CheckBox();
-		gridSuche.addComponent(wohnung, 4 ,3);
+		gridSuche.addComponent(new Label("Unterkunft: *"), 0 ,4);
+		gridSuche.addComponent(new Label("WG"), 1 ,4);
+		final CheckBox wg = new CheckBox();
+		gridSuche.addComponent(wg, 2 ,4);
+		gridSuche.addComponent(new Label("Wohnung"), 3 ,4);
+		final CheckBox wohnung = new CheckBox();
+		gridSuche.addComponent(wohnung, 4 ,4);
 		
 		//Sonstiges
-		gridSuche.addComponent(new Label("Sonstiges:"), 0 ,4);
-		gridSuche.addComponent(new Label("Haustiere"), 1 ,4);
-		CheckBox haustiere = new CheckBox();
-		gridSuche.addComponent(haustiere, 2 ,4);
-		gridSuche.addComponent(new Label("Raucher"), 3 ,4);
-		CheckBox rauchen = new CheckBox();
-		gridSuche.addComponent(rauchen, 4 ,4);
-		gridSuche.addComponent(new Label("mÃ¶bliert"), 1 ,5);
-		CheckBox moebliert = new CheckBox();
-		gridSuche.addComponent(moebliert, 2 ,5);
-		gridSuche.addComponent(new Label("KÃ¼che"), 3 ,5);
-		CheckBox kueche = new CheckBox();
-		gridSuche.addComponent(kueche, 4 ,5);
+		gridSuche.addComponent(new Label("Sonstiges:"), 0 ,5);
+		gridSuche.addComponent(new Label("Haustiere"), 1 ,5);
+		final CheckBox haustiere = new CheckBox();
+		gridSuche.addComponent(haustiere, 2 ,5);
+		gridSuche.addComponent(new Label("Raucher"), 3 ,5);
+		final CheckBox rauchen = new CheckBox();
+		gridSuche.addComponent(rauchen, 4 ,5);
+		gridSuche.addComponent(new Label("möbliert"), 1 ,6);
+		final CheckBox moebliert = new CheckBox();
+		gridSuche.addComponent(moebliert, 2, 6);
+		gridSuche.addComponent(new Label("Küche"), 3 ,6);
+		final CheckBox kueche = new CheckBox();
+		gridSuche.addComponent(kueche, 4 ,6);
+		gridSuche.addComponent(new Label("Internet"), 1 ,7);
+		final CheckBox internet = new CheckBox();
+		gridSuche.addComponent(internet, 2 ,7);
 		
+		gridSuche.addComponent(new Label("* Mussfelder"), 0, 8);
 		Button suchButton = new Button("Suchen");
 		suchButton.addStyleName("SuchButton");
-		gridSuche.addComponent(suchButton, 0 ,6);
+		gridSuche.addComponent(suchButton, 0 ,9);
 		
+		//Suchfunktion
+	
+
+		suchButton.addClickListener(new Button.ClickListener() {
+			public void buttonClick(ClickEvent event) {
+				final int a;
+				if(wg.getValue()){
+					a = 1;
+				}else if (wg.getValue()&& wohnung.getValue()){
+					a = 2;
+				}else if (wohnung.getValue()){
+					a = 3;
+				}else{
+					a = 4;
+					Notification.show("Bitte Art der Unterkunft wählen!");
+				}
+
+				
+				OfferProvider of = new OfferProvider();
+				List<Offer> ergebnisse;
+				ergebnisse =
+						of.filter(zeitVon.getValue(),
+						zeitBis.getValue(),
+						(sucheVon.getValue()=="") ? (float)0.0 : Float.parseFloat(sucheVon.getValue()),
+						(sucheBis.getValue()=="") ? (float)0.0 : Float.parseFloat(sucheBis.getValue()), 
+						(preisVon.getValue()=="") ? (float)0.0 : Float.parseFloat(preisVon.getValue()),
+						(preisBis.getValue()=="") ? (float)0.0 : Float.parseFloat(preisBis.getValue()),
+						a, internet.getValue(), moebliert.getValue(), kueche.getValue(),rauchen.getValue(),
+						haustiere.getValue(),
+						stadt.getValue());
+				
+				String name = "AngebotAnzeigen";
+				getUI().getNavigator().addView(name, new Suchergebnis(ergebnisse));
+				getUI().getNavigator().navigateTo(name);
+			}
+		});
 		
 		content.addComponent(gridSuche);
 		

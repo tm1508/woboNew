@@ -3,6 +3,8 @@ package com.example.housing;
 import java.io.File;
 import java.sql.Date;
 
+import javax.swing.GroupLayout.Alignment;
+
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.server.FileResource;
@@ -31,19 +33,21 @@ public class Einzelansicht extends VerticalLayout implements View {
 	/**
 	 * Instantiates a new einzelansicht.
 	 */
+	//TODO: Übergabe Parameter Offer-Id
 	public Einzelansicht(){
 	
 	content = new VerticalLayout();
 //	content = (VerticalLayout)this;
-	content.setMargin(true);
+
+    content.setMargin(true);
 	content.setSizeFull();
 	content.setSpacing(true);
-
+	
 	Navigation nav = new Navigation();
 
-	
-	addComponent(content);
-	content.addComponent(nav);
+
+//	content.addComponent(nav);
+
 	
 	NavigationPublic navPublic = new NavigationPublic();
 	addComponent(navPublic);
@@ -56,14 +60,18 @@ public class Einzelansicht extends VerticalLayout implements View {
 		nav.setVisible(false);
 		navPublic.setVisible(true);
 	}
+	addComponent(nav);	
+	addComponent(content);
+
 	setContent();
 
 
 
 	
 	Footer f = new Footer();
-	//addComponent(f);
-	content.addComponent(f);
+	addComponent(f);
+//	setComponentAlignment(f, com.vaadin.ui.Alignment.TOP_CENTER);
+	//content.addComponent(f);
 	}
 
 
