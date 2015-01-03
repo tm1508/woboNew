@@ -1,5 +1,7 @@
 package com.example.housing;
 
+import java.util.Date;
+
 import com.example.housing.data.model.Offer;
 import com.example.housing.data.provider.OfferProvider;
 import com.vaadin.navigator.View;
@@ -58,7 +60,7 @@ public class AngebotAnzeigen extends VerticalLayout implements View {
 			navPublic.setVisible(true);
 		}
 		OfferProvider op = new OfferProvider();
-		Offer offer = op.getOfferById(idOffer);
+		Offer offer = op.findById(idOffer);
 		setContent(offer);
 		addComponent(content);
 
@@ -288,20 +290,24 @@ public class AngebotAnzeigen extends VerticalLayout implements View {
 		Label ltitel = new Label("Titel");
 		ltitel.setWidth("10%");
 		TextField titel = new TextField();
+		titel.setValue("Schönste Wohnung in Karlsruhe");
 		titel.setEnabled(false);
 		titel.setWidth("90%");
 		hl.addComponent(ltitel);
 		hl.addComponent(titel);
 		Label adress = new Label("Adresse");
 		adress.setEnabled(false);
-		TextField street = new TextField("Straße, Hausnummer");
+		Label street = new Label("Straße, Hausnummer");
+		street.setValue("Morgenstraße 100");
 		street.setEnabled(false);
 		HorizontalLayout hl0 = new HorizontalLayout();
 		hl0.setWidth("50%");
 		TextField zip = new TextField("PLZ");
+		zip.setValue("76137");
 		zip.setWidth("50%");
 		zip.setEnabled(false);
 		TextField city = new TextField("Ort");
+		city.setValue("Karlsruhe");
 		city.setWidth("50%");
 		city.setEnabled(false);
 		hl0.addComponent(zip);
@@ -330,18 +336,31 @@ public class AngebotAnzeigen extends VerticalLayout implements View {
 		isShared.addItem("Wohnung");
 		isShared.addItem("Zimmer");
 		isShared.addItem("WG-Zimmer");
+		if(1==1)
+			isShared.setNullSelectionItemId("Wohnung");
+		else if(1==2)
+			isShared.setNullSelectionItemId("Zimmer");
+		else if(1==3)
+			isShared.setNullSelectionItemId("WG-Zimmer");		
 		isShared.setEnabled(false);
 		z1.addComponent(isShared);
-		TextField squareMetre = new TextField("Größe (in m²)");
+		
+		TextField squareMetre = new TextField("Größe (in m²)");		
+		squareMetre.setValue("26"); 
 		squareMetre.setEnabled(false);
 		z2.addComponent(squareMetre);
+		
 		TextField roomMates = new TextField("Anzahl Mitbewohner:");
+		roomMates.setValue("0");
 		roomMates.setEnabled(false);
 		z3.addComponent(roomMates);
+		
 		Label date = new Label("Verfügbarkeit");
 		DateField startDate = new DateField("von:");
+		startDate.setValue(new Date());
 		startDate.setEnabled(false);
 		DateField endDate = new DateField("bis:");
+		endDate.setValue(new Date());
 		endDate.setEnabled(false);
 		HorizontalLayout hl1 = new HorizontalLayout();
 		hl1.setWidth("50%");
@@ -352,9 +371,11 @@ public class AngebotAnzeigen extends VerticalLayout implements View {
 		Label costs = new Label("Kosten");
 		label.addComponent(costs);
 		TextField price = new TextField("Warmmiete:");
+		price.setValue("400");
 		price.setEnabled(false);
 		z1.addComponent(price);
 		TextField bond = new TextField("Kaution:");
+		price.setValue("550");
 		bond.setEnabled(false);
 		z2.addComponent(bond);
 		TextField cost = new TextField("Sonstige Kosten:");
@@ -377,24 +398,36 @@ public class AngebotAnzeigen extends VerticalLayout implements View {
 		HorizontalLayout hl2 = new HorizontalLayout();
 		hl2.setWidth("100%");
 		CheckBox internet = new CheckBox("Internet");
+		internet.setValue(true);
 		internet.setWidth("20%");
 		internet.setEnabled(false);
 		CheckBox furnished = new CheckBox("Möbliert");
+		furnished.setValue(false);
 		furnished.setWidth("20%");
 		furnished.setEnabled(false);
 		CheckBox kitchen = new CheckBox("Küche");
+		kitchen.setValue(true);
 		kitchen.setWidth("20%");
 		kitchen.setEnabled(false);
 		CheckBox smoker = new CheckBox("Raucher");
+		smoker.setValue(false);
 		smoker.setWidth("20%");
 		smoker.setEnabled(false);
 		CheckBox pets = new CheckBox("Haustiere");
+		pets.setValue(false);
 		pets.setWidth("20%");
 		pets.setEnabled(false);
-		ComboBox gender = new ComboBox("Bevorzugtes Geschlecht:");
-		gender.addItem("männlich");
-		gender.addItem("weiblich");
-		gender.setEnabled(false);
+		ComboBox genders = new ComboBox("Bevorzugtes Geschlecht:");
+		genders.addItem("egal");
+		genders.addItem("männlich");
+		genders.addItem("weiblich");
+		if(1==1)
+			genders.setNullSelectionItemId("egal");
+		else if(1==2)
+			genders.setNullSelectionItemId("männlich");
+		else if(1==3)
+			genders.setNullSelectionItemId("weiblich");
+		genders.setEnabled(false);
 
 		hl2.addComponent(internet);
 		hl2.addComponent(furnished);
@@ -405,12 +438,12 @@ public class AngebotAnzeigen extends VerticalLayout implements View {
 		content.addComponent(new Label());
 		content.addComponent(hl2);
 		content.addComponent(new Label());
-		content.addComponent(gender);
+		content.addComponent(genders);
 		content.addComponent(new Label());
 
 		// Anzeigetext
 		Label anzeigetext = new Label("Anzeigetext");
-		Label text = new Label();
+		Label text = new Label("Hallo \n die Wohnung hat eine optimale Lage, mitten im Herzen der Südstadt....");
 		text.setWidth("100%");
 		text.setEnabled(false);
 
