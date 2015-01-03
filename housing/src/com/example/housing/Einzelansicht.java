@@ -33,6 +33,7 @@ public class Einzelansicht extends VerticalLayout implements View {
 	/**
 	 * Instantiates a new einzelansicht.
 	 */
+	//TODO: Übergabe Parameter Offer-Id
 	public Einzelansicht(){
 	
 	content = new VerticalLayout();
