@@ -54,6 +54,12 @@ public class UserProvider extends BaseProvider<User>{
 		
 	}
 	
+	public boolean removeUser(User user) {
+		
+		return super.delete(user); //true bei Erfolg, false bei Fehler
+		
+	}
+	
 	/**
 	 * Find by id.
 	 *

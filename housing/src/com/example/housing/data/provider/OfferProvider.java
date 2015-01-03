@@ -40,6 +40,12 @@ public class OfferProvider extends BaseProvider<Offer> {
 		return super.update(offer); //true bei Erfolg, false bei Fehler
 		
 	}
+	
+	public boolean removeOffer(Offer offer) {
+		
+		return super.delete(offer); //true bei Erfolg, false bei Fehler
+		
+	}
 
 	/**
 	 * Find by id.
