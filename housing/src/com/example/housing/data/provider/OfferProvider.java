@@ -34,6 +34,12 @@ public class OfferProvider extends BaseProvider<Offer> {
 		}
 
 	}
+	
+	public boolean alterOffer(Offer offer) {
+		
+		return super.update(offer); //true bei Erfolg, false bei Fehler
+		
+	}
 
 	/**
 	 * Find by id.

@@ -48,6 +48,12 @@ public class UserProvider extends BaseProvider<User>{
 
 	}
 	
+	public boolean alterUser(User user) {
+		
+		return super.update(user); //true bei Erfolg, false bei Fehler
+		
+	}
+	
 	/**
 	 * Find by id.
 	 *

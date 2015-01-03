@@ -313,6 +313,7 @@ public class Registrierung extends VerticalLayout implements View{
 			public void buttonClick(ClickEvent event) {
 
 				//TODO Registrierung
+				//neuen User in die DB speichern mit:   new UserProvider().addUser(newUser);   (-> also User-Objekt "newUser" hier schon komplett instantiieren!)
 				Notification.show("Die Registrierung war erfolgreich. Sie können sich jetzt anmelden.",Type.HUMANIZED_MESSAGE);
 
 			}
