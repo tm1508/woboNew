@@ -29,7 +29,7 @@ public class OfferProvider extends BaseProvider<Offer> {
 	public void addOffer(Offer newOffer) {
 		if (!super.save(newOffer)) {
 
-			System.out.println("Datensatz konnte nicht in die Datenbank gespeichert werden!");
+			System.out.println("Neues Angebot konnte nicht in die Datenbank gespeichert werden!");
 
 		}
 

@@ -7,6 +7,7 @@ import javax.persistence.PersistenceUnit;
 import javax.persistence.Query;
 
 import com.example.housing.HousingUI;
+import com.example.housing.data.model.Offer;
 import com.example.housing.data.model.User;
 import com.vaadin.ui.UI;
 
@@ -36,6 +37,15 @@ public class UserProvider extends BaseProvider<User>{
 		return (User) q.getResultList().get(0);
 		//return (User) q.getSingleResult();*/
 		return em.find(User.class, search);
+	}
+	
+	public void addUser(User newUser) {
+		if (!super.save(newUser)) {
+
+			System.out.println("Neuer User konnte nicht in die Datenbank gespeichert werden!");
+
+		}
+
 	}
 	
 	/**
