@@ -6,8 +6,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.GroupLayout.Alignment;
+import javax.swing.ImageIcon;
 
 import com.example.housing.data.model.Offer;
+import com.example.housing.data.model.Photo;
 import com.vaadin.event.LayoutEvents.LayoutClickEvent;
 import com.vaadin.event.LayoutEvents.LayoutClickListener;
 import com.vaadin.navigator.View;
@@ -17,6 +19,7 @@ import com.vaadin.server.VaadinService;
 import com.vaadin.server.VaadinSession;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.CheckBox;
+import com.vaadin.ui.Component;
 import com.vaadin.ui.DateField;
 import com.vaadin.ui.GridLayout;
 import com.vaadin.ui.HorizontalLayout;
@@ -144,10 +147,21 @@ public class Suchergebnis extends VerticalLayout implements View {
 
 		GridLayout ergebnisLayout = new GridLayout(6,3);
 		ergebnisLayout.setMargin(false);
+		//pictures
+//		List<Photo> pictures;
+//		pictures = o.getPhotos();
+//		if(pictures.size()>0){
+//		Photo ph = pictures.get(0);
+//		byte[] by = ph.getPhoto();
+//		ImageIcon im2 = new ImageIcon(by);		
+//		ergebnisLayout.addComponent((Component) im2,0,0,2,2);
+//		}else{
+			//TODO
 		String basepath = VaadinService.getCurrent().getBaseDirectory().getAbsolutePath();
 		FileResource resource = new FileResource(new File(basepath + "/WEB-INF/image/dh.jpg"));
 		Image image = new Image("",resource);
 		ergebnisLayout.addComponent(image,0,0,2,2);
+//		}
 		
 		String title = o.getTitle();
 		Label l = new Label(title + " in "+ o.getCity());
