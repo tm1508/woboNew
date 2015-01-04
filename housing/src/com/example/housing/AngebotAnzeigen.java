@@ -58,7 +58,8 @@ public class AngebotAnzeigen extends VerticalLayout implements View {
 			navPublic.setVisible(true);
 		}
 		OfferProvider op = new OfferProvider();
-		Offer offer = op.getOfferById(idOffer);
+		//Offer offer = op.getOfferById(idOffer);
+		Offer offer = op.findById(idOffer);
 		setContent(offer);
 		addComponent(content);
 

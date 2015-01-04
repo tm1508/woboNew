@@ -34,6 +34,7 @@ public class Startseite extends VerticalLayout implements View{
 	public void enter(ViewChangeEvent event) {
 		// TODO Auto-generated method stub
 
+		
 	}
 	
 	/**
@@ -45,6 +46,9 @@ public class Startseite extends VerticalLayout implements View{
 		
 		NavigationPublic navPublic = new NavigationPublic();
 		addComponent(navPublic);
+		
+		//Listenzeile list = new Listenzeile();
+		//addComponent(list);
 		
 		//falls der Benutzer eingelogt ist verändert sich die Navigation
 		if(VaadinSession.getCurrent().getAttribute("login").equals(true)){

@@ -1,5 +1,7 @@
 package com.example.housing;
-
+/**
+ * Registrierung der Nutzer, enthaelt ein Registrierungsformular
+ */
 import com.example.housing.data.model.User;
 import com.example.housing.utility.DHStudValidator;
 import com.example.housing.utility.SendEMail;
@@ -330,6 +332,9 @@ public class Registrierung extends VerticalLayout implements View{
 				if(validate){//falls alle Felder richtig ausgefüllt wurden
 					
 					//Werte in der DB speichern
+					//TODO Registrierung
+					//neuen User in die DB speichern mit:   new UserProvider().addUser(newUser);   (-> also User-Objekt "newUser" hier schon komplett instantiieren!)
+					
 					safeToDB();
 					
 					//E-Mail an den Nutzer senden
@@ -451,3 +456,4 @@ public class Registrierung extends VerticalLayout implements View{
 	}
 
 }
+

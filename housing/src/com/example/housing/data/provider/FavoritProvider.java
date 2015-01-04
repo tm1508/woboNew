@@ -5,6 +5,7 @@ import java.util.List;
 import javax.persistence.Query;
 
 import com.example.housing.data.model.Favorit;
+import com.example.housing.data.model.Offer;
 import com.example.housing.data.model.User;
 
 // TODO: Auto-generated Javadoc
@@ -19,6 +20,20 @@ public class FavoritProvider extends BaseProvider<Favorit>{
 	@Override
 	protected Class<Favorit> getEntityClass() {
 		return Favorit.class;
+	}
+	
+	public void addFavorit(User user, Offer offer) {
+		
+		Favorit newFav = new Favorit();
+		newFav.setFavorit_idUser(user);
+		newFav.setFavorit_idOffer(offer);
+		
+		if (!super.save(newFav)) {
+
+			System.out.println("Angebot konnte nicht zu den Favoriten hinzugefügt werden.");
+
+		}
+
 	}
 	
 	/**
