@@ -23,8 +23,8 @@ public class SendEMail {
 	
 	//Methode wird nur zum Testen verwendet!!!
 	public static void main(String args[]){
-		String to = "kochbuchAG@web.de";
-		String from = "kochbuchAG@web.de";
+		String to = "wohnungsboerse_dh@web.de";
+		String from = "wohnungsboerse_dh@web.de";
 		String subject = "Test";
 		String text = "123";
 		send(to, from, subject, text);
@@ -51,7 +51,7 @@ public class SendEMail {
 		Authenticator auth = new javax.mail.Authenticator() {
 			@Override
 			public PasswordAuthentication getPasswordAuthentication() {
-				return new PasswordAuthentication("kochbuchAG@web.de", "kochbuch");// Unsere E-Mail-Adresse und unser Passwort
+				return new PasswordAuthentication("wohnungsboerse_dh@web.de", "wohnungsboerse");// Unsere E-Mail-Adresse und unser Passwort
 			}
 		};
 		
@@ -61,7 +61,7 @@ public class SendEMail {
 		// neue Message erzeugen
 		SMTPMessage message = (SMTPMessage) new SMTPMessage(session);
 		try {
-			message.setEnvelopeFrom("kochbuchAG@web.de");// tatsächlicher Absender (E-Mail wird von uns an uns selbst geschickt, unter dem Namen bzw. der E-Mail-Adresse des Nutzers)
+			message.setEnvelopeFrom("wohnungsboerse_dh@web.de");// tatsächlicher Absender (E-Mail wird von uns an uns selbst geschickt, unter dem Namen bzw. der E-Mail-Adresse des Nutzers)
 			message.setFrom(new InternetAddress(from));// E-Mail-Adresse des Benutzers
 			message.setRecipients(Message.RecipientType.TO,InternetAddress.parse(to));// E-Mail-Adresse des Empfängers
 			message.setSubject(subject);// Betreff
