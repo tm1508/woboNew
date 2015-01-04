@@ -5,6 +5,7 @@ import java.sql.Date;
 
 import javax.swing.GroupLayout.Alignment;
 
+import com.example.housing.data.model.Offer;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.server.FileResource;
@@ -33,9 +34,11 @@ public class Einzelansicht extends VerticalLayout implements View {
 	/**
 	 * Instantiates a new einzelansicht.
 	 */
-	//TODO: Übergabe Parameter Offer-Id
-	public Einzelansicht(){
 	
+	Offer angebot;
+	public Einzelansicht(Offer einzelAngebot){
+	this.angebot = einzelAngebot;
+		
 	content = new VerticalLayout();
 //	content = (VerticalLayout)this;
 
@@ -85,15 +88,15 @@ public class Einzelansicht extends VerticalLayout implements View {
 
 			
 		//titel
-		String titel = "Helle 3 ZKB Wohnung in Karlsruhe Oststadt";
-		Label lTitel= new Label(titel);
+		String titel = angebot.getTitle();
+		Label lTitel= new Label(titel + " in " +angebot.getCity());
 		lTitel.addStyleName("ImportantTitle");
 		content.addComponent(lTitel);
 		
 		//adresse
-		String adress = "Teststraße 123";
-		String zip = "76227";
-		String city = "Karlsruhe";
+		String adress = angebot.getStreet();
+		String zip = angebot.getZip();
+		String city = angebot.getCity();
 		Label lAdress = new Label(adress + "   " + zip + "   " + city);
 
 		content.addComponent(lAdress);
@@ -134,45 +137,50 @@ public class Einzelansicht extends VerticalLayout implements View {
 		GridLayout gridInfos = new GridLayout(2,15); 
 		gridInfos.setWidth("60%");
 		content.addComponent(gridInfos);
+		
 		//Date
 		
 	    DateField startDate = new DateField();
-	    startDate.setValue(new Date(2014,12,05));
+	    startDate.setValue(angebot.getStartDate());
 	    startDate.setEnabled(false);
 	    gridInfos.addComponent(new Label("Startdatum"), 0, 0);
 	    gridInfos.addComponent(startDate, 1,0);
 		    
 	    DateField endDate = new DateField();
-	    endDate.setValue(new Date(2015,02,18));
+	    endDate.setValue(angebot.getEndDate());
 	    endDate.setEnabled(false);
 	    gridInfos.addComponent(new Label("Enddatum"), 0,1);
 	    gridInfos.addComponent(endDate, 1,1);
 	    
 	    //Size
-		float sm =  (float) 80.12;
+		float sm = angebot.getSquareMetre();
 		String sSm = Float.toString(sm) + "m²";
 		
         gridInfos.addComponent(new Label("Größe"),0,2);
         gridInfos.addComponent(new Label(sSm),1 , 2);
         
         //Price
-    	float price =  (float) 400.50;
+    	float price =  angebot.getPrice();
 		String sPrice = Float.toString(price) + " €";
 		
         gridInfos.addComponent(new Label("Warmmiete"),0,3);
         gridInfos.addComponent(new Label(sPrice),1 , 3);
         
-        //IsShared
-        CheckBox isShared = new CheckBox("");       
-        gridInfos.addComponent(new Label("WG"), 0, 4);
-        gridInfos.addComponent(isShared, 1, 4);
-        isShared.setEnabled(false);
-        int i = 1;
-        isShared.setValue( i!= 0);
-        
-       
+        //IsShared       
+    	int a = angebot.getType();
+		String s;
+		if(a ==1){
+			s = "WG";
+		}else if(a ==2){
+			s = "Wohnung";
+		}else{
+			s="";
+		}
+        gridInfos.addComponent(new Label("Art der Unterkunft: "), 0, 4);
+        gridInfos.addComponent(new Label(s), 1, 4);
+     
         //Number of Roomates 
-        int number = 5;
+        int number = angebot.getNumberOfRoommate();
         gridInfos.addComponent(new Label("Anzahl Mitbewohner"), 0, 5);
         gridInfos.addComponent(new Label(Integer.toString(number)), 1, 5);
         
@@ -181,44 +189,39 @@ public class Einzelansicht extends VerticalLayout implements View {
         gridInfos.addComponent(new Label("Internet"), 0, 6);
         gridInfos.addComponent(hasInternet, 1,6);
         hasInternet.setEnabled(false);
-        int j = 1;
-        hasInternet.setValue( j!= 0);
+        hasInternet.setValue( angebot.isInternet());
         
         //furnished       
         CheckBox isFurnished = new CheckBox("");       
         gridInfos.addComponent(new Label("Möbliert"), 0, 7);
         gridInfos.addComponent(isFurnished, 1,7);
         isFurnished.setEnabled(false);
-        int k = 1;
-        isFurnished.setValue( k!= 0);
+        isFurnished.setValue( angebot.isFurnished());
         
         //kitchen       
         CheckBox useKitchen = new CheckBox("");       
         gridInfos.addComponent(new Label("Küchenmitbenutzung"), 0, 8);
         gridInfos.addComponent(useKitchen, 1,8);
         useKitchen.setEnabled(false);
-        int c = 1;
-        useKitchen.setValue( c!= 0);
+        useKitchen.setValue( angebot.isKitchen());
        
         //smoker
         CheckBox smokingAllowed = new CheckBox("");       
         gridInfos.addComponent(new Label("Raucher"), 0, 9);
         gridInfos.addComponent(smokingAllowed, 1,9);
         smokingAllowed.setEnabled(false);
-        int m = 0;
-        smokingAllowed.setValue( m!= 0);
+        smokingAllowed.setValue(angebot.isSmoker());
         
         //pets       
         CheckBox petsAllowed = new CheckBox("");       
         gridInfos.addComponent(new Label("Haustiere erlaubt"), 0, 10);
         gridInfos.addComponent(petsAllowed, 1,10);
         petsAllowed.setEnabled(false);
-        int n = 1;
-        petsAllowed.setValue( n!= 0);
+        petsAllowed.setValue(angebot.isPets());
         
         //male / female   
         Label maleFemale = new Label(""); 
-        int q = 1;
+        int q = angebot.getGender();
         if( q!= 0){
     	   maleFemale.setValue("Frauen-WG");
         }
@@ -230,7 +233,7 @@ public class Einzelansicht extends VerticalLayout implements View {
 
         
         //bond
-        float bond =  (float) 600.50;
+        float bond =  angebot.getBond();
 		String sBond = Float.toString(bond)+ " €";
 		
         Label lBond = new Label("Kaution");
@@ -240,7 +243,7 @@ public class Einzelansicht extends VerticalLayout implements View {
         
         //text
         TextArea t = new TextArea();
-        String text = "Dies ist eine schöne Wohnung";
+        String text = angebot.getText();
        
         t.setValue(text);
         t.setEnabled(false);

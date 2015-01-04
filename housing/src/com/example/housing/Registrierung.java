@@ -361,6 +361,7 @@ public class Registrierung extends VerticalLayout implements View{
 						Notification.show("Die Registrierung war nicht erfolgreich. Ein Nutzer mit dieser E-Mail-Adresse existiert bereits.",Type.HUMANIZED_MESSAGE);//Meldung an den Nutzer
 					}
 					
+
 				}else{//Registrierung nicht erfolgreich
 					Notification.show("Die Registrierung war nicht erfolgreich. Bitte überprüfen Sie Ihre Eingaben.",Type.HUMANIZED_MESSAGE);//Meldung an den Nutzer
 				}

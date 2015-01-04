@@ -1,5 +1,7 @@
 package com.example.housing.data.provider;
 
+import java.util.List;
+
 import javax.persistence.EntityManager;
 import javax.persistence.Persistence;
 import javax.persistence.PersistenceContext;
@@ -55,6 +57,14 @@ public class UserProvider extends BaseProvider<User>{
 	}
 	
 	public boolean removeUser(User user) {
+		
+		List<Offer> offers = user.getOffers();
+		OfferProvider offerProv = new OfferProvider();
+		for(Offer o : offers) {
+			
+			offerProv.removeOffer(o);
+			
+		}
 		
 		return super.delete(user); //true bei Erfolg, false bei Fehler
 		
