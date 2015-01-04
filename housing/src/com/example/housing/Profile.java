@@ -1,6 +1,7 @@
 package com.example.housing;
 
 import com.example.housing.data.model.User;
+import com.example.housing.data.provider.UserProvider;
 import com.example.housing.utility.DHStudValidator;
 import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;
@@ -394,8 +395,23 @@ public class Profile extends VerticalLayout implements View{
 				boolean validate = validate();
 				if(validate){//falls alle Felder richtig ausgefüllt wurden
 					
-					//TODO Werte in der DB speichern
-					//TODO neues User-Objekt in der Session speichern
+					User u = new User();
+					u.setFirstname(prename.getValue());
+					u.setLastname(lastname.getValue());
+					u.setEmail(email_1.getValue());
+					u.setPassword(password_1.getValue());
+					u.setMobile(handy.getValue());
+					u.setActivated(false);
+					if(dhstud.getValue()){
+						u.setAccessLevel(1);
+					}else{
+						u.setAccessLevel(0);
+					}
+					//Werte in der DB speichern
+					new UserProvider().alterUser(u);
+					
+					//neues User-Objekt in der Session speichern
+					VaadinSession.getCurrent().setAttribute(User.class, u);//User-Objekt in der Session speichern
 					
 					//Navigation zur Profilseite
 					String name = "Profile";
