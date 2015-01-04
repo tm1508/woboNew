@@ -98,15 +98,10 @@ public class LoginWindow extends Window{
 					try{
 						
 						//1. User aus der Datenbank auslesen
-						//TODO Datenbankanbindung
-						User u = new UserProvider().findByEmail("max.mustermann@test.de");
-						System.out.println(u.isActivated());
-						//User u = test();
+						User u = new UserProvider().findByEmail(email_1.getValue());
 
 						//2. Prüfen ob das Konto aktiviert ist
 						if(!u.isActivated()){
-							//System.out.println(Page.getCurrent().getLocation().toString());
-							//System.out.println(Page.getCurrent().getUriFragment().toString());
 							
 							String[] msgs = Page.getCurrent().getUriFragment().split("/");//Request Parameter auslesen (wurde bei der Registrierung verschickt)
 							
@@ -114,8 +109,9 @@ public class LoginWindow extends Window{
 								Notification.show("Login fehlgeschlagen!","Ihr Konto ist nicht freigeschalten. Bitte folgen Sie dem Link in der E-Mail, die Sie erhalten haben.", Type.HUMANIZED_MESSAGE);
 							}else{
 								if(email_1.getValue().equals(u.getEmail()) && email_1.getValue().equals(msgs[1])){//richtiger Parameter wurde übergeben
-									//TODO Aktivierung in DB speichern
+									//Aktivierung in DB speichern
 									u.setActivated(true);
+									new UserProvider().alterUser(u);
 								}else{
 									Notification.show("Login fehlgeschlagen!","Ihr Konto ist nicht freigeschalten. Bitte folgen Sie dem Link in der E-Mail, die Sie erhalten haben.", Type.HUMANIZED_MESSAGE);
 								}
