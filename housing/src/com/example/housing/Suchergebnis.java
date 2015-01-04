@@ -110,6 +110,7 @@ public class Suchergebnis extends VerticalLayout implements View {
 		b.setBond((float)400.20);
 		b.setText("Tolle Wohnung mit super Blick über Karlsruhe");
 	
+		
 		angebote.add(b);
 		
 		Offer c = new Offer();
