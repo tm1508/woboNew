@@ -3,6 +3,7 @@ package com.example.housing;
  * Registrierung der Nutzer, enthaelt ein Registrierungsformular
  */
 import com.example.housing.data.model.User;
+import com.example.housing.data.provider.UserProvider;
 import com.example.housing.utility.DHStudValidator;
 import com.example.housing.utility.SendEMail;
 import com.vaadin.data.Property.ValueChangeEvent;
@@ -327,14 +328,24 @@ public class Registrierung extends VerticalLayout implements View{
 		//Abschließen der Registrierung
 		button.addClickListener(new Button.ClickListener() {
 			public void buttonClick(ClickEvent event) {
-				//Validierung der Felder
+				
+				User u = new User();
+				u.setFirstname("Max");
+				u.setLastname("Mustermann");
+				u.setAccessLevel(1);
+				u.setActivated(false);
+				u.setDhMail("max.mustermann@dh-karlsruhe.de");
+				u.setEmail("max.mustermann@web.de");
+				u.setPassword("12345");
+				u.setMobile("123456789");
+			
+				new UserProvider().addUser(u);
+				
+				/*//Validierung der Felder
 				boolean validate = validate();
 				if(validate){//falls alle Felder richtig ausgefüllt wurden
 					
 					//Werte in der DB speichern
-					//TODO Registrierung
-					//neuen User in die DB speichern mit:   new UserProvider().addUser(newUser);   (-> also User-Objekt "newUser" hier schon komplett instantiieren!)
-					
 					safeToDB();
 					
 					//E-Mail an den Nutzer senden
@@ -348,7 +359,7 @@ public class Registrierung extends VerticalLayout implements View{
 					Notification.show("Die Registrierung war erfolgreich. Sie können sich jetzt anmelden.",Type.HUMANIZED_MESSAGE);//Meldung an den Nutzer
 				}else{//Registrierung nicht erfolgreich
 					Notification.show("Die Registrierung war nicht erfolgreich. Bitte überprüfen Sie Ihre Eingaben.",Type.HUMANIZED_MESSAGE);//Meldung an den Nutzer
-				}
+				}*/
 			}
 		});
 		
@@ -370,8 +381,8 @@ public class Registrierung extends VerticalLayout implements View{
 		}else{
 			u.setAccessLevel(0);
 		}
-		//TODO entsprechende Methode in UserProvider aufrufen
-		
+		//neuen User in die DB speichern mit:   new UserProvider().addUser(newUser);   (-> also User-Objekt "newUser" hier schon komplett instantiieren!)
+		new UserProvider().addUser(u);
 	}
 
 	/**
