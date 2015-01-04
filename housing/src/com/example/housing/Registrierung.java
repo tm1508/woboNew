@@ -329,7 +329,7 @@ public class Registrierung extends VerticalLayout implements View{
 		button.addClickListener(new Button.ClickListener() {
 			public void buttonClick(ClickEvent event) {
 				
-				User u = new User();
+				/*User u = new User();
 				u.setFirstname("Max");
 				u.setLastname("Mustermann");
 				u.setAccessLevel(1);
@@ -339,27 +339,31 @@ public class Registrierung extends VerticalLayout implements View{
 				u.setPassword("12345");
 				u.setMobile("123456789");
 			
-				new UserProvider().addUser(u);
+				new UserProvider().addUser(u);*/
 				
-				/*//Validierung der Felder
+				//Validierung der Felder
 				boolean validate = validate();
 				if(validate){//falls alle Felder richtig ausgefüllt wurden
+					if(new UserProvider().userExists(email_1.getValue().toString()) == false){//der Nutzer existiert noch nicht
+						//Werte in der DB speichern
+						safeToDB();
+						
+						//E-Mail an den Nutzer senden
+						sendEMail();
+						
+						//Navigation zur Startseite
+						String name = "Startseite";
+						getUI().getNavigator().addView(name, new Startseite());
+						getUI().getNavigator().navigateTo(name);
+						
+						Notification.show("Die Registrierung war erfolgreich. Sie können sich jetzt anmelden.",Type.HUMANIZED_MESSAGE);//Meldung an den Nutzer
+					}else{//ein Nutzer mit dieser E-Mail-Adresse existiert bereits
+						Notification.show("Die Registrierung war nicht erfolgreich. Ein Nutzer mit dieser E-Mail-Adresse existiert bereits.",Type.HUMANIZED_MESSAGE);//Meldung an den Nutzer
+					}
 					
-					//Werte in der DB speichern
-					safeToDB();
-					
-					//E-Mail an den Nutzer senden
-					sendEMail();
-					
-					//Navigation zur Startseite
-					String name = "Startseite";
-					getUI().getNavigator().addView(name, new Startseite());
-					getUI().getNavigator().navigateTo(name);
-					
-					Notification.show("Die Registrierung war erfolgreich. Sie können sich jetzt anmelden.",Type.HUMANIZED_MESSAGE);//Meldung an den Nutzer
 				}else{//Registrierung nicht erfolgreich
 					Notification.show("Die Registrierung war nicht erfolgreich. Bitte überprüfen Sie Ihre Eingaben.",Type.HUMANIZED_MESSAGE);//Meldung an den Nutzer
-				}*/
+				}
 			}
 		});
 		
@@ -463,7 +467,7 @@ public class Registrierung extends VerticalLayout implements View{
 						+"http://localhost:8080/housing/servlet/com.example.housing.HousingUI$Servlet#!Startseite/"+email_1.getValue()
 						+ "</span><br/><br/>Mit freundlichen Grüßen<br/>ihr DHBW Wohungsbörsen-Team<p/><span style='color: #e2001a' 'font-family: Arial, sans-serif''font-size: 8pt' >Anschrift:<br/>DHBW KarlsruheBaden-Wuerttemberg Cooperative State University Karlsruhe<br />Erzbergerstraße 121 . 76133 Karlsruhe <br />Postfach 10 01 36 . 76231 Karlsruhe   <br />Telefon +49.721.9735-5 <br />Telefax +49.721.9735-600 <br />E-Mail: dreischer@dhbw-karlsruhe.de<br /><br/><br/>Ansprechpartner:<br/> <br />Dr. Anita Dreischer<br /><br/><b>Copyright DHBW Karlsruhe. Alle Rechte vorbehalten.</b></span>";
 		//E-Mail senden
-		SendEMail.send(email_1.getValue(), "KochbuchAG@web.de", "Danke für Ihre Registrierung", body);
+		SendEMail.send(email_1.getValue(), "wohnungsboerse_dh@web.de", "Danke für Ihre Registrierung", body);
 	}
 
 }

@@ -76,4 +76,13 @@ public class UserProvider extends BaseProvider<User>{
 		return (User) q.getSingleResult();
 	}
 	
+	public boolean userExists(String email){
+		try{
+			this.findByEmail(email);
+			return true;//es existiert ein Benutzer mit dieser E-Mail-Adresse
+		}catch(Exception e){
+			return false;//Fehlermeldung -> ein Nutzer mit dieser E-Mail-Adresse existiert noch nicht
+		}
+	}
+	
 }
