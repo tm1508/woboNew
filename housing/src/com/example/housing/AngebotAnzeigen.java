@@ -11,6 +11,7 @@ import com.vaadin.ui.Button;
 import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.DateField;
+import com.vaadin.ui.GridLayout;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.RichTextArea;
@@ -60,7 +61,6 @@ public class AngebotAnzeigen extends VerticalLayout implements View {
 			navPublic.setVisible(true);
 		}
 		OfferProvider op = new OfferProvider();
-		//Offer offer = op.getOfferById(idOffer);
 		Offer offer = op.findById(idOffer);
 		setContent(offer);
 		addComponent(content);
@@ -92,181 +92,152 @@ public class AngebotAnzeigen extends VerticalLayout implements View {
 	}
 	/**
 	 * Sets the content.
-	 */
+	 */	
 	public void setContent(Offer offer) {
 
 		content = new VerticalLayout();
 		content.setMargin(true);
 
+		GridLayout gridAngebot = new GridLayout(5,16); 
+		gridAngebot.setSpacing(true);
+		//gridSuche.setWidth("40%");
+		//gridAngebot.addStyleName("AngebotAnzeigen");
+		
 		// Titel + Adresse
-		HorizontalLayout hl = new HorizontalLayout();
-		// hl.setWidth("100%");
 		Label ltitel = new Label("Titel");
-		ltitel.setWidth("10%");
-		TextField titel = new TextField();
+		ltitel.addStyleName("AbschnittLabel");
+		
+		Label titel = new Label();
 		titel.setValue(offer.getTitle());
-		titel.setEnabled(false);
-		titel.setWidth("90%");
-		hl.addComponent(ltitel);
-		hl.addComponent(titel);
+		gridAngebot.addComponent(ltitel, 0,0);
+		gridAngebot.addComponent(titel, 1, 0);
+		
+
 		Label adress = new Label("Adresse");
-		adress.setEnabled(false);
-		TextField street = new TextField("Straße, Hausnummer");
-		street.setValue(offer.getStreet());
-		street.setEnabled(false);
-		HorizontalLayout hl0 = new HorizontalLayout();
-		hl0.setWidth("50%");
-		TextField zip = new TextField("PLZ");
-		zip.setValue(offer.getZip());
-		zip.setWidth("50%");
-		zip.setEnabled(false);
-		TextField city = new TextField("Ort");
-		city.setValue(offer.getCity());
-		city.setWidth("50%");
-		city.setEnabled(false);
-		hl0.addComponent(zip);
-		hl0.addComponent(city);
+		adress.addStyleName("AbschnittLabel");
+		gridAngebot.addComponent(adress, 0, 1);
+		
+		Label street = new Label("Straße, Hausnummer");
+		Label streetValue = new Label(offer.getStreet());
+		gridAngebot.addComponent(street,0,2);
+		gridAngebot.addComponent(streetValue, 1, 2);
+		
+		
+		Label zip = new Label("PLZ");
+		Label zipValue = new Label(offer.getZip());
+		gridAngebot.addComponent(zip, 0, 3);
+		gridAngebot.addComponent(zipValue,1,3);
+		Label city = new Label("Ort");
+		Label cityValue = new Label(offer.getCity());
+		gridAngebot.addComponent(city, 2, 3);
+		gridAngebot.addComponent(cityValue,3,3);
 
-		content.addComponent(hl);
-		content.addComponent(new Label());
-		content.addComponent(adress);
-		content.addComponent(new Label());
-		content.addComponent(street);
-		content.addComponent(hl0);
-		content.addComponent(new Label());
+		// Allgemeine Informationen		
+		Label allgInfo = new Label("Allgemeine Angaben");
+		allgInfo.addStyleName("AbschnittLabel");
+		gridAngebot.addComponent(allgInfo,0,4);
 
-		// Allgemeine Informationen
-		HorizontalLayout label = new HorizontalLayout();
-		label.setWidth("100%");
-		HorizontalLayout z1 = new HorizontalLayout();
-		z1.setWidth("100%");
-		HorizontalLayout z2 = new HorizontalLayout();
-		z2.setWidth("100%");
-		HorizontalLayout z3 = new HorizontalLayout();
-		z3.setWidth("100%");
-		Label allgInfo = new Label("Allgemeine Angaben zur Wohnung");
-		label.addComponent(allgInfo);
-		ComboBox isShared = new ComboBox("Art");
-		isShared.addItem("Wohnung");
-		isShared.addItem("Zimmer");
-		isShared.addItem("WG-Zimmer");
+		Label isShared = new Label("Art");
+		Label isSharedValue = new Label();
 		if(offer.getType()==1)
-			isShared.setNullSelectionItemId("Wohnung");
+			isSharedValue.setValue("Wohnung");
 		else if(offer.getType()==2)
-			isShared.setNullSelectionItemId("Zimmer");
+			isSharedValue.setValue("Zimmer");
 		else if(offer.getType()==3)
-			isShared.setNullSelectionItemId("WG-Zimmer");		
-		isShared.setEnabled(false);
-		z1.addComponent(isShared);
+			isSharedValue.setValue("WG-Zimmer");
+
+		gridAngebot.addComponent(isShared,0,5);
+		gridAngebot.addComponent(isSharedValue,1,5);
 		
-		TextField squareMetre = new TextField("Größe (in m²)");		
-		squareMetre.setValue(String.valueOf(offer.getSquareMetre())); 
-		squareMetre.setEnabled(false);
-		z2.addComponent(squareMetre);
+		Label squareMetre = new Label("Größe (in m²)");		
+		Label squareMetreValue = new Label("26"); 
+		gridAngebot.addComponent(squareMetre,0,6);
+		gridAngebot.addComponent(squareMetreValue,1,6);
 		
-		TextField roomMates = new TextField("Anzahl Mitbewohner:");
-		roomMates.setValue(String.valueOf(offer.getNumberOfRoommate()));
-		roomMates.setEnabled(false);
-		z3.addComponent(roomMates);
+		Label roomMates = new Label("Anzahl Mitbewohner:");
+		Label roomMatesValue= new Label(String.valueOf(offer.getNumberOfRoommate()));
+		gridAngebot.addComponent(roomMates,0,7);
+		gridAngebot.addComponent(roomMatesValue,1,7);		
 		
+		// Kosten
+		Label costs = new Label("Kosten");
+		costs.addStyleName("AbschnittLabel");
+		gridAngebot.addComponent(costs, 3,4);
+		
+		Label price = new Label("Warmmiete:");
+		Label priceValue = new Label(String.valueOf(offer.getPrice()));
+		gridAngebot.addComponent(price, 3, 5);
+		gridAngebot.addComponent(priceValue, 4, 5);
+		
+		Label bond = new Label("Kaution:");
+		Label bondValue = new Label(String.valueOf(offer.getBond()));
+		gridAngebot.addComponent(bond,3,6);
+		gridAngebot.addComponent(bondValue,4,6);
+
+		//Verfügbarkeit
 		Label date = new Label("Verfügbarkeit");
+		date.addStyleName("AbschnittLabel");
 		DateField startDate = new DateField("von:");
 		startDate.setValue(offer.getStartDate());
 		startDate.setEnabled(false);
 		DateField endDate = new DateField("bis:");
 		endDate.setValue(offer.getEndDate());
 		endDate.setEnabled(false);
-		HorizontalLayout hl1 = new HorizontalLayout();
-		hl1.setWidth("50%");
-		hl1.addComponent(startDate);
-		hl1.addComponent(endDate);
-
-		// Kosten
-		Label costs = new Label("Kosten");
-		label.addComponent(costs);
-		TextField price = new TextField("Warmmiete:");
-		price.setValue(String.valueOf(offer.getPrice()));
-		price.setEnabled(false);
-		z1.addComponent(price);
-		TextField bond = new TextField("Kaution:");
-		price.setValue(String.valueOf(offer.getBond()));
-		bond.setEnabled(false);
-		z2.addComponent(bond);
-		TextField cost = new TextField("Sonstige Kosten:");
-		cost.setEnabled(false);
-		z3.addComponent(cost);
-
-		content.addComponent(label);
-		content.addComponent(new Label());
-		content.addComponent(z1);
-		content.addComponent(z2);
-		content.addComponent(z3);
-		content.addComponent(new Label());
-
-		content.addComponent(date);
-		content.addComponent(hl1);
-		content.addComponent(new Label());
+		gridAngebot.addComponent(date,0,8);
+		gridAngebot.addComponent(startDate,0,9);
+		gridAngebot.addComponent(endDate,2,9);
 
 		// weitere Angaben
 		Label angaben = new Label("Weitere Details");
-		HorizontalLayout hl2 = new HorizontalLayout();
-		hl2.setWidth("100%");
+		angaben.addStyleName("AbschnittLabel");
+		gridAngebot.addComponent(angaben,0,10);
+		
 		CheckBox internet = new CheckBox("Internet");
 		internet.setValue(offer.isInternet());
-		internet.setWidth("20%");
-		internet.setEnabled(false);
+		internet.setReadOnly(true);
 		CheckBox furnished = new CheckBox("Möbliert");
 		furnished.setValue(offer.isFurnished());
-		furnished.setWidth("20%");
-		furnished.setEnabled(false);
+		furnished.setReadOnly(true);
 		CheckBox kitchen = new CheckBox("Küche");
 		kitchen.setValue(offer.isKitchen());
-		kitchen.setWidth("20%");
-		kitchen.setEnabled(false);
+		kitchen.setReadOnly(true);
 		CheckBox smoker = new CheckBox("Raucher");
 		smoker.setValue(offer.isSmoker());
-		smoker.setWidth("20%");
-		smoker.setEnabled(false);
+		smoker.setReadOnly(true);
 		CheckBox pets = new CheckBox("Haustiere");
 		pets.setValue(offer.isPets());
-		pets.setWidth("20%");
-		pets.setEnabled(false);
-		ComboBox genders = new ComboBox("Bevorzugtes Geschlecht:");
-		genders.addItem("egal");
-		genders.addItem("männlich");
-		genders.addItem("weiblich");
+		pets.setReadOnly(true);
+		Label genders = new Label("Bevorzugtes Geschlecht:");
+		Label gendersValue = new Label();
 		if(offer.getGender()==1)
-			genders.setNullSelectionItemId("egal");
+			gendersValue.setValue("egal");
 		else if(offer.getGender()==2)
-			genders.setNullSelectionItemId("männlich");
+			gendersValue.setValue("männlich");
 		else if(offer.getGender()==3)
-			genders.setNullSelectionItemId("weiblich");
-		genders.setEnabled(false);
+			gendersValue.setValue("weiblich");
+		
 
-		hl2.addComponent(internet);
-		hl2.addComponent(furnished);
-		hl2.addComponent(kitchen);
-		hl2.addComponent(smoker);
-		hl2.addComponent(pets);
-		content.addComponent(angaben);
-		content.addComponent(new Label());
-		content.addComponent(hl2);
-		content.addComponent(new Label());
-		content.addComponent(genders);
-		content.addComponent(new Label());
+
+		gridAngebot.addComponent(internet,0,12);
+		gridAngebot.addComponent(furnished,1,12);
+		gridAngebot.addComponent(kitchen,2,12);
+		gridAngebot.addComponent(smoker,3,12);
+		gridAngebot.addComponent(pets,4,12);
+		gridAngebot.addComponent(genders,0,11);
+		gridAngebot.addComponent(gendersValue,1,11);
 
 		// Anzeigetext
 		Label anzeigetext = new Label("Anzeigetext");
+		anzeigetext.addStyleName("AbschnittLabel");
 		Label text = new Label(offer.getText());
 		text.setWidth("100%");
 		text.setEnabled(false);
-
-		content.addComponent(anzeigetext);
-		content.addComponent(new Label());
+		
+		gridAngebot.addComponent(anzeigetext,0,13);
+		content.addComponent(gridAngebot);
 		content.addComponent(text);
-		content.addComponent(new Label());
 
-		HorizontalLayout buttons = new HorizontalLayout();
+
 		Button change = new Button("bearbeiten");
 		change.addClickListener(new Button.ClickListener() {
 			public void buttonClick(ClickEvent event) {
@@ -275,185 +246,144 @@ public class AngebotAnzeigen extends VerticalLayout implements View {
 				getUI().getNavigator().navigateTo(name);
 			}
 		});
-
-		buttons.addComponent(change);
-		content.addComponent(buttons);
+		
+		content.addComponent(new Label());
+		content.addComponent(change);
+		
 
 	}
+	
 	public void setContent() {
 
 		content = new VerticalLayout();
 		content.setMargin(true);
 
+		GridLayout gridAngebot = new GridLayout(5,16); 
+		gridAngebot.setSpacing(true);
+		//gridSuche.setWidth("40%");
+		//gridAngebot.addStyleName("AngebotAnzeigen");
+		
 		// Titel + Adresse
-		HorizontalLayout hl = new HorizontalLayout();
-		// hl.setWidth("100%");
 		Label ltitel = new Label("Titel");
-		ltitel.setWidth("10%");
-		TextField titel = new TextField();
+		ltitel.addStyleName("AbschnittLabel");
+		
+		Label titel = new Label();
 		titel.setValue("Schönste Wohnung in Karlsruhe");
-		titel.setEnabled(false);
-		titel.setWidth("90%");
-		hl.addComponent(ltitel);
-		hl.addComponent(titel);
+		gridAngebot.addComponent(ltitel, 0,0);
+		gridAngebot.addComponent(titel, 1, 0);
+		
+
 		Label adress = new Label("Adresse");
-		adress.setEnabled(false);
+		adress.addStyleName("AbschnittLabel");
+		gridAngebot.addComponent(adress, 0, 1);
+		
 		Label street = new Label("Straße, Hausnummer");
-		street.setValue("Morgenstraße 100");
-		street.setEnabled(false);
-		HorizontalLayout hl0 = new HorizontalLayout();
-		hl0.setWidth("50%");
-		TextField zip = new TextField("PLZ");
-		zip.setValue("76137");
-		zip.setWidth("50%");
-		zip.setEnabled(false);
-		TextField city = new TextField("Ort");
-		city.setValue("Karlsruhe");
-		city.setWidth("50%");
-		city.setEnabled(false);
-		hl0.addComponent(zip);
-		hl0.addComponent(city);
+		Label streetValue = new Label("Morgenstraße 100");
+		gridAngebot.addComponent(street,0,2);
+		gridAngebot.addComponent(streetValue, 1, 2);
+		
+		
+		Label zip = new Label("PLZ");
+		Label zipValue = new Label("76137");
+		gridAngebot.addComponent(zip, 0, 3);
+		gridAngebot.addComponent(zipValue,1,3);
+		Label city = new Label("Ort");
+		Label cityValue = new Label("Karlsruhe");
+		gridAngebot.addComponent(city, 2, 3);
+		gridAngebot.addComponent(cityValue,3,3);
 
-		content.addComponent(hl);
-		content.addComponent(new Label());
-		content.addComponent(adress);
-		content.addComponent(new Label());
-		content.addComponent(street);
-		content.addComponent(hl0);
-		content.addComponent(new Label());
+		// Allgemeine Informationen		
+		Label allgInfo = new Label("Allgemeine Angaben");
+		allgInfo.addStyleName("AbschnittLabel");
+		gridAngebot.addComponent(allgInfo,0,4);
 
-		// Allgemeine Informationen
-		HorizontalLayout label = new HorizontalLayout();
-		label.setWidth("100%");
-		HorizontalLayout z1 = new HorizontalLayout();
-		z1.setWidth("100%");
-		HorizontalLayout z2 = new HorizontalLayout();
-		z2.setWidth("100%");
-		HorizontalLayout z3 = new HorizontalLayout();
-		z3.setWidth("100%");
-		Label allgInfo = new Label("Allgemeine Angaben zur Wohnung");
-		label.addComponent(allgInfo);
-		ComboBox isShared = new ComboBox("Art");
-		isShared.addItem("Wohnung");
-		isShared.addItem("Zimmer");
-		isShared.addItem("WG-Zimmer");
-		if(1==1)
-			isShared.setNullSelectionItemId("Wohnung");
-		else if(1==2)
-			isShared.setNullSelectionItemId("Zimmer");
-		else if(1==3)
-			isShared.setNullSelectionItemId("WG-Zimmer");		
-		isShared.setEnabled(false);
-		z1.addComponent(isShared);
+		Label isShared = new Label("Art");
+		Label isSharedValue = new Label("Wohnung");
+		gridAngebot.addComponent(isShared,0,5);
+		gridAngebot.addComponent(isSharedValue,1,5);
 		
-		TextField squareMetre = new TextField("Größe (in m²)");		
-		squareMetre.setValue("26"); 
-		squareMetre.setEnabled(false);
-		z2.addComponent(squareMetre);
+		Label squareMetre = new Label("Größe (in m²)");		
+		Label squareMetreValue = new Label("26"); 
+		gridAngebot.addComponent(squareMetre,0,6);
+		gridAngebot.addComponent(squareMetreValue,1,6);
 		
-		TextField roomMates = new TextField("Anzahl Mitbewohner:");
-		roomMates.setValue("0");
-		roomMates.setEnabled(false);
-		z3.addComponent(roomMates);
+		Label roomMates = new Label("Anzahl Mitbewohner:");
+		Label roomMatesValue= new Label("0");
+		gridAngebot.addComponent(roomMates,0,7);
+		gridAngebot.addComponent(roomMatesValue,1,7);		
 		
+		// Kosten
+		Label costs = new Label("Kosten");
+		costs.addStyleName("AbschnittLabel");
+		gridAngebot.addComponent(costs, 3,4);
+		
+		Label price = new Label("Warmmiete:");
+		Label priceValue = new Label("400");
+		gridAngebot.addComponent(price, 3, 5);
+		gridAngebot.addComponent(priceValue, 4, 5);
+		
+		Label bond = new Label("Kaution:");
+		Label bondValue = new Label("600");
+		gridAngebot.addComponent(bond,3,6);
+		gridAngebot.addComponent(bondValue,4,6);
+
+		//Verfügbarkeit
 		Label date = new Label("Verfügbarkeit");
+		date.addStyleName("AbschnittLabel");
 		DateField startDate = new DateField("von:");
 		startDate.setValue(new Date());
 		startDate.setEnabled(false);
 		DateField endDate = new DateField("bis:");
 		endDate.setValue(new Date());
 		endDate.setEnabled(false);
-		HorizontalLayout hl1 = new HorizontalLayout();
-		hl1.setWidth("50%");
-		hl1.addComponent(startDate);
-		hl1.addComponent(endDate);
-
-		// Kosten
-		Label costs = new Label("Kosten");
-		label.addComponent(costs);
-		TextField price = new TextField("Warmmiete:");
-		price.setValue("400");
-		price.setEnabled(false);
-		z1.addComponent(price);
-		TextField bond = new TextField("Kaution:");
-		price.setValue("550");
-		bond.setEnabled(false);
-		z2.addComponent(bond);
-		TextField cost = new TextField("Sonstige Kosten:");
-		cost.setEnabled(false);
-		z3.addComponent(cost);
-
-		content.addComponent(label);
-		content.addComponent(new Label());
-		content.addComponent(z1);
-		content.addComponent(z2);
-		content.addComponent(z3);
-		content.addComponent(new Label());
-
-		content.addComponent(date);
-		content.addComponent(hl1);
-		content.addComponent(new Label());
+		gridAngebot.addComponent(date,0,8);
+		gridAngebot.addComponent(startDate,0,9);
+		gridAngebot.addComponent(endDate,2,9);
 
 		// weitere Angaben
 		Label angaben = new Label("Weitere Details");
-		HorizontalLayout hl2 = new HorizontalLayout();
-		hl2.setWidth("100%");
+		angaben.addStyleName("AbschnittLabel");
+		gridAngebot.addComponent(angaben,0,10);
+		
 		CheckBox internet = new CheckBox("Internet");
 		internet.setValue(true);
-		internet.setWidth("20%");
-		internet.setEnabled(false);
+		internet.setReadOnly(true);
 		CheckBox furnished = new CheckBox("Möbliert");
 		furnished.setValue(false);
-		furnished.setWidth("20%");
-		furnished.setEnabled(false);
+		furnished.setReadOnly(true);
 		CheckBox kitchen = new CheckBox("Küche");
 		kitchen.setValue(true);
-		kitchen.setWidth("20%");
-		kitchen.setEnabled(false);
+		kitchen.setReadOnly(true);
 		CheckBox smoker = new CheckBox("Raucher");
 		smoker.setValue(false);
-		smoker.setWidth("20%");
-		smoker.setEnabled(false);
+		smoker.setReadOnly(true);
 		CheckBox pets = new CheckBox("Haustiere");
 		pets.setValue(false);
-		pets.setWidth("20%");
-		pets.setEnabled(false);
-		ComboBox genders = new ComboBox("Bevorzugtes Geschlecht:");
-		genders.addItem("egal");
-		genders.addItem("männlich");
-		genders.addItem("weiblich");
-		if(1==1)
-			genders.setNullSelectionItemId("egal");
-		else if(1==2)
-			genders.setNullSelectionItemId("männlich");
-		else if(1==3)
-			genders.setNullSelectionItemId("weiblich");
-		genders.setEnabled(false);
+		pets.setReadOnly(true);
+		Label genders = new Label("Bevorzugtes Geschlecht:");
+		Label gendersValue = new Label("egal");
 
-		hl2.addComponent(internet);
-		hl2.addComponent(furnished);
-		hl2.addComponent(kitchen);
-		hl2.addComponent(smoker);
-		hl2.addComponent(pets);
-		content.addComponent(angaben);
-		content.addComponent(new Label());
-		content.addComponent(hl2);
-		content.addComponent(new Label());
-		content.addComponent(genders);
-		content.addComponent(new Label());
+
+		gridAngebot.addComponent(internet,0,12);
+		gridAngebot.addComponent(furnished,1,12);
+		gridAngebot.addComponent(kitchen,2,12);
+		gridAngebot.addComponent(smoker,3,12);
+		gridAngebot.addComponent(pets,4,12);
+		gridAngebot.addComponent(genders,0,11);
+		gridAngebot.addComponent(gendersValue,1,11);
 
 		// Anzeigetext
 		Label anzeigetext = new Label("Anzeigetext");
+		anzeigetext.addStyleName("AbschnittLabel");
 		Label text = new Label("Hallo \n die Wohnung hat eine optimale Lage, mitten im Herzen der Südstadt....");
 		text.setWidth("100%");
 		text.setEnabled(false);
-
-		content.addComponent(anzeigetext);
-		content.addComponent(new Label());
+		
+		gridAngebot.addComponent(anzeigetext,0,13);
+		content.addComponent(gridAngebot);
 		content.addComponent(text);
-		content.addComponent(new Label());
 
-		HorizontalLayout buttons = new HorizontalLayout();
+
 		Button change = new Button("bearbeiten");
 		change.addClickListener(new Button.ClickListener() {
 			public void buttonClick(ClickEvent event) {
@@ -462,9 +392,10 @@ public class AngebotAnzeigen extends VerticalLayout implements View {
 				getUI().getNavigator().navigateTo(name);
 			}
 		});
-
-		buttons.addComponent(change);
-		content.addComponent(buttons);
+		
+		content.addComponent(new Label());
+		content.addComponent(change);
+		
 
 	}
 
