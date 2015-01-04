@@ -43,6 +43,14 @@ public class OfferProvider extends BaseProvider<Offer> {
 	
 	public boolean removeOffer(Offer offer) {
 		
+		List<Photo> photos = offer.getPhotos();
+		PhotoProvider photoProv = new PhotoProvider();
+		for(Photo p : photos) {
+			
+			photoProv.removePhoto(p);
+			
+		}
+		
 		return super.delete(offer); //true bei Erfolg, false bei Fehler
 		
 	}

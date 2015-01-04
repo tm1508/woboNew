@@ -17,6 +17,24 @@ public class PhotoProvider extends BaseProvider<Photo> {
 		return Photo.class;
 	}
 	
+	public void addPhoto(Photo newPhoto) {
+		
+		//TODO: Foto verkleinern/Dateityp anpassen etc?
+		
+		if (!super.save(newPhoto)) {
+
+			System.out.println("Neues Foto konnte nicht in die Datenbank gespeichert werden!");
+
+		}
+
+	}
+	
+	public boolean removePhoto(Photo photo) {
+		
+		return super.delete(photo);
+		
+	}
+	
 	/**
 	 * Find by id.
 	 *
