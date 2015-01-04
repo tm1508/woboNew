@@ -1,6 +1,7 @@
 package com.example.housing;
 
 import com.example.housing.data.model.User;
+import com.example.housing.data.provider.UserProvider;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.server.Page;
 import com.vaadin.server.VaadinSession;
@@ -98,7 +99,9 @@ public class LoginWindow extends Window{
 						
 						//1. User aus der Datenbank auslesen
 						//TODO Datenbankanbindung
-						User u = test();
+						User u = new UserProvider().findByEmail("max.mustermann@test.de");
+						System.out.println(u.isActivated());
+						//User u = test();
 
 						//2. Prüfen ob das Konto aktiviert ist
 						if(!u.isActivated()){
@@ -135,7 +138,7 @@ public class LoginWindow extends Window{
 	
 					}catch(Exception e){
 						//Fehlermeldung bei Datenbankproblemen
-						Notification.show("Login fehlgeschlagen!","Bitte versuchen Sie es später erneut.", Type.HUMANIZED_MESSAGE);
+						Notification.show("Login fehlgeschlagen!","Bitte registrieren Sie sich zuerst.", Type.HUMANIZED_MESSAGE);
 					}
 				}
 			});
