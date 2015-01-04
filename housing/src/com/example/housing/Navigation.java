@@ -12,7 +12,9 @@ import com.vaadin.ui.CustomComponent;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Image;
 import com.vaadin.ui.MenuBar;
+import com.vaadin.ui.Notification;
 import com.vaadin.ui.MenuBar.MenuItem;
+import com.vaadin.ui.Notification.Type;
 import com.vaadin.ui.VerticalLayout;
 
 // TODO: Auto-generated Javadoc
@@ -65,9 +67,9 @@ public class Navigation extends CustomComponent {
 		
 		MenuBar.Command mycommand = new MenuBar.Command() {
 			public void menuSelected(MenuItem selectedItem) {
-				
-				//TODO 
+ 
 				VaadinSession.getCurrent().setAttribute("login", false);
+				Notification.show("Logout erfolgreich.", Type.HUMANIZED_MESSAGE);
 				Page.getCurrent().reload();
 			}  
 		};
@@ -112,6 +114,15 @@ public class Navigation extends CustomComponent {
 			}  
 		};
 		
+		MenuBar.Command mycommand5 = new MenuBar.Command() {
+			public void menuSelected(MenuItem selectedItem) {
+				String name = "Profile";
+				getUI().getNavigator().addView(name, new Profile());
+				getUI().getNavigator().navigateTo(name);
+				
+			}  
+		};
+		
 		
 		
 				
@@ -128,7 +139,7 @@ public class Navigation extends CustomComponent {
 		MenuItem nav5 = menuBar_1.addItem("Persönliche Daten", FontAwesome.CHILD, null); 
 			nav5.addItem("Meine Favoriten", FontAwesome.STAR_O, null);
 			nav5.addItem("Meine Anfragen", FontAwesome.STAR_O, null);
-			nav5.addItem("Meine Profildaten", FontAwesome.USER, null); 
+			nav5.addItem("Meine Profildaten", FontAwesome.USER, mycommand5); 
 		MenuItem nav6 = menuBar_1.addItem("Logout", FontAwesome.UNLOCK_ALT, mycommand);//Navigation
 		
 		mainLayout.addComponent(menuBar_1);
