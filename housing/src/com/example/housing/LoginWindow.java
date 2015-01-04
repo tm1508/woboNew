@@ -1,5 +1,7 @@
 package com.example.housing;
 
+import com.example.housing.data.model.User;
+import com.example.housing.data.provider.UserProvider;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.server.Page;
 import com.vaadin.server.VaadinSession;
@@ -13,11 +15,13 @@ import com.vaadin.ui.Window;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Notification.Type;
 
-
-// TODO: Auto-generated Javadoc
 /**
  * The Class LoginWindow.
+ * @author MWI Wohungsbörse 2014
+ * @version 1.0
+ * @see com.example.housing.Registrierung
  */
+@SuppressWarnings("serial")
 public class LoginWindow extends Window{
 	
 	/** The title. */
@@ -32,7 +36,6 @@ public class LoginWindow extends Window{
 	/** The login button. */
 	public static Button loginButton;
 	
-	
 	/**
 	 * Instantiates a new login window.
 	 */
@@ -40,10 +43,10 @@ public class LoginWindow extends Window{
 		super("Bitte loggen Sie sich ein...");
 		initialisieren();
 	}
-
 	
 	/**
 	 * Initialisieren.
+	 * @see com.vaadin.ui.Window
 	 */
 	public void initialisieren(){
 		this.center();
@@ -82,7 +85,6 @@ public class LoginWindow extends Window{
 			password_1.setIcon(FontAwesome.KEY);
 			content.addComponent(password_1);
 				
-				
 			// loginButton
 			Button loginButton = new Button();
 			loginButton.setCaption("Login");
@@ -93,23 +95,69 @@ public class LoginWindow extends Window{
 			content.addComponent(loginButton);
 			loginButton.addClickListener(new Button.ClickListener() {
 				public void buttonClick(ClickEvent event) {
-					if(email_1.getValue().equals("max.mustermann@test.de")){
-						Notification.show("Login erfolgreich.",Type.HUMANIZED_MESSAGE);
-						VaadinSession.getCurrent().setAttribute("login", true);
-						//System.out.println(VaadinSession.getCurrent().getAttribute("login").toString());
-						Page.getCurrent().reload();
-					}else{
-						Notification.show("Login fehlgeschlagen!","Bitte überprüfen Sie Benutzername und Passwort.", Type.HUMANIZED_MESSAGE);
-					}
+					try{
+						
+						//1. User aus der Datenbank auslesen
+						//TODO Datenbankanbindung
+						User u = new UserProvider().findByEmail("max.mustermann@test.de");
+						System.out.println(u.isActivated());
+						//User u = test();
 
+						//2. Prüfen ob das Konto aktiviert ist
+						if(!u.isActivated()){
+							//System.out.println(Page.getCurrent().getLocation().toString());
+							//System.out.println(Page.getCurrent().getUriFragment().toString());
+							
+							String[] msgs = Page.getCurrent().getUriFragment().split("/");//Request Parameter auslesen (wurde bei der Registrierung verschickt)
+							
+							if(msgs.length == 1){//es gibt keinen Parameter -> kein Login möglich
+								Notification.show("Login fehlgeschlagen!","Ihr Konto ist nicht freigeschalten. Bitte folgen Sie dem Link in der E-Mail, die Sie erhalten haben.", Type.HUMANIZED_MESSAGE);
+							}else{
+								if(email_1.getValue().equals(u.getEmail()) && email_1.getValue().equals(msgs[1])){//richtiger Parameter wurde übergeben
+									//TODO Aktivierung in DB speichern
+									u.setActivated(true);
+								}else{
+									Notification.show("Login fehlgeschlagen!","Ihr Konto ist nicht freigeschalten. Bitte folgen Sie dem Link in der E-Mail, die Sie erhalten haben.", Type.HUMANIZED_MESSAGE);
+								}
+							}
+						}
+						
+						//3. Prüfen ob Benutzer und Passwort stimmen (nur wenn das Konto aktiviert ist)
+						if(u.isActivated()){
+							if(email_1.getValue().equals(u.getEmail()) && password_1.getValue().equals(u.getPassword())){//prüfen ob Passwort und E-Mail stimmen
+								Notification.show("Login erfolgreich.",Type.HUMANIZED_MESSAGE);//Meldung an den Nutzer
+								VaadinSession.getCurrent().setAttribute(User.class, u);//User-Objekt in der Session speichern
+								VaadinSession.getCurrent().setAttribute("login", true);//Login-Attribut auf true setzen (wird auf jeder Seite abgefragt, um zu prüfen welche Navigationsleiste angezeigt werden soll)
+							
+								Page.getCurrent().reload();//Seite erneut Laden (damit die Navigationsleiste verändert wird)
+							}else{
+								//Fehlermeldung bei falschem Benutzername oder Passwort
+								Notification.show("Login fehlgeschlagen!","Bitte überprüfen Sie Benutzername und/oder Passwort.", Type.HUMANIZED_MESSAGE);
+							}
+						}
+	
+					}catch(Exception e){
+						//Fehlermeldung bei Datenbankproblemen
+						Notification.show("Login fehlgeschlagen!","Bitte registrieren Sie sich zuerst.", Type.HUMANIZED_MESSAGE);
+					}
 				}
 			});
 				
-			this.setContent(content);
-	        
-	       
+			this.setContent(content);    
 	}
 	
-	
-	
+	//diese Methode ist nur zum Testen !!!
+	public User test(){
+		User u = new User();
+		u.setFirstname("Max");
+		u.setLastname("Mustermann");
+		u.setEmail("max.mustermann@test.de");
+		u.setPassword("12345");
+		u.setMobile("12345678");
+		u.setDhMail(null);
+		u.setActivated(true);
+		u.setAccessLevel(0);
+		return u;
+	}
+
 }

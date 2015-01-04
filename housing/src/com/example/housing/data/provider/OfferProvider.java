@@ -124,16 +124,4 @@ public class OfferProvider extends BaseProvider<Offer> {
 		return filterErgebnis;
 	}
 
-	public Offer getOfferById(int idOffer) {
-		StringBuffer searchById = new StringBuffer();
-		searchById.append("SELECT o FROM Offer o WHERE ");
-		searchById.append("o.id = " + idOffer + ";");
-		if (!em.isOpen()) {
-			em = getEmf().createEntityManager();
-		}
-		Query searchedOffer = em.createQuery(searchById.toString());
-		Offer offer = (Offer) searchedOffer.getSingleResult();
-		return offer;
-	}
-
 }
