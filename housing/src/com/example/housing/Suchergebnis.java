@@ -41,9 +41,11 @@ public class Suchergebnis extends VerticalLayout implements View {
 	 */
 
 	List<Offer> angebote; 
+	
 	//Übergabe der Ergebnis aus der Suche
 	public Suchergebnis(List<Offer> offer){
-	this.angebote = offer;
+		
+		this.angebote = offer;
 		
 	content = new VerticalLayout();
 
@@ -67,10 +69,10 @@ public class Suchergebnis extends VerticalLayout implements View {
 		navPublic.setVisible(true);
 	}
 	addComponent(nav);	
-	addComponent(content);
+	
 
 	setContent();
-
+	addComponent(content);
 
 
 	

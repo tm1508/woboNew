@@ -16,7 +16,10 @@ import javax.servlet.annotation.WebServlet;
 
 
 
+import com.example.housing.data.model.Offer;
+
 import com.example.housing.data.model.User;
+
 import com.vaadin.annotations.Theme;
 import com.vaadin.annotations.VaadinServletConfiguration;
 import com.vaadin.navigator.Navigator;
@@ -88,6 +91,7 @@ public class HousingUI extends UI {
 		
 		navigator = new Navigator(this, this);
 		String name = "Startseite";
+		
 		navigator.addView(name, new Startseite());
 		navigator.navigateTo(name);
 	}
