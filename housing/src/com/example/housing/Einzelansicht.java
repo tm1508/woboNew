@@ -137,6 +137,7 @@ public class Einzelansicht extends VerticalLayout implements View {
 		GridLayout gridInfos = new GridLayout(2,15); 
 		gridInfos.setWidth("60%");
 		content.addComponent(gridInfos);
+		
 		//Date
 		
 	    DateField startDate = new DateField();
