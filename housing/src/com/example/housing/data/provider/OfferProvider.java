@@ -109,7 +109,7 @@ public class OfferProvider extends BaseProvider<Offer> {
 			filter.append("o.pets = " + pets + " AND ");
 		}
 		if (!city.equals("")) {
-			filter.append("o.city = '" + city + "'");
+			filter.append("o.city LIKE '" + city + "%'");
 		}
 
 		if (filter.lastIndexOf("AND ") == filter.length() - 4) {
@@ -118,7 +118,6 @@ public class OfferProvider extends BaseProvider<Offer> {
 			filter.delete(filter.length() - 7, filter.length() - 1);
 		}
 		filter.append(")");
-		// TODO: createQuery mit Übergabe des filters führt zu einer Exception.
 
 		if (!em.isOpen()) {
 
