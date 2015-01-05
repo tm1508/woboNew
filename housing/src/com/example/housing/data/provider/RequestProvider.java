@@ -19,15 +19,11 @@ public class RequestProvider extends BaseProvider<Request> {
 		return Request.class;
 	}
 	
-	public void addRequest(User user, Offer offer) {
+	public void addRequest(Request newRequest) {
 		
-		Request newReq = new Request();
-		newReq.setRequest_idUser(user);
-		newReq.setRequest_idOffer(offer);
-		
-		if (!super.save(newReq)) {
+		if (!super.save(newRequest)) {
 
-			System.out.println("Angebot konnte nicht zu den abgesendeten Anfragen hinzugefügt werden.");
+			System.out.println("Anfrage konnte nicht zu den abgesendeten Anfragen hinzugefügt werden.");
 
 		}
 
@@ -41,6 +37,11 @@ public class RequestProvider extends BaseProvider<Request> {
 	 */
 	public Request findById(Integer id) {
 		return (Request) super.find(id);
+	}
+
+	public boolean requestExists(User user, Offer offer) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 }

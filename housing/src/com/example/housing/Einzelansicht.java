@@ -37,44 +37,41 @@ public class Einzelansicht extends VerticalLayout implements View {
 	
 	Offer angebot;
 	public Einzelansicht(Offer einzelAngebot){
-	this.angebot = einzelAngebot;
+		this.angebot = einzelAngebot;
 		
-	content = new VerticalLayout();
-//	content = (VerticalLayout)this;
+		content = new VerticalLayout();
+//		content = (VerticalLayout)this;
+		
+		content.setMargin(true);
+		content.setSizeFull();
+		content.setSpacing(true);
+		
+		Navigation nav = new Navigation();
+		
+		
+//		content.addComponent(nav);
+		
+		
+		NavigationPublic navPublic = new NavigationPublic();
+		addComponent(navPublic);
+		
+		//falls der Benutzer eingelogt ist verändert sich die Navigation
+		if(VaadinSession.getCurrent().getAttribute("login").equals(true)){
+			nav.setVisible(true);
+			navPublic.setVisible(false);
+		}else{
+			nav.setVisible(false);
+			navPublic.setVisible(true);
+		}
+		addComponent(nav);	
+		addComponent(content);
+		
+		setContent();
 
-    content.setMargin(true);
-	content.setSizeFull();
-	content.setSpacing(true);
-	
-	Navigation nav = new Navigation();
-
-
-//	content.addComponent(nav);
-
-	
-	NavigationPublic navPublic = new NavigationPublic();
-	addComponent(navPublic);
-	
-	//falls der Benutzer eingelogt ist verändert sich die Navigation
-	if(VaadinSession.getCurrent().getAttribute("login").equals(true)){
-		nav.setVisible(true);
-		navPublic.setVisible(false);
-	}else{
-		nav.setVisible(false);
-		navPublic.setVisible(true);
-	}
-	addComponent(nav);	
-	addComponent(content);
-
-	setContent();
-
-
-
-	
-	Footer f = new Footer();
-	addComponent(f);
-//	setComponentAlignment(f, com.vaadin.ui.Alignment.TOP_CENTER);
-	//content.addComponent(f);
+		Footer f = new Footer();
+		addComponent(f);
+//		setComponentAlignment(f, com.vaadin.ui.Alignment.TOP_CENTER);
+		//content.addComponent(f);
 	}
 
 
@@ -258,6 +255,14 @@ public class Einzelansicht extends VerticalLayout implements View {
         Button anfrage = new Button("Anfrage");
         anfrage.addStyleName("AnfrageButton");
         gridInfos.addComponent(anfrage, 1 , 14);
+        
+        anfrage.addClickListener(new Button.ClickListener() {
+			public void buttonClick(ClickEvent event) {
+				String name = "Anfrageformular";
+				getUI().getNavigator().addView(name, new Anfrageformular(angebot));
+				getUI().getNavigator().navigateTo(name);
+			}
+		});
 
 
 	}

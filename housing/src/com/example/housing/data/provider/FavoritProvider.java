@@ -22,13 +22,9 @@ public class FavoritProvider extends BaseProvider<Favorit>{
 		return Favorit.class;
 	}
 	
-	public void addFavorit(User user, Offer offer) {
+	public void addFavorit(Favorit newFavorit) {
 		
-		Favorit newFav = new Favorit();
-		newFav.setFavorit_idUser(user);
-		newFav.setFavorit_idOffer(offer);
-		
-		if (!super.save(newFav)) {
+		if (!super.save(newFavorit)) {
 
 			System.out.println("Angebot konnte nicht zu den Favoriten hinzugefügt werden.");
 

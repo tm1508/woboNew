@@ -50,39 +50,35 @@ public class Suchergebnis extends VerticalLayout implements View {
 		
 		this.angebote = offers;
 		
-	content = new VerticalLayout();
-
-
-    content.setMargin(true);
-	content.setSizeFull();
-	content.setSpacing(true);
-	
-	Navigation nav = new Navigation();
-
-	
-	NavigationPublic navPublic = new NavigationPublic();
-	addComponent(navPublic);
-	
-	//falls der Benutzer eingelogt ist verändert sich die Navigation
-	if(VaadinSession.getCurrent().getAttribute("login").equals(true)){
-		nav.setVisible(true);
-		navPublic.setVisible(false);
-	}else{
-		nav.setVisible(false);
-		navPublic.setVisible(true);
-	}
-	addComponent(nav);	
-	
-
-	setContent();
-	addComponent(content);
-
-
-	
-	Footer f = new Footer();
-	addComponent(f);
-//	setComponentAlignment(f, com.vaadin.ui.Alignment.TOP_CENTER);
-	//content.addComponent(f);
+		content = new VerticalLayout();
+				
+    	content.setMargin(true);
+		content.setSizeFull();
+		content.setSpacing(true);
+		
+		Navigation nav = new Navigation();
+		
+		NavigationPublic navPublic = new NavigationPublic();
+		addComponent(navPublic);
+		
+		//falls der Benutzer eingelogt ist verändert sich die Navigation
+		if(VaadinSession.getCurrent().getAttribute("login").equals(true)){
+			nav.setVisible(true);
+			navPublic.setVisible(false);
+		}else{
+			nav.setVisible(false);
+			navPublic.setVisible(true);
+		}
+		
+		addComponent(nav);	
+		
+		setContent();
+		addComponent(content);
+		
+		Footer f = new Footer();
+		addComponent(f);
+//		setComponentAlignment(f, com.vaadin.ui.Alignment.TOP_CENTER);
+//		content.addComponent(f);
 	}
 
 
