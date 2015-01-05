@@ -92,54 +92,10 @@ public class Suchergebnis extends VerticalLayout implements View {
 	@SuppressWarnings("deprecation")
 	public void setContent(){
 		
-		//testDaten
-		Offer b = new Offer();
-		b.setCity("Karlsruhe");
-		b.setTitle("schön");
-		b.setPrice((float)400.00);
-		b.setSquareMetre((float)80.40);
-		b.setType(1);
-		b.setStartDate(new Date(10,10,2015));
-		b.setEndDate(new Date(20,10,2015));
-		b.setStreet("Am Testgraben 12");
-		b.setZip("76123");
-		b.setNumberOfRoommate(3);
-		b.setInternet(true);
-		b.setFurnished(false);
-		b.setKitchen(true);
-		b.setSmoker(false);
-		b.setPets(true);
-		b.setGender(1);
-		b.setBond((float)400.20);
-		b.setText("Tolle Wohnung mit super Blick über Karlsruhe");
-	
-		
-		angebote.add(b);
-		
-		Offer c = new Offer();
-		c.setCity("München");
-		c.setTitle("schön");
-		c.setPrice((float)400.00);
-		c.setSquareMetre((float)80.40);
-		c.setType(2);
-		c.setStartDate(new Date(10,10,2015));
-		c.setEndDate(new Date(20,10,2015));
-		c.setStreet("Münchenerstraße 120");
-		c.setZip("49333");
-		c.setNumberOfRoommate(3);
-		c.setInternet(false);
-		c.setFurnished(false);
-		c.setKitchen(true);
-		c.setSmoker(false);
-		c.setPets(true);
-		c.setGender(1);
-		c.setBond((float)400.20);
-		c.setText("Tolle Wohnung in München");
-	
-		angebote.add(c);
 		
 		// Anzahl der gefundenen Ergebnisse
 		int anzahl = angebote.size();
+		System.out.println(anzahl);
 		for(int i = 0; i<anzahl;i++){
 			final Offer o = angebote.get(i);
 		
