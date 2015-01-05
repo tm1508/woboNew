@@ -287,11 +287,13 @@ public class AngebotErstellen extends VerticalLayout implements View {
 				try {
 					genders.validate();
 				} catch (InvalidValueException e) {
-					valid = false;}
+					valid = false;
+				}
 				try {
 					isShared.validate();
 				} catch (InvalidValueException e) {
-					valid = false;}
+					valid = false;
+				}
 				try {
 					squareMetre.validate();
 				} catch (InvalidValueException e) {
@@ -318,28 +320,37 @@ public class AngebotErstellen extends VerticalLayout implements View {
 					valid = false;
 				}
 
-				// Überprüft welche Art Angebot erstellt wird und setzt entsprechenden int-Wert
+				// Überprüft welche Art Angebot erstellt wird und setzt
+				// entsprechenden int-Wert
 				int type = 1;
-				try{ String shared = (String) isShared.getValue();
-				if (shared.equals("Wohnung")) {
-					type = 1;
-				} else if (shared.equals("Zimmer")) {
-					type = 2;
-				} else if (shared.equals("WG-Zimmer")) {
-					type = 3;
-				}}catch(NullPointerException e){}
-				
-				// Überprüft ob es ein bevorzugtes Geschlecht gibt und setzt entsprechenden int-Wert
+				try {
+					String shared = (String) isShared.getValue();
+					if (shared.equals("Wohnung")) {
+						type = 1;
+					} else if (shared.equals("Zimmer")) {
+						type = 2;
+					} else if (shared.equals("WG-Zimmer")) {
+						type = 3;
+					}
+				} catch (NullPointerException e) {// tut nichts, fängt nur
+													// NullPointerException ab
+				}
+
+				// Überprüft ob es ein bevorzugtes Geschlecht gibt und setzt
+				// entsprechenden int-Wert
 				int gender = 1;
-				try{
-				String gend = (String) genders.getValue();
-				if(gend.equals("egal")) {
-					gender = 1;
-				}else if(gend.equals("männlich")) {
-					gender = 2;
-				} else if (gend.equals("weiblich")) {
-					gender = 3;
-				}}catch(NullPointerException e){}
+				try {
+					String gend = (String) genders.getValue();
+					if (gend.equals("egal")) {
+						gender = 1;
+					} else if (gend.equals("männlich")) {
+						gender = 2;
+					} else if (gend.equals("weiblich")) {
+						gender = 3;
+					}
+				} catch (NullPointerException e) {// tut nichts, fängt nur
+													// NullPointerException ab
+				}
 
 				OfferProvider of = new OfferProvider();
 				Offer newOffer = new Offer();
@@ -350,9 +361,10 @@ public class AngebotErstellen extends VerticalLayout implements View {
 					newOffer.setZip(zip.getValue());
 					newOffer.setCity(city.getValue());
 					newOffer.setStartDate(startDate.getValue());
-					try{
-						newOffer.setEndDate(endDate.getValue());}
-					catch(NullPointerException e){}
+					try { // überprüft ob ein Enddatum angegeben ist, da die Angabe optional ist
+						newOffer.setEndDate(endDate.getValue());
+					} catch (NullPointerException e) {
+					}
 					newOffer.setSquareMetre(Float.parseFloat(squareMetre.getValue()));
 					newOffer.setPrice(Float.parseFloat(price.getValue()));
 					newOffer.setType(type);
@@ -364,10 +376,10 @@ public class AngebotErstellen extends VerticalLayout implements View {
 					newOffer.setPets(pets.getValue());
 					newOffer.setGender(gender);
 					newOffer.setText(text.getValue());
-					if (bond.getValue().equals(""))
-						newOffer.setBond(Float.parseFloat("0.0"));
-					else
+					try {//überprüft ob eine Kaution angegeben ist, da die Angabe optional ist
 						newOffer.setBond(Float.parseFloat(bond.getValue()));
+					} catch (NullPointerException e) {
+					}
 					newOffer.setInactive(inactive.getValue());
 					// newOffer.setLatitude(latitude);
 					// newOffer.setLongitude(longitude);
@@ -377,7 +389,7 @@ public class AngebotErstellen extends VerticalLayout implements View {
 					getUI().getNavigator().addView(name, new AngebotAnzeigen(newOffer.getIdOffer()));
 					getUI().getNavigator().navigateTo(name);
 
-				} else
+				} else //Sind nicht alle Mussfelder gefüllt, wird eine Nachricht auf dem Bildschirm ausgegeben
 					Notification.show("Bitte füllen Sie alle Mussfelder*");
 			}
 		});
