@@ -4,6 +4,7 @@ import com.example.housing.data.model.Offer;
 import com.example.housing.data.model.Request;
 import com.example.housing.data.model.User;
 import com.example.housing.data.provider.RequestProvider;
+import com.example.housing.utility.SendEMail;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.server.FontAwesome;
@@ -19,7 +20,9 @@ import com.vaadin.ui.Notification.Type;
 @SuppressWarnings("serial")
 public class Anfrageformular extends VerticalLayout implements View{
 
-	Offer requestedOffer;
+	private Offer requestedOffer;
+	
+	private RichTextArea text;
 	
 	VerticalLayout content;
 	
@@ -75,13 +78,13 @@ public class Anfrageformular extends VerticalLayout implements View{
 		content.addComponent(title);
 		
 		//Infolabel
-		Label infoText = new Label("Hier können Sie eine Anfrage an den Anbieter verfassen. Dieser Text wird zusammen mit Ihren Kontaktdaten aus Ihrem Profil an den Anbieter weitergeleitet.");
+		Label infoText = new Label("Hier können Sie eine Anfrage an den Anbieter verfassen. Dieser Text wird zusammen mit Ihren Kontaktdaten aus Ihrem Profil an den Anbieter weitergeleitet. Er kann Sie dann gezielt kontaktieren, um mit Ihnen alles Weitere zu besprechen.");
 		content.addComponent(infoText);
 		
 		//text
 		Label anfrage = new Label("Anfrage");
 		anfrage.addStyleName("AbschnittLabel");
-		final RichTextArea text = new RichTextArea();
+		text = new RichTextArea();
 		text.setRequired(true);
 		text.setRequiredError("Das Textfeld darf nicht leer sein.");
 		text.setWidth("100%");
@@ -92,7 +95,6 @@ public class Anfrageformular extends VerticalLayout implements View{
 		Button sendButton = new Button();
 		sendButton.setCaption("Anfrage abschicken");
 		//button.setImmediate(true);
-		sendButton.setDescription("Ihre Anfrage wird an den Anbieter geschickt, damit er Sie kontaktieren kann.");
 		sendButton.setWidth("-1px");
 		sendButton.setHeight("-1px");
 		content.addComponent(sendButton);
@@ -107,10 +109,10 @@ public class Anfrageformular extends VerticalLayout implements View{
 					sendEMail();
 					
 					//TODO: Navigation
-					/*//Navigation zur Startseite
-					String name = "Meine Anfragen";
-					getUI().getNavigator().addView(name, new Startseite());
-					getUI().getNavigator().navigateTo(name);*/
+					//Navigation zur Startseite
+					String name = "AngebotAnzeigen";
+					getUI().getNavigator().addView(name, new Einzelansicht(requestedOffer));
+					getUI().getNavigator().navigateTo(name);
 					
 					Notification.show("Die Anfrage war erfolgreich. Der Anbieter kann Sie nun kontaktieren.",Type.HUMANIZED_MESSAGE);//Meldung an den Nutzer
 				}else{//eine Anfrage von diesem User für dieses Angebot existiert bereits
@@ -132,8 +134,13 @@ public class Anfrageformular extends VerticalLayout implements View{
 	}
 	
 	protected void sendEMail() {
-		// TODO Auto-generated method stub
+		String bodyAnbieter = "<span style='color: #000000' 'font-family: Arial, sans-serif''font-size: 16pt' >Sehr geehrte Nutzerin, sehr geehrter Nutzer,"
+				+"<br/><br/>Sie haben eine Anfrage zu einem Ihrer Angebote in der Wohnungsbörse der DHBW erhalten:"
+				+"<br/><br/>" + text.getValue() + "</span>"
+				+"<br/><span style='color: #e2001a' 'font-family: Arial, sans-serif''font-size: 20pt' >"
+				+ "</span><br/><br/>Mit freundlichen Grüßen<br/>Ihr DHBW Wohungsbörsen-Team<p/><span style='color: #e2001a' 'font-family: Arial, sans-serif''font-size: 8pt' >Anschrift:<br/>DHBW Karlsruhe<br/>Baden-Wuerttemberg Cooperative State University Karlsruhe<br />Erzbergerstraße 121 . 76133 Karlsruhe <br />Postfach 10 01 36 . 76231 Karlsruhe   <br />Telefon +49.721.9735-5 <br />Telefax +49.721.9735-600 <br />E-Mail: dreischer@dhbw-karlsruhe.de<br /><br/><br/>Ansprechpartner:<br/> <br />Dr. Anita Dreischer<br /><br/><b>Copyright DHBW Karlsruhe. Alle Rechte vorbehalten.</b></span>";
 		
+		SendEMail.send(requestedOffer.getOffer_idUser().getEmail(), "wohnungsboerse_dh@web.de", "Neue Anfrage in der DHBW-Wohnungsbörse", bodyAnbieter);
 	}
 	
 }
