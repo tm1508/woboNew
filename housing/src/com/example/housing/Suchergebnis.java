@@ -117,6 +117,8 @@ public class Suchergebnis extends VerticalLayout implements View {
 		FileResource resource = new FileResource(new File(basepath + "/WEB-INF/image/dh.jpg"));
 		Image image = new Image("",resource);
 		ergebnisLayout.addComponent(image,0,0,2,2);
+//		String im = "Kein Bild vorhanden";
+//		ergebnisLayout.addComponent(new Label(im),0,0,2,2);
 //		}
 		
 		String title = o.getTitle();
