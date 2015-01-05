@@ -463,11 +463,11 @@ public class Registrierung extends VerticalLayout implements View{
 	public void sendEMail(){
 		// Text der E-Mail mit Style-Informationen
 		String body = "<span style='color: #000000' 'font-family: Arial, sans-serif''font-size: 16pt' >Sehr geehrte Nutzerin, sehr geehrter Nutzer,"
-					 +"<br/><br/>vielen Dank, dass Sie sich für uns entschieden haben. Damit Sie sich erstmalig anmelden könne folgen Sie bitte dem folgenden Link. Dadurch wird sichergestellt, dass keine Unbefungten Ihre E-Mail-Adresse dazu verwenden können, um sich bei uns zu Registrieren.</span>"
+					 +"<br/><br/>vielen Dank, dass Sie sich für uns entschieden haben. Damit Sie sich erstmalig anmelden können, folgen Sie bitte dem folgenden Link. Dadurch wird sichergestellt, dass keine Unbefungten Ihre E-Mail-Adresse dazu verwenden können, um sich bei uns zu registrieren.</span>"
 					 +"<br/><span style='color: #e2001a' 'font-family: Arial, sans-serif''font-size: 20pt' >"
 					 + "<a href='http://localhost:8080/housing/servlet/com.example.housing.HousingUI$Servlet#!Startseite/"+email_1.getValue()+"'>weiter zum Login</a>"
 						//+"http://localhost:8080/housing/servlet/com.example.housing.HousingUI$Servlet#!Startseite/"+email_1.getValue()
-						+ "</span><br/><br/>Mit freundlichen Grüßen<br/>ihr DHBW Wohungsbörsen-Team<p/><span style='color: #e2001a' 'font-family: Arial, sans-serif''font-size: 8pt' >Anschrift:<br/>DHBW KarlsruheBaden-Wuerttemberg Cooperative State University Karlsruhe<br />Erzbergerstraße 121 . 76133 Karlsruhe <br />Postfach 10 01 36 . 76231 Karlsruhe   <br />Telefon +49.721.9735-5 <br />Telefax +49.721.9735-600 <br />E-Mail: dreischer@dhbw-karlsruhe.de<br /><br/><br/>Ansprechpartner:<br/> <br />Dr. Anita Dreischer<br /><br/><b>Copyright DHBW Karlsruhe. Alle Rechte vorbehalten.</b></span>";
+						+ "</span><br/><br/>Mit freundlichen Grüßen<br/>Ihr DHBW Wohungsbörsen-Team<p/><span style='color: #e2001a' 'font-family: Arial, sans-serif''font-size: 8pt' >Anschrift:<br/>DHBW Karlsruhe<br/>Baden-Wuerttemberg Cooperative State University Karlsruhe<br />Erzbergerstraße 121 . 76133 Karlsruhe <br />Postfach 10 01 36 . 76231 Karlsruhe   <br />Telefon +49.721.9735-5 <br />Telefax +49.721.9735-600 <br />E-Mail: dreischer@dhbw-karlsruhe.de<br /><br/><br/>Ansprechpartner:<br/> <br />Dr. Anita Dreischer<br /><br/><b>Copyright DHBW Karlsruhe. Alle Rechte vorbehalten.</b></span>";
 		//E-Mail senden
 		SendEMail.send(email_1.getValue(), "wohnungsboerse_dh@web.de", "Danke für Ihre Registrierung", body);
 	}

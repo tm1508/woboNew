@@ -152,15 +152,16 @@ public class Suche extends VerticalLayout implements View{
 		suchButton.addClickListener(new Button.ClickListener() {
 			public void buttonClick(ClickEvent event) {
 				final int a;
-				if(wg.getValue()){
+				if(wohnung.getValue()){
 					a = 1;
 				}else if (wg.getValue()&& wohnung.getValue()){
-					a = 2;
-				}else if (wohnung.getValue()){
 					a = 3;
+				}else if (wg.getValue()){
+					a = 2;
 				}else{
 					a = 4;
 					Notification.show("Bitte Art der Unterkunft wählen!");
+					return;
 				}
 
 				
