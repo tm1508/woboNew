@@ -1,6 +1,7 @@
 package com.example.housing;
 
 import com.example.housing.data.model.Offer;
+import com.example.housing.data.model.User;
 import com.example.housing.data.provider.OfferProvider;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
@@ -235,19 +236,21 @@ public class AngebotErstellen extends VerticalLayout implements View {
 		save.addClickListener(new Button.ClickListener() {
 			public void buttonClick(ClickEvent event) {
 				int type = 1;
-				if (isShared.getValue().equals("Wohnung")) {
+				System.out.println("isShared: " + isShared.getValue() + "########################################"); //Test; immer null
+				/*if (isShared.getValue().equals("Wohnung")) {
 					type = 1;
 				} else if (isShared.getValue().equals("Zimmer")) {
 					type = 2;
 				} else if (isShared.getValue().equals("WG-Zimmer")) {
 					type = 3;
-				}
+				}*/
 				int gender = 1;
-				if (genders.getValue().equals("männlich")) {
+				System.out.println("gender: " + genders.getValue() + "###############################"); //Test; immer null
+				/*if (genders.getValue().equals("männlich")) {
 					gender = 2;
 				} else if (genders.getValue().equals("weiblich")) {
 					gender = 3;
-				}
+				}*/
 				OfferProvider of = new OfferProvider();
 				Offer newOffer = new Offer();
 				
@@ -270,6 +273,7 @@ public class AngebotErstellen extends VerticalLayout implements View {
 				newOffer.setText(text.getValue());
 				newOffer.setBond(Float.parseFloat(bond.getValue()));
 				newOffer.setInactive(inactive.getValue());
+				newOffer.setOffer_idUser(VaadinSession.getCurrent().getAttribute(User.class));
 				//newOffer.setLatitude(latitude);
 				//newOffer.setLongitude(longitude);
 				//newOffer.setPhotos();

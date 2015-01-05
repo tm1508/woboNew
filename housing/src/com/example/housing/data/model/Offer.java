@@ -66,7 +66,7 @@ public class Offer {
 	private boolean pets;
 	
 	/** The gender. */
-	private int isFemale;
+	private int gender;
 	
 	/** The text. */
 	@Lob
@@ -86,11 +86,9 @@ public class Offer {
 	@Temporal(value=TemporalType.TIMESTAMP)
 	private Date offerTime;
 	
-	//TODO: in Datenbanktabelle ergänzen
-	//geändert
-	//private float latitude;
+	private float latitude;
 	
-	//private float longitude;
+	private float longitude;
 	
 	/** The photos. */
 	@OneToMany(mappedBy="photo_idOffer")
@@ -394,7 +392,7 @@ public class Offer {
 	 * @return the gender
 	 */
 	public int getGender() {
-		return isFemale;
+		return gender;
 	}
 	
 	/**
@@ -403,7 +401,7 @@ public class Offer {
 	 * @param gender the new gender
 	 */
 	public void setGender(int gender) {
-		this.isFemale = gender;
+		this.gender = gender;
 	}
 	
 	/**
@@ -521,21 +519,21 @@ public class Offer {
 	public void setOfferTime(Date offerTime) {
 		this.offerTime = offerTime;
 	}
-	//geändert
-//	public float getLatitude() {
-//		return latitude;
-//	}
 
-//	public void setLatitude(float latitude) {
-//		this.latitude = latitude;
-//	}
+	public float getLatitude() {
+		return latitude;
+	}
 
-//	public float getLongitude() {
-//		return longitude;
-//	}
-//
-//	public void setLongitude(float longitude) {
-//		this.longitude = longitude;
-//	}
+	public void setLatitude(float latitude) {
+		this.latitude = latitude;
+	}
+
+	public float getLongitude() {
+		return longitude;
+	}
+
+	public void setLongitude(float longitude) {
+		this.longitude = longitude;
+	}
 
 }

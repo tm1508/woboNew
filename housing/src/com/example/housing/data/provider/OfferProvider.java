@@ -109,7 +109,7 @@ public class OfferProvider extends BaseProvider<Offer> {
 			filter.append("o.pets = " + pets + " AND ");
 		}
 		if (!city.equals("")) {
-			filter.append("o.city = '" + city + "'");
+			filter.append("o.city LIKE '" + city + "'");
 		}
 
 		if (filter.lastIndexOf("AND ") == filter.length() - 4) {

@@ -63,7 +63,7 @@ public class SendEMail {
 		try {
 			message.setEnvelopeFrom("wohnungsboerse_dh@web.de");// tatsächlicher Absender (E-Mail wird von uns an uns selbst geschickt, unter dem Namen bzw. der E-Mail-Adresse des Nutzers)
 			message.setFrom(new InternetAddress(from));// E-Mail-Adresse des Benutzers
-			message.setRecipients(Message.RecipientType.TO,InternetAddress.parse(to));// E-Mail-Adresse des Empfängers
+			message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(to));// E-Mail-Adresse des Empfängers
 			message.setSubject(subject);// Betreff
 			message.setContent(text, "text/html");// Text der E-Mail (mit html Code für den Style)
 			
