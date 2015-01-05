@@ -251,9 +251,9 @@ public class Einzelansicht extends VerticalLayout implements View {
         gridInfos.addComponent(t, 1,13);
         
         
-        Button bearbeiten = new Button("Bearbeiten");
-        bearbeiten.addStyleName("BearbeitenButton");
-        gridInfos.addComponent(bearbeiten, 0 , 14);
+//        Button bearbeiten = new Button("Bearbeiten");
+//        bearbeiten.addStyleName("BearbeitenButton");
+//        gridInfos.addComponent(bearbeiten, 0 , 14);
         
         Button anfrage = new Button("Anfrage");
         anfrage.addStyleName("AnfrageButton");
