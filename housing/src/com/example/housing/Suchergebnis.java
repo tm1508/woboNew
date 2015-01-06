@@ -1,15 +1,20 @@
 package com.example.housing;
 
+import java.io.ByteArrayInputStream;
 import java.io.File;
+import java.io.IOException;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.imageio.ImageIO;
+import javax.imageio.stream.ImageInputStream;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.ImageIcon;
 
 import com.example.housing.data.model.Offer;
 import com.example.housing.data.model.Photo;
+import com.vaadin.data.Buffered;
 import com.vaadin.event.LayoutEvents.LayoutClickEvent;
 import com.vaadin.event.LayoutEvents.LayoutClickListener;
 import com.vaadin.navigator.View;
@@ -100,22 +105,37 @@ public class Suchergebnis extends VerticalLayout implements View {
 			GridLayout ergebnisLayout = new GridLayout(6,3);
 			ergebnisLayout.setMargin(false);
 			//pictures
-//			List<Photo> pictures;
-//			pictures = o.getPhotos();
-//			if(pictures.size()>0){
-//			Photo ph = pictures.get(0);
-//			byte[] by = ph.getPhoto();
-//			ImageIcon im2 = new ImageIcon(by);		
-//			ergebnisLayout.addComponent((Component) im2,0,0,2,2);
-//			}else{
-			//TODO
+			List<Photo> pictures;
+			pictures = o.getPhotos();
+			ImageInputStream iis = null;
+			//falls Bilder zu der Wohnung vorhanden sind
+			if(pictures.size()>0){
+			Photo ph = pictures.get(0);			
+			byte[] by = ph.getPhoto();
+			ByteArrayInputStream bis = new ByteArrayInputStream(by);
+			Object source = bis;
+			try {
+				iis = ImageIO.createImageInputStream(source);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			Buffered bufferedImage=null;
+			try {
+				bufferedImage = (Buffered) ImageIO.read(iis);
+			} catch (IOException e) {
+				e.printStackTrace();
+			} 
+			Image ii = (Image) bufferedImage;	
+			ergebnisLayout.addComponent(ii,0,0,2,2);
+			}else{
+			//TODO Kein bild vorhanden Bild
 			String basepath = VaadinService.getCurrent().getBaseDirectory().getAbsolutePath();
 			FileResource resource = new FileResource(new File(basepath + "/WEB-INF/image/dh.jpg"));
 			Image image = new Image("",resource);
 			ergebnisLayout.addComponent(image,0,0,2,2);
 //			String im = "Kein Bild vorhanden";
 //			ergebnisLayout.addComponent(new Label(im),0,0,2,2);
-//			}
+			}
 			
 			String title = o.getTitle();
 			Label l = new Label(title + " in "+ o.getCity());
