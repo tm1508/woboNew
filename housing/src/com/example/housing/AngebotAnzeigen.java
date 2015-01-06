@@ -69,7 +69,7 @@ public class AngebotAnzeigen extends VerticalLayout implements View {
 		addComponent(f);
 	}
 
-	/*public AngebotAnzeigen() { //nicht unbedingt notwendig
+	public AngebotAnzeigen() { //nicht unbedingt notwendig
 		Navigation nav = new Navigation();
 		addComponent(nav);
 		// setSizeFull();
@@ -89,7 +89,7 @@ public class AngebotAnzeigen extends VerticalLayout implements View {
 
 		Footer f = new Footer();
 		addComponent(f);
-	}*/
+	}
 	/**
 	 * Sets the content.
 	 */	
@@ -254,7 +254,7 @@ public class AngebotAnzeigen extends VerticalLayout implements View {
 
 	}
 	
-	/*public void setContent() {
+	public void setContent() {
 
 		content = new VerticalLayout();
 		content.setMargin(true);
@@ -398,7 +398,7 @@ public class AngebotAnzeigen extends VerticalLayout implements View {
 		content.addComponent(change);
 		
 
-	}*/
+	}
 
 
 }
