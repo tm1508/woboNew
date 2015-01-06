@@ -130,9 +130,9 @@ public class Suchergebnis extends VerticalLayout implements View {
 			
 			int a = o.getType();
 			String s;
-			if(a ==1){
+			if(a ==2){
 				s = "WG";
-			}else if(a ==2){
+			}else if(a ==1){
 				s = "Wohnung";
 			}else{
 				s="";

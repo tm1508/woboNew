@@ -167,9 +167,9 @@ public class Einzelansicht extends VerticalLayout implements View {
     	int a = angebot.getType();
 		String s;
 		if(a ==1){
-			s = "WG";
-		}else if(a ==2){
 			s = "Wohnung";
+		}else if(a ==2){
+			s = "WG";
 		}else{
 			s="";
 		}
