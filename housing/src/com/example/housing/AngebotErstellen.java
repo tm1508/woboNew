@@ -1,6 +1,7 @@
 package com.example.housing;
 
 import com.example.housing.data.model.Offer;
+import com.example.housing.data.model.User;
 import com.example.housing.data.provider.OfferProvider;
 import com.vaadin.data.Validator.InvalidValueException;
 import com.vaadin.navigator.View;
@@ -352,10 +353,13 @@ public class AngebotErstellen extends VerticalLayout implements View {
 													// NullPointerException ab
 				}
 
-				OfferProvider of = new OfferProvider();
-				Offer newOffer = new Offer();
+				
+				
 				if (valid) {// sind alle Mussfelder gefüllt, wird ein neues
 							// Angebot erstellt
+					Offer newOffer = new Offer();
+					User u = VaadinSession.getCurrent().getAttribute(User.class);
+					newOffer.setOffer_idUser(u);
 					newOffer.setTitle(titel.getValue());
 					newOffer.setStreet(street.getValue());
 					newOffer.setZip(zip.getValue());
@@ -376,19 +380,20 @@ public class AngebotErstellen extends VerticalLayout implements View {
 					newOffer.setPets(pets.getValue());
 					newOffer.setGender(gender);
 					newOffer.setText(text.getValue());
+					
 					try {//überprüft ob eine Kaution angegeben ist, da die Angabe optional ist
 						newOffer.setBond(Float.parseFloat(bond.getValue()));
-					} catch (NullPointerException e) {
+					} catch (NumberFormatException e) {
 					}
 					newOffer.setInactive(inactive.getValue());
 					// newOffer.setLatitude(latitude);
 					// newOffer.setLongitude(longitude);
 					// newOffer.setPhotos();
-					of.addOffer(newOffer);
+					new OfferProvider().addOffer(newOffer); //neues Angebot in die DB schreiben
 					String name = "AngebotAnzeigen";
-					getUI().getNavigator().addView(name, new AngebotAnzeigen(newOffer.getIdOffer()));
+					getUI().getNavigator().addView(name, new AngebotAnzeigen());
 					getUI().getNavigator().navigateTo(name);
-
+					
 				} else //Sind nicht alle Mussfelder gefüllt, wird eine Nachricht auf dem Bildschirm ausgegeben
 					Notification.show("Bitte füllen Sie alle Mussfelder*");
 			}
