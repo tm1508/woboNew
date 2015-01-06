@@ -3,6 +3,7 @@ package com.example.housing;
 import java.util.Date;
 
 import com.example.housing.data.model.Offer;
+import com.example.housing.data.model.User;
 import com.example.housing.data.provider.OfferProvider;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
@@ -45,7 +46,7 @@ public class AngebotAnzeigen extends VerticalLayout implements View {
 	/**
 	 * Instantiates a new angebot anzeigen.
 	 */
-	public AngebotAnzeigen(int idOffer) {
+	public AngebotAnzeigen(Offer offer) {
 		Navigation nav = new Navigation();
 		addComponent(nav);
 		// setSizeFull();
@@ -61,7 +62,6 @@ public class AngebotAnzeigen extends VerticalLayout implements View {
 			navPublic.setVisible(true);
 		}
 		OfferProvider op = new OfferProvider();
-		Offer offer = op.findById(idOffer);
 		setContent(offer);
 		addComponent(content);
 
@@ -69,7 +69,7 @@ public class AngebotAnzeigen extends VerticalLayout implements View {
 		addComponent(f);
 	}
 
-	public AngebotAnzeigen() { //nicht unbedingt notwendig
+	/*public AngebotAnzeigen() { //nicht unbedingt notwendig
 		Navigation nav = new Navigation();
 		addComponent(nav);
 		// setSizeFull();
@@ -89,11 +89,11 @@ public class AngebotAnzeigen extends VerticalLayout implements View {
 
 		Footer f = new Footer();
 		addComponent(f);
-	}
+	}*/
 	/**
 	 * Sets the content.
 	 */	
-	public void setContent(Offer offer) {
+	public void setContent(final Offer offer) {
 
 		content = new VerticalLayout();
 		content.setMargin(true);
@@ -241,8 +241,9 @@ public class AngebotAnzeigen extends VerticalLayout implements View {
 		Button change = new Button("bearbeiten");
 		change.addClickListener(new Button.ClickListener() {
 			public void buttonClick(ClickEvent event) {
+				
 				String name = "AngebotErstellen";
-				getUI().getNavigator().addView(name, new AngebotErstellen()); // momentan angezeigtes Angebot soll übergeben werden...
+				getUI().getNavigator().addView(name, new AngebotErstellen(offer)); // momentan angezeigtes Angebot soll übergeben werden...
 				getUI().getNavigator().navigateTo(name);
 			}
 		});
@@ -253,7 +254,7 @@ public class AngebotAnzeigen extends VerticalLayout implements View {
 
 	}
 	
-	public void setContent() {
+	/*public void setContent() {
 
 		content = new VerticalLayout();
 		content.setMargin(true);
@@ -397,7 +398,7 @@ public class AngebotAnzeigen extends VerticalLayout implements View {
 		content.addComponent(change);
 		
 
-	}
+	}*/
 
 
 }
