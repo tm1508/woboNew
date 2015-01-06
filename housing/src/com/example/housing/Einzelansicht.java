@@ -6,6 +6,7 @@ import java.sql.Date;
 import javax.swing.GroupLayout.Alignment;
 
 import com.example.housing.data.model.Offer;
+import com.example.housing.data.model.User;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.server.FileResource;
@@ -17,6 +18,8 @@ import com.vaadin.ui.DateField;
 import com.vaadin.ui.GridLayout;
 import com.vaadin.ui.Image;
 import com.vaadin.ui.Label;
+import com.vaadin.ui.Notification;
+import com.vaadin.ui.Notification.*;
 import com.vaadin.ui.Panel;
 import com.vaadin.ui.TextArea;
 import com.vaadin.ui.VerticalLayout;
@@ -258,9 +261,15 @@ public class Einzelansicht extends VerticalLayout implements View {
         
         anfrage.addClickListener(new Button.ClickListener() {
 			public void buttonClick(ClickEvent event) {
-				String name = "Anfrageformular";
-				getUI().getNavigator().addView(name, new Anfrageformular(angebot));
-				getUI().getNavigator().navigateTo(name);
+				if(! (boolean) VaadinSession.getCurrent().getAttribute("login")) {
+					Notification.show("Sie müssen sich als verifizierter DH-Student einloggen, um eine Anfrage zu einem Wohnungsangebot stellen zu können!", Type.WARNING_MESSAGE);
+				} else if (VaadinSession.getCurrent().getAttribute(User.class).getAccessLevel() == 1) {
+					Notification.show("Sie müssen sich als DH-Student verifizieren, um eine Anfrage zu einem Wohnungsangebot stellen zu können!", Type.WARNING_MESSAGE);
+				} else {
+					String name = "Anfrageformular";
+					getUI().getNavigator().addView(name, new Anfrageformular(angebot));
+					getUI().getNavigator().navigateTo(name);
+				}
 			}
 		});
 

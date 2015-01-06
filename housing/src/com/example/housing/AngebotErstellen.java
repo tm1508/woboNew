@@ -261,7 +261,7 @@ public class AngebotErstellen extends VerticalLayout implements View {
 		anzeigetext.addStyleName("AbschnittLabel");
 		final RichTextArea text = new RichTextArea();
 		text.setRequired(true);
-		text.setRequiredError("Bitte geben Sie eine kurze Beschreibun des Angebots an.");
+		text.setRequiredError("Bitte geben Sie eine kurze Beschreibung des Angebots an.");
 		text.setWidth("100%");
 		Label bilder = new Label("Bilder hinzufügen");
 		bilder.addStyleName("AbschnittLabel");
