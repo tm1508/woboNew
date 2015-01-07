@@ -9,6 +9,7 @@ import javax.persistence.Query;
 
 import com.example.housing.data.model.Offer;
 import com.example.housing.data.model.Photo;
+import com.example.housing.data.model.User;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -66,6 +67,20 @@ public class OfferProvider extends BaseProvider<Offer> {
 		return (Offer) super.find(id);
 	}
 
+	public List<Offer> ownOffers(User user){
+		StringBuffer owns = new StringBuffer();
+		int offer_idUser = user.getIdUser();
+		owns.append("SELECT o FROM Offer o WHERE o.offer_idUser = "+ offer_idUser);
+		if (!em.isOpen()) {
+
+			em = getEmf().createEntityManager();
+
+		}
+		Query filterAbfrage = em.createQuery(owns.toString());
+		@SuppressWarnings("unchecked")
+		List<Offer> ownOffers = (List<Offer>) filterAbfrage.getResultList();
+		return ownOffers;
+	}
 	public List<Offer> filter(Date startDate, Date endDate, float minSquareMetre, float maxSquareMetre, float minPrice,
 			float maxPrice, int type, boolean internet, boolean furnished, boolean kitchen, boolean smoker,
 			boolean pets, String city) {

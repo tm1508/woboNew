@@ -109,8 +109,8 @@ public class Navigation extends CustomComponent {
 		//Navigator navigator = new Navigator(null, h);
 		MenuBar.Command mycommand4 = new MenuBar.Command() {
 			public void menuSelected(MenuItem selectedItem) {
-				String name = "AngebotAnzeigen";
-				getUI().getNavigator().addView(name, new AngebotAnzeigen());
+				String name = "AngeboteVerwalten";
+				getUI().getNavigator().addView(name, new AngeboteVerwalten());
 				getUI().getNavigator().navigateTo(name);
 				
 			}  
