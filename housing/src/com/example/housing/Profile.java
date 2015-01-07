@@ -395,17 +395,14 @@ public class Profile extends VerticalLayout implements View{
 				boolean validate = validate();
 				if(validate){//falls alle Felder richtig ausgefüllt wurden
 					
-					User u = new User();
+					User u = new UserProvider().findByEmail(email_1.getValue());
 					u.setFirstname(prename.getValue());
 					u.setLastname(lastname.getValue());
 					u.setEmail(email_1.getValue());
 					u.setPassword(password_1.getValue());
 					u.setMobile(handy.getValue());
-					u.setActivated(false);
 					if(dhstud.getValue()){
 						u.setAccessLevel(1);
-					}else{
-						u.setAccessLevel(0);
 					}
 					//Werte in der DB speichern
 					new UserProvider().alterUser(u);

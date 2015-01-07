@@ -4,6 +4,8 @@ import com.example.housing.data.model.User;
 import com.example.housing.data.provider.UserProvider;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.server.Page;
+import com.vaadin.server.VaadinServlet;
+import com.vaadin.server.VaadinServletService;
 import com.vaadin.server.VaadinSession;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Label;
@@ -96,7 +98,12 @@ public class LoginWindow extends Window{
 			loginButton.addClickListener(new Button.ClickListener() {
 				public void buttonClick(ClickEvent event) {
 					try{
+						// Find out the base bath for the servlet
+						String servletPath = VaadinServlet.getCurrent()
+						    .getServletContext().getContextPath() + VaadinServletService 
+						    .getCurrentServletRequest().getServletPath();
 						
+						System.out.println(servletPath);
 						//1. User aus der Datenbank auslesen
 						User u = new UserProvider().findByEmail(email_1.getValue());
 
