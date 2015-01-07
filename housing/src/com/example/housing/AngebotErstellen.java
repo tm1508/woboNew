@@ -3,6 +3,7 @@ package com.example.housing;
 import com.example.housing.data.model.Offer;
 import com.example.housing.data.model.User;
 import com.example.housing.data.provider.OfferProvider;
+import com.example.housing.utility.Format;
 import com.vaadin.data.Validator.InvalidValueException;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
@@ -393,8 +394,8 @@ public class AngebotErstellen extends VerticalLayout implements View {
 						newOffer.setEndDate(endDate.getValue());
 					} catch (NullPointerException e) {
 					}
-					newOffer.setSquareMetre(Float.parseFloat(squareMetre.getValue()));
-					newOffer.setPrice(Float.parseFloat(price.getValue()));
+					newOffer.setSquareMetre(new Format().floatFormat(squareMetre.getValue()));
+					newOffer.setPrice(new Format().floatFormat(price.getValue()));
 					newOffer.setType(type);
 					newOffer.setNumberOfRoommate(Integer.parseInt(roomMates.getValue()));
 					newOffer.setInternet(internet.getValue());
@@ -751,8 +752,8 @@ public class AngebotErstellen extends VerticalLayout implements View {
 						newOffer.setEndDate(endDate.getValue());
 					} catch (NullPointerException e) {
 					}
-					newOffer.setSquareMetre(Float.parseFloat(squareMetre.getValue()));
-					newOffer.setPrice(Float.parseFloat(price.getValue()));
+					newOffer.setSquareMetre(new Format().floatFormat(squareMetre.getValue()));
+					newOffer.setPrice(new Format().floatFormat(price.getValue()));
 					newOffer.setType(type);
 					newOffer.setNumberOfRoommate(Integer.parseInt(roomMates.getValue()));
 					newOffer.setInternet(internet.getValue());
