@@ -382,8 +382,7 @@ public class AngebotErstellen extends VerticalLayout implements View {
 				if (valid) {// sind alle Mussfelder gefüllt, wird ein neues
 							// Angebot erstellt
 					Offer newOffer = new Offer();
-					User u = VaadinSession.getCurrent().getAttribute(User.class);
-					newOffer.setOffer_idUser(u);
+					newOffer.setOffer_idUser(VaadinSession.getCurrent().getAttribute(User.class));
 					newOffer.setTitle(titel.getValue());
 					newOffer.setStreet(street.getValue());
 					newOffer.setZip(zip.getValue());
@@ -755,8 +754,7 @@ public class AngebotErstellen extends VerticalLayout implements View {
 				if (valid) {// sind alle Mussfelder gefüllt, wird ein neues
 							// Angebot erstellt
 					Offer changedOffer = new Offer();
-					User u = VaadinSession.getCurrent().getAttribute(User.class);
-					changedOffer.setOffer_idUser(u);
+					changedOffer.setOffer_idUser(VaadinSession.getCurrent().getAttribute(User.class));
 					changedOffer.setIdOffer(offer.getIdOffer());
 					changedOffer.setTitle(titel.getValue());
 					changedOffer.setStreet(street.getValue());
@@ -765,7 +763,7 @@ public class AngebotErstellen extends VerticalLayout implements View {
 					changedOffer.setStartDate(startDate.getValue());
 					try { // überprüft ob ein Enddatum angegeben ist, da die
 							// Angabe optional ist
-						offer.setEndDate(endDate.getValue());
+						changedOffer.setEndDate(endDate.getValue());
 					} catch (NullPointerException e) {
 					}
 					changedOffer.setSquareMetre(new Format().floatFormat(squareMetre.getValue()));
