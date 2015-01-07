@@ -89,10 +89,10 @@ public class OfferProvider extends BaseProvider<Offer> {
 		StringBuffer filter = new StringBuffer();
 		filter.append("SELECT o FROM Offer o WHERE o.inactive = false AND ");
 		if (startDate != null && !startDate.equals(new Date(0))) {
-			filter.append("o.startDate < " + sdf.format(startDate) + " AND "); // Formatierung?
+			filter.append("o.startDate <= '" + sdf.format(startDate) + "' AND "); // Formatierung?
 		}
 		if (endDate != null && !endDate.equals(new Date(0))) {
-			filter.append("o.endDate > " + sdf.format(endDate) + " AND ");
+			filter.append("o.endDate > '" + sdf.format(endDate) + "' AND ");
 		}
 		if (minSquareMetre != 0.0) {
 			filter.append("o.squareMetre >= " + minSquareMetre + " AND ");
