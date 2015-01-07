@@ -146,13 +146,13 @@ public class Suchergebnis extends VerticalLayout implements View {
 			ergebnisLayout.addComponent(new Label(sSm), 4, 1);
 
 			int a = o.getType();
-			String s;
-			if (a == 2) {
-				s = "WG";
-			} else if (a == 1) {
+			String s = "";
+			if (a == 1) {
 				s = "Wohnung";
-			} else {
-				s = "";
+			} else if (a == 2) {
+				s = "Zimmer";
+			} else if(a ==3){
+				s = "WG-Zimmer";
 			}
 			ergebnisLayout.addComponent(new Label(s), 5, 1);
 
