@@ -255,10 +255,7 @@ public class Einzelansicht extends VerticalLayout implements View {
         gridInfos.addComponent(new Label("Beschreibung  "), 0, 13);
         gridInfos.addComponent(t, 1,13);
         
-        
-//        Button bearbeiten = new Button("Bearbeiten");
-//        bearbeiten.addStyleName("BearbeitenButton");
-//        gridInfos.addComponent(bearbeiten, 0 , 14);
+
         
         Button anfrage = new Button("Anfrage");
         anfrage.addStyleName("AnfrageButton");
@@ -278,7 +275,10 @@ public class Einzelansicht extends VerticalLayout implements View {
 			}
 		});
         
-        Button change = new Button("bearbeiten");
+        if((boolean) VaadinSession.getCurrent().getAttribute("login")){
+        	if(VaadinSession.getCurrent().getAttribute(User.class)== angebot.getOffer_idUser()){
+        Button change = new Button("Bearbeiten");
+        change.addStyleName("BearbeitenButton");
 		change.addClickListener(new Button.ClickListener() {
 			public void buttonClick(ClickEvent event) {
 				
@@ -288,8 +288,12 @@ public class Einzelansicht extends VerticalLayout implements View {
 			}
 		});
 		
+		
+		gridInfos.addComponent(change, 0 , 14);
+        	}
+        }
 		content.addComponent(new Label());
-		content.addComponent(change);
+		
 
 
 	}
