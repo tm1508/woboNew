@@ -42,20 +42,7 @@ public class Listenzeile extends CustomComponent {
 		buildMainLayout();
 		setCompositionRoot(mainLayout);
 
-		// TODO add user code here
-		/*
-		 * HorizontalLayout h = new HorizontalLayout();
-		 * 
-		 * 
-		 * String basepath =
-		 * VaadinService.getCurrent().getBaseDirectory().getAbsolutePath();
-		 * FileResource resource = new FileResource(new File(basepath +
-		 * "/WEB-INF/image/dh.jpg")); Image image = new Image("",resource);
-		 * h.setSpacing(true); h.addComponent(image); h.addComponent(new
-		 * Label("Titel")); h.addComponent(new Label("Quadratmeter"));
-		 * h.addComponent(new Label("Preis")); h.addComponent(new
-		 * Label("Zeitraum"));
-		 */
+	
 		GridLayout ergebnisLayout = new GridLayout(6, 3);
 		ergebnisLayout.setMargin(false);
 		ergebnisLayout.addStyleName("Listenzeile");
