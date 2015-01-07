@@ -92,7 +92,7 @@ public class OfferProvider extends BaseProvider<Offer> {
 			filter.append("o.startDate <= '" + sdf.format(startDate) + "' AND "); // Formatierung?
 		}
 		if (endDate != null && !endDate.equals(new Date(0))) {
-			filter.append("o.endDate > '" + sdf.format(endDate) + "' AND ");
+			filter.append("o.endDate >= '" + sdf.format(endDate) + "' AND ");
 		}
 		if (minSquareMetre != 0.0) {
 			filter.append("o.squareMetre >= " + minSquareMetre + " AND ");
