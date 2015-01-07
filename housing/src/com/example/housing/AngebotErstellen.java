@@ -427,13 +427,28 @@ public class AngebotErstellen extends VerticalLayout implements View {
 					Notification.show("Bitte füllen Sie alle Mussfelder*");
 			}
 		});
+		Button abbrechen = new Button();
+		abbrechen.addStyleName("BearbeitenButton");
+		abbrechen.setCaption("Abbrechen");
+		abbrechen.setImmediate(true);
+		abbrechen.setDescription("Abbrechen der Bearbeitung. Ihre Änderungen werden nicht gespeichert.");
+		abbrechen.addClickListener(new Button.ClickListener() {
+			public void buttonClick(ClickEvent event) {
+				String name = "Startseite";
+				getUI().getNavigator().addView(name, new Startseite());
+				getUI().getNavigator().navigateTo(name);
 
+			}
+		});
 		content.addComponent(inactive);
-		content.addComponent(save);
+		HorizontalLayout buttons = new HorizontalLayout();
+		buttons.addComponent(save);
+		buttons.addComponent(abbrechen);
+		content.addComponent(buttons);
 
 	}
 
-	public void setContent(Offer offer) {
+	public void setContent(final Offer offer) {
 
 		content = new VerticalLayout();
 		content.setMargin(true);
@@ -739,45 +754,49 @@ public class AngebotErstellen extends VerticalLayout implements View {
 
 				if (valid) {// sind alle Mussfelder gefüllt, wird ein neues
 							// Angebot erstellt
-					Offer newOffer = new Offer();
+					Offer changedOffer = new Offer();
 					User u = VaadinSession.getCurrent().getAttribute(User.class);
-					newOffer.setOffer_idUser(u);
-					newOffer.setTitle(titel.getValue());
-					newOffer.setStreet(street.getValue());
-					newOffer.setZip(zip.getValue());
-					newOffer.setCity(city.getValue());
-					newOffer.setStartDate(startDate.getValue());
+					changedOffer.setOffer_idUser(u);
+					changedOffer.setIdOffer(offer.getIdOffer());
+					changedOffer.setTitle(titel.getValue());
+					changedOffer.setStreet(street.getValue());
+					changedOffer.setZip(zip.getValue());
+					changedOffer.setCity(city.getValue());
+					changedOffer.setStartDate(startDate.getValue());
 					try { // überprüft ob ein Enddatum angegeben ist, da die
 							// Angabe optional ist
-						newOffer.setEndDate(endDate.getValue());
+						offer.setEndDate(endDate.getValue());
 					} catch (NullPointerException e) {
 					}
-					newOffer.setSquareMetre(new Format().floatFormat(squareMetre.getValue()));
-					newOffer.setPrice(new Format().floatFormat(price.getValue()));
-					newOffer.setType(type);
-					newOffer.setNumberOfRoommate(Integer.parseInt(roomMates.getValue()));
-					newOffer.setInternet(internet.getValue());
-					newOffer.setFurnished(furnished.getValue());
-					newOffer.setKitchen(kitchen.getValue());
-					newOffer.setSmoker(smoker.getValue());
-					newOffer.setPets(pets.getValue());
-					newOffer.setGender(gender);
-					newOffer.setText(text.getValue());
+					changedOffer.setSquareMetre(new Format().floatFormat(squareMetre.getValue()));
+					changedOffer.setPrice(new Format().floatFormat(price.getValue()));
+					changedOffer.setType(type);
+					changedOffer.setNumberOfRoommate(Integer.parseInt(roomMates.getValue()));
+					changedOffer.setInternet(internet.getValue());
+					changedOffer.setFurnished(furnished.getValue());
+					changedOffer.setKitchen(kitchen.getValue());
+					changedOffer.setSmoker(smoker.getValue());
+					changedOffer.setPets(pets.getValue());
+					changedOffer.setGender(gender);
+					changedOffer.setText(text.getValue());
 
 					try {// überprüft ob eine Kaution angegeben ist, da die
 							// Angabe optional ist
-						newOffer.setBond(Float.parseFloat(bond.getValue()));
+						changedOffer.setBond(Float.parseFloat(bond.getValue()));
 					} catch (NumberFormatException e) {
 					}
-					newOffer.setInactive(inactive.getValue());
-					// newOffer.setLatitude(latitude);
-					// newOffer.setLongitude(longitude);
-					// newOffer.setPhotos();
-					new OfferProvider().addOffer(newOffer); // neues Angebot in
-															// die DB schreiben
-					String name = "AngebotAnzeigen";
-					getUI().getNavigator().addView(name, new AngebotAnzeigen(newOffer));
-					getUI().getNavigator().navigateTo(name);
+					changedOffer.setInactive(inactive.getValue());
+					// changedOffer.setLatitude(latitude);
+					// changedOffer.setLongitude(longitude);
+					// changedOffer.setPhotos();
+					if (new OfferProvider().alterOffer(changedOffer)) {
+						// neues Angebot in die DB schreiben
+						String name = "AngebotAnzeigen";
+						getUI().getNavigator().addView(name, new AngebotAnzeigen(changedOffer));
+						getUI().getNavigator().navigateTo(name);
+					} else {
+						Notification.show("Das Angebot konnte nicht geändert werden.");
+					}
 
 				} else
 					// Sind nicht alle Mussfelder gefüllt, wird eine Nachricht
@@ -786,8 +805,24 @@ public class AngebotErstellen extends VerticalLayout implements View {
 			}
 		});
 
+		Button abbrechen = new Button();
+		abbrechen.addStyleName("BearbeitenButton");
+		abbrechen.setCaption("Abbrechen");
+		abbrechen.setImmediate(true);
+		abbrechen.setDescription("Abbrechen der Bearbeitung. Ihre Änderungen werden nicht gespeichert.");
+		abbrechen.addClickListener(new Button.ClickListener() {
+			public void buttonClick(ClickEvent event) {
+				String name = "Einzelansicht";
+				getUI().getNavigator().addView(name, new Einzelansicht(offer));
+				getUI().getNavigator().navigateTo(name);
+
+			}
+		});
 		content.addComponent(inactive);
-		content.addComponent(save);
+		HorizontalLayout buttons = new HorizontalLayout();
+		buttons.addComponent(save);
+		buttons.addComponent(abbrechen);
+		content.addComponent(buttons);
 
 	}
 
