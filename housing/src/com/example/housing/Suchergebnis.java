@@ -166,8 +166,8 @@ public class Suchergebnis extends VerticalLayout implements View {
 			ergebnisLayout.addComponent(new Label(start.toString()),3,2);
 //			Date end= new Date(2015,04,30);
 			//TODO: Wenn end-Datum nicht gesetzt ist, prüfen!
-			//Date end = (Date) o.getEndDate();
-			//ergebnisLayout.addComponent(new Label(end.toString()),5,2);
+			Date end = (Date) o.getEndDate();
+			ergebnisLayout.addComponent(new Label(end.toString()),5,2);
 			
 			
 			ergebnisLayout.addLayoutClickListener(new LayoutClickListener(){
