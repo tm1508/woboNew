@@ -14,6 +14,7 @@ import javax.swing.ImageIcon;
 
 import com.example.housing.data.model.Offer;
 import com.example.housing.data.model.Photo;
+import com.example.housing.utility.Format;
 import com.vaadin.data.Buffered;
 import com.vaadin.event.LayoutEvents.LayoutClickEvent;
 import com.vaadin.event.LayoutEvents.LayoutClickListener;

@@ -7,6 +7,7 @@ import javax.swing.GroupLayout.Alignment;
 
 import com.example.housing.data.model.Offer;
 import com.example.housing.data.model.User;
+import com.example.housing.utility.Format;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.server.FileResource;
@@ -135,7 +136,7 @@ public class Einzelansicht extends VerticalLayout implements View {
 		
 		    
 		GridLayout gridInfos = new GridLayout(2,15); 
-		gridInfos.setWidth("60%");
+	//	gridInfos.setWidth("60%");
 		content.addComponent(gridInfos);
 		
 		//Date
@@ -143,8 +144,11 @@ public class Einzelansicht extends VerticalLayout implements View {
 	    DateField startDate = new DateField();
 	    startDate.setValue(angebot.getStartDate());
 	    startDate.setEnabled(false);
-	    gridInfos.addComponent(new Label("Startdatum"), 0, 0);
+	    Label start = new Label("Startdatum");
+	    start.setWidth("388px");
+	    gridInfos.addComponent(start, 0, 0);
 	    gridInfos.addComponent(startDate, 1,0);
+
 		    
 	    DateField endDate = new DateField();
 	    endDate.setValue(angebot.getEndDate());
@@ -154,27 +158,27 @@ public class Einzelansicht extends VerticalLayout implements View {
 	    
 	    //Size
 		float sm = angebot.getSquareMetre();
-		String sSm = Float.toString(sm) + "m²";
+		String sSm = new Format().stringFormat(sm) + "m²";
 		
         gridInfos.addComponent(new Label("Größe"),0,2);
         gridInfos.addComponent(new Label(sSm),1 , 2);
         
         //Price
     	float price =  angebot.getPrice();
-		String sPrice = Float.toString(price) + " €";
+		String sPrice = new Format().stringFormat(price) + " €";
 		
         gridInfos.addComponent(new Label("Warmmiete"),0,3);
         gridInfos.addComponent(new Label(sPrice),1 , 3);
         
         //IsShared       
     	int a = angebot.getType();
-		String s;
+		String s = "";
 		if(a ==1){
 			s = "Wohnung";
 		}else if(a ==2){
-			s = "WG";
-		}else{
-			s="";
+			s = "Zimmer";
+		}else if(a == 3){
+			s="WG-Zimmer";
 		}
         gridInfos.addComponent(new Label("Art der Unterkunft: "), 0, 4);
         gridInfos.addComponent(new Label(s), 1, 4);
@@ -221,14 +225,16 @@ public class Einzelansicht extends VerticalLayout implements View {
         
         //male / female   
         Label maleFemale = new Label(""); 
-        int q = angebot.getGender();
-        if( q!= 0){
-    	   maleFemale.setValue("Frauen-WG");
+        int g = angebot.getGender();
+        if( g==1){
+    	   maleFemale.setValue("egal");
         }
-        if (q == 0){
-    	   maleFemale.setValue("Männer-WG");
+        else if (g == 2){
+    	   maleFemale.setValue("männlich");
         }
-        gridInfos.addComponent(new Label("Art der WG"), 0, 11);
+        else if ( g == 3)
+        	maleFemale.setValue("weiblich");
+        gridInfos.addComponent(new Label("Bevorzugtes Geschlecht"), 0, 11);
         gridInfos.addComponent(maleFemale, 1,11);
 
         
@@ -247,13 +253,11 @@ public class Einzelansicht extends VerticalLayout implements View {
        
         t.setValue(text);
         t.setEnabled(false);
+        t.setWidth("338px");
         gridInfos.addComponent(new Label("Beschreibung  "), 0, 13);
         gridInfos.addComponent(t, 1,13);
         
-        
-//        Button bearbeiten = new Button("Bearbeiten");
-//        bearbeiten.addStyleName("BearbeitenButton");
-//        gridInfos.addComponent(bearbeiten, 0 , 14);
+
         
         Button anfrage = new Button("Anfrage");
         anfrage.addStyleName("AnfrageButton");
@@ -272,6 +276,30 @@ public class Einzelansicht extends VerticalLayout implements View {
 				}
 			}
 		});
+        
+        if(VaadinSession.getCurrent().getAttribute("login").equals(true)){
+        	User u = VaadinSession.getCurrent().getAttribute(User.class);
+        	int id = u.getIdUser();
+        	User u2 = angebot.getOffer_idUser();
+        	int id2 = u.getIdUser();
+        	if(id == id2){
+        Button change = new Button("Bearbeiten");
+        change.addStyleName("BearbeitenButton");
+		change.addClickListener(new Button.ClickListener() {
+			public void buttonClick(ClickEvent event) {
+				
+				String name = "AngebotErstellen";
+				getUI().getNavigator().addView(name, new AngebotErstellen(angebot)); // momentan angezeigtes Angebot soll übergeben werden...
+				getUI().getNavigator().navigateTo(name);
+			}
+		});
+		
+		
+		gridInfos.addComponent(change, 0 , 14);
+        	}
+        }
+		content.addComponent(new Label());
+		
 
 
 	}

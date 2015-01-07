@@ -11,6 +11,7 @@ import com.vaadin.data.validator.StringLengthValidator;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.server.FontAwesome;
+import com.vaadin.server.Page;
 import com.vaadin.server.UserError;
 import com.vaadin.server.VaadinSession;
 import com.vaadin.ui.Button;
@@ -22,7 +23,9 @@ import com.vaadin.ui.Notification;
 import com.vaadin.ui.Notification.Type;
 import com.vaadin.ui.PasswordField;
 import com.vaadin.ui.TextField;
+import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
+import com.vaadin.ui.Window;
 
 /**
  * The Class Profile.
@@ -81,13 +84,16 @@ public class Profile extends VerticalLayout implements View{
 	private HorizontalLayout passwordLayout;
 	
 	/** The button_1. */
-	private Button button_1;
+	private Button button_1;//Profil bearbeiten
 	
 	/** The button_2. */
-	private Button button_2;
+	private Button button_2;//abbrechen
 	
 	/** The button_3. */
-	private Button button_3;
+	private Button button_3;//Änderungen speichern
+	
+	/** The button_4. */
+	private Button button_4;//Profil löschen
 
 
 	/* (non-Javadoc)
@@ -395,17 +401,14 @@ public class Profile extends VerticalLayout implements View{
 				boolean validate = validate();
 				if(validate){//falls alle Felder richtig ausgefüllt wurden
 					
-					User u = new User();
+					User u = new UserProvider().findByEmail(email_1.getValue());
 					u.setFirstname(prename.getValue());
 					u.setLastname(lastname.getValue());
 					u.setEmail(email_1.getValue());
 					u.setPassword(password_1.getValue());
 					u.setMobile(handy.getValue());
-					u.setActivated(false);
 					if(dhstud.getValue()){
 						u.setAccessLevel(1);
-					}else{
-						u.setAccessLevel(0);
 					}
 					//Werte in der DB speichern
 					new UserProvider().alterUser(u);
@@ -424,11 +427,85 @@ public class Profile extends VerticalLayout implements View{
 				}
 			}
 		});
+		
+		
+		// button_4
+		button_4 = new Button();
+		button_4.setVisible(true);
+		button_4.setCaption("Profil löschen");
+		button_4.setImmediate(true);
+		button_4.setDescription("Löschen des Profils.");
+		button_4.setWidth("-1px");
+		button_4.setHeight("-1px");
+		content.addComponent(button_4);
+		button_4.addClickListener(new Button.ClickListener() {
+		public void buttonClick(ClickEvent event) {
+				CheckWindow w  = new CheckWindow();
+				
+				UI.getCurrent().addWindow(w);
+			}
+		
+			class CheckWindow extends Window{
+				
+				public CheckWindow(){
+					super("Profil löschen?");
+					this.center();		
+					this.setHeight("50%");
+				    this.setWidth("30%");
+				    
+				    final VerticalLayout content = new VerticalLayout();
+				    content.setMargin(true);
+				    
+				    
+					Label l = new Label("Wenn Sie Ihr Profil löschen werden all Ihre Daten gelöscht (inklusive Ihrer angebotenen Wohnungen)!");
+					content.addComponent(l);
+					
+					Button yes = new Button();
+					yes.setCaption("Ja, ich will mein Profil löschen.");
+					yes.setDescription("Profil löschen");
+					yes.setWidth("-1px");
+					yes.setHeight("-1px");
+					content.addComponent(yes);
+					yes.addClickListener(new Button.ClickListener() {
+						public void buttonClick(ClickEvent event) {
+							User u = new UserProvider().findByEmail(VaadinSession.getCurrent().getAttribute(User.class).getEmail());
+							new UserProvider().removeUser(u);
+							VaadinSession.getCurrent().setAttribute("login", false);
+							VaadinSession.getCurrent().setAttribute(User.class, null);
+							
+							
+							String name = "Startseite";
+							getUI().getNavigator().addView(name, new Startseite());
+							getUI().getNavigator().navigateTo(name);
+							CheckWindow.this.close();
+							Notification.show("Ihr Profil wurde gelöscht.", Type.HUMANIZED_MESSAGE);
+						}
+					});
+					
+					
+					Button no = new Button();
+					no.setCaption("Nein, doch nicht.");
+					no.setDescription("Profil nicht löschen");
+					no.setWidth("-1px");
+					no.setHeight("-1px");
+					content.addComponent(no);
+					no.addClickListener(new Button.ClickListener() {
+						public void buttonClick(ClickEvent event) {
+							CheckWindow.this.close();
+						}
+					});
+					
+					this.setContent(content);
+				}
+				
+			}
+		});
+		
 		daten();//Felder mit Daten befüllen
 	}
 	
 	/**
-	 * Gets the data from the User-Session-Object.
+	 * Sets the data from the User-Session-Object.
 	 * @see com.vaadin.server.VaadinSession
 	 */
 	private void daten() {
