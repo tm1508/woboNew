@@ -416,8 +416,8 @@ public class AngebotErstellen extends VerticalLayout implements View {
 					// newOffer.setPhotos();
 					new OfferProvider().addOffer(newOffer); // neues Angebot in
 															// die DB schreiben
-					String name = "AngebotAnzeigen";
-					getUI().getNavigator().addView(name, new AngebotAnzeigen(newOffer));
+					String name = "Einzelansicht";
+					getUI().getNavigator().addView(name, new Einzelansicht(newOffer));
 					getUI().getNavigator().navigateTo(name);
 
 				} else
@@ -789,8 +789,8 @@ public class AngebotErstellen extends VerticalLayout implements View {
 					// changedOffer.setPhotos();
 					if (new OfferProvider().alterOffer(changedOffer)) {
 						// neues Angebot in die DB schreiben
-						String name = "AngebotAnzeigen";
-						getUI().getNavigator().addView(name, new AngebotAnzeigen(changedOffer));
+						String name = "Einzelansicht";
+						getUI().getNavigator().addView(name, new Einzelansicht(changedOffer));
 						getUI().getNavigator().navigateTo(name);
 					} else {
 						Notification.show("Das Angebot konnte nicht geändert werden.");
