@@ -112,7 +112,7 @@ public class OfferProvider extends BaseProvider<Offer> {
 			else if (type == 5)
 				filter.append("o.type = 2 OR o.type = 3 AND ");
 			else if (type == 6)
-				filter.append("o.type = 2 OR o.type = 3 AND ");
+				filter.append("o.type = 1 OR o.type = 3 AND ");
 			else if (type == 7) {
 			} else
 				filter.append("o.type = " + type + " AND ");
