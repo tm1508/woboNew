@@ -431,6 +431,7 @@ public class Profile extends VerticalLayout implements View{
 		
 		// button_4
 		button_4 = new Button();
+		button_4.setStyleName("loeschen");
 		button_4.setVisible(true);
 		button_4.setCaption("Profil löschen");
 		button_4.setImmediate(true);

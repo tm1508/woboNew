@@ -4,6 +4,7 @@ import java.util.Date;
 
 import com.example.housing.data.model.Offer;
 import com.example.housing.data.provider.OfferProvider;
+import com.example.housing.utility.Format;
 import com.vaadin.navigator.Navigator;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
@@ -175,14 +176,19 @@ public class Suche extends VerticalLayout implements View{
 				ergebnisse =
 						of.filter(zeitVon.getValue(),
 						zeitBis.getValue(),
-						(sucheVon.getValue()=="") ? (float)0.0 : Float.parseFloat(sucheVon.getValue()),
-						(sucheBis.getValue()=="") ? (float)0.0 : Float.parseFloat(sucheBis.getValue()), 
-						(preisVon.getValue()=="") ? (float)0.0 : Float.parseFloat(preisVon.getValue()),
-						(preisBis.getValue()=="") ? (float)0.0 : Float.parseFloat(preisBis.getValue()),
+						(sucheVon.getValue()=="") ? (float)0.0 : new Format().floatFormat(sucheVon.getValue()),
+						(sucheBis.getValue()=="") ? (float)0.0 : new Format().floatFormat(sucheBis.getValue()), 
+						(preisVon.getValue()=="") ? (float)0.0 : new Format().floatFormat(preisVon.getValue()),
+						(preisBis.getValue()=="") ? (float)0.0 : new Format().floatFormat(preisBis.getValue()),
 						a, internet.getValue(), moebliert.getValue(), kueche.getValue(),rauchen.getValue(),
 						haustiere.getValue(),
 						stadt.getValue());
 				
+				//Werte löschen für erneute Suche
+				sucheVon.setValue("");
+				sucheBis.setValue("");
+				preisVon.setValue("");
+				preisBis.setValue("");
 				String name = "AngebotAnzeigen";
 				getUI().getNavigator().addView(name, new Suchergebnis(ergebnisse));
 				getUI().getNavigator().navigateTo(name);
