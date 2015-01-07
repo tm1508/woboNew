@@ -15,6 +15,8 @@ import com.vaadin.ui.Link;
 import com.vaadin.ui.Panel;
 import com.vaadin.ui.Table;
 import com.vaadin.ui.TextField;
+import com.vaadin.ui.Upload;
+import com.vaadin.ui.Upload.FinishedEvent;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Button.ClickEvent;
 
@@ -221,7 +223,32 @@ public class Startseite extends VerticalLayout implements View{
 		content.addComponent(p);
 		*/
 		
+		
+		
+		final LineBreakCounter lineBreakCounter = new LineBreakCounter();
+        lineBreakCounter.setSlow(true);
+ 
+        Upload u= new Upload(null, lineBreakCounter);
+       
+         
+       u.setButtonCaption("Upload File");
+        
+        u.addFinishedListener(new Upload.FinishedListener() {
+            @Override
+            public void uploadFinished(final FinishedEvent event) {
+                System.out.println(lineBreakCounter.getLineBreakCount());
+                System.out.println(lineBreakCounter.getPicture());
+            }
+        });
+ 
+       content.addComponent(u);
+ 
+ 
+    }
+ 
+    
+		
 	}
 	
 	
-}
+
