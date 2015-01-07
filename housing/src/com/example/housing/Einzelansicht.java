@@ -135,7 +135,7 @@ public class Einzelansicht extends VerticalLayout implements View {
 		
 		    
 		GridLayout gridInfos = new GridLayout(2,15); 
-		gridInfos.setWidth("60%");
+	//	gridInfos.setWidth("60%");
 		content.addComponent(gridInfos);
 		
 		//Date
@@ -143,8 +143,11 @@ public class Einzelansicht extends VerticalLayout implements View {
 	    DateField startDate = new DateField();
 	    startDate.setValue(angebot.getStartDate());
 	    startDate.setEnabled(false);
-	    gridInfos.addComponent(new Label("Startdatum"), 0, 0);
+	    Label start = new Label("Startdatum");
+	    start.setWidth("388px");
+	    gridInfos.addComponent(start, 0, 0);
 	    gridInfos.addComponent(startDate, 1,0);
+
 		    
 	    DateField endDate = new DateField();
 	    endDate.setValue(angebot.getEndDate());
@@ -247,6 +250,7 @@ public class Einzelansicht extends VerticalLayout implements View {
        
         t.setValue(text);
         t.setEnabled(false);
+        t.setWidth("338px");
         gridInfos.addComponent(new Label("Beschreibung  "), 0, 13);
         gridInfos.addComponent(t, 1,13);
         
