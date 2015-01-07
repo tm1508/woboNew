@@ -172,13 +172,13 @@ public class Einzelansicht extends VerticalLayout implements View {
         
         //IsShared       
     	int a = angebot.getType();
-		String s;
+		String s = "";
 		if(a ==1){
 			s = "Wohnung";
 		}else if(a ==2){
-			s = "WG";
-		}else{
-			s="";
+			s = "Zimmer";
+		}else if(a == 3){
+			s="WG-Zimmer";
 		}
         gridInfos.addComponent(new Label("Art der Unterkunft: "), 0, 4);
         gridInfos.addComponent(new Label(s), 1, 4);
@@ -225,14 +225,16 @@ public class Einzelansicht extends VerticalLayout implements View {
         
         //male / female   
         Label maleFemale = new Label(""); 
-        int q = angebot.getGender();
-        if( q!= 0){
-    	   maleFemale.setValue("Frauen-WG");
+        int g = angebot.getGender();
+        if( g==1){
+    	   maleFemale.setValue("egal");
         }
-        if (q == 0){
-    	   maleFemale.setValue("Männer-WG");
+        else if (g == 2){
+    	   maleFemale.setValue("männlich");
         }
-        gridInfos.addComponent(new Label("Art der WG"), 0, 11);
+        else if ( g == 3)
+        	maleFemale.setValue("weiblich");
+        gridInfos.addComponent(new Label("Bevorzugtes Geschlecht"), 0, 11);
         gridInfos.addComponent(maleFemale, 1,11);
 
         
@@ -275,8 +277,12 @@ public class Einzelansicht extends VerticalLayout implements View {
 			}
 		});
         
-        if((boolean) VaadinSession.getCurrent().getAttribute("login")){
-        	if(VaadinSession.getCurrent().getAttribute(User.class)== angebot.getOffer_idUser()){
+        if(VaadinSession.getCurrent().getAttribute("login").equals(true)){
+        	User u = VaadinSession.getCurrent().getAttribute(User.class);
+        	int id = u.getIdUser();
+        	User u2 = angebot.getOffer_idUser();
+        	int id2 = u.getIdUser();
+        	if(id == id2){
         Button change = new Button("Bearbeiten");
         change.addStyleName("BearbeitenButton");
 		change.addClickListener(new Button.ClickListener() {
