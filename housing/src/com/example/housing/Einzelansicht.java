@@ -267,7 +267,7 @@ public class Einzelansicht extends VerticalLayout implements View {
 			public void buttonClick(ClickEvent event) {
 				if(! (boolean) VaadinSession.getCurrent().getAttribute("login")) {
 					Notification.show("Sie müssen sich als verifizierter DH-Student einloggen, um eine Anfrage zu einem Wohnungsangebot stellen zu können!", Type.WARNING_MESSAGE);
-				} else if (VaadinSession.getCurrent().getAttribute(User.class).getAccessLevel() == 1) {
+				} else if (VaadinSession.getCurrent().getAttribute(User.class).getAccessLevel() != 1) {
 					Notification.show("Sie müssen sich als DH-Student verifizieren, um eine Anfrage zu einem Wohnungsangebot stellen zu können!", Type.WARNING_MESSAGE);
 				} else {
 					String name = "Anfrageformular";

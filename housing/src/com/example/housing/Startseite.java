@@ -15,6 +15,8 @@ import com.vaadin.ui.Link;
 import com.vaadin.ui.Panel;
 import com.vaadin.ui.Table;
 import com.vaadin.ui.TextField;
+import com.vaadin.ui.Upload;
+import com.vaadin.ui.Upload.FinishedEvent;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Button.ClickEvent;
 
@@ -125,7 +127,7 @@ public class Startseite extends VerticalLayout implements View{
 	        //Tab 3
 			final VerticalLayout layout_2 = new VerticalLayout();
 	        layout_2.setMargin(true);
-	        	layout_2.addComponent(new Label("Für alle, die eine Wohnung suchen...: Sie sind Dualer Student an der DHBW Karlsruhe? Dann finden Sie bei uns die passende Wohung oder das passende Zimmer. Wir haben ein großes Angebot an Zimmer und Wohnungen..."));
+	        	layout_2.addComponent(new Label("Für alle, die eine Wohnung suchen...: Sie sind Dualer Student an der DHBW Karlsruhe? Dann finden Sie bei uns die passende Wohung oder das passende Zimmer. Wir haben ein großes Angebot an Zimmern und Wohnungen..."));
 	
 		        Link link_2 = new Link();
 				link_2.setStyleName("text");
@@ -221,7 +223,32 @@ public class Startseite extends VerticalLayout implements View{
 		content.addComponent(p);
 		*/
 		
+		
+		
+		final LineBreakCounter lineBreakCounter = new LineBreakCounter();
+        lineBreakCounter.setSlow(true);
+ 
+        Upload u= new Upload(null, lineBreakCounter);
+       
+         
+       u.setButtonCaption("Upload File");
+        
+        u.addFinishedListener(new Upload.FinishedListener() {
+            @Override
+            public void uploadFinished(final FinishedEvent event) {
+                System.out.println(lineBreakCounter.getLineBreakCount());
+                System.out.println(lineBreakCounter.getPicture());
+            }
+        });
+ 
+       content.addComponent(u);
+ 
+ 
+    }
+ 
+    
+		
 	}
 	
 	
-}
+
