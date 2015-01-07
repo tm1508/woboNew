@@ -127,7 +127,7 @@ public class Startseite extends VerticalLayout implements View{
 	        //Tab 3
 			final VerticalLayout layout_2 = new VerticalLayout();
 	        layout_2.setMargin(true);
-	        	layout_2.addComponent(new Label("Für alle, die eine Wohnung suchen...: Sie sind Dualer Student an der DHBW Karlsruhe? Dann finden Sie bei uns die passende Wohung oder das passende Zimmer. Wir haben ein großes Angebot an Zimmer und Wohnungen..."));
+	        	layout_2.addComponent(new Label("Für alle, die eine Wohnung suchen...: Sie sind Dualer Student an der DHBW Karlsruhe? Dann finden Sie bei uns die passende Wohung oder das passende Zimmer. Wir haben ein großes Angebot an Zimmern und Wohnungen..."));
 	
 		        Link link_2 = new Link();
 				link_2.setStyleName("text");
