@@ -115,13 +115,14 @@ public class Suche extends VerticalLayout implements View{
 		gridSuche.addComponent(zeitBis, 4,3);
 		
 		//Art der Unterkunft
-		gridSuche.addComponent(new Label("Unterkunft: *"), 0 ,4);
-		gridSuche.addComponent(new Label("WG"), 1 ,4);
-		final CheckBox wg = new CheckBox();
-		gridSuche.addComponent(wg, 2 ,4);
-		gridSuche.addComponent(new Label("Wohnung"), 3 ,4);
-		final CheckBox wohnung = new CheckBox();
-		gridSuche.addComponent(wohnung, 4 ,4);
+		gridSuche.addComponent(new Label("Unterkunft: "), 0 ,4);
+		final CheckBox wohnung = new CheckBox("Wohnung");
+		final CheckBox zimmer = new CheckBox("Zimmer");
+		final CheckBox wg = new CheckBox("WG-Zimmer");
+		gridSuche.addComponent(wohnung,2 ,4);
+		gridSuche.addComponent(zimmer,3,4);
+		gridSuche.addComponent(wg, 4 ,4);
+
 		
 		//Sonstiges
 		gridSuche.addComponent(new Label("Sonstiges:"), 0 ,5);
@@ -151,19 +152,23 @@ public class Suche extends VerticalLayout implements View{
 
 		suchButton.addClickListener(new Button.ClickListener() {
 			public void buttonClick(ClickEvent event) {
-				final int a;
-				if(wohnung.getValue()){
-					a = 1;
-				}else if (wg.getValue()&& wohnung.getValue()){
-					a = 3;
-				}else if (wg.getValue()){
-					a = 2;
-				}else{
-					a = 4;
-					Notification.show("Bitte Art der Unterkunft wählen!");
-					return;
+				int a = 7;
+				if(wohnung.getValue()&&zimmer.getValue()&& wg.getValue()){
+					a = 7;
 				}
-
+				else if(wohnung.getValue()&&zimmer.getValue()){
+					a = 4;
+				}else if (zimmer.getValue()&& wg.getValue()){
+					a = 5;
+				}else if (wg.getValue()&&wohnung.getValue()){
+					a = 6;
+				}else if(wohnung.getValue()){
+					a = 1;
+				}else if(zimmer.getValue()){
+					a = 2;
+				}else if(wg.getValue()){
+					a = 3;
+				}
 				
 				OfferProvider of = new OfferProvider();
 				List<Offer> ergebnisse;

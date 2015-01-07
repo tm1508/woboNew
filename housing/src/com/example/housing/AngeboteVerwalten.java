@@ -14,6 +14,8 @@ import javax.swing.ImageIcon;
 
 import com.example.housing.data.model.Offer;
 import com.example.housing.data.model.Photo;
+import com.example.housing.data.model.User;
+import com.example.housing.data.provider.OfferProvider;
 import com.example.housing.utility.Format;
 import com.vaadin.data.Buffered;
 import com.vaadin.event.LayoutEvents.LayoutClickEvent;
@@ -40,80 +42,77 @@ import com.vaadin.ui.Button.ClickEvent;
 /**
  * The Class Suchergebnis.
  */
-public class Suchergebnis extends VerticalLayout implements View {
-	
+public class AngeboteVerwalten extends VerticalLayout implements View {
+
 	/** The content. */
 	VerticalLayout content;
-	
+
 	/**
-	 * Instantiates a new suchergebnis.
+	 * Instantiates a new angeboteverwalten.
 	 */
 
-	List<Offer> angebote; 
-	
-	//Übergabe der Ergebnis aus der Suche
-	public Suchergebnis(List<Offer> offers){
-		
-		this.angebote = offers;
-		
+	OfferProvider op = new OfferProvider();
+	List<Offer> angebote = op.ownOffers(VaadinSession.getCurrent().getAttribute(User.class));
+	// Übergabe der Ergebnis aus der Suche
+	public AngeboteVerwalten() {
 		content = new VerticalLayout();
-				
-    	content.setMargin(true);
+		content.setMargin(true);
 		content.setSizeFull();
 		content.setSpacing(true);
-		
+
 		Navigation nav = new Navigation();
-		
+
 		NavigationPublic navPublic = new NavigationPublic();
 		addComponent(navPublic);
-		
-		//falls der Benutzer eingelogt ist verändert sich die Navigation
-		if(VaadinSession.getCurrent().getAttribute("login").equals(true)){
+
+		// falls der Benutzer eingelogt ist verändert sich die Navigation
+		if (VaadinSession.getCurrent().getAttribute("login").equals(true)) {
 			nav.setVisible(true);
 			navPublic.setVisible(false);
-		}else{
+		} else {
 			nav.setVisible(false);
 			navPublic.setVisible(true);
 		}
-		
-		addComponent(nav);	
-		
+
+		addComponent(nav);
+
 		setContent();
 		addComponent(content);
-		
+
 		Footer f = new Footer();
 		addComponent(f);
-//		setComponentAlignment(f, com.vaadin.ui.Alignment.TOP_CENTER);
-//		content.addComponent(f);
+		// setComponentAlignment(f, com.vaadin.ui.Alignment.TOP_CENTER);
+		// content.addComponent(f);
 	}
-
 
 	/**
 	 * Sets the content.
 	 */
 	@SuppressWarnings("deprecation")
-	public void setContent(){
-			
+	public void setContent() {
+
 		// Anzahl der gefundenen Ergebnisse
 		int anzahl = angebote.size();
 		System.out.println(anzahl);
-		for(int i = 0; i<anzahl;i++){
+		for (int i = 0; i < anzahl; i++) {
 			final Offer o = angebote.get(i);
-		
+
 			content.addComponent(new Listenzeile(o));
 		}
 
 	}
 
-	/* (non-Javadoc)
-	 * @see com.vaadin.navigator.View#enter(com.vaadin.navigator.ViewChangeListener.ViewChangeEvent)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.vaadin.navigator.View#enter(com.vaadin.navigator.ViewChangeListener
+	 * .ViewChangeEvent)
 	 */
 	@Override
 	public void enter(ViewChangeEvent event) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 }
-
-

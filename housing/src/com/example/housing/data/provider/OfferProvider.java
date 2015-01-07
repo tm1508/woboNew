@@ -9,6 +9,7 @@ import javax.persistence.Query;
 
 import com.example.housing.data.model.Offer;
 import com.example.housing.data.model.Photo;
+import com.example.housing.data.model.User;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -34,25 +35,25 @@ public class OfferProvider extends BaseProvider<Offer> {
 		}
 
 	}
-	
+
 	public boolean alterOffer(Offer offer) {
-		
-		return super.update(offer); //true bei Erfolg, false bei Fehler
-		
+
+		return super.update(offer); // true bei Erfolg, false bei Fehler
+
 	}
-	
+
 	public boolean removeOffer(Offer offer) {
-		
+
 		List<Photo> photos = offer.getPhotos();
 		PhotoProvider photoProv = new PhotoProvider();
-		for(Photo p : photos) {
-			
+		for (Photo p : photos) {
+
 			photoProv.removePhoto(p);
-			
+
 		}
-		
-		return super.delete(offer); //true bei Erfolg, false bei Fehler
-		
+
+		return super.delete(offer); // true bei Erfolg, false bei Fehler
+
 	}
 
 	/**
@@ -66,6 +67,21 @@ public class OfferProvider extends BaseProvider<Offer> {
 		return (Offer) super.find(id);
 	}
 
+	public List<Offer> ownOffers(User user) {
+		StringBuffer owns = new StringBuffer();
+		int offer_idUser = user.getIdUser();
+		owns.append("SELECT o FROM Offer o WHERE o.offer_idUser = " + offer_idUser);
+		if (!em.isOpen()) {
+
+			em = getEmf().createEntityManager();
+
+		}
+		Query filterAbfrage = em.createQuery(owns.toString());
+		@SuppressWarnings("unchecked")
+		List<Offer> ownOffers = (List<Offer>) filterAbfrage.getResultList();
+		return ownOffers;
+	}
+
 	public List<Offer> filter(Date startDate, Date endDate, float minSquareMetre, float maxSquareMetre, float minPrice,
 			float maxPrice, int type, boolean internet, boolean furnished, boolean kitchen, boolean smoker,
 			boolean pets, String city) {
@@ -73,10 +89,10 @@ public class OfferProvider extends BaseProvider<Offer> {
 		StringBuffer filter = new StringBuffer();
 		filter.append("SELECT o FROM Offer o WHERE o.inactive = false AND ");
 		if (startDate != null && !startDate.equals(new Date(0))) {
-			filter.append("o.startDate < " + sdf.format(startDate) + " AND "); // Formatierung?
+			filter.append("o.startDate >= '" + sdf.format(startDate) + "' AND "); // Formatierung?
 		}
 		if (endDate != null && !endDate.equals(new Date(0))) {
-			filter.append("o.endDate > " + sdf.format(endDate) + " AND ");
+			filter.append("o.endDate <= '" + sdf.format(endDate) + "' AND ");
 		}
 		if (minSquareMetre != 0.0) {
 			filter.append("o.squareMetre >= " + minSquareMetre + " AND ");
@@ -91,7 +107,15 @@ public class OfferProvider extends BaseProvider<Offer> {
 			filter.append("o.price <= " + maxPrice + " AND ");
 		}
 		if (type != 0) {
-			filter.append("o.type = " + type + " AND ");
+			if (type == 4)
+				filter.append("o.type = 1 OR o.type = 2 AND ");
+			else if (type == 5)
+				filter.append("o.type = 2 OR o.type = 3 AND ");
+			else if (type == 6)
+				filter.append("o.type = 1 OR o.type = 3 AND ");
+			else if (type == 7) {
+			} else
+				filter.append("o.type = " + type + " AND ");
 		}
 		if (internet) {
 			filter.append("o.internet = " + internet + " AND ");
