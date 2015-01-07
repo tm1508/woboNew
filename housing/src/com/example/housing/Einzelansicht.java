@@ -281,10 +281,10 @@ public class Einzelansicht extends VerticalLayout implements View {
         	User u = VaadinSession.getCurrent().getAttribute(User.class);
         	int id = u.getIdUser();
         	User u2 = angebot.getOffer_idUser();
-        	int id2 = u.getIdUser();
+        	int id2 = u2.getIdUser();
         	if(id == id2){
-        Button change = new Button("Bearbeiten");
-        change.addStyleName("BearbeitenButton");
+				Button change = new Button("Bearbeiten");
+				change.addStyleName("BearbeitenButton");
 		change.addClickListener(new Button.ClickListener() {
 			public void buttonClick(ClickEvent event) {
 				
