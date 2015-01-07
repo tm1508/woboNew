@@ -2,6 +2,8 @@ package com.example.housing;
 
 import com.example.housing.data.model.User;
 import com.example.housing.data.provider.UserProvider;
+import com.vaadin.server.ClassResource;
+import com.vaadin.server.ExternalResource;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.server.Page;
 import com.vaadin.server.VaadinServlet;
@@ -9,9 +11,11 @@ import com.vaadin.server.VaadinServletService;
 import com.vaadin.server.VaadinSession;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Label;
+import com.vaadin.ui.Link;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.PasswordField;
 import com.vaadin.ui.TextField;
+import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
 import com.vaadin.ui.Button.ClickEvent;
@@ -37,6 +41,8 @@ public class LoginWindow extends Window{
 	
 	/** The login button. */
 	public static Button loginButton;
+	
+	public static Button link;
 	
 	/**
 	 * Instantiates a new login window.
@@ -145,8 +151,32 @@ public class LoginWindow extends Window{
 					}
 				}
 			});
+			
+			link = new Button();
+			link.setStyleName("link");
+			link.setCaption("Passwort vergessen?");
+			link.setImmediate(false);
+			link.setWidth("-1px");
+			link.setHeight("-1px");
+			link.setIcon(FontAwesome.EXTERNAL_LINK);
+			
+			
+			
+			link.addClickListener(new Button.ClickListener(){
+			public void buttonClick(ClickEvent event) {
+				ForgotPasswordWindow w = new ForgotPasswordWindow();
+				UI.getCurrent().removeWindow(LoginWindow.this);
+				UI.getCurrent().addWindow(w);
 				
+			}
+			});
+			
+	
+			content.addComponent(link);
+			
 			this.setContent(content);    
+			
+			
 	}
 	
 	//diese Methode ist nur zum Testen !!!
