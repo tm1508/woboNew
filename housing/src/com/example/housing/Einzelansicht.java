@@ -7,6 +7,7 @@ import javax.swing.GroupLayout.Alignment;
 
 import com.example.housing.data.model.Offer;
 import com.example.housing.data.model.User;
+import com.example.housing.utility.Format;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.server.FileResource;
@@ -154,14 +155,14 @@ public class Einzelansicht extends VerticalLayout implements View {
 	    
 	    //Size
 		float sm = angebot.getSquareMetre();
-		String sSm = Float.toString(sm) + "m²";
+		String sSm = new Format().stringFormat(sm) + "m²";
 		
         gridInfos.addComponent(new Label("Größe"),0,2);
         gridInfos.addComponent(new Label(sSm),1 , 2);
         
         //Price
     	float price =  angebot.getPrice();
-		String sPrice = Float.toString(price) + " €";
+		String sPrice = new Format().stringFormat(price) + " €";
 		
         gridInfos.addComponent(new Label("Warmmiete"),0,3);
         gridInfos.addComponent(new Label(sPrice),1 , 3);

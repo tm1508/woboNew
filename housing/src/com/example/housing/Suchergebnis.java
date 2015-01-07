@@ -14,6 +14,7 @@ import javax.swing.ImageIcon;
 
 import com.example.housing.data.model.Offer;
 import com.example.housing.data.model.Photo;
+import com.example.housing.utility.Format;
 import com.vaadin.data.Buffered;
 import com.vaadin.event.LayoutEvents.LayoutClickEvent;
 import com.vaadin.event.LayoutEvents.LayoutClickListener;
@@ -141,11 +142,11 @@ public class Suchergebnis extends VerticalLayout implements View {
 			Label l = new Label(title + " in "+ o.getCity());
 			ergebnisLayout.addComponent(l,4,0);
 			float price = o.getPrice();		
-			Label l2 = new Label(Float.toString(price)+ " €");
+			Label l2 = new Label(new Format().stringFormat(price)+ " €");
 			ergebnisLayout.addComponent(l2,3,1);
 			
 			float sm = o.getSquareMetre();
-			String sSm = Float.toString(sm) + " m²";
+			String sSm = new Format().stringFormat(sm) + " m²";
 			ergebnisLayout.addComponent(new Label(sSm),4,1);
 			
 			int a = o.getType();
@@ -165,8 +166,8 @@ public class Suchergebnis extends VerticalLayout implements View {
 			ergebnisLayout.addComponent(new Label(start.toString()),3,2);
 //			Date end= new Date(2015,04,30);
 			//TODO: Wenn end-Datum nicht gesetzt ist, prüfen!
-			Date end = (Date) o.getEndDate();
-			ergebnisLayout.addComponent(new Label(end.toString()),5,2);
+			//Date end = (Date) o.getEndDate();
+			//ergebnisLayout.addComponent(new Label(end.toString()),5,2);
 			
 			
 			ergebnisLayout.addLayoutClickListener(new LayoutClickListener(){
