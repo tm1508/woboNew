@@ -105,18 +105,17 @@ public class AngebotErstellen extends VerticalLayout implements View {
 		content.setMargin(true);
 
 		// Titel + Adresse
-		HorizontalLayout hl = new HorizontalLayout();
-		hl.setWidth("60%");
 		Label ltitel = new Label("Titel");
 		ltitel.setWidth("10%");
 		ltitel.addStyleName("AbschnittLabel");
 		final TextField titel = new TextField();
+		titel.setWidth("50%");
 		titel.setRequired(true);
 		titel.setRequiredError("Bitte geben Sie einen Titel an.");
 		titel.setWidth("90%");
 		titel.addStyleName("ImportantTitle");
-		hl.addComponent(ltitel);
-		hl.addComponent(titel);
+		content.addComponent(ltitel);
+		content.addComponent(titel);
 		Label adress = new Label("Adresse");
 		adress.addStyleName("AbschnittLabel");
 		final TextField street = new TextField("Straﬂe, Hausnummer");
@@ -138,7 +137,6 @@ public class AngebotErstellen extends VerticalLayout implements View {
 		hl0.addComponent(zip);
 		hl0.addComponent(city);
 
-		content.addComponent(hl);
 		content.addComponent(new Label());
 		content.addComponent(adress);
 		content.addComponent(new Label());
