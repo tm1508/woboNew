@@ -59,7 +59,7 @@ $v-background-color: #F7F7F7;
     .v-label-title {
   		font-size: 30px;
   		color: #e2001a;
-  		margin-bottom: 30px;
+  		margin-bottom: 20px;
   	}
   
   	.v-textfield{
@@ -72,6 +72,14 @@ $v-background-color: #F7F7F7;
 	text-align:center;
   }
   	//Startseite
+  	
+  	
+  	//Profil
+  	.v-button-loeschen{
+		margin-top:30px;
+		color: #e2001a;
+		border-color: #e2001a;
+	}
   	
   	//Einzelansicht 
   	.v-label-ImportantTitle {
