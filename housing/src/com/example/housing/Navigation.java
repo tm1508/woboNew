@@ -64,6 +64,7 @@ public class Navigation extends CustomComponent {
 		menuBar_1 = new MenuBar();
 		menuBar_1.setImmediate(false);
 		menuBar_1.setHeight("43px");
+		menuBar_1.setSizeFull();
 	
 		
 		MenuBar.Command mycommand = new MenuBar.Command() {

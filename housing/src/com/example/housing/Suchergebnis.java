@@ -102,7 +102,7 @@ public class Suchergebnis extends VerticalLayout implements View {
 		
 	
 
-			GridLayout ergebnisLayout = new GridLayout(6,3);
+		/*	GridLayout ergebnisLayout = new GridLayout(6,3);
 			ergebnisLayout.setMargin(false);
 			//pictures
 			List<Photo> pictures;
@@ -176,8 +176,9 @@ public class Suchergebnis extends VerticalLayout implements View {
 					getUI().getNavigator().navigateTo(name);
 	            }
 			});
-		
-			content.addComponent(ergebnisLayout);
+		*/
+			content.addComponent(new Listenzeile(o));
+			//content.addComponent(ergebnisLayout);
 		}
 
 
