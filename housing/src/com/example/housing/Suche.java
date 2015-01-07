@@ -142,7 +142,7 @@ public class Suche extends VerticalLayout implements View{
 		final CheckBox internet = new CheckBox();
 		gridSuche.addComponent(internet, 2 ,7);
 		
-		gridSuche.addComponent(new Label("* Mussfelder"), 0, 8);
+
 		Button suchButton = new Button("Suchen");
 		suchButton.addStyleName("SuchButton");
 		gridSuche.addComponent(suchButton, 0 ,9);
