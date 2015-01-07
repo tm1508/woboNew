@@ -15,10 +15,12 @@ import com.vaadin.ui.DateField;
 import com.vaadin.ui.GridLayout;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
+import com.vaadin.ui.Notification;
 import com.vaadin.ui.RichTextArea;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Button.ClickEvent;
+import com.vaadin.ui.Notification.Type;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -26,6 +28,9 @@ import com.vaadin.ui.Button.ClickEvent;
  */
 public class AngebotAnzeigen extends VerticalLayout implements View {
 
+	
+	private Offer currentOffer;
+	
 	/** The content. */
 	VerticalLayout content;
 
@@ -47,6 +52,9 @@ public class AngebotAnzeigen extends VerticalLayout implements View {
 	 * Instantiates a new angebot anzeigen.
 	 */
 	public AngebotAnzeigen(Offer offer) {
+		
+		currentOffer = offer;
+		
 		Navigation nav = new Navigation();
 		addComponent(nav);
 		// setSizeFull();
@@ -394,8 +402,26 @@ public class AngebotAnzeigen extends VerticalLayout implements View {
 			}
 		});
 		
+		Button anfrage = new Button("Anfrage");
+        //anfrage.addStyleName("AnfrageButton");
+        
+        anfrage.addClickListener(new Button.ClickListener() {
+			public void buttonClick(ClickEvent event) {
+				if(! (boolean) VaadinSession.getCurrent().getAttribute("login")) {
+					Notification.show("Sie müssen sich als verifizierter DH-Student einloggen, um eine Anfrage zu einem Wohnungsangebot stellen zu können!", Type.WARNING_MESSAGE);
+				} else if (VaadinSession.getCurrent().getAttribute(User.class).getAccessLevel() == 1) {
+					Notification.show("Sie müssen sich als DH-Student verifizieren, um eine Anfrage zu einem Wohnungsangebot stellen zu können!", Type.WARNING_MESSAGE);
+				} else {
+					String name = "Anfrageformular";
+					getUI().getNavigator().addView(name, new Anfrageformular(currentOffer));
+					getUI().getNavigator().navigateTo(name);
+				}
+			}
+		});
+		
 		content.addComponent(new Label());
 		content.addComponent(change);
+		content.addComponent(anfrage);
 		
 
 	}
