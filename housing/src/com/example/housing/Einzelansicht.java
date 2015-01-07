@@ -273,6 +273,19 @@ public class Einzelansicht extends VerticalLayout implements View {
 				}
 			}
 		});
+        
+        Button change = new Button("bearbeiten");
+		change.addClickListener(new Button.ClickListener() {
+			public void buttonClick(ClickEvent event) {
+				
+				String name = "AngebotErstellen";
+				getUI().getNavigator().addView(name, new AngebotErstellen(angebot)); // momentan angezeigtes Angebot soll übergeben werden...
+				getUI().getNavigator().navigateTo(name);
+			}
+		});
+		
+		content.addComponent(new Label());
+		content.addComponent(change);
 
 
 	}
