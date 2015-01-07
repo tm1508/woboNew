@@ -71,7 +71,7 @@ public class OfferProvider extends BaseProvider<Offer> {
 			boolean pets, String city) {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		StringBuffer filter = new StringBuffer();
-		filter.append("SELECT o FROM Offer o WHERE o.inactive = false AND");
+		filter.append("SELECT o FROM Offer o WHERE o.inactive = false AND ");
 		if (startDate != null && !startDate.equals(new Date(0))) {
 			filter.append("o.startDate < " + sdf.format(startDate) + " AND "); // Formatierung?
 		}
