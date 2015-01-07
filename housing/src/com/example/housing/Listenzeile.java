@@ -41,7 +41,7 @@ public class Listenzeile extends CustomComponent {
 	public Listenzeile(final Offer o) {
 		buildMainLayout();
 		setCompositionRoot(mainLayout);
-		mainLayout.setMargin(false);
+		
 		
 
 		// TODO add user code here
@@ -152,7 +152,7 @@ public class Listenzeile extends CustomComponent {
 		mainLayout = new VerticalLayout();
 		mainLayout.setImmediate(false);
 
-		mainLayout.setMargin(true);
+		mainLayout.setMargin(false);
 		
 		return mainLayout;
 		
