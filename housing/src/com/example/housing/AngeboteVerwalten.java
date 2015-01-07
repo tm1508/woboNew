@@ -97,7 +97,7 @@ public class AngeboteVerwalten extends VerticalLayout implements View {
 		for (int i = 0; i < anzahl; i++) {
 			final Offer o = angebote.get(i);
 
-			GridLayout ergebnisLayout = new GridLayout(6, 3);
+			/*GridLayout ergebnisLayout = new GridLayout(6, 3);
 			ergebnisLayout.setMargin(false);
 			// pictures
 			List<Photo> pictures;
@@ -171,8 +171,9 @@ public class AngeboteVerwalten extends VerticalLayout implements View {
 					getUI().getNavigator().navigateTo(name);
 				}
 			});
-
-			content.addComponent(ergebnisLayout);
+*/
+			content.addComponent(new Listenzeile(o));
+			//content.addComponent(ergebnisLayout);
 		}
 
 	}
