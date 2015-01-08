@@ -401,7 +401,9 @@ public class Profile extends VerticalLayout implements View{
 				boolean validate = validate();
 				if(validate){//falls alle Felder richtig ausgefüllt wurden
 					
-					User u = new UserProvider().findByEmail(email_1.getValue());
+					User u = VaadinSession.getCurrent().getAttribute(User.class);
+					//User u = new UserProvider().findByEmail(email_1.getValue());
+					u.setIdUser(VaadinSession.getCurrent().getAttribute(User.class).getIdUser());
 					u.setFirstname(prename.getValue());
 					u.setLastname(lastname.getValue());
 					u.setEmail(email_1.getValue());
