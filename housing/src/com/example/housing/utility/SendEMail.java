@@ -27,7 +27,8 @@ public class SendEMail {
 		String from = "wohnungsboerse_dh@web.de";
 		String subject = "Test";
 		String text = "123";
-		send(to, from, subject, text);
+		String cc = "julia.agricola@web.de";
+		sendCC(to, from, cc, subject, text);
 	}
 	
 	/**
@@ -73,5 +74,44 @@ public class SendEMail {
 		} catch (Exception e) {
 			System.out.println(e);
 		}
+	}
+	
+	
+	public static void sendCC(String to, String from, String cc, String subject, String text){
+		
+		// Properties setzen
+		properties.put("mail.smtp.host", "smtp.web.de");// SMTP-Server von web.de
+		properties.put("mail.smtp.auth", "true");// Authentifikation erforderlich
+		properties.put("mail.smtp.port", "587");// Port des SMTP-Servers
+		properties.put("mail.smtp.starttls.enable", "true");// SSLv3/TLSv1
+
+		// Authentifizierung
+		Authenticator auth = new javax.mail.Authenticator() {
+			@Override
+			public PasswordAuthentication getPasswordAuthentication() {
+				return new PasswordAuthentication("wohnungsboerse_dh@web.de", "wohnungsboerse");// Unsere E-Mail-Adresse und unser Passwort
+			}
+		};
+		
+		// Session erstellen mit den oben gesetzten Properties und der Authentifikation
+		Session session = Session.getDefaultInstance(properties, auth);
+		
+		// neue Message erzeugen
+		SMTPMessage message = (SMTPMessage) new SMTPMessage(session);
+		try {
+			message.setEnvelopeFrom("wohnungsboerse_dh@web.de");// tatsächlicher Absender (E-Mail wird von uns an uns selbst geschickt, unter dem Namen bzw. der E-Mail-Adresse des Nutzers)
+			message.setFrom(new InternetAddress(from));// E-Mail-Adresse des Benutzers
+			message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(to));// E-Mail-Adresse des Empfängers
+			message.setRecipients(Message.RecipientType.CC, InternetAddress.parse(cc));
+			message.setSubject(subject);// Betreff
+			message.setContent(text, "text/html");// Text der E-Mail (mit html Code für den Style)
+			
+			// E-Mail senden
+			Transport.send(message);
+
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+		
 	}
 }
