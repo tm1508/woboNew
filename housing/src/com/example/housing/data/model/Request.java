@@ -1,5 +1,7 @@
 package com.example.housing.data.model;
 
+import java.util.Date;
+
 import javax.persistence.*;
 
 // TODO: Auto-generated Javadoc
@@ -24,6 +26,14 @@ public class Request {
 	@ManyToOne
 	@JoinColumn(name="request_idOffer")
 	private Offer request_idOffer;
+	
+	/** The message. */
+	@Lob
+	private String message;
+	
+	/** The requestTime*/
+	@Temporal(value=TemporalType.TIMESTAMP)
+	private Date requestTime;
 	
 	/**
 	 * Gets the id request.
@@ -77,6 +87,40 @@ public class Request {
 	 */
 	public void setRequest_idOffer(Offer request_idOffer) {
 		this.request_idOffer = request_idOffer;
+	}
+	/**
+	 * Gets the message.
+	 *
+	 * @return the message
+	 */
+	public String getMessage() {
+		return message;
+	}
+	/**
+	 * Sets the message.
+	 *
+	 * @return the message
+	 */
+	public void setMessage(String message) {
+		this.message = message;
+	}
+	
+	/**
+	 * Gets the requestTime.
+	 *
+	 * @return the requestTime
+	 */
+	public Date getRequestTime() {
+		return requestTime;
+	}
+
+	/**
+	 * Sets the requestTime.
+	 *
+	 * @return the requestTime
+	 */
+	public void setRequestTime(Date requestTime) {
+		this.requestTime = requestTime;
 	}
 
 }
