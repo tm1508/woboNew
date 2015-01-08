@@ -356,7 +356,7 @@ public class Registrierung extends VerticalLayout implements View{
 						getUI().getNavigator().addView(name, new Startseite());
 						getUI().getNavigator().navigateTo(name);
 						
-						Notification.show("Die Registrierung war erfolgreich. Sie können sich jetzt anmelden.",Type.HUMANIZED_MESSAGE);//Meldung an den Nutzer
+						Notification.show("Die Registrierung war erfolgreich. Sie haben eine Email zur Aktivierung erhalten.",Type.HUMANIZED_MESSAGE);//Meldung an den Nutzer
 					}else{//ein Nutzer mit dieser E-Mail-Adresse existiert bereits
 						Notification.show("Die Registrierung war nicht erfolgreich. Ein Nutzer mit dieser E-Mail-Adresse existiert bereits.",Type.HUMANIZED_MESSAGE);//Meldung an den Nutzer
 					}
