@@ -127,6 +127,7 @@ public class Registrierung extends VerticalLayout implements View{
 		//Footer hinzufuegen
 		Footer f = new Footer();
 		addComponent(f);	
+
 	}
 	
 	/**

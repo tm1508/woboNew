@@ -104,24 +104,19 @@ public class LoginWindow extends Window{
 			loginButton.addClickListener(new Button.ClickListener() {
 				public void buttonClick(ClickEvent event) {
 					try{
-						// Find out the base bath for the servlet
-						String servletPath = VaadinServlet.getCurrent()
-						    .getServletContext().getContextPath() + VaadinServletService 
-						    .getCurrentServletRequest().getServletPath();
+					
 						
-						System.out.println(servletPath);
+				
 						//1. User aus der Datenbank auslesen
 						User u = new UserProvider().findByEmail(email_1.getValue());
 
 						//2. Prüfen ob das Konto aktiviert ist
 						if(!u.isActivated()){
 							
-							String[] msgs = Page.getCurrent().getUriFragment().split("/");//Request Parameter auslesen (wurde bei der Registrierung verschickt)
+							//String[] msgs = Page.getCurrent().getUriFragment().split("/");//Request Parameter auslesen (wurde bei der Registrierung verschickt)
 							
-							if(msgs.length == 1){//es gibt keinen Parameter -> kein Login möglich
-								Notification.show("Login fehlgeschlagen!","Ihr Konto ist nicht freigeschalten. Bitte folgen Sie dem Link in der E-Mail, die Sie erhalten haben.", Type.HUMANIZED_MESSAGE);
-							}else{
-								if(email_1.getValue().equals(u.getEmail()) && email_1.getValue().equals(msgs[1])){//richtiger Parameter wurde übergeben
+							String param = (String) VaadinSession.getCurrent().getAttribute("activated");
+							if(email_1.getValue().equals(u.getEmail()) && email_1.getValue().equals(param)){//richtiger Parameter wurde übergeben
 									//Aktivierung in DB speichern
 									u.setActivated(true);
 									new UserProvider().alterUser(u);
@@ -129,7 +124,7 @@ public class LoginWindow extends Window{
 									Notification.show("Login fehlgeschlagen!","Ihr Konto ist nicht freigeschalten. Bitte folgen Sie dem Link in der E-Mail, die Sie erhalten haben.", Type.HUMANIZED_MESSAGE);
 								}
 							}
-						}
+						
 						
 						//3. Prüfen ob Benutzer und Passwort stimmen (nur wenn das Konto aktiviert ist)
 						if(u.isActivated()){
@@ -137,8 +132,12 @@ public class LoginWindow extends Window{
 								Notification.show("Login erfolgreich.",Type.HUMANIZED_MESSAGE);//Meldung an den Nutzer
 								VaadinSession.getCurrent().setAttribute(User.class, u);//User-Objekt in der Session speichern
 								VaadinSession.getCurrent().setAttribute("login", true);//Login-Attribut auf true setzen (wird auf jeder Seite abgefragt, um zu prüfen welche Navigationsleiste angezeigt werden soll)
-							
-								Page.getCurrent().reload();//Seite erneut Laden (damit die Navigationsleiste verändert wird)
+								
+								String name = "Startseite";
+								getUI().getNavigator().addView(name, new Startseite());
+								getUI().getNavigator().navigateTo(name);
+								LoginWindow.this.close();
+								//Page.getCurrent().reload();//Seite erneut Laden (damit die Navigationsleiste verändert wird)
 							}else{
 								//Fehlermeldung bei falschem Benutzername oder Passwort
 								Notification.show("Login fehlgeschlagen!","Bitte überprüfen Sie Benutzername und/oder Passwort.", Type.HUMANIZED_MESSAGE);
