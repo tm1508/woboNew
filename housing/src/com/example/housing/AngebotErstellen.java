@@ -4,6 +4,7 @@ import com.example.housing.data.model.Offer;
 import com.example.housing.data.model.User;
 import com.example.housing.data.provider.OfferProvider;
 import com.example.housing.utility.Format;
+import com.example.housing.utility.PhotoUploader;
 import com.vaadin.data.Validator.InvalidValueException;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
@@ -18,8 +19,10 @@ import com.vaadin.ui.Notification;
 import com.vaadin.ui.RichTextArea;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.Upload;
+import com.vaadin.ui.Upload.Receiver;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Button.ClickEvent;
+import com.vaadin.ui.Upload.FinishedEvent;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -636,8 +639,9 @@ public class AngebotErstellen extends VerticalLayout implements View {
 		text.setWidth("100%");
 		Label bilder = new Label("Bilder hinzufügen");
 		bilder.addStyleName("AbschnittLabel");
-		Upload bilderup = new Upload();
-		bilderup.setButtonCaption("hochladen");
+		
+		//Upload bilderup = new Upload();
+		//bilderup.setButtonCaption("hochladen alt");
 
 		content.addComponent(anzeigetext);
 		content.addComponent(new Label());
@@ -645,9 +649,28 @@ public class AngebotErstellen extends VerticalLayout implements View {
 		content.addComponent(new Label());
 		content.addComponent(bilder);
 		content.addComponent(new Label());
-		content.addComponent(bilderup);
-		content.addComponent(new Label());
-
+		//content.addComponent(bilderup);
+		//content.addComponent(new Label());
+		
+		//TODO
+		//Bilder-Upload
+		final Receiver photoUpload = new PhotoUploader();
+ 
+        Upload u= new Upload("hochladen neu", photoUpload);
+        
+        //u.setReceiver(photoUpload);
+        //u.setButtonCaption("hochladen neu");
+       
+        u.addFinishedListener(new Upload.FinishedListener() {
+            @Override
+            public void uploadFinished(final FinishedEvent event) {
+                System.out.println("Bild-Daten: Länge byte[] = " + ((PhotoUploader) photoUpload).getPictureData().length);
+            }
+        });
+        
+        content.addComponent(u);
+        content.addComponent(new Label());
+        
 		// Button speichern/aktivieren/deaktivieren
 		final CheckBox inactive = new CheckBox("deaktivieren");
 
