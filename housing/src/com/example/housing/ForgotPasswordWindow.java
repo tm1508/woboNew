@@ -22,7 +22,7 @@ import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Notification.Type;
 
 /**
- * The Class LoginWindow.
+ * The Class ForgotPasswordWindow.
  * @author MWI Wohungsbörse 2014
  * @version 1.0
  * @see com.example.housing.Registrierung
@@ -45,11 +45,14 @@ public class ForgotPasswordWindow extends Window{
 	/** The save button. */
 	public static Button save;
 	
+	/** The cancel button. */
+	public static Button cancel;
+	
 	/** The text. */
 	public static Label text;
 	
 	/**
-	 * Instantiates a new login window.
+	 * Instantiates a new ForgotPasswordWindow.
 	 */
 	public ForgotPasswordWindow() {
 		super("Passwort vergessen.");
@@ -99,7 +102,7 @@ public class ForgotPasswordWindow extends Window{
 			
 			// password_2
 			password_2 = new PasswordField();
-			password_2.setCaption("Neues Passwort (Kontrolle");
+			password_2.setCaption("Neues Passwort (Kontrolle)");
 			password_2.setImmediate(false);
 			password_2.setDescription("Bitte Passwort eingeben");
 			password_2.setWidth("220px");
@@ -108,7 +111,7 @@ public class ForgotPasswordWindow extends Window{
 			password_2.setIcon(FontAwesome.KEY);
 			content.addComponent(password_2);
 				
-			// loginButton
+			// speichern
 			save = new Button();
 			save.setCaption("speichern");
 			save.setImmediate(true);
@@ -123,17 +126,17 @@ public class ForgotPasswordWindow extends Window{
 						//1. User aus der Datenbank auslesen
 						User u = new UserProvider().findByEmail(email_1.getValue());
 						
-						//2. Validate Password
+						//2. Validate: Passwörter sind gleich?
 						if(validate()){
-							u.setPassword(password_1.getValue());
-							u.setActivated(false);
-							new UserProvider().alterUser(u);
-							
+							u.setPassword(password_1.getValue());//neues Passwort setzen
+							u.setActivated(false);//Nutzer deaktivieren
+							new UserProvider().alterUser(u);//User in der DB updaten
+			
 							//E-Mail an den Nutzer senden
 							sendEMail();
 							
-							
-							Page.getCurrent().reload();
+							ForgotPasswordWindow.this.close();//Fenster schließen
+							Notification.show("Ihr Passwort wurde geändert","Bitte folgen Sie dem Link in der E-Mail, die Sie erhalten haben.", Type.HUMANIZED_MESSAGE);
 						}else{
 							Notification.show("Änderung des Passworts fehlgeschlagen!","Bitte überprüfen Sie Ihre Eingaben.", Type.HUMANIZED_MESSAGE);
 						}
@@ -147,6 +150,21 @@ public class ForgotPasswordWindow extends Window{
 				}
 			});
 			
+			// abbrechen
+			cancel = new Button();
+			cancel.setCaption("abbrechen");
+			cancel.setImmediate(true);
+			cancel.setDescription("Diese Aktion abbrechen");
+			cancel.setWidth("-1px");
+			cancel.setHeight("-1px");
+			content.addComponent(cancel);
+			cancel.addClickListener(new Button.ClickListener() {
+				public void buttonClick(ClickEvent event) {
+					ForgotPasswordWindow.this.close();//Fenster schließen
+				}
+			});
+			
+			
 			text = new Label("Wenn Sie Ihr neues Passort speichern erhalten Sie eine E-Mail an die angegebene E-Mail-Adresse. Um Sich erneut einloggen zu können folgen Sie bitte dem Link in der E-Mail.");
 			content.addComponent(text);
 			
@@ -156,6 +174,7 @@ public class ForgotPasswordWindow extends Window{
 	
 	/**
 	 * Validates the user input
+	 * Validates if the text fields "email_1", "password_1" and "password_2" are filled. It also validates weather the two password are equal.
 	 * @return boolean
 	 * @see com.vaadin.data.validator.EmailValidator
 	 * @see com.vaadin.data.validator.StringLengthValidator;
@@ -164,12 +183,12 @@ public class ForgotPasswordWindow extends Window{
 	public boolean validate(){
 		boolean erfolgreich=true;//wird auf false gesetzt, falls ein Wert nicht richtig ist
 		
+		//sind alle Pflichtfelder gefüllt?
 		try {
 			email_1.validate();
 		} catch (InvalidValueException e) {
 			erfolgreich=false;
 		}
-		
 		
 		try {
 			password_1.validate();
@@ -183,6 +202,7 @@ public class ForgotPasswordWindow extends Window{
 			erfolgreich=false;
 		}
 		
+		//sind die beiden Passwörter gleich?
 		if(!password_1.getValue().equals(password_2.getValue())){
 			System.out.println(password_1.getValue());
 			System.out.println(password_2.getValue());
@@ -191,8 +211,6 @@ public class ForgotPasswordWindow extends Window{
 			erfolgreich=false;
 		}
 			
-
-
 		return erfolgreich;
 		
 	}

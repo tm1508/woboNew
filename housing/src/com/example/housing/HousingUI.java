@@ -1,47 +1,14 @@
 package com.example.housing;
 
-import java.util.Map;
-
-import javax.persistence.Cache;
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
-import javax.persistence.PersistenceUnitUtil;
-import javax.persistence.Query;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.metamodel.Metamodel;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-import com.example.housing.data.model.Offer;
 import com.example.housing.data.model.User;
 import com.vaadin.annotations.PreserveOnRefresh;
 import com.vaadin.annotations.Theme;
 import com.vaadin.annotations.VaadinServletConfiguration;
 import com.vaadin.navigator.Navigator;
-import com.vaadin.navigator.ViewProvider;
 import com.vaadin.server.CustomizedSystemMessages;
 import com.vaadin.server.DefaultErrorHandler;
-import com.vaadin.server.ErrorHandler;
-import com.vaadin.server.Page;
 import com.vaadin.server.ServiceException;
 import com.vaadin.server.SessionDestroyEvent;
 import com.vaadin.server.SessionDestroyListener;
@@ -53,12 +20,8 @@ import com.vaadin.server.SystemMessagesProvider;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.server.VaadinServlet;
 import com.vaadin.server.VaadinSession;
-import com.vaadin.ui.Button;
-import com.vaadin.ui.Button.ClickEvent;
-import com.vaadin.ui.Notification;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
-import com.vaadin.ui.Window;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -100,7 +63,9 @@ public class HousingUI extends UI {
 				                new CustomizedSystemMessages();
 				  		//Fehlertexte		        
 				        messages.setSessionExpiredCaption("Ihre Session ist abgelaufen.");
-				        messages.setSessionExpiredMessage("Bitte laden Sie die Seite neu oder drücken Sie ESC. Sie müssen sich eventuell erneut einloggen.");		        
+				        messages.setSessionExpiredMessage("Bitte laden Sie die Seite neu oder drücken Sie ESC. Sie müssen sich eventuell erneut einloggen.");
+				        messages.setCommunicationErrorCaption("Kommunikationsprobleme");
+				        messages.setCommunicationErrorMessage("Bitte notieren Sie sich Ihre noch nicht gespeicherten Eingaben.");
 				        return messages;
 				    }
 				});	

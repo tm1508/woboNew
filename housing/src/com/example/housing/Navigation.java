@@ -71,11 +71,15 @@ public class Navigation extends CustomComponent {
  
 				VaadinSession.getCurrent().setAttribute("login", false);
 				VaadinSession.getCurrent().setAttribute(User.class, null);
-				Notification.show("Logout erfolgreich.", Type.HUMANIZED_MESSAGE);
 				
 				String name = "Startseite";
 				getUI().getNavigator().addView(name, new Startseite());
 				getUI().getNavigator().navigateTo(name);
+				
+				Notification notif = new Notification("Logout erfolgreich.","Besuchen Sie uns bald wieder!", Type.HUMANIZED_MESSAGE);//Meldung an den Nutzer
+				notif.setDelayMsec(300);
+				notif.setIcon(FontAwesome.UNLOCK_ALT);
+				notif.show(Page.getCurrent());
 			}  
 		};
 		

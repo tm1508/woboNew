@@ -11,7 +11,6 @@ import com.vaadin.data.validator.StringLengthValidator;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.server.FontAwesome;
-import com.vaadin.server.Page;
 import com.vaadin.server.UserError;
 import com.vaadin.server.VaadinSession;
 import com.vaadin.ui.Button;
@@ -381,8 +380,11 @@ public class Profile extends VerticalLayout implements View{
 				email_2.setVisible(false);
 				email_2.setEnabled(false);
 				passwordLayout.setVisible(false);
-				handy.setVisible(false);
-				dhstud.setVisible(false);	
+				handy.setVisible(true);
+				handy.setEnabled(false);
+				dhstud.setVisible(false);
+				moodlename.setVisible(false);
+				passwordmoodle.setVisible(false);
 			}
 		});
 		
@@ -443,11 +445,11 @@ public class Profile extends VerticalLayout implements View{
 		content.addComponent(button_4);
 		button_4.addClickListener(new Button.ClickListener() {
 		public void buttonClick(ClickEvent event) {
-				CheckWindow w  = new CheckWindow();
-				
-				UI.getCurrent().addWindow(w);
+				CheckWindow w  = new CheckWindow();//Wollen Sie Ihr Profil wirklich löschen?
+				UI.getCurrent().addWindow(w);//neues Fenster hinzufügen
 			}
 		
+			//Check Window
 			class CheckWindow extends Window{
 				
 				public CheckWindow(){
@@ -456,13 +458,15 @@ public class Profile extends VerticalLayout implements View{
 					this.setHeight("50%");
 				    this.setWidth("30%");
 				    
+				    //Layout
 				    final VerticalLayout content = new VerticalLayout();
 				    content.setMargin(true);
 				    
-				    
+				    //Hinweistext
 					Label l = new Label("Wenn Sie Ihr Profil löschen werden all Ihre Daten gelöscht (inklusive Ihrer angebotenen Wohnungen)!");
 					content.addComponent(l);
 					
+					//Button "Ja"
 					Button yes = new Button();
 					yes.setCaption("Ja, ich will mein Profil löschen.");
 					yes.setDescription("Profil löschen");
@@ -471,21 +475,27 @@ public class Profile extends VerticalLayout implements View{
 					content.addComponent(yes);
 					yes.addClickListener(new Button.ClickListener() {
 						public void buttonClick(ClickEvent event) {
-							User u = new UserProvider().findByEmail(VaadinSession.getCurrent().getAttribute(User.class).getEmail());
-							new UserProvider().removeUser(u);
+							User u = new UserProvider().findByEmail(VaadinSession.getCurrent().getAttribute(User.class).getEmail());//User in der DB suchen
+							new UserProvider().removeUser(u);//User in der DB löschen
+							
+							//Logout
 							VaadinSession.getCurrent().setAttribute("login", false);
 							VaadinSession.getCurrent().setAttribute(User.class, null);
 							
-							
+							//Navigation zur Startseite
 							String name = "Startseite";
 							getUI().getNavigator().addView(name, new Startseite());
 							getUI().getNavigator().navigateTo(name);
+							
+							//dieses Fenster schließen
 							CheckWindow.this.close();
+							
+							//Meldung an den Nutzer
 							Notification.show("Ihr Profil wurde gelöscht.", Type.HUMANIZED_MESSAGE);
 						}
 					});
 					
-					
+					//Abbrechen-Button
 					Button no = new Button();
 					no.setCaption("Nein, doch nicht.");
 					no.setDescription("Profil nicht löschen");
@@ -494,7 +504,7 @@ public class Profile extends VerticalLayout implements View{
 					content.addComponent(no);
 					no.addClickListener(new Button.ClickListener() {
 						public void buttonClick(ClickEvent event) {
-							CheckWindow.this.close();
+							CheckWindow.this.close();//Fenster schließen
 						}
 					});
 					

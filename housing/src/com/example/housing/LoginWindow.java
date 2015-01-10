@@ -2,16 +2,11 @@ package com.example.housing;
 
 import com.example.housing.data.model.User;
 import com.example.housing.data.provider.UserProvider;
-import com.vaadin.server.ClassResource;
-import com.vaadin.server.ExternalResource;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.server.Page;
-import com.vaadin.server.VaadinServlet;
-import com.vaadin.server.VaadinServletService;
 import com.vaadin.server.VaadinSession;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Label;
-import com.vaadin.ui.Link;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.PasswordField;
 import com.vaadin.ui.TextField;
@@ -116,7 +111,10 @@ public class LoginWindow extends Window{
 									u.setActivated(true);
 									new UserProvider().alterUser(u);
 								}else{
-									Notification.show("Login fehlgeschlagen!","Ihr Konto ist nicht freigeschalten. Bitte folgen Sie dem Link in der E-Mail, die Sie erhalten haben.", Type.HUMANIZED_MESSAGE);
+									Notification notif = new Notification("Login fehlgeschlagen!","Ihr Konto ist nicht freigeschalten. Bitte folgen Sie dem Link in der E-Mail, die Sie erhalten haben.", Type.HUMANIZED_MESSAGE);
+									notif.setDelayMsec(300);
+									notif.setIcon(FontAwesome.EXCLAMATION_TRIANGLE);
+									notif.show(Page.getCurrent());
 								}
 							}
 						
@@ -124,7 +122,12 @@ public class LoginWindow extends Window{
 						//3. Prüfen ob Benutzer und Passwort stimmen (nur wenn das Konto aktiviert ist)
 						if(u.isActivated()){
 							if(email_1.getValue().equals(u.getEmail()) && password_1.getValue().equals(u.getPassword())){//prüfen ob Passwort und E-Mail stimmen
-								Notification.show("Login erfolgreich.",Type.HUMANIZED_MESSAGE);//Meldung an den Nutzer
+							
+								Notification notif = new Notification("Login erfolgreich.","Herzlich Willkommen!", Type.HUMANIZED_MESSAGE);//Meldung an den Nutzer
+								notif.setDelayMsec(300);
+								notif.setIcon(FontAwesome.UNLOCK_ALT);
+								notif.show(Page.getCurrent());
+								
 								VaadinSession.getCurrent().setAttribute(User.class, u);//User-Objekt in der Session speichern
 								VaadinSession.getCurrent().setAttribute("login", true);//Login-Attribut auf true setzen (wird auf jeder Seite abgefragt, um zu prüfen welche Navigationsleiste angezeigt werden soll)
 								
@@ -135,17 +138,24 @@ public class LoginWindow extends Window{
 								//Page.getCurrent().reload();//Seite erneut Laden (damit die Navigationsleiste verändert wird)
 							}else{
 								//Fehlermeldung bei falschem Benutzername oder Passwort
-								Notification.show("Login fehlgeschlagen!","Bitte überprüfen Sie Benutzername und/oder Passwort.", Type.HUMANIZED_MESSAGE);
+								Notification notif = new Notification("Login fehlgeschlagen!","Bitte überprüfen Sie Benutzername und/oder Passwort.", Type.HUMANIZED_MESSAGE);
+								notif.setDelayMsec(300);
+								notif.setIcon(FontAwesome.EXCLAMATION_TRIANGLE);
+								notif.show(Page.getCurrent());
 							}
 						}
 	
 					}catch(Exception e){
 						//Fehlermeldung bei Datenbankproblemen
-						Notification.show("Login fehlgeschlagen!","Bitte registrieren Sie sich zuerst.", Type.HUMANIZED_MESSAGE);
+						Notification notif = new Notification("Login fehlgeschlagen!","Bitte registrieren Sie sich zuerst.", Type.HUMANIZED_MESSAGE);
+						notif.setDelayMsec(300);
+						notif.setIcon(FontAwesome.EXCLAMATION_TRIANGLE);
+						notif.show(Page.getCurrent());
 					}
 				}
 			});
 			
+			//Link zum Fenster "Passwort vergessen"
 			link = new Button();
 			link.setStyleName("link");
 			link.setCaption("Passwort vergessen?");
@@ -153,14 +163,11 @@ public class LoginWindow extends Window{
 			link.setWidth("-1px");
 			link.setHeight("-1px");
 			link.setIcon(FontAwesome.EXTERNAL_LINK);
-			
-			
-			
 			link.addClickListener(new Button.ClickListener(){
 			public void buttonClick(ClickEvent event) {
-				ForgotPasswordWindow w = new ForgotPasswordWindow();
-				UI.getCurrent().removeWindow(LoginWindow.this);
-				UI.getCurrent().addWindow(w);
+				ForgotPasswordWindow w = new ForgotPasswordWindow();//Intantiiert ein neues Fenster
+				UI.getCurrent().removeWindow(LoginWindow.this);//schließt das Loginfenster
+				UI.getCurrent().addWindow(w);//öffnet das neue Fenster "Passwort vergessen"
 				
 			}
 			});
@@ -169,22 +176,6 @@ public class LoginWindow extends Window{
 			content.addComponent(link);
 			
 			this.setContent(content);    
-			
-			
-	}
-	
-	//diese Methode ist nur zum Testen !!!
-	public User test(){
-		User u = new User();
-		u.setFirstname("Max");
-		u.setLastname("Mustermann");
-		u.setEmail("max.mustermann@test.de");
-		u.setPassword("12345");
-		u.setMobile("12345678");
-		u.setDhMail(null);
-		u.setActivated(true);
-		u.setAccessLevel(0);
-		return u;
-	}
-
+						
+	}	
 }
