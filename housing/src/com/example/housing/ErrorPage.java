@@ -1,34 +1,13 @@
 package com.example.housing;
 
-import com.example.housing.data.model.User;
-import com.example.housing.data.provider.UserProvider;
-import com.example.housing.utility.DHStudValidator;
-import com.vaadin.data.Property.ValueChangeEvent;
-import com.vaadin.data.Property.ValueChangeListener;
-import com.vaadin.data.Validator.InvalidValueException;
-import com.vaadin.data.validator.EmailValidator;
-import com.vaadin.data.validator.StringLengthValidator;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
-import com.vaadin.server.FontAwesome;
-import com.vaadin.server.Page;
-import com.vaadin.server.UserError;
 import com.vaadin.server.VaadinSession;
-import com.vaadin.ui.Button;
-import com.vaadin.ui.Button.ClickEvent;
-import com.vaadin.ui.CheckBox;
-import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
-import com.vaadin.ui.Notification;
-import com.vaadin.ui.Notification.Type;
-import com.vaadin.ui.PasswordField;
-import com.vaadin.ui.TextField;
-import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
-import com.vaadin.ui.Window;
 
 /**
- * The Class Profile.
+ * The Class Error Page.
  * 
  * @author MWI Wohungsbörse 2014
  * @version 1.0
@@ -40,13 +19,9 @@ public class ErrorPage extends VerticalLayout implements View{
 	/** The content. */
 	private VerticalLayout content;//Layout fuer den Inhalt
 	
-	//Felder des Registrierungsformulars
 	/** The title. */
 	private Label title;
 	
-	
-
-
 	/* (non-Javadoc)
 	 * @see com.vaadin.navigator.View#enter(com.vaadin.navigator.ViewChangeListener.ViewChangeEvent)
 	 */
@@ -56,7 +31,7 @@ public class ErrorPage extends VerticalLayout implements View{
 	}
 	
 	/**
-	 * Instantiates a new Registrierung.
+	 * Instantiates a new ErrorPage.
 	 */
 	public ErrorPage(){
 		setMargin(true);
@@ -101,7 +76,7 @@ public class ErrorPage extends VerticalLayout implements View{
 		title.setImmediate(false);
 		title.setWidth("-1px");
 		title.setHeight("-1px");
-		title.setValue("Error");
+		title.setValue("Es ist ein Fehler aufgetreten.");
 		title.addStyleName("title");
 		content.addComponent(title);
 				

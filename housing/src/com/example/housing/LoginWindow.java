@@ -105,17 +105,12 @@ public class LoginWindow extends Window{
 				public void buttonClick(ClickEvent event) {
 					try{
 					
-						
-				
 						//1. User aus der Datenbank auslesen
 						User u = new UserProvider().findByEmail(email_1.getValue());
 
 						//2. Prüfen ob das Konto aktiviert ist
 						if(!u.isActivated()){
-							
-							//String[] msgs = Page.getCurrent().getUriFragment().split("/");//Request Parameter auslesen (wurde bei der Registrierung verschickt)
-							
-							String param = (String) VaadinSession.getCurrent().getAttribute("activated");
+							String param = (String) VaadinSession.getCurrent().getAttribute("activated");//Parameter aus der Session auslesen
 							if(email_1.getValue().equals(u.getEmail()) && email_1.getValue().equals(param)){//richtiger Parameter wurde übergeben
 									//Aktivierung in DB speichern
 									u.setActivated(true);

@@ -66,7 +66,7 @@ import com.vaadin.ui.Window;
  */
 @SuppressWarnings("serial")
 @Theme("housing")
-@PreserveOnRefresh
+@PreserveOnRefresh 
 public class HousingUI extends UI {
 
 	/** The navigator. */
@@ -85,10 +85,12 @@ public class HousingUI extends UI {
 		 */
 		@Override
 		protected void servletInitialized() throws ServletException {
+			//Initialisieren der Session
 			super.servletInitialized();
 			getService().addSessionInitListener(this);
 			getService().addSessionDestroyListener(this);
 			
+			//Verändern der Fehlermeldungen (z.B. für eine abgelaufene Session")
 			getService().setSystemMessagesProvider(
 				    new SystemMessagesProvider() {
 				    @Override 
@@ -96,23 +98,12 @@ public class HousingUI extends UI {
 				        SystemMessagesInfo systemMessagesInfo) {
 				        CustomizedSystemMessages messages =
 				                new CustomizedSystemMessages();
-				        messages.setCommunicationErrorCaption("Comm Err");
-				        messages.setCommunicationErrorMessage("This is bad.");
-				        messages.setCommunicationErrorNotificationEnabled(true);
-				        messages.setCommunicationErrorURL("http://vaadin.com/");
-				        
+				  		//Fehlertexte		        
 				        messages.setSessionExpiredCaption("Ihre Session ist abgelaufen.");
-				        messages.setSessionExpiredMessage("Bitte laden Sie die Seite neu oder drücken Sie ESC. Sie müssen sich eventuell erneut einloggen.");
-				        messages.setInternalErrorCaption("Es ist ei Fehler aufgetreten");
-				        
+				        messages.setSessionExpiredMessage("Bitte laden Sie die Seite neu oder drücken Sie ESC. Sie müssen sich eventuell erneut einloggen.");		        
 				        return messages;
 				    }
-				});
-			
-			
-			
-			
-			
+				});	
 		}
 		
 		/* (non-Javadoc)
@@ -120,15 +111,9 @@ public class HousingUI extends UI {
 		 */
 		@Override
 		public void sessionInit(SessionInitEvent event)throws ServiceException {
-			event.getSession().setAttribute("login", false);
-			event.getSession().setAttribute("activated", "");
-			event.getSession().setAttribute(User.class, null);
-			
-			
-			
-			
-			
-				
+			event.getSession().setAttribute("login", false);//Ist ein Nutzer eingeloggt? true=ja, false=nein
+			event.getSession().setAttribute("activated", "");//speichern des Requestparameters für die Aktivierung
+			event.getSession().setAttribute(User.class, null);//evtl. speichern des eingeloggten Users	
 		}
 		
 		/* (non-Javadoc)
@@ -159,46 +144,26 @@ public class HousingUI extends UI {
 		}
 		VaadinSession.getCurrent().setAttribute("activated", param);
 		
-		
+		//Navigation zur Startseite
 		navigator = new Navigator(this, this);
 		String name = "Startseite";
-		
 		navigator.addView(name, new Startseite());
 		navigator.navigateTo(name);
 		
+		navigator.setErrorView(new ErrorPage());//Navigation zur Fehlerseite
 		
-		navigator.setErrorView(new ErrorPage());
-		
-		// Configure the error handler for the UI
+		// Error Handler
 		UI.getCurrent().setErrorHandler(new DefaultErrorHandler() {
 		    @Override
 		    public void error(com.vaadin.server.ErrorEvent event) {
-		        // Find the final cause
-		        String cause = "<b>The click failed because:</b><br/>";
-		        for (Throwable t = event.getThrowable(); t != null;
-		             t = t.getCause())
-		            if (t.getCause() == null) // We're at final cause
-		                cause += t.getClass().getName() + "<br/>";
-		        
-		        // Display the error message in a custom fashion
-		        System.out.println("Fehler!!!!!!!!!!!!!!!!!!!!!!!!!!"+cause);
-		        
+		    	//Navigation zur Fehlerseite
 				navigator.addView("Error", new ErrorPage());
 				navigator.navigateTo("Error");
-		        // Do the default error handling (optional)
-		        //doDefault(event);
+		        //doDefault(event);//falls rotes Ausrufezeichen im Browser angezeigt werden soll
 		    } 
 		});
 		
 	}
 	
-	 @Override
-	    public void refresh(VaadinRequest request) {
-		  System.out.println(request.getContextPath());
-		  System.out.println("ok");
-	 }
-	
-
-
 }
 
