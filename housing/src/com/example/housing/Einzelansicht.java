@@ -51,13 +51,13 @@ public class Einzelansicht extends VerticalLayout implements View {
 		content.setSpacing(true);
 		
 		Navigation nav = new Navigation();
-		
-		
-//		content.addComponent(nav);
-		
+		addComponent(nav);
 		
 		NavigationPublic navPublic = new NavigationPublic();
 		addComponent(navPublic);
+		
+		//Listenzeile list = new Listenzeile();
+		//addComponent(list);
 		
 		//falls der Benutzer eingelogt ist verändert sich die Navigation
 		if(VaadinSession.getCurrent().getAttribute("login").equals(true)){
@@ -67,10 +67,11 @@ public class Einzelansicht extends VerticalLayout implements View {
 			nav.setVisible(false);
 			navPublic.setVisible(true);
 		}
-		addComponent(nav);	
+			
+		setContent();
 		addComponent(content);
 		
-		setContent();
+
 
 		Footer f = new Footer();
 		addComponent(f);
@@ -107,10 +108,10 @@ public class Einzelansicht extends VerticalLayout implements View {
 		gridPictures.setMargin(false);
 		content.addComponent(gridPictures);
 		String basepath = VaadinService.getCurrent().getBaseDirectory().getAbsolutePath();
-		FileResource resource = new FileResource(new File(basepath + "/WEB-INF/image/Bad.jpg"));
-		FileResource resource2 = new FileResource(new File(basepath + "/WEB-INF/image/P1000595.jpg"));
-		FileResource resource3 = new FileResource(new File(basepath + "/WEB-INF/image/Wohnbereich.jpg"));
-		FileResource resource4 = new FileResource(new File(basepath + "/WEB-INF/image/Wohnzimmer.jpg"));
+		FileResource resource = new FileResource(new File(basepath + "/WEB-INF/image/dh.jpg"));
+		FileResource resource2 = new FileResource(new File(basepath + "/WEB-INF/image/dh.jpg"));
+		FileResource resource3 = new FileResource(new File(basepath + "/WEB-INF/image/dh.jpg"));
+		FileResource resource4 = new FileResource(new File(basepath + "/WEB-INF/image/dh.jpg"));
 		Image image = new Image("",resource2);
 		image.setWidth("388px");
 		image.setHeight("314px");
@@ -298,7 +299,7 @@ public class Einzelansicht extends VerticalLayout implements View {
 		gridInfos.addComponent(change, 0 , 14);
         	}
         }
-		content.addComponent(new Label());
+	//	content.addComponent(new Label());
 		
 
 

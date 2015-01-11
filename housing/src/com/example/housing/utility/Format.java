@@ -23,8 +23,12 @@ public class Format {
 	}
 	
 	public  Float floatFormat(String s){
+		if(!s.isEmpty()){
 		float f = Float.parseFloat(s.replace(",", "."));
 		return f;
+		}else{
+			return (float) 0.0;
+		}
 	}
 	
 }
