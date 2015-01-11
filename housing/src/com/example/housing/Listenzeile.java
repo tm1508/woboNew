@@ -4,6 +4,7 @@ import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
 import java.sql.Date;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 import javax.imageio.ImageIO;
@@ -111,14 +112,15 @@ public class Listenzeile extends CustomComponent {
 		ls.setWidth("250px");
 		ergebnisLayout.addComponent(ls, 5, 1);
 
-		// Date start= new Date(2015,01,30);
+	
 		Date start = (Date) o.getStartDate();
-		ergebnisLayout.addComponent(new Label("Startdatum: " + start.toString()), 3, 2);
-		// Date end= new Date(2015,04,30);
+		String dateS = new Format().dateFormat(start);
+		ergebnisLayout.addComponent(new Label("Startdatum: " +  dateS ), 3, 2);
 
 		try {
 			Date end = (Date) o.getEndDate();
-			ergebnisLayout.addComponent(new Label("Enddatum: " + end.toString()), 5, 2);
+			String dateSs = new Format().dateFormat(end);
+			ergebnisLayout.addComponent(new Label("Enddatum: " + dateSs), 5, 2);
 		} catch (Exception e) {//tut nichts, da Enddatum keine Muss-Angabe ist
 		}
 
