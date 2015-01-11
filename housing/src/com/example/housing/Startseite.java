@@ -1,6 +1,8 @@
 package com.example.housing;
 
+import com.example.housing.data.model.Offer;
 import com.example.housing.data.model.User;
+import com.example.housing.data.provider.OfferProvider;
 import com.example.housing.data.provider.UserProvider;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
@@ -99,6 +101,7 @@ public class Startseite extends VerticalLayout implements View{
 		//Begrüßungstext
 		Accordion accordion = new Accordion();
 		accordion.setHeight("400px");
+	
 		
 			//Tab 1
 			final VerticalLayout layout = new VerticalLayout();
@@ -167,8 +170,8 @@ public class Startseite extends VerticalLayout implements View{
 		
 			//Suchfeld
 			TextField suchfeld = new TextField();
-			suchfeld.setCaption("Suchbegriff eingeben...");
-			suchfeld.setDescription("Bitte Suchbegriff eingeben");
+			suchfeld.setCaption("Stadt eigeben...");
+			suchfeld.setDescription("Bitte Stadt eingeben");
 			suchfeld.setWidth("220px");
 			suchfeld.setHeight("-1px");
 			suchfeld.addStyleName("textfield");
@@ -177,7 +180,7 @@ public class Startseite extends VerticalLayout implements View{
 			//Button zum Starten derv Suche
 			Button sucheStarten = new Button();
 			sucheStarten.setCaption("Suche starten");
-			sucheStarten.setDescription("Bitte Suchbegriff eingeben");
+			sucheStarten.setDescription("Suche starten");
 			sucheStarten.setWidth("-1px");
 			sucheStarten.setHeight("-1px");
 			sucheStarten.setIcon(FontAwesome.SEARCH);
@@ -190,17 +193,23 @@ public class Startseite extends VerticalLayout implements View{
 		
 		//Neuste Angebote
 		Panel p = new Panel("Unsere neusten Angebote");
+		p.setWidth("100%");
 		VerticalLayout v = new VerticalLayout();
 		v.setMargin(true);
 		
 		
-        Table tabelle = new Table();
-        tabelle.setSizeFull();
-        tabelle.setSelectable(true);
-        tabelle.setMultiSelect(true);
-        tabelle.setImmediate(true);
-        v.addComponent(tabelle);
-		p.setContent(v);
+		/*	Offer[] o = new Offer[3];
+			o[0]=new OfferProvider().findById(1);
+			o[1]=new OfferProvider().findById(2);
+			o[2]=new OfferProvider().findById(3);
+			
+			for(int i=0; i<o.length; i++){
+				v.addComponent(new Listenzeile(o[i]));
+			}
+	        
+	       */
+		
+        p.setContent(v);
 		
 		content.addComponent(p);
 		

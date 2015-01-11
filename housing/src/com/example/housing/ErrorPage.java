@@ -3,6 +3,7 @@ package com.example.housing;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.server.VaadinSession;
+import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.VerticalLayout;
 
@@ -21,6 +22,9 @@ public class ErrorPage extends VerticalLayout implements View{
 	
 	/** The title. */
 	private Label title;
+	
+	/** The text. */
+	private Label text;
 	
 	/* (non-Javadoc)
 	 * @see com.vaadin.navigator.View#enter(com.vaadin.navigator.ViewChangeListener.ViewChangeEvent)
@@ -81,6 +85,20 @@ public class ErrorPage extends VerticalLayout implements View{
 		content.addComponent(title);
 				
 		
+		
+		// text
+		text = new Label();
+		text.setImmediate(false);
+		text.setWidth("-1px");
+		text.setHeight("-1px");
+		text.setValue("Tut uns leid, das hätte nicht passieren dürfen.<br/>"
+				+"<br/><br/> Der Fehler kann folgende Ursachen haben:"
+				+"<br/><br/> - Sie wollten zu einer nicht verfügbaren Seite navigieren. Beispielsweise können Sie die Profilseite nur aufrufen, wenn Sie eingeloggt sind."
+				+"<br/><br/> - Das hochladen eines Bildes hat den Fehler verursacht.  Bitte versuchen Sie es später erneut."
+				+"<br/><br/> - Es gab einen Serverfehler. Wenn der Fehler öfters auftritt wenden Sie sich bitte an den Administrator.");
+		
+		text.setContentMode(ContentMode.HTML);
+		content.addComponent(text);
 	}
 	
 	
