@@ -1,3 +1,5 @@
+
+
 .v-horizontal > .v-spacing {
 	width: 50px;
 }
@@ -12166,5 +12168,21 @@ div.v-layout.v-horizontal.v-widget {
 	font-size: 20px;
 	font-weight: bolder;
 	margin-bottom: 10px;
-	margin-top: 10px;
+	margin-top: 10px;S
 }
+
+.v-gridlayout-Listenzeile {
+         border-color: #C0C0C0;
+         border-width: 2px;
+         border-style: solid;    
+             
+    }
+	
+.v-gridlayout-Listenzeile:hover {
+         border-color: red;
+         border-width: 2px;
+         border-style: solid;  
+         cursor: pointer;  
+             
+    }
+	

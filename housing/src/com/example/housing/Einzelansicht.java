@@ -5,12 +5,15 @@ import java.sql.Date;
 
 import javax.swing.GroupLayout.Alignment;
 
+import com.example.housing.data.model.Favorit;
 import com.example.housing.data.model.Offer;
 import com.example.housing.data.model.User;
+import com.example.housing.data.provider.FavoritProvider;
 import com.example.housing.utility.Format;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.server.FileResource;
+import com.vaadin.server.Page;
 import com.vaadin.server.VaadinService;
 import com.vaadin.server.VaadinSession;
 import com.vaadin.ui.Button;
@@ -277,6 +280,26 @@ public class Einzelansicht extends VerticalLayout implements View {
 				}
 			}
 		});
+        
+        if(VaadinSession.getCurrent().getAttribute("login").equals(true)){
+        
+        Button favorit = new Button("Favorit");
+        content.addComponent(favorit);
+        
+    	favorit.addClickListener(new Button.ClickListener() {
+			public void buttonClick(ClickEvent event) {
+				Favorit newFavorit = new Favorit();
+				newFavorit.setFavorit_idOffer(angebot);
+				newFavorit.setFavorit_idUser(VaadinSession.getCurrent().getAttribute(User.class));
+				
+				new FavoritProvider().addFavorit(newFavorit);
+				Notification not = new Notification("zu Favoriten hinzugefügt");
+				not.show(Page.getCurrent());
+				
+			}
+		}); 
+    	
+        }
         
         if(VaadinSession.getCurrent().getAttribute("login").equals(true)){
         	User u = VaadinSession.getCurrent().getAttribute(User.class);
