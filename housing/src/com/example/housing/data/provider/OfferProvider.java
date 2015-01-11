@@ -37,6 +37,20 @@ public class OfferProvider extends BaseProvider<Offer> {
 	}
 
 	public boolean alterOffer(Offer offer) {
+		
+		if(!em.isOpen()) {
+			
+			em = getEmf().createEntityManager();
+		
+		}
+		try {
+			Offer persistedOffer = this.findById(offer.getIdOffer());
+			em.detach(persistedOffer);
+			em.close();
+		} catch (Exception e) {
+			System.out.println(e);
+			return false;
+		}
 
 		return super.update(offer); // true bei Erfolg, false bei Fehler
 
