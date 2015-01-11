@@ -52,6 +52,20 @@ public class UserProvider extends BaseProvider<User>{
 	
 	public boolean alterUser(User user) {
 		
+		if(!em.isOpen()) {
+			
+			em = getEmf().createEntityManager();
+		
+		}
+		try {
+			User persistedUser = this.findById(user.getIdUser());
+			em.detach(persistedUser);
+			em.close();
+		} catch (Exception e) {
+			System.out.println(e);
+			return false;
+		}
+		
 		return super.update(user); //true bei Erfolg, false bei Fehler
 		
 	}
