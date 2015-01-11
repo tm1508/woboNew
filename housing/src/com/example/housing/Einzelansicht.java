@@ -241,7 +241,7 @@ public class Einzelansicht extends VerticalLayout implements View {
         
         //bond
         float bond =  angebot.getBond();
-		String sBond = Float.toString(bond)+ " €";
+		String sBond = new Format().stringFormat(bond) + " €";
 		
         Label lBond = new Label("Kaution");
         gridInfos.addComponent(lBond,0,12);
