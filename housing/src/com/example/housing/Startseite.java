@@ -1,5 +1,7 @@
 package com.example.housing;
 
+import java.util.List;
+
 import com.example.housing.data.model.Offer;
 import com.example.housing.data.model.User;
 import com.example.housing.data.provider.OfferProvider;
@@ -197,41 +199,14 @@ public class Startseite extends VerticalLayout implements View{
 		VerticalLayout v = new VerticalLayout();
 		v.setMargin(true);
 		
-		
-		/*	Offer[] o = new Offer[3];
-			o[0]=new OfferProvider().findById(1);
-			o[1]=new OfferProvider().findById(2);
-			o[2]=new OfferProvider().findById(3);
-			
-			for(int i=0; i<o.length; i++){
-				v.addComponent(new Listenzeile(o[i]));
-			}
-	        
-	       */
+		List<Offer> latestOffers = new OfferProvider().getLatestOffers();
+		for( Offer o : latestOffers) {
+			v.addComponent(new Listenzeile(o));
+		}
 		
         p.setContent(v);
 		
 		content.addComponent(p);
-		
-		/*
-		//Datenbank-Test: Versuche User auszugeben aus Datenbank
-		User user = new UserProvider().doQueryOneResult(Long.getLong("1"));
-		Panel p = new Panel("User: " + user.getEmail());
-		VerticalLayout v = new VerticalLayout();
-		v.setMargin(true);
-		
-		
-        Table tabelle = new Table();
-        tabelle.setSizeFull();
-        tabelle.setSelectable(true);
-        tabelle.setMultiSelect(true);
-        tabelle.setImmediate(true);
-        v.addComponent(tabelle);
-		p.setContent(v);
-		
-		content.addComponent(p);
-		*/
- 
  
     }
  

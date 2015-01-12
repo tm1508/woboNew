@@ -11,6 +11,7 @@ import com.example.housing.data.model.Favorit;
 import com.example.housing.data.model.Offer;
 import com.example.housing.data.model.User;
 import com.example.housing.data.provider.FavoritProvider;
+import com.example.housing.data.provider.PhotoProvider;
 import com.example.housing.utility.Format;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
@@ -112,6 +113,7 @@ public class Einzelansicht extends VerticalLayout implements View {
 		//String basepath = VaadinService.getCurrent().getBaseDirectory().getAbsolutePath();
 		
 		Resource resource, resource2, resource3, resource4, resource5;
+		final PhotoProvider phPr = new PhotoProvider();
 		
 		resource = new StreamResource(new StreamResource.StreamSource() {
 			@Override
@@ -120,7 +122,7 @@ public class Einzelansicht extends VerticalLayout implements View {
 				try {
 					bais = new ByteArrayInputStream(angebot.getPhotos().get(0).getPhoto());
 				} catch (Exception e) {
-					bais = new ByteArrayInputStream(angebot.getPhotos().get(0).getPhoto()); // TODO: Standard-Bild setzen
+					bais = new ByteArrayInputStream(phPr.findById(1).getPhoto()); // TODO: Standard-Bild setzen
 				}
 				return bais;
 			}
@@ -133,7 +135,7 @@ public class Einzelansicht extends VerticalLayout implements View {
 				try {
 					bais = new ByteArrayInputStream(angebot.getPhotos().get(1).getPhoto());
 				} catch (Exception e) {
-					bais = new ByteArrayInputStream(angebot.getPhotos().get(0).getPhoto());
+					bais = new ByteArrayInputStream(phPr.findById(1).getPhoto());
 				}
 				return bais;
 			}
@@ -146,7 +148,7 @@ public class Einzelansicht extends VerticalLayout implements View {
 					try {
 						bais = new ByteArrayInputStream(angebot.getPhotos().get(2).getPhoto());
 					} catch (Exception e) {
-						bais = new ByteArrayInputStream(angebot.getPhotos().get(0).getPhoto());
+						bais = new ByteArrayInputStream(phPr.findById(1).getPhoto());
 					}
 					return bais;
 				}
@@ -159,7 +161,7 @@ public class Einzelansicht extends VerticalLayout implements View {
 				try {
 					bais = new ByteArrayInputStream(angebot.getPhotos().get(3).getPhoto());
 				} catch (Exception e) {
-					bais = new ByteArrayInputStream(angebot.getPhotos().get(0).getPhoto());;
+					bais = new ByteArrayInputStream(phPr.findById(1).getPhoto());;
 				}
 				return bais;
 			}
@@ -172,7 +174,7 @@ public class Einzelansicht extends VerticalLayout implements View {
 				try {
 					bais = new ByteArrayInputStream(angebot.getPhotos().get(4).getPhoto());
 				} catch (Exception e) {
-					bais = new ByteArrayInputStream(angebot.getPhotos().get(0).getPhoto());
+					bais = new ByteArrayInputStream(phPr.findById(1).getPhoto());
 				}
 				return bais;
 			}
