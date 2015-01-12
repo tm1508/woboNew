@@ -129,7 +129,7 @@ public class HousingUI extends UI {
 				navigator.navigateTo("Error");
 		        doDefault(event);//falls rotes Ausrufezeichen im Browser angezeigt werden soll
 		    } 
-		});
+		}); 
 		
 	}
 	
