@@ -25,6 +25,7 @@ import com.vaadin.ui.Button;
 import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.DateField;
 import com.vaadin.ui.GridLayout;
+import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Image;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Notification;
@@ -310,12 +311,46 @@ public class Einzelansicht extends VerticalLayout implements View {
         t.setWidth("338px");
         gridInfos.addComponent(new Label("Beschreibung  "), 0, 13);
         gridInfos.addComponent(t, 1,13);
+    
         
-
+        //Bearbeiten- und Löschen-Button
+        if(VaadinSession.getCurrent().getAttribute("login").equals(true)){
+        	if(VaadinSession.getCurrent().getAttribute(User.class).getEmail().equals(angebot.getOffer_idUser().getEmail())){
+        		
+        		HorizontalLayout userButtons = new HorizontalLayout();
+        		
+				Button change = new Button("Bearbeiten");
+				change.addStyleName("BearbeitenButton");
+				change.addClickListener(new Button.ClickListener() {
+					public void buttonClick(ClickEvent event) {
+						String name = "AngebotErstellen";
+						getUI().getNavigator().addView(name, new AngebotErstellen(angebot)); // momentan angezeigtes Angebot soll übergeben werden...
+						getUI().getNavigator().navigateTo(name);
+					}
+				});
+				
+				Button delete = new Button("Angebot löschen");
+				delete.addStyleName("BearbeitenButton");
+				delete.addClickListener(new Button.ClickListener() {
+					public void buttonClick(ClickEvent event) {
+						//TODO Popup-Fenster zum Bestätigen	
+					}
+				});
+				
+				userButtons.addComponent(change);
+				userButtons.addComponent(delete);
+				
+				gridInfos.addComponent(userButtons, 0 , 14);
+			
+        	}
+        }
         
+        HorizontalLayout buttons = new HorizontalLayout();
+        
+        //Anfrage-Button
         Button anfrage = new Button("Anfrage");
         anfrage.addStyleName("AnfrageButton");
-        gridInfos.addComponent(anfrage, 1 , 14);
+        buttons.addComponent(anfrage);
         
         anfrage.addClickListener(new Button.ClickListener() {
 			public void buttonClick(ClickEvent event) {
@@ -331,44 +366,30 @@ public class Einzelansicht extends VerticalLayout implements View {
 			}
 		});
         
+        
+        //Favoriten-Button
         if(VaadinSession.getCurrent().getAttribute("login").equals(true)){
         
-        Button favorit = new Button("Favorit");
-        content.addComponent(favorit);
-        
-    	favorit.addClickListener(new Button.ClickListener() {
-			public void buttonClick(ClickEvent event) {
-				Favorit newFavorit = new Favorit();
-				newFavorit.setFavorit_idOffer(angebot);
-				newFavorit.setFavorit_idUser(VaadinSession.getCurrent().getAttribute(User.class));
-				
-				new FavoritProvider().addFavorit(newFavorit);
-				Notification not = new Notification("zu Favoriten hinzugefügt");
-				not.show(Page.getCurrent());
-				
-			}
-		}); 
+        	Button favorit = new Button("Favorit");
+        	favorit.addStyleName("AnfrageButton");
+        	buttons.addComponent(favorit);
+        	
+        	favorit.addClickListener(new Button.ClickListener() {
+        		public void buttonClick(ClickEvent event) {
+        			Favorit newFavorit = new Favorit();
+        			newFavorit.setFavorit_idOffer(angebot);
+        			newFavorit.setFavorit_idUser(VaadinSession.getCurrent().getAttribute(User.class));
+        			
+        			new FavoritProvider().addFavorit(newFavorit);
+        			Notification not = new Notification("Das Angebot wurde zu Ihren Favoriten hinzugefügt."); //TODO
+        			not.show(Page.getCurrent());
+        			
+        		}	
+        	}); 
     	
         }
         
-        if(VaadinSession.getCurrent().getAttribute("login").equals(true)){
-        	if(VaadinSession.getCurrent().getAttribute(User.class).getEmail().equals(angebot.getOffer_idUser().getEmail())){
-				Button change = new Button("Bearbeiten");
-				change.addStyleName("BearbeitenButton");
-				change.addClickListener(new Button.ClickListener() {
-					public void buttonClick(ClickEvent event) {
-						String name = "AngebotErstellen";
-						getUI().getNavigator().addView(name, new AngebotErstellen(angebot)); // momentan angezeigtes Angebot soll übergeben werden...
-						getUI().getNavigator().navigateTo(name);
-					}
-				});
-				
-			gridInfos.addComponent(change, 0 , 14);
-        	}
-        }
-	//	content.addComponent(new Label());
-		
-
+        gridInfos.addComponent(buttons, 1, 14);
 
 	}
 
