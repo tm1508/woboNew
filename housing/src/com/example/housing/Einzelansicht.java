@@ -1,6 +1,8 @@
 package com.example.housing;
 
+import java.io.ByteArrayInputStream;
 import java.io.File;
+import java.io.InputStream;
 import java.sql.Date;
 
 import javax.swing.GroupLayout.Alignment;
@@ -14,6 +16,8 @@ import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.server.FileResource;
 import com.vaadin.server.Page;
+import com.vaadin.server.Resource;
+import com.vaadin.server.StreamResource;
 import com.vaadin.server.VaadinService;
 import com.vaadin.server.VaadinSession;
 import com.vaadin.ui.Button;
@@ -38,11 +42,11 @@ public class Einzelansicht extends VerticalLayout implements View {
 	/** The content. */
 	VerticalLayout content;
 	
+	Offer angebot;
+	
 	/**
 	 * Instantiates a new einzelansicht.
 	 */
-	
-	Offer angebot;
 	public Einzelansicht(Offer einzelAngebot){
 		this.angebot = einzelAngebot;
 		
@@ -73,8 +77,6 @@ public class Einzelansicht extends VerticalLayout implements View {
 			
 		setContent();
 		addComponent(content);
-		
-
 
 		Footer f = new Footer();
 		addComponent(f);
@@ -88,9 +90,6 @@ public class Einzelansicht extends VerticalLayout implements View {
 	 */
 	@SuppressWarnings("deprecation")
 	public void setContent(){
-		
-
-
 			
 		//titel
 		String titel = angebot.getTitle();
@@ -110,15 +109,79 @@ public class Einzelansicht extends VerticalLayout implements View {
 		GridLayout gridPictures = new GridLayout(8, 8);
 		gridPictures.setMargin(false);
 		content.addComponent(gridPictures);
-		String basepath = VaadinService.getCurrent().getBaseDirectory().getAbsolutePath();
-		FileResource resource = new FileResource(new File(basepath + "/WEB-INF/image/dh.jpg"));
-		FileResource resource2 = new FileResource(new File(basepath + "/WEB-INF/image/dh.jpg"));
-		FileResource resource3 = new FileResource(new File(basepath + "/WEB-INF/image/dh.jpg"));
-		FileResource resource4 = new FileResource(new File(basepath + "/WEB-INF/image/dh.jpg"));
-		Image image = new Image("",resource2);
+		//String basepath = VaadinService.getCurrent().getBaseDirectory().getAbsolutePath();
+		
+		Resource resource, resource2, resource3, resource4, resource5;
+		
+		resource = new StreamResource(new StreamResource.StreamSource() {
+			@Override
+			public InputStream getStream(){
+				InputStream bais;
+				try {
+					bais = new ByteArrayInputStream(angebot.getPhotos().get(0).getPhoto());
+				} catch (Exception e) {
+					bais = new ByteArrayInputStream(angebot.getPhotos().get(0).getPhoto()); // TODO: Standard-Bild setzen
+				}
+				return bais;
+			}
+		}, "Bild_1");
+		
+		resource2 = new StreamResource(new StreamResource.StreamSource() {
+			@Override
+			public InputStream getStream(){
+				InputStream bais;
+				try {
+					bais = new ByteArrayInputStream(angebot.getPhotos().get(1).getPhoto());
+				} catch (Exception e) {
+					bais = new ByteArrayInputStream(angebot.getPhotos().get(0).getPhoto());
+				}
+				return bais;
+			}
+		}, "Bild_2");
+		
+		resource3 = new StreamResource(new StreamResource.StreamSource() {
+				@Override
+				public InputStream getStream(){
+					InputStream bais;
+					try {
+						bais = new ByteArrayInputStream(angebot.getPhotos().get(2).getPhoto());
+					} catch (Exception e) {
+						bais = new ByteArrayInputStream(angebot.getPhotos().get(0).getPhoto());
+					}
+					return bais;
+				}
+			}, "Bild_3");
+		
+		resource4 = new StreamResource(new StreamResource.StreamSource() {
+			@Override
+			public InputStream getStream(){
+				InputStream bais;
+				try {
+					bais = new ByteArrayInputStream(angebot.getPhotos().get(3).getPhoto());
+				} catch (Exception e) {
+					bais = new ByteArrayInputStream(angebot.getPhotos().get(0).getPhoto());;
+				}
+				return bais;
+			}
+		}, "Bild_4");
+		
+		resource5 = new StreamResource(new StreamResource.StreamSource() {
+			@Override
+			public InputStream getStream(){
+				InputStream bais;
+				try {
+					bais = new ByteArrayInputStream(angebot.getPhotos().get(4).getPhoto());
+				} catch (Exception e) {
+					bais = new ByteArrayInputStream(angebot.getPhotos().get(0).getPhoto());
+				}
+				return bais;
+			}
+		}, "Bild_5");
+		
+		Image image = new Image("",resource);
 		image.setWidth("388px");
 		image.setHeight("314px");
-		Image image2 = new Image("",resource);
+		Image image2 = new Image("",resource2);
 		image2.setWidth("169px");
 		image2.setHeight("144px");
 		Image image3 = new Image("",resource3);
@@ -130,14 +193,13 @@ public class Einzelansicht extends VerticalLayout implements View {
 		Image image5 = new Image("",resource);
 		image5.setWidth("169px");
 		image5.setHeight("144px");
-		    gridPictures.addComponent(image, 0, 0, 3, 3);
-		    gridPictures.addComponent(image2, 4, 0 ,5,1);
-		    gridPictures.addComponent(image3, 6, 0, 7,1);
-		    gridPictures.addComponent(image4, 4, 2, 5,3);
-		    gridPictures.addComponent(image5, 6, 2, 7,3);
-		    gridPictures.setWidth("40%");
-
 		
+		gridPictures.addComponent(image, 0, 0, 3, 3);
+		gridPictures.addComponent(image2, 4, 0 ,5,1);
+		gridPictures.addComponent(image3, 6, 0, 7,1);
+		gridPictures.addComponent(image4, 4, 2, 5,3);
+		gridPictures.addComponent(image5, 6, 2, 7,3);
+		gridPictures.setWidth("40%");
 		    
 		GridLayout gridInfos = new GridLayout(2,15); 
 	//	gridInfos.setWidth("60%");
@@ -269,10 +331,10 @@ public class Einzelansicht extends VerticalLayout implements View {
         
         anfrage.addClickListener(new Button.ClickListener() {
 			public void buttonClick(ClickEvent event) {
-				if(! (boolean) VaadinSession.getCurrent().getAttribute("login")) {
-					Notification.show("Sie müssen sich als verifizierter DH-Student einloggen, um eine Anfrage zu einem Wohnungsangebot stellen zu können!", Type.WARNING_MESSAGE);
+				if(VaadinSession.getCurrent().getAttribute("login").equals(false)) {
+					Notification.show("Sie müssen sich als verifizierter DH-Student einloggen, um eine Anfrage zu einem Wohnungsangebot stellen zu können!", Type.HUMANIZED_MESSAGE);
 				} else if (VaadinSession.getCurrent().getAttribute(User.class).getAccessLevel() != 1) {
-					Notification.show("Sie müssen sich als DH-Student verifizieren, um eine Anfrage zu einem Wohnungsangebot stellen zu können!", Type.WARNING_MESSAGE);
+					Notification.show("Sie müssen sich als DH-Student verifizieren, um eine Anfrage zu einem Wohnungsangebot stellen zu können!", Type.HUMANIZED_MESSAGE);
 				} else {
 					String name = "Anfrageformular";
 					getUI().getNavigator().addView(name, new Anfrageformular(angebot));
@@ -302,24 +364,18 @@ public class Einzelansicht extends VerticalLayout implements View {
         }
         
         if(VaadinSession.getCurrent().getAttribute("login").equals(true)){
-        	User u = VaadinSession.getCurrent().getAttribute(User.class);
-        	int id = u.getIdUser();
-        	User u2 = angebot.getOffer_idUser();
-        	int id2 = u2.getIdUser();
-        	if(id == id2){
+        	if(VaadinSession.getCurrent().getAttribute(User.class).getEmail().equals(angebot.getOffer_idUser().getEmail())){
 				Button change = new Button("Bearbeiten");
 				change.addStyleName("BearbeitenButton");
-		change.addClickListener(new Button.ClickListener() {
-			public void buttonClick(ClickEvent event) {
+				change.addClickListener(new Button.ClickListener() {
+					public void buttonClick(ClickEvent event) {
+						String name = "AngebotErstellen";
+						getUI().getNavigator().addView(name, new AngebotErstellen(angebot)); // momentan angezeigtes Angebot soll übergeben werden...
+						getUI().getNavigator().navigateTo(name);
+					}
+				});
 				
-				String name = "AngebotErstellen";
-				getUI().getNavigator().addView(name, new AngebotErstellen(angebot)); // momentan angezeigtes Angebot soll übergeben werden...
-				getUI().getNavigator().navigateTo(name);
-			}
-		});
-		
-		
-		gridInfos.addComponent(change, 0 , 14);
+			gridInfos.addComponent(change, 0 , 14);
         	}
         }
 	//	content.addComponent(new Label());
