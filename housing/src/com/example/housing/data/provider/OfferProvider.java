@@ -61,13 +61,18 @@ public class OfferProvider extends BaseProvider<Offer> {
 
 		List<Photo> photos = offer.getPhotos();
 		PhotoProvider photoProv = new PhotoProvider();
+		boolean success = true;
 		for (Photo p : photos) {
 
-			photoProv.removePhoto(p);
+			success = photoProv.removePhoto(p);
 
 		}
 
-		return super.delete(offer); // true bei Erfolg, false bei Fehler
+		if(success) {
+			return super.delete(offer.getIdOffer()); //true bei Erfolg, false bei Fehler
+		} else {
+			return false;
+		}
 
 	}
 
@@ -181,6 +186,7 @@ public class OfferProvider extends BaseProvider<Offer> {
 		Query latestAbfrage = em.createQuery("SELECT o FROM Offer o ORDER BY o.offerTime DESC");
 		@SuppressWarnings("unchecked")
 		List<Offer> allOffers = (List<Offer>) latestAbfrage.getResultList();
+		
 		List<Offer> latestFive = new ArrayList<Offer>();
 		for(int i = 0; i < 5; i++) {
 			try {
@@ -188,7 +194,9 @@ public class OfferProvider extends BaseProvider<Offer> {
 			} catch (Exception e) { //Abfangen von NullPointer (wenn weniger als fünf Angebote in der Datenbank sind)
 			}
 		}
+		
 		return (List<Offer>) latestFive;
+		
 	}
 
 }
