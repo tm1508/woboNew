@@ -2,15 +2,11 @@ package com.example.housing;
 
 import com.example.housing.data.model.User;
 import com.example.housing.data.provider.UserProvider;
-import com.example.housing.utility.DHStudValidator;
 import com.example.housing.utility.SendEMail;
 import com.vaadin.data.Validator.InvalidValueException;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.server.Page;
 import com.vaadin.server.UserError;
-import com.vaadin.server.VaadinServlet;
-import com.vaadin.server.VaadinServletService;
-import com.vaadin.server.VaadinSession;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Notification;
@@ -136,16 +132,23 @@ public class ForgotPasswordWindow extends Window{
 							sendEMail();
 							
 							ForgotPasswordWindow.this.close();//Fenster schließen
-							Notification.show("Ihr Passwort wurde geändert","Bitte folgen Sie dem Link in der E-Mail, die Sie erhalten haben.", Type.HUMANIZED_MESSAGE);
+							Notification notif = new Notification("Ihr Passwort wurde geändert","Bitte folgen Sie dem Link in der E-Mail, die Sie erhalten haben.", Type.HUMANIZED_MESSAGE);
+							notif.setDelayMsec(300);
+							notif.setIcon(FontAwesome.CHECK_SQUARE_O);
+							notif.show(Page.getCurrent());
 						}else{
-							Notification.show("Änderung des Passworts fehlgeschlagen!","Bitte überprüfen Sie Ihre Eingaben.", Type.HUMANIZED_MESSAGE);
+							Notification notif = new Notification("Änderung des Passworts fehlgeschlagen!","Bitte überprüfen Sie Ihre Eingaben.", Type.HUMANIZED_MESSAGE);
+							notif.setDelayMsec(300);
+							notif.setIcon(FontAwesome.EXCLAMATION_TRIANGLE);
+							notif.show(Page.getCurrent());
 						}
-						
-						
-						
+											
 					}catch(Exception e){
 						//Fehlermeldung bei Datenbankproblemen
-						Notification.show("Änderung des Passworts fehlgeschlagen!","Es gibt keinen Nutzer mit dieser E-Mail-Adresse.", Type.HUMANIZED_MESSAGE);
+						Notification notif = new Notification("Änderung des Passworts fehlgeschlagen!","Es gibt keinen Nutzer mit dieser E-Mail-Adresse.", Type.HUMANIZED_MESSAGE);
+						notif.setDelayMsec(300);
+						notif.setIcon(FontAwesome.EXCLAMATION_TRIANGLE);
+						notif.show(Page.getCurrent());
 					}
 				}
 			});
@@ -164,8 +167,7 @@ public class ForgotPasswordWindow extends Window{
 				}
 			});
 			
-			
-			text = new Label("Wenn Sie Ihr neues Passort speichern erhalten Sie eine E-Mail an die angegebene E-Mail-Adresse. Um Sich erneut einloggen zu können folgen Sie bitte dem Link in der E-Mail.");
+			text = new Label("Wenn Sie Ihr neues Passwort speichern erhalten Sie eine E-Mail an die angegebene E-Mail-Adresse. Um Sich erneut einloggen zu können folgen Sie bitte dem Link in der E-Mail.");
 			content.addComponent(text);
 			
 			this.setContent(content);    
@@ -212,7 +214,6 @@ public class ForgotPasswordWindow extends Window{
 		}
 			
 		return erfolgreich;
-		
 	}
 	
 	

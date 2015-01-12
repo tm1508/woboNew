@@ -1,5 +1,3 @@
-
-
 .v-horizontal > .v-spacing {
 	width: 50px;
 }
@@ -12117,6 +12115,14 @@ div.v-layout.v-horizontal.v-widget {
 	text-align: center;
 }
 
+.housing .v-panel-startseite .v-panel-caption {
+	font-size: 16px;
+}
+
+.housing .v-accordion-startseite .v-accordion-item-caption .v-caption {
+	font-size: 16px;
+}
+
 .housing .v-button-loeschen {
 	margin-top: 30px;
 	color: #e2001a;
@@ -12168,21 +12174,18 @@ div.v-layout.v-horizontal.v-widget {
 	font-size: 20px;
 	font-weight: bolder;
 	margin-bottom: 10px;
-	margin-top: 10px;S
+	margin-top: 10px;
 }
 
-.v-gridlayout-Listenzeile {
-         border-color: #C0C0C0;
-         border-width: 2px;
-         border-style: solid;    
-             
-    }
-	
-.v-gridlayout-Listenzeile:hover {
-         border-color: red;
-         border-width: 2px;
-         border-style: solid;  
-         cursor: pointer;  
-             
-    }
-	
+.housing .v-gridlayout-Listenzeile {
+	border-color: #C0C0C0;
+	border-width: 2px;
+	border-style: solid;
+}
+
+.housing .v-gridlayout-Listenzeile:hover {
+	border-color: red;
+	border-width: 2px;
+	border-style: solid;
+	cursor: pointer;
+}

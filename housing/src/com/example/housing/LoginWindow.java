@@ -172,7 +172,6 @@ public class LoginWindow extends Window{
 				}
 			});
 			
-	
 			content.addComponent(link);
 			
 			this.setContent(content);    
