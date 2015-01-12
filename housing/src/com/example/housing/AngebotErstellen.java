@@ -308,7 +308,7 @@ public class AngebotErstellen extends VerticalLayout implements View, Receiver, 
 		// Button speichern/aktivieren/deaktivieren
 		final CheckBox inactive = new CheckBox("deaktivieren");
 
-		Button save = new Button("speichern");
+		Button save = new Button("Speichern");
 		save.addStyleName("BearbeitenButton");
 		save.addClickListener(new Button.ClickListener() {
 			public void buttonClick(ClickEvent event) {
@@ -470,8 +470,8 @@ public class AngebotErstellen extends VerticalLayout implements View, Receiver, 
 		});
 		content.addComponent(inactive);
 		HorizontalLayout buttons = new HorizontalLayout();
-		buttons.addComponent(save);
 		buttons.addComponent(abbrechen);
+		buttons.addComponent(save);
 		content.addComponent(buttons);
 
 	}

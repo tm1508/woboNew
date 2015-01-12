@@ -29,6 +29,7 @@ import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Image;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Notification;
+import com.vaadin.ui.UI;
 import com.vaadin.ui.Notification.*;
 import com.vaadin.ui.Panel;
 import com.vaadin.ui.TextArea;
@@ -333,7 +334,8 @@ public class Einzelansicht extends VerticalLayout implements View {
 				delete.addStyleName("BearbeitenButton");
 				delete.addClickListener(new Button.ClickListener() {
 					public void buttonClick(ClickEvent event) {
-						//TODO Popup-Fenster zum Bestätigen	
+						ConfirmDeleteWindow cdw = new ConfirmDeleteWindow(angebot);
+						UI.getCurrent().addWindow(cdw);	
 					}
 				});
 				
