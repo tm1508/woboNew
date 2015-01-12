@@ -4,9 +4,11 @@ import java.util.Date;
 
 import com.example.housing.data.model.Favorit;
 import com.example.housing.data.model.Offer;
+import com.example.housing.data.model.Request;
 import com.example.housing.data.model.User;
 import com.example.housing.data.provider.FavoritProvider;
 import com.example.housing.data.provider.OfferProvider;
+import com.example.housing.data.provider.RequestProvider;
 import com.example.housing.utility.Format;
 import com.vaadin.navigator.Navigator;
 import com.vaadin.navigator.View;
@@ -29,7 +31,7 @@ import java.util.List;
 /**
  * The Class Suche.
  */
-public class Favoriten extends VerticalLayout implements View{
+public class AnfragenVerwalten extends VerticalLayout implements View{
 
 	/** The content. */
 	VerticalLayout content;
@@ -43,7 +45,7 @@ public class Favoriten extends VerticalLayout implements View{
 		
 	}
 
-	public Favoriten(){
+	public AnfragenVerwalten(){
 		
 		 content = new VerticalLayout();
 		
@@ -76,17 +78,17 @@ public class Favoriten extends VerticalLayout implements View{
 	
 	public void setContent(){
 		
+	
+		RequestProvider rp = new RequestProvider();
+		List<Request> reqs;
 		
-		FavoritProvider fp = new FavoritProvider();
-		List<Favorit> favs;
+		reqs = rp.findReq(VaadinSession.getCurrent().getAttribute(User.class));
 		
-		favs = fp.findFav(VaadinSession.getCurrent().getAttribute(User.class));
-		
-		int anzahl = favs.size();
+		int anzahl = reqs.size();
 		System.out.println(anzahl);
 		 for(int i = 0; i<anzahl;i++){
 			
-			 Offer o = favs.get(i).getFavorit_idOffer();
+			 Offer o = reqs.get(i).getRequest_idOffer();
 			 content.addComponent(new Listenzeile(o));
 		} 
 			

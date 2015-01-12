@@ -141,7 +141,14 @@ public class Navigation extends CustomComponent {
 			}  
 		};
 		
-		
+		MenuBar.Command mycommand7 = new MenuBar.Command() {
+			public void menuSelected(MenuItem selectedItem) {
+				String name = "AnfragenVerwalten";
+				getUI().getNavigator().addView(name, new AnfragenVerwalten());
+				getUI().getNavigator().navigateTo(name);
+				
+			}  
+		};
 				
 			
 				
@@ -155,7 +162,7 @@ public class Navigation extends CustomComponent {
 			nav2.addItem("Wohnungsangebote verwalten", FontAwesome.WRENCH, mycommand4); //AngebotAnzeigen
 		MenuItem nav5 = menuBar_1.addItem("Persönliche Daten", FontAwesome.CHILD, null); 
 			nav5.addItem("Meine Favoriten", FontAwesome.STAR_O, mycommand6);
-			nav5.addItem("Meine Anfragen", FontAwesome.STAR_O, null);
+			nav5.addItem("Meine Anfragen", FontAwesome.STAR_O, mycommand7);
 			nav5.addItem("Meine Profildaten", FontAwesome.USER, mycommand5); 
 		MenuItem nav6 = menuBar_1.addItem("Logout", FontAwesome.UNLOCK_ALT, mycommand);//Navigation
 		
