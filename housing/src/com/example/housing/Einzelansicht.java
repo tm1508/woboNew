@@ -110,75 +110,61 @@ public class Einzelansicht extends VerticalLayout implements View {
 		GridLayout gridPictures = new GridLayout(8, 8);
 		gridPictures.setMargin(false);
 		content.addComponent(gridPictures);
-		//String basepath = VaadinService.getCurrent().getBaseDirectory().getAbsolutePath();
+		String basepath = VaadinService.getCurrent().getBaseDirectory().getAbsolutePath();
 		
-		Resource resource, resource2, resource3, resource4, resource5;
-		final PhotoProvider phPr = new PhotoProvider();
+		Resource resource = new FileResource(new File(basepath + "/WEB-INF/image/dh.jpg"));
+		Resource resource2 = new FileResource(new File(basepath + "/WEB-INF/image/dh.jpg"));
+		Resource resource3 = new FileResource(new File(basepath + "/WEB-INF/image/dh.jpg"));
+		Resource resource4 = new FileResource(new File(basepath + "/WEB-INF/image/dh.jpg"));
+		Resource resource5 = new FileResource(new File(basepath + "/WEB-INF/image/dh.jpg"));
 		
-		resource = new StreamResource(new StreamResource.StreamSource() {
-			@Override
-			public InputStream getStream(){
-				InputStream bais;
-				try {
-					bais = new ByteArrayInputStream(angebot.getPhotos().get(0).getPhoto());
-				} catch (Exception e) {
-					bais = new ByteArrayInputStream(phPr.findById(1).getPhoto()); // TODO: Standard-Bild setzen
-				}
-				return bais;
-			}
-		}, "Bild_1");
-		
-		resource2 = new StreamResource(new StreamResource.StreamSource() {
-			@Override
-			public InputStream getStream(){
-				InputStream bais;
-				try {
-					bais = new ByteArrayInputStream(angebot.getPhotos().get(1).getPhoto());
-				} catch (Exception e) {
-					bais = new ByteArrayInputStream(phPr.findById(1).getPhoto());
-				}
-				return bais;
-			}
-		}, "Bild_2");
-		
-		resource3 = new StreamResource(new StreamResource.StreamSource() {
-				@Override
-				public InputStream getStream(){
-					InputStream bais;
-					try {
-						bais = new ByteArrayInputStream(angebot.getPhotos().get(2).getPhoto());
-					} catch (Exception e) {
-						bais = new ByteArrayInputStream(phPr.findById(1).getPhoto());
+		switch(angebot.getPhotos().size()) {
+			case 5:
+				
+				resource5 = new StreamResource(new StreamResource.StreamSource() {
+					@Override
+					public InputStream getStream(){
+						return new ByteArrayInputStream(angebot.getPhotos().get(4).getPhoto());
 					}
-					return bais;
-				}
-			}, "Bild_3");
-		
-		resource4 = new StreamResource(new StreamResource.StreamSource() {
-			@Override
-			public InputStream getStream(){
-				InputStream bais;
-				try {
-					bais = new ByteArrayInputStream(angebot.getPhotos().get(3).getPhoto());
-				} catch (Exception e) {
-					bais = new ByteArrayInputStream(phPr.findById(1).getPhoto());;
-				}
-				return bais;
-			}
-		}, "Bild_4");
-		
-		resource5 = new StreamResource(new StreamResource.StreamSource() {
-			@Override
-			public InputStream getStream(){
-				InputStream bais;
-				try {
-					bais = new ByteArrayInputStream(angebot.getPhotos().get(4).getPhoto());
-				} catch (Exception e) {
-					bais = new ByteArrayInputStream(phPr.findById(1).getPhoto());
-				}
-				return bais;
-			}
-		}, "Bild_5");
+				}, "Bild_5");
+				
+			case 4:
+				
+				resource4 = new StreamResource(new StreamResource.StreamSource() {
+					@Override
+					public InputStream getStream(){
+						return new ByteArrayInputStream(angebot.getPhotos().get(3).getPhoto());
+					}
+				}, "Bild_4");
+				
+			case 3:
+				
+				resource3 = new StreamResource(new StreamResource.StreamSource() {
+					@Override
+					public InputStream getStream(){
+						return new ByteArrayInputStream(angebot.getPhotos().get(2).getPhoto());
+					}
+				}, "Bild_3");
+				
+			case 2:
+				
+				resource2 = new StreamResource(new StreamResource.StreamSource() {
+					@Override
+					public InputStream getStream(){
+						return new ByteArrayInputStream(angebot.getPhotos().get(1).getPhoto());
+					}
+				}, "Bild_2");
+				
+			case 1:
+				
+				resource = new StreamResource(new StreamResource.StreamSource() {
+					@Override
+					public InputStream getStream(){
+						return new ByteArrayInputStream(angebot.getPhotos().get(0).getPhoto());
+					}
+				}, "Bild_1");
+				
+		}
 		
 		Image image = new Image("",resource);
 		image.setWidth("388px");
@@ -192,7 +178,7 @@ public class Einzelansicht extends VerticalLayout implements View {
 		Image image4 = new Image("",resource4);
 		image4.setWidth("169px");
 		image4.setHeight("144px");
-		Image image5 = new Image("",resource);
+		Image image5 = new Image("",resource5);
 		image5.setWidth("169px");
 		image5.setHeight("144px");
 		
