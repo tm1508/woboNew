@@ -77,7 +77,7 @@ public abstract class BaseProvider<T> {
 			
 		} catch (Exception e) {
 			
-			System.out.println(e);
+			e.printStackTrace();
 			em.getTransaction().rollback();
 			em.close();
 			return false;
@@ -106,7 +106,7 @@ public abstract class BaseProvider<T> {
 			
 		} catch(Exception e) {
 			
-			System.out.println(e);
+			e.printStackTrace();
 			em.getTransaction().rollback();
 			em.close();
 			return false;
@@ -115,7 +115,7 @@ public abstract class BaseProvider<T> {
 		
 	}
 	
-	public boolean delete(T obj) {
+	public boolean delete(Integer objId) {
 		
 		if(!em.isOpen()) {
 			
@@ -126,7 +126,8 @@ public abstract class BaseProvider<T> {
 		try {
 			
 			em.getTransaction().begin();
-			em.remove(obj);
+			T persistedObj = this.find(objId);
+			em.remove(persistedObj);
 			//em.flush();
 			em.getTransaction().commit();
 			em.close();
@@ -135,7 +136,7 @@ public abstract class BaseProvider<T> {
 			
 		} catch(Exception e) {
 			
-			System.out.println(e);
+			e.printStackTrace();
 			em.getTransaction().rollback();
 			em.close();
 			return false;

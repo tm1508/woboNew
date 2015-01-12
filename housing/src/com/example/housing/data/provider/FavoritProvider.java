@@ -69,5 +69,10 @@ public class FavoritProvider extends BaseProvider<Favorit>{
 		List<Favorit> ownFavs = (List<Favorit>) q.getResultList();
 		return ownFavs;
 	}
+
+	public boolean removeFavorit(Favorit f) {
+		// TODO Auto-generated method stub
+		return false;
+	}
 	
 }

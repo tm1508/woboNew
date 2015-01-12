@@ -44,10 +44,35 @@ public class RequestProvider extends BaseProvider<Request> {
 	}
 
 	public boolean requestExists(User user, Offer offer) {
-		// TODO Auto-generated method stub
-		return false;
+		
+		try {
+			
+			this.findByUserOffer(user, offer);
+			return true; //es existiert bereits eine anfrage zu dieser User-Offer-Kombi
+			
+		} catch(Exception e) {
+			
+			return false; //Fehlermeldung -> eine Anfrage zu dieser User-Offer-Kombi existiert noch nicht
+		
+		}
+	
 	}
 	
+	private Request findByUserOffer(User user, Offer offer) {
+		
+		if (!em.isOpen()) {
+
+			em = getEmf().createEntityManager();
+
+		}
+		
+		Query q = em.createQuery("SELECT r FROM REQUEST r WHERE r.request_idUser =:user AND r.request_idOffer =:offer");
+		q.setParameter("user", user);
+		q.setParameter("offer", offer);
+		return (Request) q.getSingleResult();
+		
+	}
+
 	public List<Request> findReq(User user) {
 		StringBuffer reqs = new StringBuffer();
 		int request_idUser = user.getIdUser();
@@ -61,6 +86,12 @@ public class RequestProvider extends BaseProvider<Request> {
 		@SuppressWarnings("unchecked")
 		List<Request> ownReqs = (List<Request>) q.getResultList();
 		return ownReqs;
+	}
+
+	public boolean removeRequest(Request request) {
+		
+		return super.delete(request.getIdRequest());
+		
 	}
 	
 
