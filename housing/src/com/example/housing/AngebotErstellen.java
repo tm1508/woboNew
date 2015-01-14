@@ -2,7 +2,9 @@ package com.example.housing;
 
 import java.io.ByteArrayOutputStream;
 import java.io.OutputStream;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import com.example.housing.data.model.Offer;
 import com.example.housing.data.model.Photo;
@@ -40,13 +42,13 @@ import com.vaadin.ui.Upload.FinishedEvent;
 public class AngebotErstellen extends VerticalLayout implements View, Receiver, SucceededListener {
 
 	/** The content. */
-	VerticalLayout content;
+	private VerticalLayout content;
 	
-	/** The current offer. */
-	Offer currentOffer;
+	private Offer currentOffer;
 	
-	/** The tmp img. */
-	ByteArrayOutputStream tmpImg;
+	private List<Photo> newPhotos;
+	
+	private ByteArrayOutputStream tmpImg;
 
 	/*
 	 * (non-Javadoc)
@@ -73,8 +75,8 @@ public class AngebotErstellen extends VerticalLayout implements View, Receiver, 
 		currentOffer.setTitle(" ");
 		currentOffer.setStreet(" ");
 		currentOffer.setZip(" ");
-		currentOffer.setOffer_idUser(VaadinSession.getCurrent().getAttribute(User.class));
 		currentOffer.setInactive(true);
+		currentOffer.setOffer_idUser(VaadinSession.getCurrent().getAttribute(User.class));
 		new OfferProvider().addOffer(currentOffer);
 		
 		Navigation nav = new Navigation();
@@ -101,14 +103,10 @@ public class AngebotErstellen extends VerticalLayout implements View, Receiver, 
 	}
 
 	// bereits bestehendes Angebot bearbeiten
-	/**
-	 * Instantiates a new angebot erstellen.
-	 *
-	 * @param offer the offer
-	 */
 	public AngebotErstellen(Offer offer) {
 		
 		currentOffer = offer;
+		newPhotos = new ArrayList();
 		
 		Navigation nav = new Navigation();
 		addComponent(nav);
@@ -450,9 +448,8 @@ public class AngebotErstellen extends VerticalLayout implements View, Receiver, 
 					// newOffer.setPhotos();
 					new OfferProvider().alterOffer(currentOffer); // neues Angebot in
 															// die DB schreiben
-					Offer o = new OfferProvider().findById(currentOffer.getIdOffer());
 					String name = "Einzelansicht";
-					getUI().getNavigator().addView(name, new Einzelansicht(o));
+					getUI().getNavigator().addView(name, new Einzelansicht(currentOffer));
 					getUI().getNavigator().navigateTo(name);
 
 				} else
@@ -485,11 +482,6 @@ public class AngebotErstellen extends VerticalLayout implements View, Receiver, 
 
 	}
 
-	/**
-	 * Sets the content.
-	 *
-	 * @param offer the new content
-	 */
 	public void setContent(final Offer offer) {
 
 		content = new VerticalLayout();
@@ -853,6 +845,12 @@ public class AngebotErstellen extends VerticalLayout implements View, Receiver, 
 		abbrechen.setDescription("Abbrechen der Bearbeitung. Ihre Änderungen werden nicht gespeichert.");
 		abbrechen.addClickListener(new Button.ClickListener() {
 			public void buttonClick(ClickEvent event) {
+				
+				PhotoProvider photoProv = new PhotoProvider();
+				for(Photo p : newPhotos) {
+					photoProv.removePhoto(p);
+				}
+				
 				String name = "Einzelansicht";
 				getUI().getNavigator().addView(name, new Einzelansicht(offer));
 				getUI().getNavigator().navigateTo(name);
@@ -867,12 +865,6 @@ public class AngebotErstellen extends VerticalLayout implements View, Receiver, 
 
 	}
 
-	/**
-	 * Art.
-	 *
-	 * @param offer the offer
-	 * @return the string
-	 */
 	public String art(Offer offer) {
 		String art = "";
 		if (offer.getType() == 1)
@@ -884,12 +876,6 @@ public class AngebotErstellen extends VerticalLayout implements View, Receiver, 
 		return art;
 	}
 
-	/**
-	 * Gender.
-	 *
-	 * @param offer the offer
-	 * @return the string
-	 */
 	public String gender(Offer offer) {
 		String gender = "";
 		if (offer.getGender() == 1)
@@ -901,9 +887,6 @@ public class AngebotErstellen extends VerticalLayout implements View, Receiver, 
 		return gender;
 	}
 
-	/* (non-Javadoc)
-	 * @see com.vaadin.ui.Upload.Receiver#receiveUpload(java.lang.String, java.lang.String)
-	 */
 	@Override
 	public OutputStream receiveUpload(String filename, String mimeType) {
 		try {
@@ -915,9 +898,6 @@ public class AngebotErstellen extends VerticalLayout implements View, Receiver, 
 		}
 	}
 	
-	/* (non-Javadoc)
-	 * @see com.vaadin.ui.Upload.SucceededListener#uploadSucceeded(com.vaadin.ui.Upload.SucceededEvent)
-	 */
 	@Override
 	public void uploadSucceeded(SucceededEvent event) {
 		
@@ -928,6 +908,8 @@ public class AngebotErstellen extends VerticalLayout implements View, Receiver, 
         	Photo newPhoto = new Photo();
         	newPhoto.setPhoto_idOffer(currentOffer);
         	newPhoto.setPhoto(tmpImg.toByteArray());
+        	
+        	newPhotos.add(newPhoto);
         	
         	new PhotoProvider().addPhoto(newPhoto);
         	

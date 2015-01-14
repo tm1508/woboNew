@@ -17,36 +17,21 @@ import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Notification.Type;
 
-// TODO: Auto-generated Javadoc
-/**
- * The Class Anfrageformular.
- */
 @SuppressWarnings("serial")
 public class Anfrageformular extends VerticalLayout implements View{
 
-	/** The requested offer. */
 	private Offer requestedOffer;
 	
-	/** The text. */
 	private RichTextArea text;
 	
-	/** The content. */
 	VerticalLayout content;
 	
-	/* (non-Javadoc)
-	 * @see com.vaadin.navigator.View#enter(com.vaadin.navigator.ViewChangeListener.ViewChangeEvent)
-	 */
 	@Override
 	public void enter(ViewChangeEvent event) {
 		// TODO Auto-generated method stub
 		
 	}
 	
-	/**
-	 * Instantiates a new anfrageformular.
-	 *
-	 * @param currentOffer the current offer
-	 */
 	public Anfrageformular(Offer currentOffer){
 		
 		//Bezug zu Angebot
@@ -81,9 +66,6 @@ public class Anfrageformular extends VerticalLayout implements View{
 		addComponent(f);	
 	}
 
-	/**
-	 * Sets the content.
-	 */
 	private void setContent() {
 		
 		//title
@@ -140,9 +122,6 @@ public class Anfrageformular extends VerticalLayout implements View{
 		});
 	}
 	
-	/**
-	 * Safe to db.
-	 */
 	protected void safeToDB() {
 		
 		Request request = new Request();
@@ -153,9 +132,6 @@ public class Anfrageformular extends VerticalLayout implements View{
 		
 	}
 	
-	/**
-	 * Send e mail.
-	 */
 	protected void sendEMail() {
 		String bodyAnbieter = "<span style='color: #000000' 'font-family: Arial, sans-serif''font-size: 16pt' >Sehr geehrte Nutzerin, sehr geehrter Nutzer,"
 				+"<br/><br/>Sie haben eine Anfrage zu einem Ihrer Angebote in der Wohnungsbörse der DHBW erhalten:"
