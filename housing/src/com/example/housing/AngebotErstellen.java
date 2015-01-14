@@ -434,7 +434,7 @@ public class AngebotErstellen extends VerticalLayout implements View, Receiver, 
 
 					try {// überprüft ob eine Kaution angegeben ist, da die Angabe optional ist
 						currentOffer.setBond(new Format().floatFormat(bond.getValue()));
-					} catch (NumberFormatException e) {
+					} catch (NumberFormatException e) { 
 					}
 					currentOffer.setInactive(inactive.getValue());
 					// newOffer.setLatitude(latitude);
