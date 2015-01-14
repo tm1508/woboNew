@@ -43,11 +43,11 @@ public class AngebotErstellen extends VerticalLayout implements View, Receiver, 
 
 	/** The content. */
 	private VerticalLayout content;
-	
+
 	private Offer currentOffer;
-	
+
 	private List<Photo> newPhotos;
-	
+
 	private ByteArrayOutputStream tmpImg;
 
 	/*
@@ -68,7 +68,7 @@ public class AngebotErstellen extends VerticalLayout implements View, Receiver, 
 	 */
 	// neues Angebot erstellen
 	public AngebotErstellen() {
-		
+
 		currentOffer = new Offer();
 		currentOffer.setCity(" ");
 		currentOffer.setStartDate(new Date());
@@ -78,7 +78,7 @@ public class AngebotErstellen extends VerticalLayout implements View, Receiver, 
 		currentOffer.setInactive(true);
 		currentOffer.setOffer_idUser(VaadinSession.getCurrent().getAttribute(User.class));
 		new OfferProvider().addOffer(currentOffer);
-		
+
 		Navigation nav = new Navigation();
 		addComponent(nav);
 		// setSizeFull();
@@ -104,10 +104,10 @@ public class AngebotErstellen extends VerticalLayout implements View, Receiver, 
 
 	// bereits bestehendes Angebot bearbeiten
 	public AngebotErstellen(Offer offer) {
-		
+
 		currentOffer = offer;
 		newPhotos = new ArrayList();
-		
+
 		Navigation nav = new Navigation();
 		addComponent(nav);
 		// setSizeFull();
@@ -422,7 +422,8 @@ public class AngebotErstellen extends VerticalLayout implements View, Receiver, 
 					currentOffer.setZip(zip.getValue());
 					currentOffer.setCity(city.getValue());
 					currentOffer.setStartDate(startDate.getValue());
-					try { // überprüft ob ein Enddatum angegeben ist, da die Angabe optional ist
+					try { // überprüft ob ein Enddatum angegeben ist, da die
+							// Angabe optional ist
 						currentOffer.setEndDate(endDate.getValue());
 					} catch (NullPointerException e) {
 					}
@@ -438,16 +439,19 @@ public class AngebotErstellen extends VerticalLayout implements View, Receiver, 
 					currentOffer.setGender(gender);
 					currentOffer.setText(text.getValue());
 
-					try {// überprüft ob eine Kaution angegeben ist, da die Angabe optional ist
+					try {// überprüft ob eine Kaution angegeben ist, da die
+							// Angabe optional ist
 						currentOffer.setBond(new Format().floatFormat(bond.getValue()));
-					} catch (NumberFormatException e) { 
+					} catch (NumberFormatException e) {
 					}
 					currentOffer.setInactive(inactive.getValue());
 					// newOffer.setLatitude(latitude);
 					// newOffer.setLongitude(longitude);
 					// newOffer.setPhotos();
-					new OfferProvider().alterOffer(currentOffer); // neues Angebot in
-															// die DB schreiben
+					new OfferProvider().alterOffer(currentOffer); // neues
+																	// Angebot
+																	// in
+					// die DB schreiben
 					Offer o = new OfferProvider().find(currentOffer.getIdOffer());
 					String name = "Einzelansicht";
 					getUI().getNavigator().addView(name, new Einzelansicht(o));
@@ -466,9 +470,9 @@ public class AngebotErstellen extends VerticalLayout implements View, Receiver, 
 		abbrechen.setDescription("Abbrechen der Bearbeitung. Ihre Änderungen werden nicht gespeichert.");
 		abbrechen.addClickListener(new Button.ClickListener() {
 			public void buttonClick(ClickEvent event) {
-				
+
 				new OfferProvider().removeOffer(currentOffer);
-				
+
 				String name = "Startseite";
 				getUI().getNavigator().addView(name, new Startseite());
 				getUI().getNavigator().navigateTo(name);
@@ -672,7 +676,7 @@ public class AngebotErstellen extends VerticalLayout implements View, Receiver, 
 		text.setWidth("100%");
 		Label bilder = new Label("Bilder hinzufügen");
 		bilder.addStyleName("AbschnittLabel");
-		
+
 		Upload bilderup = new Upload("Foto hochladen", this);
 		bilderup.addSucceededListener(this);
 
@@ -684,7 +688,7 @@ public class AngebotErstellen extends VerticalLayout implements View, Receiver, 
 		content.addComponent(new Label());
 		content.addComponent(bilderup);
 		content.addComponent(new Label());
-        
+
 		// Button speichern/aktivieren/deaktivieren
 		final CheckBox inactive = new CheckBox("deaktivieren");
 
@@ -790,8 +794,10 @@ public class AngebotErstellen extends VerticalLayout implements View, Receiver, 
 
 				if (valid) {// sind alle Mussfelder gefüllt, wird ein neues
 							// Angebot erstellt
-					//currentOffer.setOffer_idUser(VaadinSession.getCurrent().getAttribute(User.class));	//hat sich nicht geändert
-					//currentOffer.setIdOffer(offer.getIdOffer());											//hat sich nicht geändert
+					// currentOffer.setOffer_idUser(VaadinSession.getCurrent().getAttribute(User.class));
+					// //hat sich nicht geändert
+					// currentOffer.setIdOffer(offer.getIdOffer()); //hat sich
+					// nicht geändert
 					currentOffer.setTitle(titel.getValue());
 					currentOffer.setStreet(street.getValue());
 					currentOffer.setZip(zip.getValue());
@@ -823,10 +829,11 @@ public class AngebotErstellen extends VerticalLayout implements View, Receiver, 
 					// changedOffer.setLatitude(latitude);
 					// changedOffer.setLongitude(longitude);
 					// changedOffer.setPhotos();
+					Offer o = new OfferProvider().find(currentOffer.getIdOffer());
 					if (new OfferProvider().alterOffer(currentOffer)) {
 						// neues Angebot in die DB schreiben
 						String name = "Einzelansicht";
-						getUI().getNavigator().addView(name, new Einzelansicht(currentOffer));
+						getUI().getNavigator().addView(name, new Einzelansicht(o));
 						getUI().getNavigator().navigateTo(name);
 					} else {
 						Notification.show("Das Angebot konnte nicht geändert werden.");
@@ -846,12 +853,12 @@ public class AngebotErstellen extends VerticalLayout implements View, Receiver, 
 		abbrechen.setDescription("Abbrechen der Bearbeitung. Ihre Änderungen werden nicht gespeichert.");
 		abbrechen.addClickListener(new Button.ClickListener() {
 			public void buttonClick(ClickEvent event) {
-				
+
 				PhotoProvider photoProv = new PhotoProvider();
-				for(Photo p : newPhotos) {
+				for (Photo p : newPhotos) {
 					photoProv.removePhoto(p);
 				}
-				
+
 				String name = "Einzelansicht";
 				getUI().getNavigator().addView(name, new Einzelansicht(offer));
 				getUI().getNavigator().navigateTo(name);
@@ -898,24 +905,28 @@ public class AngebotErstellen extends VerticalLayout implements View, Receiver, 
 			return null;
 		}
 	}
-	
+
 	@Override
 	public void uploadSucceeded(SucceededEvent event) {
-		
+
 		System.out.println("Bild wurde hochgeladen");
-        if ( tmpImg != null) {
-            //TODO Bild in die Datenbank abspeichern, Byte Array bekommt man mit tmpFile.toByteArray();
-        	
-        	Photo newPhoto = new Photo();
-        	newPhoto.setPhoto_idOffer(currentOffer);
-        	newPhoto.setPhoto(tmpImg.toByteArray());
-        	
-        	newPhotos.add(newPhoto);
-        	
-        	new PhotoProvider().addPhoto(newPhoto);
-        	
-        }
-		
+		if (tmpImg != null) {
+			// TODO Bild in die Datenbank abspeichern, Byte Array bekommt man
+			// mit tmpFile.toByteArray();
+
+			Photo newPhoto = new Photo();
+			newPhoto.setPhoto_idOffer(currentOffer);
+			newPhoto.setPhoto(tmpImg.toByteArray());
+
+			try {
+				newPhotos.add(newPhoto);
+			} catch (NullPointerException ne) { //tut nichts
+			}
+
+			new PhotoProvider().addPhoto(newPhoto);
+
+		}
+
 	}
 
 }

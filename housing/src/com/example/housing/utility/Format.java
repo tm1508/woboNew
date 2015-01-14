@@ -31,28 +31,21 @@ public class Format {
 		return dateS;
 	}
 
-	/**
-	 * String format.
-	 *
-	 * @param f the f
-	 * @return the string
-	 */
-	public String stringFormat(Float f) {
+	public String stringFormat (float f) {
 		String s = String.valueOf(f);
 		char oldChar = '.';
-		char newChar = ',';
-		s.replace(oldChar, newChar);
-		return s.replace(oldChar, newChar);
-
+        char newChar = ',';
+        String result = s.replace(oldChar, newChar);
+		return result;
 	}
-
+	
 	/**
 	 * Float format.
 	 *
 	 * @param s the s
 	 * @return the float
 	 */
-	public Float floatFormat(String s) {
+	public float floatFormat(String s) {
 		if (!s.isEmpty()) {
 			float f = Float.parseFloat(s.replace(",", "."));
 			return f;
@@ -67,7 +60,7 @@ public class Format {
 	 * @param f the f
 	 * @return the string
 	 */
-	public String stringEuro(Float f) {
+	public String stringEuro(float f) {
 		String s = String.valueOf(f);
 		String[] a = s.split(Pattern.quote("."));
 		if (a[1].length() == 1){

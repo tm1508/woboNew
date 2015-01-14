@@ -77,13 +77,13 @@ public class ConfirmDeleteWindow extends Window {
 			public void buttonClick(ClickEvent event) {
 				
 				//TODO
-				/*new OfferProvider().removeOffer(currentOffer);
+				new OfferProvider().removeOffer(currentOffer);
 				
 				Notification.show("Das Angebot wurde gelöscht und aus der Datenbank entfernt.", Type.HUMANIZED_MESSAGE);//Meldung an den Nutzer
 				
 				String name = "Angebote verwalten";
 				getUI().getNavigator().addView(name, new AngeboteVerwalten());
-				getUI().getNavigator().navigateTo(name);*/
+				getUI().getNavigator().navigateTo(name);
 				
 				ConfirmDeleteWindow.this.close();
 				
