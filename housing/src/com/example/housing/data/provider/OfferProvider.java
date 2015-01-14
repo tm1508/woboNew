@@ -183,7 +183,7 @@ public class OfferProvider extends BaseProvider<Offer> {
 
 		}
 		
-		Query latestAbfrage = em.createQuery("SELECT o FROM Offer o ORDER BY o.offerTime DESC");
+		Query latestAbfrage = em.createQuery("SELECT o FROM Offer o WHERE o.inactive = false ORDER BY o.offerTime DESC");
 		@SuppressWarnings("unchecked")
 		List<Offer> allOffers = (List<Offer>) latestAbfrage.getResultList();
 		
