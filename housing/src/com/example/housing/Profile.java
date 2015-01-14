@@ -11,6 +11,7 @@ import com.vaadin.data.validator.StringLengthValidator;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.server.FontAwesome;
+import com.vaadin.server.Page;
 import com.vaadin.server.UserError;
 import com.vaadin.server.VaadinSession;
 import com.vaadin.ui.Button;
@@ -336,6 +337,7 @@ public class Profile extends VerticalLayout implements View{
 		button_1.setWidth("-1px");
 		button_1.setHeight("-1px");
 		button_1.setVisible(true);
+		button_1.setIcon(FontAwesome.PENCIL);
 		content.addComponent(button_1);
 		//Bearbeitung aktivieren
 		button_1.addClickListener(new Button.ClickListener() {
@@ -360,6 +362,7 @@ public class Profile extends VerticalLayout implements View{
 		// button_2
 		button_2 = new Button();
 		button_2.setCaption("Abbrechen");
+		button_2.setIcon(FontAwesome.MAIL_REPLY);
 		button_2.setImmediate(true);
 		button_2.setDescription("Abbrechen der Bearbeitung. Ihre Änderungen werden nicht gespeichert.");
 		button_2.setWidth("-1px");
@@ -392,6 +395,7 @@ public class Profile extends VerticalLayout implements View{
 		button_3 = new Button();
 		button_3.setVisible(false);
 		button_3.setCaption("Änderungen speichern");
+		button_3.setIcon(FontAwesome.SAVE);
 		button_3.setImmediate(true);
 		button_3.setDescription("Speichern der Änderungen.");
 		button_3.setWidth("-1px");
@@ -453,7 +457,7 @@ public class Profile extends VerticalLayout implements View{
 			class CheckWindow extends Window{
 				
 				public CheckWindow(){
-					super("Profil löschen?");
+					super("Wollen Sie Ihr Profil wirklich löschen?");
 					this.center();		
 					this.setHeight("50%");
 				    this.setWidth("30%");
@@ -470,6 +474,7 @@ public class Profile extends VerticalLayout implements View{
 					Button yes = new Button();
 					yes.setCaption("Ja, ich will mein Profil löschen.");
 					yes.setDescription("Profil löschen");
+					yes.setIcon(FontAwesome.CHECK);
 					yes.setWidth("-1px");
 					yes.setHeight("-1px");
 					content.addComponent(yes);
@@ -491,13 +496,17 @@ public class Profile extends VerticalLayout implements View{
 							CheckWindow.this.close();
 							
 							//Meldung an den Nutzer
-							Notification.show("Ihr Profil wurde gelöscht.", Type.HUMANIZED_MESSAGE);
+							Notification notif = new Notification("Ihr Profil wurde gelöscht!", Type.HUMANIZED_MESSAGE);
+							notif.setDelayMsec(300);
+							notif.setIcon(FontAwesome.INFO);
+							notif.show(Page.getCurrent());
 						}
 					});
 					
 					//Abbrechen-Button
 					Button no = new Button();
 					no.setCaption("Nein, doch nicht.");
+					no.setIcon(FontAwesome.MAIL_REPLY);
 					no.setDescription("Profil nicht löschen");
 					no.setWidth("-1px");
 					no.setHeight("-1px");
