@@ -28,6 +28,11 @@ public class OfferProvider extends BaseProvider<Offer> {
 		return Offer.class;
 	}
 
+	/**
+	 * Adds the offer.
+	 *
+	 * @param newOffer the new offer
+	 */
 	public void addOffer(Offer newOffer) {
 		if (!super.save(newOffer)) {
 
@@ -37,6 +42,12 @@ public class OfferProvider extends BaseProvider<Offer> {
 
 	}
 
+	/**
+	 * Alter offer.
+	 *
+	 * @param offer the offer
+	 * @return true, if successful
+	 */
 	public boolean alterOffer(Offer offer) {
 		
 		if(!em.isOpen()) {
@@ -57,6 +68,12 @@ public class OfferProvider extends BaseProvider<Offer> {
 
 	}
 
+	/**
+	 * Removes the offer.
+	 *
+	 * @param offer the offer
+	 * @return true, if successful
+	 */
 	public boolean removeOffer(Offer offer) {
 
 		List<Photo> photos = offer.getPhotos();
@@ -87,6 +104,12 @@ public class OfferProvider extends BaseProvider<Offer> {
 		return (Offer) super.find(id);
 	}
 
+	/**
+	 * Own offers.
+	 *
+	 * @param user the user
+	 * @return the list
+	 */
 	public List<Offer> ownOffers(User user) {
 		StringBuffer owns = new StringBuffer();
 		int offer_idUser = user.getIdUser();
@@ -102,6 +125,24 @@ public class OfferProvider extends BaseProvider<Offer> {
 		return ownOffers;
 	}
 
+	/**
+	 * Filter.
+	 *
+	 * @param startDate the start date
+	 * @param endDate the end date
+	 * @param minSquareMetre the min square metre
+	 * @param maxSquareMetre the max square metre
+	 * @param minPrice the min price
+	 * @param maxPrice the max price
+	 * @param type the type
+	 * @param internet the internet
+	 * @param furnished the furnished
+	 * @param kitchen the kitchen
+	 * @param smoker the smoker
+	 * @param pets the pets
+	 * @param city the city
+	 * @return the list
+	 */
 	public List<Offer> filter(Date startDate, Date endDate, float minSquareMetre, float maxSquareMetre, float minPrice,
 			float maxPrice, int type, boolean internet, boolean furnished, boolean kitchen, boolean smoker,
 			boolean pets, String city) {
@@ -175,6 +216,11 @@ public class OfferProvider extends BaseProvider<Offer> {
 		return filterErgebnis;
 	}
 	
+	/**
+	 * Gets the latest offers.
+	 *
+	 * @return the latest offers
+	 */
 	public List<Offer> getLatestOffers() {
 		
 		if (!em.isOpen()) {

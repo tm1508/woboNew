@@ -45,10 +45,13 @@ public class Einzelansicht extends VerticalLayout implements View {
 	/** The content. */
 	VerticalLayout content;
 	
+	/** The angebot. */
 	Offer angebot;
 	
 	/**
 	 * Instantiates a new einzelansicht.
+	 *
+	 * @param einzelAngebot the einzel angebot
 	 */
 	public Einzelansicht(Offer einzelAngebot){
 		this.angebot = einzelAngebot;

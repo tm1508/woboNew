@@ -83,11 +83,14 @@ public class Offer {
 	@JoinColumn(name="offer_idUser")
 	private User offer_idUser;
 	
+	/** The offer time. */
 	@Temporal(value=TemporalType.TIMESTAMP)
 	private Date offerTime;
 	
+	/** The latitude. */
 	private float latitude;
 	
+	/** The longitude. */
 	private float longitude;
 	
 	/** The photos. */
@@ -272,7 +275,7 @@ public class Offer {
 	/**
 	 * Sets the shared.
 	 *
-	 * @param isShared the new shared
+	 * @param type the new type
 	 */
 	public void setType(int type) {
 		this.type = type;
@@ -512,26 +515,56 @@ public class Offer {
 		this.favorits = favorits;
 	}
 
+	/**
+	 * Gets the offer time.
+	 *
+	 * @return the offer time
+	 */
 	public Date getOfferTime() {
 		return offerTime;
 	}
 
+	/**
+	 * Sets the offer time.
+	 *
+	 * @param offerTime the new offer time
+	 */
 	public void setOfferTime(Date offerTime) {
 		this.offerTime = offerTime;
 	}
 
+	/**
+	 * Gets the latitude.
+	 *
+	 * @return the latitude
+	 */
 	public float getLatitude() {
 		return latitude;
 	}
 
+	/**
+	 * Sets the latitude.
+	 *
+	 * @param latitude the new latitude
+	 */
 	public void setLatitude(float latitude) {
 		this.latitude = latitude;
 	}
 
+	/**
+	 * Gets the longitude.
+	 *
+	 * @return the longitude
+	 */
 	public float getLongitude() {
 		return longitude;
 	}
 
+	/**
+	 * Sets the longitude.
+	 *
+	 * @param longitude the new longitude
+	 */
 	public void setLongitude(float longitude) {
 		this.longitude = longitude;
 	}
