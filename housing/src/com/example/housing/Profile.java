@@ -426,7 +426,9 @@ public class Profile extends VerticalLayout implements View {
 						u.setAccessLevel(1);
 					}
 					if (!prüf.getEmail().equals(u.getEmail())) {
+						System.out.println("-----------------------------------------------------------------ok1");
 						if (!new UserProvider().userExists(email_1.getValue())) {
+							System.out.println("------------------------------------------------------------ok2");
 							// Werte in der DB speichern
 							new UserProvider().alterUser(u);
 							// neues User-Objekt in der Session speichern

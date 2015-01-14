@@ -127,6 +127,8 @@ public class HousingUI extends UI {
 		    	//Navigation zur Fehlerseite
 				navigator.addView("Error", new ErrorPage());
 				navigator.navigateTo("Error");
+				
+				//TODO auskommentieren, damit der User die Fehlermeldungen nicht bekommt
 		        doDefault(event);//falls rotes Ausrufezeichen im Browser angezeigt werden soll
 		    } 
 		}); 
