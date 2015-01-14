@@ -109,7 +109,7 @@ public class Maps extends VerticalLayout implements View{
 
 
 	private void setContent() {
-		TextField location = new TextField();
+		final TextField location = new TextField();
 		googleMap = new GoogleMap(null, null, null);
         googleMap.setCenter(new LatLon(60.440963, 22.25122));
         googleMap.setZoom(10);
