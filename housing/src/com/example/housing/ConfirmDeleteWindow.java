@@ -35,10 +35,10 @@ public class ConfirmDeleteWindow extends Window {
 	    //text
 	    Label text = new Label();
 		text.setImmediate(false);
-		text.setWidth("-1px");
-		text.setHeight("-1px");
+		//text.setWidth("-1px");
+		//text.setHeight("-1px");
 		//TODO Zeilenumbruch
-		text.setValue("Wollen Sie Ihr Angebot " + currentOffer.getTitle() + " wirklich unwiderruflich löschen? Alternativ können Sie es auch deaktivieren, indem Sie das Angebot bearbeiten und dort den Haken bei \"deaktivieren\" setzen. Auf diese Weise können Sie das Angebot gegebenenfalls später wieder reaktivieren.");
+		text.setValue("Wollen Sie Ihr Angebot " + currentOffer.getTitle() + " wirklich unwiderruflich löschen? \n Alternativ können Sie es auch deaktivieren, indem Sie das Angebot bearbeiten \n und dort den Haken bei \"deaktivieren\" setzen. \n Auf diese Weise können Sie das Angebot gegebenenfalls später wieder reaktivieren.");
 		content.addComponent(text);
 		
 		HorizontalLayout buttons = new HorizontalLayout();
@@ -77,13 +77,13 @@ public class ConfirmDeleteWindow extends Window {
 			public void buttonClick(ClickEvent event) {
 				
 				//TODO
-				/*new OfferProvider().removeOffer(currentOffer);
+				new OfferProvider().removeOffer(currentOffer);
 				
 				Notification.show("Das Angebot wurde gelöscht und aus der Datenbank entfernt.", Type.HUMANIZED_MESSAGE);//Meldung an den Nutzer
 				
 				String name = "Angebote verwalten";
 				getUI().getNavigator().addView(name, new AngeboteVerwalten());
-				getUI().getNavigator().navigateTo(name);*/
+				getUI().getNavigator().navigateTo(name);
 				
 				ConfirmDeleteWindow.this.close();
 				

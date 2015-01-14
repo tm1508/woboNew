@@ -99,6 +99,8 @@ public class AngeboteVerwalten extends VerticalLayout implements View {
 
 			content.addComponent(new Listenzeile(o));
 		}
+		if(anzahl ==0)
+			content.addComponent(new Label("Es exestieren keine Angebote von Ihnen."));
 
 	}
 
