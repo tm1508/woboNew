@@ -58,6 +58,7 @@ public class LoginWindow extends Window{
 	    
 	    final VerticalLayout content = new VerticalLayout();
 	    content.setMargin(true);
+	    
 			// title
 			title = new Label();
 			title.setImmediate(false);
@@ -164,15 +165,13 @@ public class LoginWindow extends Window{
 			link.setHeight("-1px");
 			link.setIcon(FontAwesome.EXTERNAL_LINK);
 			link.addClickListener(new Button.ClickListener(){
-			public void buttonClick(ClickEvent event) {
-				ForgotPasswordWindow w = new ForgotPasswordWindow();//Intantiiert ein neues Fenster
-				UI.getCurrent().removeWindow(LoginWindow.this);//schließt das Loginfenster
-				UI.getCurrent().addWindow(w);//öffnet das neue Fenster "Passwort vergessen"
-				
-			}
+				public void buttonClick(ClickEvent event) {
+					ForgotPasswordWindow w = new ForgotPasswordWindow();//Intantiiert ein neues Fenster
+					UI.getCurrent().removeWindow(LoginWindow.this);//schließt das Loginfenster
+					UI.getCurrent().addWindow(w);//öffnet das neue Fenster "Passwort vergessen"
+				}
 			});
 			
-	
 			content.addComponent(link);
 			
 			this.setContent(content);    

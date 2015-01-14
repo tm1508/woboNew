@@ -98,10 +98,9 @@ public class Anfrageformular extends VerticalLayout implements View{
 		sendButton.setWidth("-1px");
 		sendButton.setHeight("-1px");
 		content.addComponent(sendButton);
-		//Abschlieﬂen der Registrierung
 		sendButton.addClickListener(new Button.ClickListener() {
 			public void buttonClick(ClickEvent event) {
-				if(new RequestProvider().requestExists(VaadinSession.getCurrent().getAttribute(User.class), requestedOffer) == false){//der Nutzer existiert noch nicht
+				if(new RequestProvider().requestExists(VaadinSession.getCurrent().getAttribute(User.class), requestedOffer) == false){//Anfrage existiert noch nicht
 					//Werte in der DB speichern
 					safeToDB();
 					

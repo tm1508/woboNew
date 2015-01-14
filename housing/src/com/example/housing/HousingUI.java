@@ -64,8 +64,10 @@ public class HousingUI extends UI {
 				  		//Fehlertexte		        
 				        messages.setSessionExpiredCaption("Ihre Session ist abgelaufen.");
 				        messages.setSessionExpiredMessage("Bitte laden Sie die Seite neu oder drücken Sie ESC. Sie müssen sich eventuell erneut einloggen.");
-				        messages.setCommunicationErrorCaption("Kommunikationsprobleme");
+				        messages.setCommunicationErrorCaption("Ein Kommunikationsproblem ist aufgetreten.");
 				        messages.setCommunicationErrorMessage("Bitte notieren Sie sich Ihre noch nicht gespeicherten Eingaben.");
+				        messages.setInternalErrorCaption("Ein Serverproblem ist aufgetreten.");
+				        messages.setInternalErrorMessage("Bitte versuchen Sie es später erneut. Sollte der Fehler erneut auftreten, informieren Sie bitte den Administrator.");
 				        return messages;
 				    }
 				});	
@@ -113,6 +115,7 @@ public class HousingUI extends UI {
 		navigator = new Navigator(this, this);
 		String name = "Startseite";
 		navigator.addView(name, new Startseite());
+		//navigator.addView(name, new UploadTest());
 		navigator.navigateTo(name);
 		
 		navigator.setErrorView(new ErrorPage());//Navigation zur Fehlerseite
@@ -126,7 +129,7 @@ public class HousingUI extends UI {
 				navigator.navigateTo("Error");
 		        doDefault(event);//falls rotes Ausrufezeichen im Browser angezeigt werden soll
 		    } 
-		});
+		}); 
 		
 	}
 	

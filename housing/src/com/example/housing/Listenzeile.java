@@ -3,6 +3,7 @@ package com.example.housing;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.util.List;
@@ -18,6 +19,8 @@ import com.vaadin.data.Buffered;
 import com.vaadin.event.LayoutEvents.LayoutClickEvent;
 import com.vaadin.event.LayoutEvents.LayoutClickListener;
 import com.vaadin.server.FileResource;
+import com.vaadin.server.Resource;
+import com.vaadin.server.StreamResource;
 import com.vaadin.server.VaadinService;
 import com.vaadin.ui.AbsoluteLayout;
 import com.vaadin.ui.CustomComponent;
@@ -51,36 +54,33 @@ public class Listenzeile extends CustomComponent {
 		// ergebnisLayout.setSizeFull();
 
 		// pictures
-		List<Photo> pictures;
+		final List<Photo> pictures;
 		pictures = o.getPhotos();
-		ImageInputStream iis = null;
+		
 		// falls Bilder zu der Wohnung vorhanden sind
 		if (pictures.size() > 0) {
-			Photo ph = pictures.get(0);
-			byte[] by = ph.getPhoto();
-			ByteArrayInputStream bis = new ByteArrayInputStream(by);
-			Object source = bis;
-			try {
-				iis = ImageIO.createImageInputStream(source);
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-			Buffered bufferedImage = null;
-			try {
-				bufferedImage = (Buffered) ImageIO.read(iis);
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-			Image ii = (Image) bufferedImage;
-			ergebnisLayout.addComponent(ii, 0, 0, 2, 2);
+			
+			Resource resource = new StreamResource(new StreamResource.StreamSource() {
+				@Override
+				public InputStream getStream(){
+					InputStream bais = new ByteArrayInputStream(pictures.get(0).getPhoto());
+					return bais;
+				}
+			}, "Bild_1");
+			Image image = new Image(null, resource);
+			
+			ergebnisLayout.addComponent(image, 0, 0, 2, 2);
+			
 		} else {
-			// TODO Kein bild vorhanden Bild
+			
+			// TODO Standardbild
 			String basepath = VaadinService.getCurrent().getBaseDirectory().getAbsolutePath();
 			FileResource resource = new FileResource(new File(basepath + "/WEB-INF/image/dh.jpg"));
 			Image image = new Image("", resource);
 			ergebnisLayout.addComponent(image, 0, 0, 2, 2);
 			// String im = "Kein Bild vorhanden";
 			// ergebnisLayout.addComponent(new Label(im),0,0,2,2);
+			
 		}
 
 		String title = o.getTitle();

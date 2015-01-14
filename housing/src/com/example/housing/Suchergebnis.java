@@ -93,14 +93,11 @@ public class Suchergebnis extends VerticalLayout implements View {
 	 */
 	@SuppressWarnings("deprecation")
 	public void setContent(){
-			
-		// Anzahl der gefundenen Ergebnisse
-		int anzahl = angebote.size();
-		System.out.println(anzahl);
-		for(int i = 0; i<anzahl;i++){
-			final Offer o = angebote.get(i);
 		
+		for(Offer o : angebote) {
+			
 			content.addComponent(new Listenzeile(o));
+		
 		}
 
 	}

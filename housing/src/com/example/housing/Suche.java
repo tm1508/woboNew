@@ -183,7 +183,7 @@ public class Suche extends VerticalLayout implements View{
 						a, internet.getValue(), moebliert.getValue(), kueche.getValue(),rauchen.getValue(),
 						haustiere.getValue(),
 						stadt.getValue());
-
+				
 				String name = "AngebotAnzeigen";
 				getUI().getNavigator().addView(name, new Suchergebnis(ergebnisse));
 				getUI().getNavigator().navigateTo(name);

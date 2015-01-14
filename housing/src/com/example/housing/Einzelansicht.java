@@ -1,25 +1,35 @@
 package com.example.housing;
 
+import java.io.ByteArrayInputStream;
 import java.io.File;
+import java.io.InputStream;
 import java.sql.Date;
 
 import javax.swing.GroupLayout.Alignment;
 
+import com.example.housing.data.model.Favorit;
 import com.example.housing.data.model.Offer;
 import com.example.housing.data.model.User;
+import com.example.housing.data.provider.FavoritProvider;
+import com.example.housing.data.provider.PhotoProvider;
 import com.example.housing.utility.Format;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.server.FileResource;
+import com.vaadin.server.Page;
+import com.vaadin.server.Resource;
+import com.vaadin.server.StreamResource;
 import com.vaadin.server.VaadinService;
 import com.vaadin.server.VaadinSession;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.DateField;
 import com.vaadin.ui.GridLayout;
+import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Image;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Notification;
+import com.vaadin.ui.UI;
 import com.vaadin.ui.Notification.*;
 import com.vaadin.ui.Panel;
 import com.vaadin.ui.TextArea;
@@ -35,11 +45,11 @@ public class Einzelansicht extends VerticalLayout implements View {
 	/** The content. */
 	VerticalLayout content;
 	
+	Offer angebot;
+	
 	/**
 	 * Instantiates a new einzelansicht.
 	 */
-	
-	Offer angebot;
 	public Einzelansicht(Offer einzelAngebot){
 		this.angebot = einzelAngebot;
 		
@@ -70,8 +80,6 @@ public class Einzelansicht extends VerticalLayout implements View {
 			
 		setContent();
 		addComponent(content);
-		
-
 
 		Footer f = new Footer();
 		addComponent(f);
@@ -85,9 +93,6 @@ public class Einzelansicht extends VerticalLayout implements View {
 	 */
 	@SuppressWarnings("deprecation")
 	public void setContent(){
-		
-
-
 			
 		//titel
 		String titel = angebot.getTitle();
@@ -108,14 +113,65 @@ public class Einzelansicht extends VerticalLayout implements View {
 		gridPictures.setMargin(false);
 		content.addComponent(gridPictures);
 		String basepath = VaadinService.getCurrent().getBaseDirectory().getAbsolutePath();
-		FileResource resource = new FileResource(new File(basepath + "/WEB-INF/image/dh.jpg"));
-		FileResource resource2 = new FileResource(new File(basepath + "/WEB-INF/image/dh.jpg"));
-		FileResource resource3 = new FileResource(new File(basepath + "/WEB-INF/image/dh.jpg"));
-		FileResource resource4 = new FileResource(new File(basepath + "/WEB-INF/image/dh.jpg"));
-		Image image = new Image("",resource2);
+		
+		Resource resource = new FileResource(new File(basepath + "/WEB-INF/image/dh.jpg"));
+		Resource resource2 = new FileResource(new File(basepath + "/WEB-INF/image/dh.jpg"));
+		Resource resource3 = new FileResource(new File(basepath + "/WEB-INF/image/dh.jpg"));
+		Resource resource4 = new FileResource(new File(basepath + "/WEB-INF/image/dh.jpg"));
+		Resource resource5 = new FileResource(new File(basepath + "/WEB-INF/image/dh.jpg"));
+		
+		switch(angebot.getPhotos().size()) {
+			case 5:
+				
+				resource5 = new StreamResource(new StreamResource.StreamSource() {
+					@Override
+					public InputStream getStream(){
+						return new ByteArrayInputStream(angebot.getPhotos().get(4).getPhoto());
+					}
+				}, "Bild_5");
+				
+			case 4:
+				
+				resource4 = new StreamResource(new StreamResource.StreamSource() {
+					@Override
+					public InputStream getStream(){
+						return new ByteArrayInputStream(angebot.getPhotos().get(3).getPhoto());
+					}
+				}, "Bild_4");
+				
+			case 3:
+				
+				resource3 = new StreamResource(new StreamResource.StreamSource() {
+					@Override
+					public InputStream getStream(){
+						return new ByteArrayInputStream(angebot.getPhotos().get(2).getPhoto());
+					}
+				}, "Bild_3");
+				
+			case 2:
+				
+				resource2 = new StreamResource(new StreamResource.StreamSource() {
+					@Override
+					public InputStream getStream(){
+						return new ByteArrayInputStream(angebot.getPhotos().get(1).getPhoto());
+					}
+				}, "Bild_2");
+				
+			case 1:
+				
+				resource = new StreamResource(new StreamResource.StreamSource() {
+					@Override
+					public InputStream getStream(){
+						return new ByteArrayInputStream(angebot.getPhotos().get(0).getPhoto());
+					}
+				}, "Bild_1");
+				
+		}
+		
+		Image image = new Image("",resource);
 		image.setWidth("388px");
 		image.setHeight("314px");
-		Image image2 = new Image("",resource);
+		Image image2 = new Image("",resource2);
 		image2.setWidth("169px");
 		image2.setHeight("144px");
 		Image image3 = new Image("",resource3);
@@ -124,17 +180,16 @@ public class Einzelansicht extends VerticalLayout implements View {
 		Image image4 = new Image("",resource4);
 		image4.setWidth("169px");
 		image4.setHeight("144px");
-		Image image5 = new Image("",resource);
+		Image image5 = new Image("",resource5);
 		image5.setWidth("169px");
 		image5.setHeight("144px");
-		    gridPictures.addComponent(image, 0, 0, 3, 3);
-		    gridPictures.addComponent(image2, 4, 0 ,5,1);
-		    gridPictures.addComponent(image3, 6, 0, 7,1);
-		    gridPictures.addComponent(image4, 4, 2, 5,3);
-		    gridPictures.addComponent(image5, 6, 2, 7,3);
-		    gridPictures.setWidth("40%");
-
 		
+		gridPictures.addComponent(image, 0, 0, 3, 3);
+		gridPictures.addComponent(image2, 4, 0 ,5,1);
+		gridPictures.addComponent(image3, 6, 0, 7,1);
+		gridPictures.addComponent(image4, 4, 2, 5,3);
+		gridPictures.addComponent(image5, 6, 2, 7,3);
+		gridPictures.setWidth("40%");
 		    
 		GridLayout gridInfos = new GridLayout(2,15); 
 	//	gridInfos.setWidth("60%");
@@ -257,19 +312,54 @@ public class Einzelansicht extends VerticalLayout implements View {
         t.setWidth("338px");
         gridInfos.addComponent(new Label("Beschreibung  "), 0, 13);
         gridInfos.addComponent(t, 1,13);
+    
         
-
+        //Bearbeiten- und Löschen-Button
+        if(VaadinSession.getCurrent().getAttribute("login").equals(true)){
+        	if(VaadinSession.getCurrent().getAttribute(User.class).getEmail().equals(angebot.getOffer_idUser().getEmail())){
+        		
+        		HorizontalLayout userButtons = new HorizontalLayout();
+        		
+				Button change = new Button("Bearbeiten");
+				change.addStyleName("BearbeitenButton");
+				change.addClickListener(new Button.ClickListener() {
+					public void buttonClick(ClickEvent event) {
+						String name = "AngebotErstellen";
+						getUI().getNavigator().addView(name, new AngebotErstellen(angebot)); // momentan angezeigtes Angebot soll übergeben werden...
+						getUI().getNavigator().navigateTo(name);
+					}
+				});
+				
+				Button delete = new Button("Angebot löschen");
+				delete.addStyleName("BearbeitenButton");
+				delete.addClickListener(new Button.ClickListener() {
+					public void buttonClick(ClickEvent event) {
+						ConfirmDeleteWindow cdw = new ConfirmDeleteWindow(angebot);
+						UI.getCurrent().addWindow(cdw);	
+					}
+				});
+				
+				userButtons.addComponent(change);
+				userButtons.addComponent(delete);
+				
+				gridInfos.addComponent(userButtons, 0 , 14);
+			
+        	}
+        }
         
+        HorizontalLayout buttons = new HorizontalLayout();
+        
+        //Anfrage-Button
         Button anfrage = new Button("Anfrage");
         anfrage.addStyleName("AnfrageButton");
-        gridInfos.addComponent(anfrage, 1 , 14);
+        buttons.addComponent(anfrage);
         
         anfrage.addClickListener(new Button.ClickListener() {
 			public void buttonClick(ClickEvent event) {
-				if(! (boolean) VaadinSession.getCurrent().getAttribute("login")) {
-					Notification.show("Sie müssen sich als verifizierter DH-Student einloggen, um eine Anfrage zu einem Wohnungsangebot stellen zu können!", Type.WARNING_MESSAGE);
+				if(VaadinSession.getCurrent().getAttribute("login").equals(false)) {
+					Notification.show("Sie müssen sich als verifizierter DH-Student einloggen, um eine Anfrage zu einem Wohnungsangebot stellen zu können!", Type.HUMANIZED_MESSAGE);
 				} else if (VaadinSession.getCurrent().getAttribute(User.class).getAccessLevel() != 1) {
-					Notification.show("Sie müssen sich als DH-Student verifizieren, um eine Anfrage zu einem Wohnungsangebot stellen zu können!", Type.WARNING_MESSAGE);
+					Notification.show("Sie müssen sich als DH-Student verifizieren, um eine Anfrage zu einem Wohnungsangebot stellen zu können!", Type.HUMANIZED_MESSAGE);
 				} else {
 					String name = "Anfrageformular";
 					getUI().getNavigator().addView(name, new Anfrageformular(angebot));
@@ -278,30 +368,30 @@ public class Einzelansicht extends VerticalLayout implements View {
 			}
 		});
         
+        
+        //Favoriten-Button
         if(VaadinSession.getCurrent().getAttribute("login").equals(true)){
-        	User u = VaadinSession.getCurrent().getAttribute(User.class);
-        	int id = u.getIdUser();
-        	User u2 = angebot.getOffer_idUser();
-        	int id2 = u2.getIdUser();
-        	if(id == id2){
-				Button change = new Button("Bearbeiten");
-				change.addStyleName("BearbeitenButton");
-		change.addClickListener(new Button.ClickListener() {
-			public void buttonClick(ClickEvent event) {
-				
-				String name = "AngebotErstellen";
-				getUI().getNavigator().addView(name, new AngebotErstellen(angebot)); // momentan angezeigtes Angebot soll übergeben werden...
-				getUI().getNavigator().navigateTo(name);
-			}
-		});
-		
-		
-		gridInfos.addComponent(change, 0 , 14);
-        	}
+        
+        	Button favorit = new Button("Favorit");
+        	favorit.addStyleName("AnfrageButton");
+        	buttons.addComponent(favorit);
+        	
+        	favorit.addClickListener(new Button.ClickListener() {
+        		public void buttonClick(ClickEvent event) {
+        			Favorit newFavorit = new Favorit();
+        			newFavorit.setFavorit_idOffer(angebot);
+        			newFavorit.setFavorit_idUser(VaadinSession.getCurrent().getAttribute(User.class));
+        			
+        			new FavoritProvider().addFavorit(newFavorit);
+        			Notification not = new Notification("Das Angebot wurde zu Ihren Favoriten hinzugefügt."); //TODO
+        			not.show(Page.getCurrent());
+        			
+        		}	
+        	}); 
+    	
         }
-	//	content.addComponent(new Label());
-		
-
+        
+        gridInfos.addComponent(buttons, 1, 14);
 
 	}
 

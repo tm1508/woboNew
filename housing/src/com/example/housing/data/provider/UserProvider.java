@@ -9,7 +9,9 @@ import javax.persistence.PersistenceUnit;
 import javax.persistence.Query;
 
 import com.example.housing.HousingUI;
+import com.example.housing.data.model.Favorit;
 import com.example.housing.data.model.Offer;
+import com.example.housing.data.model.Request;
 import com.example.housing.data.model.User;
 import com.vaadin.ui.UI;
 
@@ -52,6 +54,20 @@ public class UserProvider extends BaseProvider<User>{
 	
 	public boolean alterUser(User user) {
 		
+		if(!em.isOpen()) {
+			
+			em = getEmf().createEntityManager();
+		
+		}
+		try {
+			User persistedUser = this.findById(user.getIdUser());
+			em.detach(persistedUser);
+			em.close();
+		} catch (Exception e) {
+			System.out.println(e);
+			return false;
+		}
+		
 		return super.update(user); //true bei Erfolg, false bei Fehler
 		
 	}
@@ -59,14 +75,34 @@ public class UserProvider extends BaseProvider<User>{
 	public boolean removeUser(User user) {
 		
 		List<Offer> offers = user.getOffers();
+		List<Favorit> favorits = user.getFavorits();
+		List<Request>requests = user.getRequests(); 
 		OfferProvider offerProv = new OfferProvider();
+		FavoritProvider favoritProv = new FavoritProvider();
+		RequestProvider requestProv = new RequestProvider();
+		boolean success = true;
+		
 		for(Offer o : offers) {
 			
-			offerProv.removeOffer(o);
+			success = offerProv.removeOffer(o);
+			
+		}
+		for(Favorit f : favorits) {
+			
+			success = favoritProv.removeFavorit(f);
+			
+		}
+		for(Request r : requests) {
+			
+			success = requestProv.removeRequest(r);
 			
 		}
 		
-		return super.delete(user); //true bei Erfolg, false bei Fehler
+		if(success) {
+			return super.delete(user.getIdUser()); //true bei Erfolg, false bei Fehler
+		} else {
+			return false;
+		}
 		
 	}
 	

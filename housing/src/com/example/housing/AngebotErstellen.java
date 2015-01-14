@@ -1,14 +1,21 @@
 package com.example.housing;
 
+import java.io.ByteArrayOutputStream;
+import java.io.OutputStream;
+import java.util.Date;
+
 import com.example.housing.data.model.Offer;
+import com.example.housing.data.model.Photo;
 import com.example.housing.data.model.User;
 import com.example.housing.data.provider.OfferProvider;
+import com.example.housing.data.provider.PhotoProvider;
 import com.example.housing.utility.Format;
 import com.example.housing.utility.PhotoUploader;
 import com.vaadin.data.Validator.InvalidValueException;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.server.VaadinSession;
+import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.ComboBox;
@@ -20,6 +27,8 @@ import com.vaadin.ui.RichTextArea;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.Upload;
 import com.vaadin.ui.Upload.Receiver;
+import com.vaadin.ui.Upload.SucceededEvent;
+import com.vaadin.ui.Upload.SucceededListener;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Upload.FinishedEvent;
@@ -28,10 +37,14 @@ import com.vaadin.ui.Upload.FinishedEvent;
 /**
  * The Class AngebotErstellen.
  */
-public class AngebotErstellen extends VerticalLayout implements View {
+public class AngebotErstellen extends VerticalLayout implements View, Receiver, SucceededListener {
 
 	/** The content. */
 	VerticalLayout content;
+	
+	Offer currentOffer;
+	
+	ByteArrayOutputStream tmpImg;
 
 	/*
 	 * (non-Javadoc)
@@ -51,6 +64,16 @@ public class AngebotErstellen extends VerticalLayout implements View {
 	 */
 	// neues Angebot erstellen
 	public AngebotErstellen() {
+		
+		currentOffer = new Offer();
+		currentOffer.setCity(" ");
+		currentOffer.setStartDate(new Date());
+		currentOffer.setTitle(" ");
+		currentOffer.setStreet(" ");
+		currentOffer.setZip(" ");
+		currentOffer.setOffer_idUser(VaadinSession.getCurrent().getAttribute(User.class));
+		new OfferProvider().addOffer(currentOffer);
+		
 		Navigation nav = new Navigation();
 		addComponent(nav);
 		// setSizeFull();
@@ -76,6 +99,9 @@ public class AngebotErstellen extends VerticalLayout implements View {
 
 	// bereits bestehendes Angebot bearbeiten
 	public AngebotErstellen(Offer offer) {
+		
+		currentOffer = offer;
+		
 		Navigation nav = new Navigation();
 		addComponent(nav);
 		// setSizeFull();
@@ -267,8 +293,8 @@ public class AngebotErstellen extends VerticalLayout implements View {
 		text.setWidth("100%");
 		Label bilder = new Label("Bilder hinzufügen");
 		bilder.addStyleName("AbschnittLabel");
-		Upload bilderup = new Upload();
-		bilderup.setButtonCaption("hochladen");
+		Upload bilderup = new Upload("Foto hochladen", this);
+		bilderup.addSucceededListener(this);
 
 		content.addComponent(anzeigetext);
 		content.addComponent(new Label());
@@ -282,7 +308,7 @@ public class AngebotErstellen extends VerticalLayout implements View {
 		// Button speichern/aktivieren/deaktivieren
 		final CheckBox inactive = new CheckBox("deaktivieren");
 
-		Button save = new Button("speichern");
+		Button save = new Button("Speichern");
 		save.addStyleName("BearbeitenButton");
 		save.addClickListener(new Button.ClickListener() {
 			public void buttonClick(ClickEvent event) {
@@ -384,43 +410,40 @@ public class AngebotErstellen extends VerticalLayout implements View {
 
 				if (valid) {// sind alle Mussfelder gefüllt, wird ein neues
 							// Angebot erstellt
-					Offer newOffer = new Offer();
-					newOffer.setOffer_idUser(VaadinSession.getCurrent().getAttribute(User.class));
-					newOffer.setTitle(titel.getValue());
-					newOffer.setStreet(street.getValue());
-					newOffer.setZip(zip.getValue());
-					newOffer.setCity(city.getValue());
-					newOffer.setStartDate(startDate.getValue());
-					try { // überprüft ob ein Enddatum angegeben ist, da die
-							// Angabe optional ist
-						newOffer.setEndDate(endDate.getValue());
+					currentOffer.setOffer_idUser(VaadinSession.getCurrent().getAttribute(User.class));
+					currentOffer.setTitle(titel.getValue());
+					currentOffer.setStreet(street.getValue());
+					currentOffer.setZip(zip.getValue());
+					currentOffer.setCity(city.getValue());
+					currentOffer.setStartDate(startDate.getValue());
+					try { // überprüft ob ein Enddatum angegeben ist, da die Angabe optional ist
+						currentOffer.setEndDate(endDate.getValue());
 					} catch (NullPointerException e) {
 					}
-					newOffer.setSquareMetre(new Format().floatFormat(squareMetre.getValue()));
-					newOffer.setPrice(new Format().floatFormat(price.getValue()));
-					newOffer.setType(type);
-					newOffer.setNumberOfRoommate(Integer.parseInt(roomMates.getValue()));
-					newOffer.setInternet(internet.getValue());
-					newOffer.setFurnished(furnished.getValue());
-					newOffer.setKitchen(kitchen.getValue());
-					newOffer.setSmoker(smoker.getValue());
-					newOffer.setPets(pets.getValue());
-					newOffer.setGender(gender);
-					newOffer.setText(text.getValue());
+					currentOffer.setSquareMetre(new Format().floatFormat(squareMetre.getValue()));
+					currentOffer.setPrice(new Format().floatFormat(price.getValue()));
+					currentOffer.setType(type);
+					currentOffer.setNumberOfRoommate(Integer.parseInt(roomMates.getValue()));
+					currentOffer.setInternet(internet.getValue());
+					currentOffer.setFurnished(furnished.getValue());
+					currentOffer.setKitchen(kitchen.getValue());
+					currentOffer.setSmoker(smoker.getValue());
+					currentOffer.setPets(pets.getValue());
+					currentOffer.setGender(gender);
+					currentOffer.setText(text.getValue());
 
-					try {// überprüft ob eine Kaution angegeben ist, da die
-							// Angabe optional ist
-						newOffer.setBond(Float.parseFloat(bond.getValue()));
+					try {// überprüft ob eine Kaution angegeben ist, da die Angabe optional ist
+						currentOffer.setBond(Float.parseFloat(bond.getValue()));
 					} catch (NumberFormatException e) {
 					}
-					newOffer.setInactive(inactive.getValue());
+					currentOffer.setInactive(inactive.getValue());
 					// newOffer.setLatitude(latitude);
 					// newOffer.setLongitude(longitude);
 					// newOffer.setPhotos();
-					new OfferProvider().addOffer(newOffer); // neues Angebot in
+					new OfferProvider().alterOffer(currentOffer); // neues Angebot in
 															// die DB schreiben
 					String name = "Einzelansicht";
-					getUI().getNavigator().addView(name, new Einzelansicht(newOffer));
+					getUI().getNavigator().addView(name, new Einzelansicht(currentOffer));
 					getUI().getNavigator().navigateTo(name);
 
 				} else
@@ -436,6 +459,9 @@ public class AngebotErstellen extends VerticalLayout implements View {
 		abbrechen.setDescription("Abbrechen der Bearbeitung. Ihre Änderungen werden nicht gespeichert.");
 		abbrechen.addClickListener(new Button.ClickListener() {
 			public void buttonClick(ClickEvent event) {
+				
+				new OfferProvider().removeOffer(currentOffer);
+				
 				String name = "Startseite";
 				getUI().getNavigator().addView(name, new Startseite());
 				getUI().getNavigator().navigateTo(name);
@@ -444,8 +470,8 @@ public class AngebotErstellen extends VerticalLayout implements View {
 		});
 		content.addComponent(inactive);
 		HorizontalLayout buttons = new HorizontalLayout();
-		buttons.addComponent(save);
 		buttons.addComponent(abbrechen);
+		buttons.addComponent(save);
 		content.addComponent(buttons);
 
 	}
@@ -640,8 +666,8 @@ public class AngebotErstellen extends VerticalLayout implements View {
 		Label bilder = new Label("Bilder hinzufügen");
 		bilder.addStyleName("AbschnittLabel");
 		
-		//Upload bilderup = new Upload();
-		//bilderup.setButtonCaption("hochladen alt");
+		Upload bilderup = new Upload("Foto hochladen", this);
+		bilderup.addSucceededListener(this);
 
 		content.addComponent(anzeigetext);
 		content.addComponent(new Label());
@@ -649,27 +675,8 @@ public class AngebotErstellen extends VerticalLayout implements View {
 		content.addComponent(new Label());
 		content.addComponent(bilder);
 		content.addComponent(new Label());
-		//content.addComponent(bilderup);
-		//content.addComponent(new Label());
-		
-		//TODO
-		//Bilder-Upload
-		final Receiver photoUpload = new PhotoUploader();
- 
-        Upload u= new Upload("hochladen neu", photoUpload);
-        
-        //u.setReceiver(photoUpload);
-        //u.setButtonCaption("hochladen neu");
-       
-        u.addFinishedListener(new Upload.FinishedListener() {
-            @Override
-            public void uploadFinished(final FinishedEvent event) {
-                System.out.println("Bild-Daten: Länge byte[] = " + ((PhotoUploader) photoUpload).getPictureData().length);
-            }
-        });
-        
-        content.addComponent(u);
-        content.addComponent(new Label());
+		content.addComponent(bilderup);
+		content.addComponent(new Label());
         
 		// Button speichern/aktivieren/deaktivieren
 		final CheckBox inactive = new CheckBox("deaktivieren");
@@ -776,44 +783,43 @@ public class AngebotErstellen extends VerticalLayout implements View {
 
 				if (valid) {// sind alle Mussfelder gefüllt, wird ein neues
 							// Angebot erstellt
-					Offer changedOffer = new Offer();
-					changedOffer.setOffer_idUser(VaadinSession.getCurrent().getAttribute(User.class));
-					changedOffer.setIdOffer(offer.getIdOffer());
-					changedOffer.setTitle(titel.getValue());
-					changedOffer.setStreet(street.getValue());
-					changedOffer.setZip(zip.getValue());
-					changedOffer.setCity(city.getValue());
-					changedOffer.setStartDate(startDate.getValue());
+					//currentOffer.setOffer_idUser(VaadinSession.getCurrent().getAttribute(User.class));	//hat sich nicht geändert
+					//currentOffer.setIdOffer(offer.getIdOffer());											//hat sich nicht geändert
+					currentOffer.setTitle(titel.getValue());
+					currentOffer.setStreet(street.getValue());
+					currentOffer.setZip(zip.getValue());
+					currentOffer.setCity(city.getValue());
+					currentOffer.setStartDate(startDate.getValue());
 					try { // überprüft ob ein Enddatum angegeben ist, da die
 							// Angabe optional ist
-						changedOffer.setEndDate(endDate.getValue());
+						currentOffer.setEndDate(endDate.getValue());
 					} catch (NullPointerException e) {
 					}
-					changedOffer.setSquareMetre(new Format().floatFormat(squareMetre.getValue()));
-					changedOffer.setPrice(new Format().floatFormat(price.getValue()));
-					changedOffer.setType(type);
-					changedOffer.setNumberOfRoommate(Integer.parseInt(roomMates.getValue()));
-					changedOffer.setInternet(internet.getValue());
-					changedOffer.setFurnished(furnished.getValue());
-					changedOffer.setKitchen(kitchen.getValue());
-					changedOffer.setSmoker(smoker.getValue());
-					changedOffer.setPets(pets.getValue());
-					changedOffer.setGender(gender);
-					changedOffer.setText(text.getValue());
+					currentOffer.setSquareMetre(new Format().floatFormat(squareMetre.getValue()));
+					currentOffer.setPrice(new Format().floatFormat(price.getValue()));
+					currentOffer.setType(type);
+					currentOffer.setNumberOfRoommate(Integer.parseInt(roomMates.getValue()));
+					currentOffer.setInternet(internet.getValue());
+					currentOffer.setFurnished(furnished.getValue());
+					currentOffer.setKitchen(kitchen.getValue());
+					currentOffer.setSmoker(smoker.getValue());
+					currentOffer.setPets(pets.getValue());
+					currentOffer.setGender(gender);
+					currentOffer.setText(text.getValue());
 
 					try {// überprüft ob eine Kaution angegeben ist, da die
 							// Angabe optional ist
-						changedOffer.setBond(Float.parseFloat(bond.getValue()));
+						currentOffer.setBond(Float.parseFloat(bond.getValue()));
 					} catch (NumberFormatException e) {
 					}
-					changedOffer.setInactive(inactive.getValue());
+					currentOffer.setInactive(inactive.getValue());
 					// changedOffer.setLatitude(latitude);
 					// changedOffer.setLongitude(longitude);
 					// changedOffer.setPhotos();
-					if (new OfferProvider().alterOffer(changedOffer)) {
+					if (new OfferProvider().alterOffer(currentOffer)) {
 						// neues Angebot in die DB schreiben
 						String name = "Einzelansicht";
-						getUI().getNavigator().addView(name, new Einzelansicht(changedOffer));
+						getUI().getNavigator().addView(name, new Einzelansicht(currentOffer));
 						getUI().getNavigator().navigateTo(name);
 					} else {
 						Notification.show("Das Angebot konnte nicht geändert werden.");
@@ -867,6 +873,34 @@ public class AngebotErstellen extends VerticalLayout implements View {
 		else if (offer.getGender() == 3)
 			gender = "weiblich";
 		return gender;
+	}
+
+	@Override
+	public OutputStream receiveUpload(String filename, String mimeType) {
+		try {
+			tmpImg = new ByteArrayOutputStream();
+			return tmpImg;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	@Override
+	public void uploadSucceeded(SucceededEvent event) {
+		
+		System.out.println("Bild wurde hochgeladen");
+        if ( tmpImg != null) {
+            //TODO Bild in die Datenbank abspeichern, Byte Array bekommt man mit tmpFile.toByteArray();
+        	
+        	Photo newPhoto = new Photo();
+        	newPhoto.setPhoto_idOffer(currentOffer);
+        	newPhoto.setPhoto(tmpImg.toByteArray());
+        	
+        	new PhotoProvider().addPhoto(newPhoto);
+        	
+        }
+		
 	}
 
 }

@@ -31,7 +31,7 @@ public class PhotoProvider extends BaseProvider<Photo> {
 	
 	public boolean removePhoto(Photo photo) {
 		
-		return super.delete(photo);
+		return super.delete(photo.getIdPhoto());
 		
 	}
 	

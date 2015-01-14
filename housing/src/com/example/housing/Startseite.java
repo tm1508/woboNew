@@ -1,9 +1,12 @@
 package com.example.housing;
 
+import java.util.List;
+
 import com.example.housing.data.model.Offer;
 import com.example.housing.data.model.User;
 import com.example.housing.data.provider.OfferProvider;
 import com.example.housing.data.provider.UserProvider;
+import com.example.housing.utility.Format;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.server.FontAwesome;
@@ -17,6 +20,7 @@ import com.vaadin.ui.Link;
 import com.vaadin.ui.Panel;
 import com.vaadin.ui.Table;
 import com.vaadin.ui.TextField;
+import com.vaadin.ui.UI;
 import com.vaadin.ui.Upload;
 import com.vaadin.ui.Upload.FinishedEvent;
 import com.vaadin.ui.VerticalLayout;
@@ -78,20 +82,7 @@ public class Startseite extends VerticalLayout implements View{
 		
 		content = new VerticalLayout();
 		content.setMargin(true);
-		/*Button button = new Button("Suche");
-		button.addClickListener(new Button.ClickListener() {
-			
-			@Override
-			public void buttonClick(ClickEvent event) {
-				String s = "Suche";
-				getUI().getNavigator().addView(s, new Suche());
-				getUI().getNavigator().navigateTo(s);	
-			}
-		});
-		content.addComponent(button);*/
-		
-		//TODO Inhalt einfügen
-		
+	
 		
 		//Horizontales Layout fuer Begrüßungstext und Suchfeld
 		HorizontalLayout h = new HorizontalLayout();
@@ -101,6 +92,7 @@ public class Startseite extends VerticalLayout implements View{
 		//Begrüßungstext
 		Accordion accordion = new Accordion();
 		accordion.setHeight("400px");
+		accordion.setStyleName("startseite");
 	
 		
 			//Tab 1
@@ -117,14 +109,24 @@ public class Startseite extends VerticalLayout implements View{
 		        Label label_1 = new Label("Wenn Sie eine Wohnung vermieten wollen sind Sie bei uns genau richtig! Jeder registrierte Benutzer kann Wohnungen anbieten. Registrieren Sie sich bitte hier. Ihre Wohung oder Ihr Zimmer wird ausschließlich an Studenten der DHBW Karlsruhe vermietet.");
 		        layout_1.addComponent(label_1);
 		        
-		        Link link_1 = new Link();
-				link_1.setStyleName("text");
+				//Link zu Registrierung
+				Button link_1 = new Button();
+				link_1.setStyleName("link");
 				link_1.setCaption("Registrierung");
 				link_1.setImmediate(false);
 				link_1.setWidth("-1px");
 				link_1.setHeight("-1px");
 				link_1.setIcon(FontAwesome.EXTERNAL_LINK);
+				link_1.addClickListener(new Button.ClickListener(){
+					public void buttonClick(ClickEvent event) {
+						String name = "Registrierung";
+						getUI().getNavigator().addView(name, new Registrierung());
+						getUI().getNavigator().navigateTo(name);
+					}
+				});
+				
 				layout_1.addComponent(link_1);
+				
 			accordion.addTab(layout_1, "Für Vermieter...",FontAwesome.HOME);//Tab 2 hinzufügen
         
 	        //Tab 3
@@ -132,14 +134,24 @@ public class Startseite extends VerticalLayout implements View{
 	        layout_2.setMargin(true);
 	        	layout_2.addComponent(new Label("Für alle, die eine Wohnung suchen...: Sie sind Dualer Student an der DHBW Karlsruhe? Dann finden Sie bei uns die passende Wohung oder das passende Zimmer. Wir haben ein großes Angebot an Zimmern und Wohnungen..."));
 	
-		        Link link_2 = new Link();
-				link_2.setStyleName("text");
+				//Link zu Registrierung
+				Button link_2 = new Button();
+				link_2.setStyleName("link");
 				link_2.setCaption("Registrierung");
 				link_2.setImmediate(false);
 				link_2.setWidth("-1px");
 				link_2.setHeight("-1px");
 				link_2.setIcon(FontAwesome.EXTERNAL_LINK);
+				link_2.addClickListener(new Button.ClickListener(){
+					public void buttonClick(ClickEvent event) {
+						String name = "Registrierung";
+						getUI().getNavigator().addView(name, new Registrierung());
+						getUI().getNavigator().navigateTo(name);
+					}
+				});
+				
 				layout_2.addComponent(link_2);
+				
 			accordion.addTab(layout_2, "Für Mieter...",FontAwesome.SEARCH);//Tab 3 hinzufügen
         
 	        //Tab 4
@@ -164,14 +176,17 @@ public class Startseite extends VerticalLayout implements View{
 		
 		//Panel für Suchfeld
 		Panel panel = new Panel("Suche");
+		panel.setStyleName("startseite");
 		panel.setHeight("400px");
+		panel.setIcon(FontAwesome.SEARCH);
 		VerticalLayout suche = new VerticalLayout();
 		suche.setMargin(true);
 		
 			//Suchfeld
-			TextField suchfeld = new TextField();
-			suchfeld.setCaption("Stadt eigeben...");
+			final TextField suchfeld = new TextField();
+			suchfeld.setCaption("Stadt eingeben...");
 			suchfeld.setDescription("Bitte Stadt eingeben");
+			suchfeld.setInputPrompt("Bsp. Karlsruhe");
 			suchfeld.setWidth("220px");
 			suchfeld.setHeight("-1px");
 			suchfeld.addStyleName("textfield");
@@ -185,6 +200,33 @@ public class Startseite extends VerticalLayout implements View{
 			sucheStarten.setHeight("-1px");
 			sucheStarten.setIcon(FontAwesome.SEARCH);
 			suche.addComponent(sucheStarten);
+			sucheStarten.addClickListener(new Button.ClickListener() {
+				
+				@Override
+				public void buttonClick(ClickEvent event) {
+					
+					OfferProvider of = new OfferProvider();
+					List<Offer> ergebnisse;				
+					ergebnisse =
+							of.filter(null,null,
+							(new Format().floatFormat("0.0")),
+									(new Format().floatFormat("0.0")), 
+									(new Format().floatFormat("0.0")),
+									( new Format().floatFormat("0.0")),
+									7, 
+									false, false, false, false,false,
+							suchfeld.getValue());
+					
+					String name = "AngebotAnzeigen";
+					getUI().getNavigator().addView(name, new Suchergebnis(ergebnisse));
+					getUI().getNavigator().navigateTo(name);
+					
+					
+				}
+			});
+			
+			
+
 
 		panel.setContent(suche);
 		h.addComponent(panel);//Panel hinzufügen
@@ -193,45 +235,19 @@ public class Startseite extends VerticalLayout implements View{
 		
 		//Neuste Angebote
 		Panel p = new Panel("Unsere neusten Angebote");
+		p.setStyleName("startseite");
 		p.setWidth("100%");
 		VerticalLayout v = new VerticalLayout();
 		v.setMargin(true);
 		
-		
-		/*	Offer[] o = new Offer[3];
-			o[0]=new OfferProvider().findById(1);
-			o[1]=new OfferProvider().findById(2);
-			o[2]=new OfferProvider().findById(3);
-			
-			for(int i=0; i<o.length; i++){
-				v.addComponent(new Listenzeile(o[i]));
-			}
-	        
-	       */
+		List<Offer> latestOffers = new OfferProvider().getLatestOffers();
+		for( Offer o : latestOffers) {
+			v.addComponent(new Listenzeile(o));
+		}
 		
         p.setContent(v);
 		
 		content.addComponent(p);
-		
-		/*
-		//Datenbank-Test: Versuche User auszugeben aus Datenbank
-		User user = new UserProvider().doQueryOneResult(Long.getLong("1"));
-		Panel p = new Panel("User: " + user.getEmail());
-		VerticalLayout v = new VerticalLayout();
-		v.setMargin(true);
-		
-		
-        Table tabelle = new Table();
-        tabelle.setSizeFull();
-        tabelle.setSelectable(true);
-        tabelle.setMultiSelect(true);
-        tabelle.setImmediate(true);
-        v.addComponent(tabelle);
-		p.setContent(v);
-		
-		content.addComponent(p);
-		*/
- 
  
     }
  

@@ -2,6 +2,7 @@ package com.example.housing.data.provider;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -37,6 +38,20 @@ public class OfferProvider extends BaseProvider<Offer> {
 	}
 
 	public boolean alterOffer(Offer offer) {
+		
+		if(!em.isOpen()) {
+			
+			em = getEmf().createEntityManager();
+		
+		}
+		try {
+			Offer persistedOffer = this.findById(offer.getIdOffer());
+			em.detach(persistedOffer);
+			em.close();
+		} catch (Exception e) {
+			System.out.println(e);
+			return false;
+		}
 
 		return super.update(offer); // true bei Erfolg, false bei Fehler
 
@@ -46,13 +61,18 @@ public class OfferProvider extends BaseProvider<Offer> {
 
 		List<Photo> photos = offer.getPhotos();
 		PhotoProvider photoProv = new PhotoProvider();
+		boolean success = true;
 		for (Photo p : photos) {
 
-			photoProv.removePhoto(p);
+			success = photoProv.removePhoto(p);
 
 		}
 
-		return super.delete(offer); // true bei Erfolg, false bei Fehler
+		if(success) {
+			return super.delete(offer.getIdOffer()); //true bei Erfolg, false bei Fehler
+		} else {
+			return false;
+		}
 
 	}
 
@@ -153,6 +173,30 @@ public class OfferProvider extends BaseProvider<Offer> {
 		@SuppressWarnings("unchecked")
 		List<Offer> filterErgebnis = (List<Offer>) filterAbfrage.getResultList();
 		return filterErgebnis;
+	}
+	
+	public List<Offer> getLatestOffers() {
+		
+		if (!em.isOpen()) {
+
+			em = getEmf().createEntityManager();
+
+		}
+		
+		Query latestAbfrage = em.createQuery("SELECT o FROM Offer o ORDER BY o.offerTime DESC");
+		@SuppressWarnings("unchecked")
+		List<Offer> allOffers = (List<Offer>) latestAbfrage.getResultList();
+		
+		List<Offer> latestFive = new ArrayList<Offer>();
+		for(int i = 0; i < 5; i++) {
+			try {
+				latestFive.add(allOffers.get(i));
+			} catch (Exception e) { //Abfangen von NullPointer (wenn weniger als fünf Angebote in der Datenbank sind)
+			}
+		}
+		
+		return (List<Offer>) latestFive;
+		
 	}
 
 }
