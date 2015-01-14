@@ -102,7 +102,7 @@ public class Einzelansicht extends VerticalLayout implements View {
 			
 		//titel
 		String titel = angebot.getTitle();
-		Label lTitel= new Label(titel + " in " +angebot.getCity());
+		Label lTitel= new Label(titel + " Ort: " +angebot.getCity());
 		lTitel.addStyleName("ImportantTitle");
 		content.addComponent(lTitel);
 		
@@ -453,9 +453,7 @@ public class Einzelansicht extends VerticalLayout implements View {
         
         //Anzeigen, wenn man Anbieter bereits kontaktiert hat       
 
-        User u = VaadinSession.getCurrent().getAttribute(User.class);
-        List<Request> r;
-        r= u.getRequests(); 
+        
   
         //Anzeigen, wenn man Anbieter bereits kontaktiert hat       
 
@@ -463,7 +461,9 @@ public class Einzelansicht extends VerticalLayout implements View {
           
 
         if(VaadinSession.getCurrent().getAttribute("login").equals(true)){
-
+        	User u = VaadinSession.getCurrent().getAttribute(User.class);
+            List<Request> r;
+            r= u.getRequests(); 
 
         	  boolean b= false;
         	  int in=0;
