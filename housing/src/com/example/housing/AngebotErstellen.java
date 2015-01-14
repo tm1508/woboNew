@@ -433,7 +433,7 @@ public class AngebotErstellen extends VerticalLayout implements View, Receiver, 
 					currentOffer.setText(text.getValue());
 
 					try {// überprüft ob eine Kaution angegeben ist, da die Angabe optional ist
-						currentOffer.setBond(Float.parseFloat(bond.getValue()));
+						currentOffer.setBond(new Format().floatFormat(bond.getValue()));
 					} catch (NumberFormatException e) {
 					}
 					currentOffer.setInactive(inactive.getValue());
@@ -582,14 +582,14 @@ public class AngebotErstellen extends VerticalLayout implements View, Receiver, 
 		costs.addStyleName("AbschnittLabel");
 		label.addComponent(costs);
 		final TextField price = new TextField("Warmmiete:");
-		price.setValue(String.valueOf(offer.getPrice()));
+		price.setValue(new Format().stringFormat(offer.getPrice()));
 		price.setRequired(true);
 		price.setRequiredError("Bitte geben Sie die Warmmiete an.");
 		price.addStyleName("AngeboteTextField");
 		z1.addComponent(price);
 		final TextField bond = new TextField("Kaution:");
 		try {
-			bond.setValue(String.valueOf(offer.getBond()));
+			bond.setValue(new Format().stringFormat(offer.getBond()));
 		} catch (Exception e) {
 		}
 		bond.addStyleName("AngeboteTextField");
@@ -809,7 +809,7 @@ public class AngebotErstellen extends VerticalLayout implements View, Receiver, 
 
 					try {// überprüft ob eine Kaution angegeben ist, da die
 							// Angabe optional ist
-						currentOffer.setBond(Float.parseFloat(bond.getValue()));
+						currentOffer.setBond(new Format().floatFormat(bond.getValue()));
 					} catch (NumberFormatException e) {
 					}
 					currentOffer.setInactive(inactive.getValue());
