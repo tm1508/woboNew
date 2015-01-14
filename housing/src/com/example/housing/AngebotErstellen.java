@@ -42,10 +42,8 @@ public class AngebotErstellen extends VerticalLayout implements View, Receiver, 
 	/** The content. */
 	VerticalLayout content;
 	
-	/** The current offer. */
 	Offer currentOffer;
 	
-	/** The tmp img. */
 	ByteArrayOutputStream tmpImg;
 
 	/*
@@ -74,7 +72,6 @@ public class AngebotErstellen extends VerticalLayout implements View, Receiver, 
 		currentOffer.setStreet(" ");
 		currentOffer.setZip(" ");
 		currentOffer.setOffer_idUser(VaadinSession.getCurrent().getAttribute(User.class));
-		currentOffer.setInactive(true);
 		new OfferProvider().addOffer(currentOffer);
 		
 		Navigation nav = new Navigation();
@@ -101,11 +98,6 @@ public class AngebotErstellen extends VerticalLayout implements View, Receiver, 
 	}
 
 	// bereits bestehendes Angebot bearbeiten
-	/**
-	 * Instantiates a new angebot erstellen.
-	 *
-	 * @param offer the offer
-	 */
 	public AngebotErstellen(Offer offer) {
 		
 		currentOffer = offer;
@@ -450,9 +442,8 @@ public class AngebotErstellen extends VerticalLayout implements View, Receiver, 
 					// newOffer.setPhotos();
 					new OfferProvider().alterOffer(currentOffer); // neues Angebot in
 															// die DB schreiben
-					Offer o = new OfferProvider().findById(currentOffer.getIdOffer());
 					String name = "Einzelansicht";
-					getUI().getNavigator().addView(name, new Einzelansicht(o));
+					getUI().getNavigator().addView(name, new Einzelansicht(currentOffer));
 					getUI().getNavigator().navigateTo(name);
 
 				} else
@@ -485,11 +476,6 @@ public class AngebotErstellen extends VerticalLayout implements View, Receiver, 
 
 	}
 
-	/**
-	 * Sets the content.
-	 *
-	 * @param offer the new content
-	 */
 	public void setContent(final Offer offer) {
 
 		content = new VerticalLayout();
@@ -867,12 +853,6 @@ public class AngebotErstellen extends VerticalLayout implements View, Receiver, 
 
 	}
 
-	/**
-	 * Art.
-	 *
-	 * @param offer the offer
-	 * @return the string
-	 */
 	public String art(Offer offer) {
 		String art = "";
 		if (offer.getType() == 1)
@@ -884,12 +864,6 @@ public class AngebotErstellen extends VerticalLayout implements View, Receiver, 
 		return art;
 	}
 
-	/**
-	 * Gender.
-	 *
-	 * @param offer the offer
-	 * @return the string
-	 */
 	public String gender(Offer offer) {
 		String gender = "";
 		if (offer.getGender() == 1)
@@ -901,9 +875,6 @@ public class AngebotErstellen extends VerticalLayout implements View, Receiver, 
 		return gender;
 	}
 
-	/* (non-Javadoc)
-	 * @see com.vaadin.ui.Upload.Receiver#receiveUpload(java.lang.String, java.lang.String)
-	 */
 	@Override
 	public OutputStream receiveUpload(String filename, String mimeType) {
 		try {
@@ -915,9 +886,6 @@ public class AngebotErstellen extends VerticalLayout implements View, Receiver, 
 		}
 	}
 	
-	/* (non-Javadoc)
-	 * @see com.vaadin.ui.Upload.SucceededListener#uploadSucceeded(com.vaadin.ui.Upload.SucceededEvent)
-	 */
 	@Override
 	public void uploadSucceeded(SucceededEvent event) {
 		

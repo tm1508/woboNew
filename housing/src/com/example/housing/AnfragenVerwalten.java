@@ -45,9 +45,6 @@ public class AnfragenVerwalten extends VerticalLayout implements View{
 		
 	}
 
-	/**
-	 * Instantiates a new anfragen verwalten.
-	 */
 	public AnfragenVerwalten(){
 		
 		 content = new VerticalLayout();
@@ -79,9 +76,6 @@ public class AnfragenVerwalten extends VerticalLayout implements View{
 		addComponent(f);
 	}
 	
-	/**
-	 * Sets the content.
-	 */
 	public void setContent(){
 		
 	

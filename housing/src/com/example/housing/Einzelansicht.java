@@ -372,12 +372,15 @@ public class Einzelansicht extends VerticalLayout implements View {
 				}
 			}
 		});
+         
         
+		final FavoritProvider fp = new FavoritProvider();
+
+	    
+        //Favoriten-Button TODO
+        if(VaadinSession.getCurrent().getAttribute("login").equals(true) && !fp.favoritExists(VaadinSession.getCurrent().getAttribute(User.class), angebot)){
         
-        //Favoriten-Button
-        if(VaadinSession.getCurrent().getAttribute("login").equals(true)){
-        
-        	Button favorit = new Button("Favorit");
+        	Button favorit = new Button("Favorit hinzufügen");
         	favorit.addStyleName("AnfrageButton");
         	buttons.addComponent(favorit);
         	
@@ -388,12 +391,38 @@ public class Einzelansicht extends VerticalLayout implements View {
         			newFavorit.setFavorit_idUser(VaadinSession.getCurrent().getAttribute(User.class));
         			
         			new FavoritProvider().addFavorit(newFavorit);
-        			Notification not = new Notification("Das Angebot wurde zu Ihren Favoriten hinzugefügt."); //TODO
+        			
+        			String name = "Meine Favoriten";
+					getUI().getNavigator().addView(name, new Favoriten()); // momentan angezeigtes Angebot soll übergeben werden...
+					getUI().getNavigator().navigateTo(name);
+					
+        			Notification not = new Notification("Das Angebot wurde zu Ihren Favoriten hinzugefügt.");
+        			not.setDelayMsec(300);
         			not.show(Page.getCurrent());
         			
         		}	
         	}); 
     	
+        }else if(VaadinSession.getCurrent().getAttribute("login").equals(true) && fp.favoritExists(VaadinSession.getCurrent().getAttribute(User.class), angebot)){
+        	
+        	Button removeFavorit = new Button("Favorit entfernen");
+        	removeFavorit.addStyleName("AnfrageButton");
+        	buttons.addComponent(removeFavorit);
+        	
+        	removeFavorit.addClickListener(new Button.ClickListener() {
+        		public void buttonClick(ClickEvent event) {
+        			
+        		    Favorit fav;
+        			fav = fp.findByUserOffer(VaadinSession.getCurrent().getAttribute(User.class), angebot);
+        	        new FavoritProvider().removeFavorit(fav);
+        			
+        			Notification not = new Notification("Das Angebot wurde aus Ihren Favoriten entfernt.");
+        			not.setDelayMsec(300);
+        			not.show(Page.getCurrent());
+        			
+        		}	
+        	}); 
+        	
         }
         
 
