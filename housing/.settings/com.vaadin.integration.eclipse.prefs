@@ -1,9 +1,8 @@
-<<<<<<< HEAD
-#Wed Jan 14 13:25:33 CET 2015
-=======
->>>>>>> branch 'master' of https://github.com/tm1508/woboNew.git
+=\=\=\=\=\=\=
+<<<<<<<=HEAD
+>>>>>>>=branch 'master' of https\://github.com/tm1508/woboNew.git
 com.vaadin.integration.eclipse.previousCompileAction=widgetset
 com.vaadin.integration.eclipse.useLatestNightly=false
 com.vaadin.integration.eclipse.widgetsetCompilationEta=59452
-com.vaadin.integration.eclipse.widgetsetDirty=false
+com.vaadin.integration.eclipse.widgetsetDirty=true
 eclipse.preferences.version=1
