@@ -8,6 +8,7 @@ import com.example.housing.utility.SendEMail;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.server.FontAwesome;
+import com.vaadin.server.Page;
 import com.vaadin.server.VaadinSession;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Label;
@@ -113,9 +114,13 @@ public class Anfrageformular extends VerticalLayout implements View{
 					getUI().getNavigator().addView(name, new Einzelansicht(requestedOffer));
 					getUI().getNavigator().navigateTo(name);
 					
-					Notification.show("Die Anfrage war erfolgreich. Der Anbieter kann Sie nun kontaktieren.",Type.HUMANIZED_MESSAGE);//Meldung an den Nutzer
+					Notification not = new Notification("Die Anfrage war erfolgreich. Der Anbieter kann Sie nun kontaktieren.",Type.HUMANIZED_MESSAGE);//Meldung an den Nutzer
+					not.setDelayMsec(300);
+					not.show(Page.getCurrent());
 				}else{//eine Anfrage von diesem User für dieses Angebot existiert bereits
-					Notification.show("Sie hatten bereits eine Anfrage für dieses Angebot abgegeben.",Type.HUMANIZED_MESSAGE);//Meldung an den Nutzer
+					Notification not = new Notification("Sie hatten bereits eine Anfrage für dieses Angebot abgegeben.",Type.HUMANIZED_MESSAGE);//Meldung an den Nutzer
+					not.setDelayMsec(300);
+					not.show(Page.getCurrent());
 				}
 			}
 
