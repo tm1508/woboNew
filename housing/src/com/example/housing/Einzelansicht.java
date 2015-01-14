@@ -451,17 +451,35 @@ public class Einzelansicht extends VerticalLayout implements View {
         gridInfos.addComponent(buttons, 1, 14);
         
         
-    /*    //Anzeigen, wenn man Anbieter bereits kontaktiert hat       
+        //Anzeigen, wenn man Anbieter bereits kontaktiert hat       
+
+        User u = VaadinSession.getCurrent().getAttribute(User.class);
+        List<Request> r;
+        r= u.getRequests(); 
+  
+        //Anzeigen, wenn man Anbieter bereits kontaktiert hat       
+
+        
+          
+
         if(VaadinSession.getCurrent().getAttribute("login").equals(true)){
-        	  List<Request> r;
-              r= VaadinSession.getCurrent().getAttribute(User.class).getRequests();  
-        	  if(r.contains(angebot)){
-        		int b = r.indexOf(angebot);
-        		Request re = r.get(b);
-              	Label l = new Label("Sie haben den Anbieter bereits kontaktiert mit dem folgenden Text: " +re.getMessage());
-              	gridInfos.addComponent(l,0,15);
-              } 
-        } */
+
+
+        	  boolean b= false;
+        	  int in=0;
+              
+              for(int i = 0; i<r.size();i++){
+            	  if(r.get(i).getRequest_idOffer().getIdOffer()==angebot.getIdOffer()){
+            		  b = true;
+            		  in = i;
+            	  }
+              }
+              if(b){
+            	Label l = new Label("Sie haben den Anbieter bereits kontaktiert mit dem folgenden Text: " +r.get(in).getMessage());
+                gridInfos.addComponent(l,0,15);
+              }
+
+        }
 
 	}
 
