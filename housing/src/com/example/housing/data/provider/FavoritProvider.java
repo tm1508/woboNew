@@ -22,6 +22,11 @@ public class FavoritProvider extends BaseProvider<Favorit>{
 		return Favorit.class;
 	}
 	
+	/**
+	 * Adds the favorit.
+	 *
+	 * @param newFavorit the new favorit
+	 */
 	public void addFavorit(Favorit newFavorit) {
 		
 		if (!super.save(newFavorit)) {
@@ -45,7 +50,7 @@ public class FavoritProvider extends BaseProvider<Favorit>{
 	/**
 	 * Find by user.
 	 *
-	 * @param u the u
+	 * @param user the user
 	 * @return the list
 	 */
 	/*  funktioniert nicht
@@ -70,6 +75,12 @@ public class FavoritProvider extends BaseProvider<Favorit>{
 		return ownFavs;
 	}
 
+	/**
+	 * Removes the favorit.
+	 *
+	 * @param f the f
+	 * @return true, if successful
+	 */
 	public boolean removeFavorit(Favorit f) {
 		// TODO Auto-generated method stub
 		return false;

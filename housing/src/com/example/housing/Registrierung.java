@@ -28,6 +28,7 @@ import com.vaadin.ui.PasswordField;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Class Registrierung.
  * 
@@ -392,7 +393,8 @@ public class Registrierung extends VerticalLayout implements View{
 	}
 
 	/**
-	 * Validates the user input
+	 * Validates the user input.
+	 *
 	 * @return boolean
 	 * @see com.vaadin.data.validator.EmailValidator
 	 * @see com.vaadin.data.validator.StringLengthValidator;

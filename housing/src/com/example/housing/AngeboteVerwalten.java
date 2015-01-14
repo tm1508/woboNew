@@ -52,8 +52,13 @@ public class AngeboteVerwalten extends VerticalLayout implements View {
 	 */
 
 	OfferProvider op = new OfferProvider();
+	
+	/** The angebote. */
 	List<Offer> angebote = op.ownOffers(VaadinSession.getCurrent().getAttribute(User.class));
 	// Übergabe der Ergebnis aus der Suche
+	/**
+	 * Instantiates a new angebote verwalten.
+	 */
 	public AngeboteVerwalten() {
 		content = new VerticalLayout();
 		content.setMargin(true);

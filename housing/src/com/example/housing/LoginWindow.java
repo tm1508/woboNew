@@ -16,6 +16,7 @@ import com.vaadin.ui.Window;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Notification.Type;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Class LoginWindow.
  * @author MWI Wohungsbörse 2014
@@ -37,6 +38,7 @@ public class LoginWindow extends Window{
 	/** The login button. */
 	public static Button loginButton;
 	
+	/** The link. */
 	public static Button link;
 	
 	/**

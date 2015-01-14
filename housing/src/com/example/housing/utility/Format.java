@@ -4,6 +4,10 @@ import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.util.regex.Pattern;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class Format.
+ */
 public class Format {
 
 	/*
@@ -15,12 +19,24 @@ public class Format {
 	 * System.out.println(p2+" "+a+"       "+a.indexOf('.') +
 	 * (floatFormat(p2))); }
 	 */
+	/**
+	 * Date format.
+	 *
+	 * @param d the d
+	 * @return the string
+	 */
 	public String dateFormat(Date d) {
 		SimpleDateFormat sd = new SimpleDateFormat("dd.MM.yyyy");
 		String dateS = sd.format(d);
 		return dateS;
 	}
 
+	/**
+	 * String format.
+	 *
+	 * @param f the f
+	 * @return the string
+	 */
 	public String stringFormat(Float f) {
 		String s = String.valueOf(f);
 		char oldChar = '.';
@@ -30,6 +46,12 @@ public class Format {
 
 	}
 
+	/**
+	 * Float format.
+	 *
+	 * @param s the s
+	 * @return the float
+	 */
 	public Float floatFormat(String s) {
 		if (!s.isEmpty()) {
 			float f = Float.parseFloat(s.replace(",", "."));
@@ -39,6 +61,12 @@ public class Format {
 		}
 	}
 
+	/**
+	 * String euro.
+	 *
+	 * @param f the f
+	 * @return the string
+	 */
 	public String stringEuro(Float f) {
 		String s = String.valueOf(f);
 		String[] a = s.split(Pattern.quote("."));

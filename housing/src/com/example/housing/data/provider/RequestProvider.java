@@ -23,6 +23,11 @@ public class RequestProvider extends BaseProvider<Request> {
 		return Request.class;
 	}
 	
+	/**
+	 * Adds the request.
+	 *
+	 * @param newRequest the new request
+	 */
 	public void addRequest(Request newRequest) {
 		
 		if (!super.save(newRequest)) {
@@ -43,6 +48,13 @@ public class RequestProvider extends BaseProvider<Request> {
 		return (Request) super.find(id);
 	}
 
+	/**
+	 * Request exists.
+	 *
+	 * @param user the user
+	 * @param offer the offer
+	 * @return true, if successful
+	 */
 	public boolean requestExists(User user, Offer offer) {
 		
 		try {
@@ -58,6 +70,13 @@ public class RequestProvider extends BaseProvider<Request> {
 	
 	}
 	
+	/**
+	 * Find by user offer.
+	 *
+	 * @param user the user
+	 * @param offer the offer
+	 * @return the request
+	 */
 	private Request findByUserOffer(User user, Offer offer) {
 		
 		if (!em.isOpen()) {
@@ -73,6 +92,12 @@ public class RequestProvider extends BaseProvider<Request> {
 		
 	}
 
+	/**
+	 * Find req.
+	 *
+	 * @param user the user
+	 * @return the list
+	 */
 	public List<Request> findReq(User user) {
 		StringBuffer reqs = new StringBuffer();
 		int request_idUser = user.getIdUser();
@@ -88,6 +113,12 @@ public class RequestProvider extends BaseProvider<Request> {
 		return ownReqs;
 	}
 
+	/**
+	 * Removes the request.
+	 *
+	 * @param request the request
+	 * @return true, if successful
+	 */
 	public boolean removeRequest(Request request) {
 		
 		return super.delete(request.getIdRequest());

@@ -1,5 +1,6 @@
 package com.example.housing.utility;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Class DHStudValidator.
  * 
@@ -9,10 +10,11 @@ package com.example.housing.utility;
 public class DHStudValidator{
 	
 	/**
-	 * Validates the user input
+	 * Validates the user input.
+	 *
 	 * @param moodlename String, Moodle Benutzername
 	 * @param moodlepassword String, Moodle Passwort
-	 * @return boolean 
+	 * @return boolean
 	 */
 	public static boolean validate(String moodlename, String moodlepassword){
 		//TODO prüfen, ob die Moodle Anmeldedaten stimmen

@@ -17,6 +17,11 @@ public class PhotoProvider extends BaseProvider<Photo> {
 		return Photo.class;
 	}
 	
+	/**
+	 * Adds the photo.
+	 *
+	 * @param newPhoto the new photo
+	 */
 	public void addPhoto(Photo newPhoto) {
 		
 		//TODO: Foto verkleinern/Dateityp anpassen etc?
@@ -29,6 +34,12 @@ public class PhotoProvider extends BaseProvider<Photo> {
 
 	}
 	
+	/**
+	 * Removes the photo.
+	 *
+	 * @param photo the photo
+	 * @return true, if successful
+	 */
 	public boolean removePhoto(Photo photo) {
 		
 		return super.delete(photo.getIdPhoto());

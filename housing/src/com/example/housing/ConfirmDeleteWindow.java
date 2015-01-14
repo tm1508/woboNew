@@ -14,16 +14,29 @@ import com.vaadin.ui.Window;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Notification.Type;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class ConfirmDeleteWindow.
+ */
 public class ConfirmDeleteWindow extends Window {
 	
+	/** The current offer. */
 	private static Offer currentOffer;
 	
+	/**
+	 * Instantiates a new confirm delete window.
+	 *
+	 * @param offer the offer
+	 */
 	public ConfirmDeleteWindow(Offer offer) {
 		super("Bitte bestätigen Sie die Löschung...");
 		currentOffer = offer;
 		initialisieren();
 	}
 	
+	/**
+	 * Initialisieren.
+	 */
 	public void initialisieren() {
 		this.center();
 		this.setHeight("50%");

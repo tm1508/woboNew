@@ -43,6 +43,11 @@ public class UserProvider extends BaseProvider<User>{
 		return em.find(User.class, search);
 	}
 	
+	/**
+	 * Adds the user.
+	 *
+	 * @param newUser the new user
+	 */
 	public void addUser(User newUser) {
 		if (!super.save(newUser)) {
 
@@ -52,6 +57,12 @@ public class UserProvider extends BaseProvider<User>{
 
 	}
 	
+	/**
+	 * Alter user.
+	 *
+	 * @param user the user
+	 * @return true, if successful
+	 */
 	public boolean alterUser(User user) {
 		
 		if(!em.isOpen()) {
@@ -72,6 +83,12 @@ public class UserProvider extends BaseProvider<User>{
 		
 	}
 	
+	/**
+	 * Removes the user.
+	 *
+	 * @param user the user
+	 * @return true, if successful
+	 */
 	public boolean removeUser(User user) {
 		
 		List<Offer> offers = user.getOffers();
@@ -116,12 +133,24 @@ public class UserProvider extends BaseProvider<User>{
 		return (User) super.find(id);
 	}
 	
+	/**
+	 * Find by email.
+	 *
+	 * @param email the email
+	 * @return the user
+	 */
 	public User findByEmail(String email) {
 		Query q = em.createQuery("SELECT u FROM User u WHERE u.email =:email");
 		q.setParameter("email", email);
 		return (User) q.getSingleResult();
 	}
 	
+	/**
+	 * User exists.
+	 *
+	 * @param email the email
+	 * @return true, if successful
+	 */
 	public boolean userExists(String email){
 		try{
 			this.findByEmail(email);
