@@ -57,6 +57,12 @@ public abstract class BaseProvider<T> {
 	 */
 	protected abstract Class<T> getEntityClass();
 	
+	/**
+	 * Save.
+	 *
+	 * @param obj the obj
+	 * @return true, if successful
+	 */
 	public boolean save(T obj) {
 		
 		if(!em.isOpen()) {
@@ -86,6 +92,12 @@ public abstract class BaseProvider<T> {
 	
 	}
 	
+	/**
+	 * Update.
+	 *
+	 * @param obj the obj
+	 * @return true, if successful
+	 */
 	public boolean update(T obj) {
 		
 		if(!em.isOpen()) {
@@ -115,6 +127,12 @@ public abstract class BaseProvider<T> {
 		
 	}
 	
+	/**
+	 * Delete.
+	 *
+	 * @param objId the obj id
+	 * @return true, if successful
+	 */
 	public boolean delete(Integer objId) {
 		
 		if(!em.isOpen()) {

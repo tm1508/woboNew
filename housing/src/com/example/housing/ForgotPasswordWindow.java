@@ -18,6 +18,7 @@ import com.vaadin.ui.Window;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Notification.Type;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Class ForgotPasswordWindow.
  * @author MWI Wohungsbörse 2014

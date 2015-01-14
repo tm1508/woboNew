@@ -14,7 +14,10 @@
 			<property name="hibernate.connection.driver_class" value="com.mysql.jdbc.Driver"/>
 
 			<property name="hibernate.connection.username" value="root"/>
+
 			<property name="hibernate.connection.password" value="m0ntag"/> <!-- Euer Passwort für den root-Account für MySQL-Zugriff eintragen!!! -->
+
+
 
 
 			<!-- <property name="hibernate.hbm2ddl.auto" value="update"/> --> <!-- create-drop -->

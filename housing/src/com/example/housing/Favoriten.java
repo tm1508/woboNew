@@ -43,6 +43,9 @@ public class Favoriten extends VerticalLayout implements View{
 		
 	}
 
+	/**
+	 * Instantiates a new favoriten.
+	 */
 	public Favoriten(){
 		
 		 content = new VerticalLayout();
@@ -74,6 +77,9 @@ public class Favoriten extends VerticalLayout implements View{
 		addComponent(f);
 	}
 	
+	/**
+	 * Sets the content.
+	 */
 	public void setContent(){
 		
 		

@@ -27,6 +27,7 @@ import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Class Profile.
  * 
@@ -548,7 +549,8 @@ public class Profile extends VerticalLayout implements View{
 	}
 
 	/**
-	 * Validates the user input
+	 * Validates the user input.
+	 *
 	 * @return boolean
 	 * @see com.vaadin.data.validator.EmailValidator
 	 * @see com.vaadin.data.validator.StringLengthValidator;

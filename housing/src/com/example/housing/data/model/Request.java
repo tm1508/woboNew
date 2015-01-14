@@ -31,7 +31,7 @@ public class Request {
 	@Lob
 	private String message;
 	
-	/** The requestTime*/
+	/**  The requestTime. */
 	@Temporal(value=TemporalType.TIMESTAMP)
 	private Date requestTime;
 	
@@ -96,9 +96,11 @@ public class Request {
 	public String getMessage() {
 		return message;
 	}
+	
 	/**
 	 * Sets the message.
 	 *
+	 * @param message the new message
 	 * @return the message
 	 */
 	public void setMessage(String message) {
@@ -117,6 +119,7 @@ public class Request {
 	/**
 	 * Sets the requestTime.
 	 *
+	 * @param requestTime the new request time
 	 * @return the requestTime
 	 */
 	public void setRequestTime(Date requestTime) {
