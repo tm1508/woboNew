@@ -8,8 +8,10 @@ import java.util.List;
 
 import javax.persistence.Query;
 
+import com.example.housing.data.model.Favorit;
 import com.example.housing.data.model.Offer;
 import com.example.housing.data.model.Photo;
+import com.example.housing.data.model.Request;
 import com.example.housing.data.model.User;
 
 // TODO: Auto-generated Javadoc
@@ -76,9 +78,24 @@ public class OfferProvider extends BaseProvider<Offer> {
 	 */
 	public boolean removeOffer(Offer offer) {
 
+		List<Request> requests = offer.getRequests();
+		RequestProvider reqProv = new RequestProvider();
+		List<Favorit> favorits = offer.getFavorits();
+		FavoritProvider favProv = new FavoritProvider();
 		List<Photo> photos = offer.getPhotos();
 		PhotoProvider photoProv = new PhotoProvider();
 		boolean success = true;
+		
+		for (Request r : requests) {
+			
+			success = reqProv.removeRequest(r);
+			
+		}
+		for (Favorit f : favorits) {
+			
+			success = favProv.removeFavorit(f);
+			
+		}
 		for (Photo p : photos) {
 
 			success = photoProv.removePhoto(p);

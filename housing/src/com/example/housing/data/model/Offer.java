@@ -1,5 +1,6 @@
 package com.example.housing.data.model;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
@@ -88,10 +89,10 @@ public class Offer {
 	private Date offerTime;
 	
 	/** The latitude. */
-	private float latitude;
+	private BigDecimal latitude;
 	
 	/** The longitude. */
-	private float longitude;
+	private BigDecimal longitude;
 	
 	/** The photos. */
 	@OneToMany(mappedBy="photo_idOffer")
@@ -100,6 +101,9 @@ public class Offer {
 	/** The favorits. */
 	@OneToMany(mappedBy="favorit_idOffer")
 	private List<Favorit> favorits;
+	
+	@OneToMany(mappedBy="request_idOffer")
+	private List<Request> requests;
 	
 	/**
 	 * Gets the id offer.
@@ -538,7 +542,7 @@ public class Offer {
 	 *
 	 * @return the latitude
 	 */
-	public float getLatitude() {
+	public BigDecimal getLatitude() {
 		return latitude;
 	}
 
@@ -547,7 +551,7 @@ public class Offer {
 	 *
 	 * @param latitude the new latitude
 	 */
-	public void setLatitude(float latitude) {
+	public void setLatitude(BigDecimal latitude) {
 		this.latitude = latitude;
 	}
 
@@ -556,7 +560,7 @@ public class Offer {
 	 *
 	 * @return the longitude
 	 */
-	public float getLongitude() {
+	public BigDecimal getLongitude() {
 		return longitude;
 	}
 
@@ -565,8 +569,16 @@ public class Offer {
 	 *
 	 * @param longitude the new longitude
 	 */
-	public void setLongitude(float longitude) {
+	public void setLongitude(BigDecimal longitude) {
 		this.longitude = longitude;
+	}
+
+	public List<Request> getRequests() {
+		return requests;
+	}
+
+	public void setRequests(List<Request> requests) {
+		this.requests = requests;
 	}
 
 }
