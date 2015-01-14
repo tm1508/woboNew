@@ -91,7 +91,7 @@ public class Listenzeile extends CustomComponent {
 		}
 
 		String title = o.getTitle();
-		Label l = new Label(title + " in " + o.getCity());
+		Label l = new Label(title + " Ort " + o.getCity());
 		l.setWidth("250px");
 		ergebnisLayout.addComponent(l, 4, 0);
 

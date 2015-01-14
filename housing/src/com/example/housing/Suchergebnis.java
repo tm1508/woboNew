@@ -99,6 +99,12 @@ public class Suchergebnis extends VerticalLayout implements View {
 	@SuppressWarnings("deprecation")
 	public void setContent(){
 		
+		if(angebote.size()==0){
+			content.addComponent(new Label("Ihre Suche ergab keine Treffer!"));
+		}else{
+			content.addComponent(new Label("Ihre Suche ergab " + angebote.size()+" Treffer!"));
+		}
+		
 		for(Offer o : angebote) {
 			
 			content.addComponent(new Listenzeile(o));
