@@ -2,16 +2,13 @@ package com.example.housing;
 
 import com.example.housing.data.model.User;
 import com.example.housing.data.provider.UserProvider;
-import com.example.housing.utility.DHStudValidator;
 import com.example.housing.utility.SendEMail;
 import com.vaadin.data.Validator.InvalidValueException;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.server.Page;
 import com.vaadin.server.UserError;
-import com.vaadin.server.VaadinServlet;
-import com.vaadin.server.VaadinServletService;
-import com.vaadin.server.VaadinSession;
 import com.vaadin.ui.Button;
+import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.PasswordField;
@@ -110,15 +107,17 @@ public class ForgotPasswordWindow extends Window{
 			password_2.setRequired(true);
 			password_2.setIcon(FontAwesome.KEY);
 			content.addComponent(password_2);
-				
+			
+			HorizontalLayout hl = new HorizontalLayout();
 			// speichern
 			save = new Button();
 			save.setCaption("speichern");
+			save.setIcon(FontAwesome.CHECK);
 			save.setImmediate(true);
 			save.setDescription("Neues Passwort speichern");
 			save.setWidth("-1px");
 			save.setHeight("-1px");
-			content.addComponent(save);
+			
 			save.addClickListener(new Button.ClickListener() {
 				public void buttonClick(ClickEvent event) {
 					try{
@@ -136,16 +135,23 @@ public class ForgotPasswordWindow extends Window{
 							sendEMail();
 							
 							ForgotPasswordWindow.this.close();//Fenster schließen
-							Notification.show("Ihr Passwort wurde geändert","Bitte folgen Sie dem Link in der E-Mail, die Sie erhalten haben.", Type.HUMANIZED_MESSAGE);
+							Notification notif = new Notification("Ihr Passwort wurde geändert","Bitte folgen Sie dem Link in der E-Mail, die Sie erhalten haben.", Type.HUMANIZED_MESSAGE);
+							notif.setDelayMsec(300);
+							notif.setIcon(FontAwesome.CHECK_SQUARE_O);
+							notif.show(Page.getCurrent());
 						}else{
-							Notification.show("Änderung des Passworts fehlgeschlagen!","Bitte überprüfen Sie Ihre Eingaben.", Type.HUMANIZED_MESSAGE);
+							Notification notif = new Notification("Änderung des Passworts fehlgeschlagen!","Bitte überprüfen Sie Ihre Eingaben.", Type.HUMANIZED_MESSAGE);
+							notif.setDelayMsec(300);
+							notif.setIcon(FontAwesome.EXCLAMATION_TRIANGLE);
+							notif.show(Page.getCurrent());
 						}
-						
-						
-						
+											
 					}catch(Exception e){
 						//Fehlermeldung bei Datenbankproblemen
-						Notification.show("Änderung des Passworts fehlgeschlagen!","Es gibt keinen Nutzer mit dieser E-Mail-Adresse.", Type.HUMANIZED_MESSAGE);
+						Notification notif = new Notification("Änderung des Passworts fehlgeschlagen!","Es gibt keinen Nutzer mit dieser E-Mail-Adresse.", Type.HUMANIZED_MESSAGE);
+						notif.setDelayMsec(300);
+						notif.setIcon(FontAwesome.EXCLAMATION_TRIANGLE);
+						notif.show(Page.getCurrent());
 					}
 				}
 			});
@@ -153,19 +159,23 @@ public class ForgotPasswordWindow extends Window{
 			// abbrechen
 			cancel = new Button();
 			cancel.setCaption("abbrechen");
+			cancel.setIcon(FontAwesome.MAIL_REPLY);
 			cancel.setImmediate(true);
 			cancel.setDescription("Diese Aktion abbrechen");
 			cancel.setWidth("-1px");
 			cancel.setHeight("-1px");
-			content.addComponent(cancel);
+			
 			cancel.addClickListener(new Button.ClickListener() {
 				public void buttonClick(ClickEvent event) {
 					ForgotPasswordWindow.this.close();//Fenster schließen
 				}
 			});
 			
+			hl.addComponent(cancel);
+			hl.addComponent(save);
+			content.addComponent(hl);
 			
-			text = new Label("Wenn Sie Ihr neues Passort speichern erhalten Sie eine E-Mail an die angegebene E-Mail-Adresse. Um Sich erneut einloggen zu können folgen Sie bitte dem Link in der E-Mail.");
+			text = new Label("Wenn Sie Ihr neues Passwort speichern erhalten Sie eine E-Mail an die angegebene E-Mail-Adresse. Um Sich erneut einloggen zu können folgen Sie bitte dem Link in der E-Mail.");
 			content.addComponent(text);
 			
 			this.setContent(content);    
@@ -212,7 +222,6 @@ public class ForgotPasswordWindow extends Window{
 		}
 			
 		return erfolgreich;
-		
 	}
 	
 	

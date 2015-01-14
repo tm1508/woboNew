@@ -221,7 +221,7 @@ public class Einzelansicht extends VerticalLayout implements View {
         
         //Price
     	float price =  angebot.getPrice();
-		String sPrice = new Format().stringFormat(price) + " €";
+		String sPrice = new Format().stringEuro(price) + " €";
 		
         gridInfos.addComponent(new Label("Warmmiete"),0,3);
         gridInfos.addComponent(new Label(sPrice),1 , 3);
@@ -296,7 +296,7 @@ public class Einzelansicht extends VerticalLayout implements View {
         
         //bond
         float bond =  angebot.getBond();
-		String sBond = new Format().stringFormat(bond) + " €";
+		String sBond = new Format().stringEuro(bond) + " €";
 		
         Label lBond = new Label("Kaution");
         gridInfos.addComponent(lBond,0,12);
