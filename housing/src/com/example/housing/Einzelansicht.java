@@ -4,12 +4,14 @@ import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.InputStream;
 import java.sql.Date;
+import java.util.List;
 
 import javax.swing.GroupLayout.Alignment;
 
 import com.example.housing.data.model.Favorit;
 import com.example.housing.data.model.Offer;
 import com.example.housing.data.model.User;
+import com.example.housing.data.model.Request;
 import com.example.housing.data.provider.FavoritProvider;
 import com.example.housing.data.provider.PhotoProvider;
 import com.example.housing.utility.Format;
@@ -191,7 +193,7 @@ public class Einzelansicht extends VerticalLayout implements View {
 		gridPictures.addComponent(image5, 6, 2, 7,3);
 		gridPictures.setWidth("40%");
 		    
-		GridLayout gridInfos = new GridLayout(2,15); 
+		GridLayout gridInfos = new GridLayout(2,16); 
 	//	gridInfos.setWidth("60%");
 		content.addComponent(gridInfos);
 		
@@ -391,7 +393,22 @@ public class Einzelansicht extends VerticalLayout implements View {
     	
         }
         
+
+        
         gridInfos.addComponent(buttons, 1, 14);
+        
+        
+        //Anzeigen, wenn man Anbieter bereits kontaktiert hat       
+        if(VaadinSession.getCurrent().getAttribute("login").equals(true)){
+        	  List<Request> r;
+              r= VaadinSession.getCurrent().getAttribute(User.class).getRequests();  
+        	  if(r.contains(angebot)){
+        		int b = r.indexOf(angebot);
+        		Request re = r.get(b);
+              	Label l = new Label("Sie haben den Anbieter bereits kontaktiert mit dem folgenden Text: " +re.getMessage());
+              	gridInfos.addComponent(l,0,15);
+              } 
+        }
 
 	}
 
