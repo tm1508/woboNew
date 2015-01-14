@@ -85,7 +85,7 @@ public class RequestProvider extends BaseProvider<Request> {
 
 		}
 		
-		Query q = em.createQuery("SELECT r FROM REQUEST r WHERE r.request_idUser =:user AND r.request_idOffer =:offer");
+		Query q = em.createQuery("SELECT r FROM Request r WHERE r.request_idUser =:user AND r.request_idOffer =:offer");
 		q.setParameter("user", user);
 		q.setParameter("offer", offer);
 		return (Request) q.getSingleResult();
