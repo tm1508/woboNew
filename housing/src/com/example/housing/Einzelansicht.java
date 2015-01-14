@@ -119,11 +119,11 @@ public class Einzelansicht extends VerticalLayout implements View {
 		content.addComponent(gridPictures);
 		String basepath = VaadinService.getCurrent().getBaseDirectory().getAbsolutePath();
 		
-		Resource resource = new FileResource(new File(basepath + "/WEB-INF/image/dh.jpg"));
-		Resource resource2 = new FileResource(new File(basepath + "/WEB-INF/image/dh.jpg"));
-		Resource resource3 = new FileResource(new File(basepath + "/WEB-INF/image/dh.jpg"));
-		Resource resource4 = new FileResource(new File(basepath + "/WEB-INF/image/dh.jpg"));
-		Resource resource5 = new FileResource(new File(basepath + "/WEB-INF/image/dh.jpg"));
+		Resource resource = new FileResource(new File(basepath + "/WEB-INF/image/DefaultBild.jpg"));
+		Resource resource2 = new FileResource(new File(basepath + "/WEB-INF/image/DefaultBild.jpg"));
+		Resource resource3 = new FileResource(new File(basepath + "/WEB-INF/image/DefaultBild.jpg"));
+		Resource resource4 = new FileResource(new File(basepath + "/WEB-INF/image/DefaultBild.jpg"));
+		Resource resource5 = new FileResource(new File(basepath + "/WEB-INF/image/DefaultBild.jpg"));
 		
 		switch(angebot.getPhotos().size()) {
 			case 5:
