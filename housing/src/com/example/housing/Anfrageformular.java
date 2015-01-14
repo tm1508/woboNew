@@ -135,7 +135,10 @@ public class Anfrageformular extends VerticalLayout implements View{
 	protected void sendEMail() {
 		String bodyAnbieter = "<span style='color: #000000' 'font-family: Arial, sans-serif''font-size: 16pt' >Sehr geehrte Nutzerin, sehr geehrter Nutzer,"
 				+"<br/><br/>Sie haben eine Anfrage zu einem Ihrer Angebote in der Wohnungsbörse der DHBW erhalten:"
-				+"<br/><br/>" + text.getValue() + "</span>"
+				+"<br/><br/>" + text.getValue() 
+				+"<br/><br/>" + VaadinSession.getCurrent().getAttribute(User.class).getFirstname()+ " " + VaadinSession.getCurrent().getAttribute(User.class).getLastname() 
+				+"<br/>" + "Email: " + VaadinSession.getCurrent().getAttribute(User.class).getEmail() 
+				+"<br/>" + "Handy: " + VaadinSession.getCurrent().getAttribute(User.class).getMobile() + "</span>"
 				+"<br/><span style='color: #e2001a' 'font-family: Arial, sans-serif''font-size: 20pt' >"
 				+ "</span><br/><br/>Mit freundlichen Grüßen<br/>Ihr DHBW Wohungsbörsen-Team<p/><span style='color: #e2001a' 'font-family: Arial, sans-serif''font-size: 8pt' >Anschrift:<br/>DHBW Karlsruhe<br/>Baden-Wuerttemberg Cooperative State University Karlsruhe<br />Erzbergerstraße 121 . 76133 Karlsruhe <br />Postfach 10 01 36 . 76231 Karlsruhe   <br />Telefon +49.721.9735-5 <br />Telefax +49.721.9735-600 <br />E-Mail: dreischer@dhbw-karlsruhe.de<br /><br/><br/>Ansprechpartner:<br/> <br />Dr. Anita Dreischer<br /><br/><b>Copyright DHBW Karlsruhe. Alle Rechte vorbehalten.</b></span>";
 		
