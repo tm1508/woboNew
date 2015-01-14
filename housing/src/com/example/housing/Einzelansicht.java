@@ -391,7 +391,13 @@ public class Einzelansicht extends VerticalLayout implements View {
         			newFavorit.setFavorit_idUser(VaadinSession.getCurrent().getAttribute(User.class));
         			
         			new FavoritProvider().addFavorit(newFavorit);
-        			Notification not = new Notification("Das Angebot wurde zu Ihren Favoriten hinzugefügt."); 
+        			
+        			String name = "Meine Favoriten";
+					getUI().getNavigator().addView(name, new Favoriten()); // momentan angezeigtes Angebot soll übergeben werden...
+					getUI().getNavigator().navigateTo(name);
+					
+        			Notification not = new Notification("Das Angebot wurde zu Ihren Favoriten hinzugefügt.");
+        			not.setDelayMsec(300);
         			not.show(Page.getCurrent());
         			
         		}	
@@ -399,7 +405,7 @@ public class Einzelansicht extends VerticalLayout implements View {
     	
         }else if(VaadinSession.getCurrent().getAttribute("login").equals(true) && fp.favoritExists(VaadinSession.getCurrent().getAttribute(User.class), angebot)){
         	
-        	Button removeFavorit = new Button("Favorit Entfernen");
+        	Button removeFavorit = new Button("Favorit entfernen");
         	removeFavorit.addStyleName("AnfrageButton");
         	buttons.addComponent(removeFavorit);
         	
@@ -410,7 +416,8 @@ public class Einzelansicht extends VerticalLayout implements View {
         			fav = fp.findByUserOffer(VaadinSession.getCurrent().getAttribute(User.class), angebot);
         	        new FavoritProvider().removeFavorit(fav);
         			
-        			Notification not = new Notification("Das Angebot wurde aus Ihren Favoriten entfernt."); 
+        			Notification not = new Notification("Das Angebot wurde aus Ihren Favoriten entfernt.");
+        			not.setDelayMsec(300);
         			not.show(Page.getCurrent());
         			
         		}	
