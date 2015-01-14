@@ -8,6 +8,7 @@ import com.vaadin.server.FontAwesome;
 import com.vaadin.server.Page;
 import com.vaadin.server.UserError;
 import com.vaadin.ui.Button;
+import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.PasswordField;
@@ -106,15 +107,17 @@ public class ForgotPasswordWindow extends Window{
 			password_2.setRequired(true);
 			password_2.setIcon(FontAwesome.KEY);
 			content.addComponent(password_2);
-				
+			
+			HorizontalLayout hl = new HorizontalLayout();
 			// speichern
 			save = new Button();
 			save.setCaption("speichern");
+			save.setIcon(FontAwesome.CHECK);
 			save.setImmediate(true);
 			save.setDescription("Neues Passwort speichern");
 			save.setWidth("-1px");
 			save.setHeight("-1px");
-			content.addComponent(save);
+			
 			save.addClickListener(new Button.ClickListener() {
 				public void buttonClick(ClickEvent event) {
 					try{
@@ -156,16 +159,21 @@ public class ForgotPasswordWindow extends Window{
 			// abbrechen
 			cancel = new Button();
 			cancel.setCaption("abbrechen");
+			cancel.setIcon(FontAwesome.MAIL_REPLY);
 			cancel.setImmediate(true);
 			cancel.setDescription("Diese Aktion abbrechen");
 			cancel.setWidth("-1px");
 			cancel.setHeight("-1px");
-			content.addComponent(cancel);
+			
 			cancel.addClickListener(new Button.ClickListener() {
 				public void buttonClick(ClickEvent event) {
 					ForgotPasswordWindow.this.close();//Fenster schließen
 				}
 			});
+			
+			hl.addComponent(cancel);
+			hl.addComponent(save);
+			content.addComponent(hl);
 			
 			text = new Label("Wenn Sie Ihr neues Passwort speichern erhalten Sie eine E-Mail an die angegebene E-Mail-Adresse. Um Sich erneut einloggen zu können folgen Sie bitte dem Link in der E-Mail.");
 			content.addComponent(text);

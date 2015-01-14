@@ -149,6 +149,15 @@ public class Navigation extends CustomComponent {
 				
 			}  
 		};
+		
+		MenuBar.Command mycommand8 = new MenuBar.Command() {
+			public void menuSelected(MenuItem selectedItem) {
+				String name = "Maps";
+				getUI().getNavigator().addView(name, new Maps());
+				getUI().getNavigator().navigateTo(name);
+				
+			}  
+		};
 				
 			
 				
@@ -165,6 +174,7 @@ public class Navigation extends CustomComponent {
 			nav5.addItem("Meine Anfragen", FontAwesome.STAR_O, mycommand7);
 			nav5.addItem("Meine Profildaten", FontAwesome.USER, mycommand5); 
 		MenuItem nav6 = menuBar_1.addItem("Logout", FontAwesome.UNLOCK_ALT, mycommand);//Navigation
+		MenuItem nav8 = menuBar_1.addItem("Maps", FontAwesome.MAP_MARKER, mycommand8);//Navigation
 		
 		mainLayout.addComponent(menuBar_1);
 		
