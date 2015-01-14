@@ -448,8 +448,9 @@ public class AngebotErstellen extends VerticalLayout implements View, Receiver, 
 					// newOffer.setPhotos();
 					new OfferProvider().alterOffer(currentOffer); // neues Angebot in
 															// die DB schreiben
+					Offer o = new OfferProvider().find(currentOffer.getIdOffer());
 					String name = "Einzelansicht";
-					getUI().getNavigator().addView(name, new Einzelansicht(currentOffer));
+					getUI().getNavigator().addView(name, new Einzelansicht(o));
 					getUI().getNavigator().navigateTo(name);
 
 				} else
