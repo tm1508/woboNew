@@ -119,11 +119,11 @@ public class Einzelansicht extends VerticalLayout implements View {
 		content.addComponent(gridPictures);
 		String basepath = VaadinService.getCurrent().getBaseDirectory().getAbsolutePath();
 		
-		Resource resource = new FileResource(new File(basepath + "/WEB-INF/image/dh.jpg"));
-		Resource resource2 = new FileResource(new File(basepath + "/WEB-INF/image/dh.jpg"));
-		Resource resource3 = new FileResource(new File(basepath + "/WEB-INF/image/dh.jpg"));
-		Resource resource4 = new FileResource(new File(basepath + "/WEB-INF/image/dh.jpg"));
-		Resource resource5 = new FileResource(new File(basepath + "/WEB-INF/image/dh.jpg"));
+		Resource resource = new FileResource(new File(basepath + "/WEB-INF/image/DefaultBild.jpg"));
+		Resource resource2 = new FileResource(new File(basepath + "/WEB-INF/image/DefaultBild.jpg"));
+		Resource resource3 = new FileResource(new File(basepath + "/WEB-INF/image/DefaultBild.jpg"));
+		Resource resource4 = new FileResource(new File(basepath + "/WEB-INF/image/DefaultBild.jpg"));
+		Resource resource5 = new FileResource(new File(basepath + "/WEB-INF/image/DefaultBild.jpg"));
 		
 		switch(angebot.getPhotos().size()) {
 			case 5:
@@ -415,6 +415,10 @@ public class Einzelansicht extends VerticalLayout implements View {
         		    Favorit fav;
         			fav = fp.findByUserOffer(VaadinSession.getCurrent().getAttribute(User.class), angebot);
         	        new FavoritProvider().removeFavorit(fav);
+        	        
+        	        String name = "Meine Favoriten";
+        	        getUI().getNavigator().addView(name, new Favoriten()); // momentan angezeigtes Angebot soll übergeben werden...
+					getUI().getNavigator().navigateTo(name);
         			
         			Notification not = new Notification("Das Angebot wurde aus Ihren Favoriten entfernt.");
         			not.setDelayMsec(300);

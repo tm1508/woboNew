@@ -82,7 +82,7 @@ public class Listenzeile extends CustomComponent {
 			
 			// TODO Standardbild
 			String basepath = VaadinService.getCurrent().getBaseDirectory().getAbsolutePath();
-			FileResource resource = new FileResource(new File(basepath + "/WEB-INF/image/dh.jpg"));
+			FileResource resource = new FileResource(new File(basepath + "/WEB-INF/image/DefaultBild.jpg"));
 			Image image = new Image("", resource);
 			ergebnisLayout.addComponent(image, 0, 0, 2, 2);
 			// String im = "Kein Bild vorhanden";
