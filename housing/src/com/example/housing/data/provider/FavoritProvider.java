@@ -99,7 +99,7 @@ public class FavoritProvider extends BaseProvider<Favorit>{
 
 		}
 		
-		Query q = em.createQuery("SELECT f FROM FAVORIT f WHERE f.favorit_idUser =:user AND f.favorit_idOffer =:offer");
+		Query q = em.createQuery("SELECT f FROM Favorit f WHERE f.favorit_idUser =:user AND f.favorit_idOffer =:offer");
 		q.setParameter("user", user);
 		q.setParameter("offer", offer);
 		return (Favorit) q.getSingleResult();
