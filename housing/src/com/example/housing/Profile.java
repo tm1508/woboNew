@@ -415,6 +415,7 @@ public class Profile extends VerticalLayout implements View {
 				if (validate) {// falls alle Felder richtig ausgefüllt wurden
 
 					User u = VaadinSession.getCurrent().getAttribute(User.class);
+					User prüf = VaadinSession.getCurrent().getAttribute(User.class);
 					u.setIdUser(VaadinSession.getCurrent().getAttribute(User.class).getIdUser());
 					u.setFirstname(prename.getValue());
 					u.setLastname(lastname.getValue());
@@ -424,8 +425,8 @@ public class Profile extends VerticalLayout implements View {
 					if (dhstud.getValue()) {
 						u.setAccessLevel(1);
 					}
-					if (!VaadinSession.getCurrent().getAttribute(User.class).getEmail().equals(email_1.getValue())) {
-						if (!new UserProvider().userExists(u.getEmail())) {
+					if (!prüf.getEmail().equals(u.getEmail())) {
+						if (!new UserProvider().userExists(email_1.getValue())) {
 							// Werte in der DB speichern
 							new UserProvider().alterUser(u);
 							// neues User-Objekt in der Session speichern
