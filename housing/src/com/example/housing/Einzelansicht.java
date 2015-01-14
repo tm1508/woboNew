@@ -14,6 +14,7 @@ import com.example.housing.data.model.User;
 import com.example.housing.data.model.Request;
 import com.example.housing.data.provider.FavoritProvider;
 import com.example.housing.data.provider.PhotoProvider;
+import com.example.housing.data.provider.RequestProvider;
 import com.example.housing.utility.Format;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
@@ -196,7 +197,7 @@ public class Einzelansicht extends VerticalLayout implements View {
 		gridPictures.addComponent(image5, 6, 2, 7,3);
 		gridPictures.setWidth("40%");
 		    
-		GridLayout gridInfos = new GridLayout(2,16); 
+		final GridLayout gridInfos = new GridLayout(2,16); 
 	//	gridInfos.setWidth("60%");
 		content.addComponent(gridInfos);
 		
@@ -368,13 +369,26 @@ public class Einzelansicht extends VerticalLayout implements View {
 					Notification.show("Sie müssen sich als verifizierter DH-Student einloggen, um eine Anfrage zu einem Wohnungsangebot stellen zu können!", Type.HUMANIZED_MESSAGE);
 				} else if (VaadinSession.getCurrent().getAttribute(User.class).getAccessLevel() != 1) {
 					Notification.show("Sie müssen sich als DH-Student verifizieren, um eine Anfrage zu einem Wohnungsangebot stellen zu können!", Type.HUMANIZED_MESSAGE);
-				} else {
+				} else if(VaadinSession.getCurrent().getAttribute("login").equals(true)){
+		        	 
+		        	  if(new RequestProvider().requestExists(VaadinSession.getCurrent().getAttribute(User.class), angebot)){
+		        		
+		              	Notification.show("Sie haben den Anbieter bereits kontaktiert"); //+re.getMessage());
+		              	
+		              } else {
 					String name = "Anfrageformular";
 					getUI().getNavigator().addView(name, new Anfrageformular(angebot));
 					getUI().getNavigator().navigateTo(name);
 				}
+				}
 			}
 		});
+
+			
+				
+				
+				
+				
          
         
 		final FavoritProvider fp = new FavoritProvider();
@@ -437,7 +451,7 @@ public class Einzelansicht extends VerticalLayout implements View {
         gridInfos.addComponent(buttons, 1, 14);
         
         
-        //Anzeigen, wenn man Anbieter bereits kontaktiert hat       
+    /*    //Anzeigen, wenn man Anbieter bereits kontaktiert hat       
         if(VaadinSession.getCurrent().getAttribute("login").equals(true)){
         	  List<Request> r;
               r= VaadinSession.getCurrent().getAttribute(User.class).getRequests();  
@@ -447,7 +461,7 @@ public class Einzelansicht extends VerticalLayout implements View {
               	Label l = new Label("Sie haben den Anbieter bereits kontaktiert mit dem folgenden Text: " +re.getMessage());
               	gridInfos.addComponent(l,0,15);
               } 
-        }
+        } */
 
 	}
 
