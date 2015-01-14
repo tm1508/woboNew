@@ -426,12 +426,25 @@ public class Profile extends VerticalLayout implements View {
 						u.setAccessLevel(1);
 					}
 					if (!prüf.getEmail().equals(u.getEmail())) {
-						if (new UserProvider().userExists(email_1.getValue())) {
-							Notification not = new Notification(
-									"Ein Nutzer mit dieser E-Mail-Adresse existiert bereits.");
-							not.setDelayMsec(300);
-							not.show(Page.getCurrent());
 
+						if (new UserProvider().userExists(email_1.getValue())) {
+
+							System.out.println("-----------------------------------------------------------------ok1");
+							if (!new UserProvider().userExists(email_1.getValue())) {
+								System.out.println("------------------------------------------------------------ok2");
+								// Werte in der DB speichern
+								new UserProvider().alterUser(u);
+								// neues User-Objekt in der Session speichern
+								VaadinSession.getCurrent().setAttribute(User.class, u);
+
+							} else {
+
+								Notification not = new Notification(
+										"Ein Nutzer mit dieser E-Mail-Adresse existiert bereits.");
+								not.setDelayMsec(300);
+								not.show(Page.getCurrent());
+
+							}
 						} else {
 							// Werte in der DB speichern
 							new UserProvider().alterUser(u);
@@ -442,8 +455,9 @@ public class Profile extends VerticalLayout implements View {
 							getUI().getNavigator().addView(name, new Profile());
 							getUI().getNavigator().navigateTo(name);
 
-							Notification.show("Ihre Änderungen wurden erfolgreich gespeichert.", Type.HUMANIZED_MESSAGE);
-							
+							Notification
+									.show("Ihre Änderungen wurden erfolgreich gespeichert.", Type.HUMANIZED_MESSAGE);
+
 						}
 					} else {
 						new UserProvider().alterUser(u);
@@ -458,7 +472,6 @@ public class Profile extends VerticalLayout implements View {
 						Notification.show("Ihre Änderungen wurden erfolgreich gespeichert.", Type.HUMANIZED_MESSAGE);
 					}
 
-					
 					// Meldung an den Nutzer
 				} else {// Registrierung nicht erfolgreich
 					Notification

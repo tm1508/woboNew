@@ -358,6 +358,9 @@ public class Einzelansicht extends VerticalLayout implements View {
         Button anfrage = new Button("Anfrage");
         anfrage.addStyleName("AnfrageButton");
         buttons.addComponent(anfrage);
+        if(angebot.isInactive()){
+        	anfrage.setEnabled(false);
+        }
         
         anfrage.addClickListener(new Button.ClickListener() {
 			public void buttonClick(ClickEvent event) {
