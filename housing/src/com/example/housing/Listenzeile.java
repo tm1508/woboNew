@@ -88,7 +88,7 @@ public class Listenzeile extends CustomComponent {
 		l.setWidth("250px");
 		ergebnisLayout.addComponent(l, 4, 0);
 		float price = o.getPrice();
-		Label l2 = new Label("Warmmiete: " + new Format().stringFormat(price) + " €");
+		Label l2 = new Label("Warmmiete: " + new Format().stringEuro(price) + " €");
 		ergebnisLayout.addComponent(l2, 3, 1);
 
 		float sm = o.getSquareMetre();
