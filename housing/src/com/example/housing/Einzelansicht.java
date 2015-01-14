@@ -415,6 +415,10 @@ public class Einzelansicht extends VerticalLayout implements View {
         		    Favorit fav;
         			fav = fp.findByUserOffer(VaadinSession.getCurrent().getAttribute(User.class), angebot);
         	        new FavoritProvider().removeFavorit(fav);
+        	        
+        	        String name = "Meine Favoriten";
+        	        getUI().getNavigator().addView(name, new Favoriten()); // momentan angezeigtes Angebot soll übergeben werden...
+					getUI().getNavigator().navigateTo(name);
         			
         			Notification not = new Notification("Das Angebot wurde aus Ihren Favoriten entfernt.");
         			not.setDelayMsec(300);
