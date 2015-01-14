@@ -1,5 +1,6 @@
 package com.example.housing.data.model;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
@@ -83,12 +84,15 @@ public class Offer {
 	@JoinColumn(name="offer_idUser")
 	private User offer_idUser;
 	
+	/** The offer time. */
 	@Temporal(value=TemporalType.TIMESTAMP)
 	private Date offerTime;
 	
-	private float latitude;
+	/** The latitude. */
+	private BigDecimal latitude;
 	
-	private float longitude;
+	/** The longitude. */
+	private BigDecimal longitude;
 	
 	/** The photos. */
 	@OneToMany(mappedBy="photo_idOffer")
@@ -97,6 +101,9 @@ public class Offer {
 	/** The favorits. */
 	@OneToMany(mappedBy="favorit_idOffer")
 	private List<Favorit> favorits;
+	
+	@OneToMany(mappedBy="request_idOffer")
+	private List<Request> requests;
 	
 	/**
 	 * Gets the id offer.
@@ -272,7 +279,7 @@ public class Offer {
 	/**
 	 * Sets the shared.
 	 *
-	 * @param isShared the new shared
+	 * @param type the new type
 	 */
 	public void setType(int type) {
 		this.type = type;
@@ -512,28 +519,66 @@ public class Offer {
 		this.favorits = favorits;
 	}
 
+	/**
+	 * Gets the offer time.
+	 *
+	 * @return the offer time
+	 */
 	public Date getOfferTime() {
 		return offerTime;
 	}
 
+	/**
+	 * Sets the offer time.
+	 *
+	 * @param offerTime the new offer time
+	 */
 	public void setOfferTime(Date offerTime) {
 		this.offerTime = offerTime;
 	}
 
-	public float getLatitude() {
+	/**
+	 * Gets the latitude.
+	 *
+	 * @return the latitude
+	 */
+	public BigDecimal getLatitude() {
 		return latitude;
 	}
 
-	public void setLatitude(float latitude) {
+	/**
+	 * Sets the latitude.
+	 *
+	 * @param latitude the new latitude
+	 */
+	public void setLatitude(BigDecimal latitude) {
 		this.latitude = latitude;
 	}
 
-	public float getLongitude() {
+	/**
+	 * Gets the longitude.
+	 *
+	 * @return the longitude
+	 */
+	public BigDecimal getLongitude() {
 		return longitude;
 	}
 
-	public void setLongitude(float longitude) {
+	/**
+	 * Sets the longitude.
+	 *
+	 * @param longitude the new longitude
+	 */
+	public void setLongitude(BigDecimal longitude) {
 		this.longitude = longitude;
+	}
+
+	public List<Request> getRequests() {
+		return requests;
+	}
+
+	public void setRequests(List<Request> requests) {
+		this.requests = requests;
 	}
 
 }

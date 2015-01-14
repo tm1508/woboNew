@@ -1,1 +1,4 @@
 com.example.housing
+com.example.housing.data.model
+com.example.housing.data.provider
+com.example.housing.utility

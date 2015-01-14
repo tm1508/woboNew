@@ -4,12 +4,14 @@ import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.InputStream;
 import java.sql.Date;
+import java.util.List;
 
 import javax.swing.GroupLayout.Alignment;
 
 import com.example.housing.data.model.Favorit;
 import com.example.housing.data.model.Offer;
 import com.example.housing.data.model.User;
+import com.example.housing.data.model.Request;
 import com.example.housing.data.provider.FavoritProvider;
 import com.example.housing.data.provider.PhotoProvider;
 import com.example.housing.utility.Format;
@@ -45,10 +47,13 @@ public class Einzelansicht extends VerticalLayout implements View {
 	/** The content. */
 	VerticalLayout content;
 	
+	/** The angebot. */
 	Offer angebot;
 	
 	/**
 	 * Instantiates a new einzelansicht.
+	 *
+	 * @param einzelAngebot the einzel angebot
 	 */
 	public Einzelansicht(Offer einzelAngebot){
 		this.angebot = einzelAngebot;
@@ -114,11 +119,11 @@ public class Einzelansicht extends VerticalLayout implements View {
 		content.addComponent(gridPictures);
 		String basepath = VaadinService.getCurrent().getBaseDirectory().getAbsolutePath();
 		
-		Resource resource = new FileResource(new File(basepath + "/WEB-INF/image/dh.jpg"));
-		Resource resource2 = new FileResource(new File(basepath + "/WEB-INF/image/dh.jpg"));
-		Resource resource3 = new FileResource(new File(basepath + "/WEB-INF/image/dh.jpg"));
-		Resource resource4 = new FileResource(new File(basepath + "/WEB-INF/image/dh.jpg"));
-		Resource resource5 = new FileResource(new File(basepath + "/WEB-INF/image/dh.jpg"));
+		Resource resource = new FileResource(new File(basepath + "/WEB-INF/image/DefaultBild.jpg"));
+		Resource resource2 = new FileResource(new File(basepath + "/WEB-INF/image/DefaultBild.jpg"));
+		Resource resource3 = new FileResource(new File(basepath + "/WEB-INF/image/DefaultBild.jpg"));
+		Resource resource4 = new FileResource(new File(basepath + "/WEB-INF/image/DefaultBild.jpg"));
+		Resource resource5 = new FileResource(new File(basepath + "/WEB-INF/image/DefaultBild.jpg"));
 		
 		switch(angebot.getPhotos().size()) {
 			case 5:
@@ -191,7 +196,7 @@ public class Einzelansicht extends VerticalLayout implements View {
 		gridPictures.addComponent(image5, 6, 2, 7,3);
 		gridPictures.setWidth("40%");
 		    
-		GridLayout gridInfos = new GridLayout(2,15); 
+		GridLayout gridInfos = new GridLayout(2,16); 
 	//	gridInfos.setWidth("60%");
 		content.addComponent(gridInfos);
 		
@@ -221,7 +226,7 @@ public class Einzelansicht extends VerticalLayout implements View {
         
         //Price
     	float price =  angebot.getPrice();
-		String sPrice = new Format().stringFormat(price) + " €";
+		String sPrice = new Format().stringEuro(price) + " €";
 		
         gridInfos.addComponent(new Label("Warmmiete"),0,3);
         gridInfos.addComponent(new Label(sPrice),1 , 3);
@@ -296,7 +301,7 @@ public class Einzelansicht extends VerticalLayout implements View {
         
         //bond
         float bond =  angebot.getBond();
-		String sBond = new Format().stringFormat(bond) + " €";
+		String sBond = new Format().stringEuro(bond) + " €";
 		
         Label lBond = new Label("Kaution");
         gridInfos.addComponent(lBond,0,12);
@@ -367,12 +372,15 @@ public class Einzelansicht extends VerticalLayout implements View {
 				}
 			}
 		});
+         
         
+		final FavoritProvider fp = new FavoritProvider();
+
+	    
+        //Favoriten-Button TODO
+        if(VaadinSession.getCurrent().getAttribute("login").equals(true) && !fp.favoritExists(VaadinSession.getCurrent().getAttribute(User.class), angebot)){
         
-        //Favoriten-Button
-        if(VaadinSession.getCurrent().getAttribute("login").equals(true)){
-        
-        	Button favorit = new Button("Favorit");
+        	Button favorit = new Button("Favorit hinzufügen");
         	favorit.addStyleName("AnfrageButton");
         	buttons.addComponent(favorit);
         	
@@ -383,15 +391,60 @@ public class Einzelansicht extends VerticalLayout implements View {
         			newFavorit.setFavorit_idUser(VaadinSession.getCurrent().getAttribute(User.class));
         			
         			new FavoritProvider().addFavorit(newFavorit);
-        			Notification not = new Notification("Das Angebot wurde zu Ihren Favoriten hinzugefügt."); //TODO
+        			
+        			String name = "Meine Favoriten";
+					getUI().getNavigator().addView(name, new Favoriten()); // momentan angezeigtes Angebot soll übergeben werden...
+					getUI().getNavigator().navigateTo(name);
+					
+        			Notification not = new Notification("Das Angebot wurde zu Ihren Favoriten hinzugefügt.");
+        			not.setDelayMsec(300);
         			not.show(Page.getCurrent());
         			
         		}	
         	}); 
     	
+        }else if(VaadinSession.getCurrent().getAttribute("login").equals(true) && fp.favoritExists(VaadinSession.getCurrent().getAttribute(User.class), angebot)){
+        	
+        	Button removeFavorit = new Button("Favorit entfernen");
+        	removeFavorit.addStyleName("AnfrageButton");
+        	buttons.addComponent(removeFavorit);
+        	
+        	removeFavorit.addClickListener(new Button.ClickListener() {
+        		public void buttonClick(ClickEvent event) {
+        			
+        		    Favorit fav;
+        			fav = fp.findByUserOffer(VaadinSession.getCurrent().getAttribute(User.class), angebot);
+        	        new FavoritProvider().removeFavorit(fav);
+        	        
+        	        String name = "Meine Favoriten";
+        	        getUI().getNavigator().addView(name, new Favoriten()); // momentan angezeigtes Angebot soll übergeben werden...
+					getUI().getNavigator().navigateTo(name);
+        			
+        			Notification not = new Notification("Das Angebot wurde aus Ihren Favoriten entfernt.");
+        			not.setDelayMsec(300);
+        			not.show(Page.getCurrent());
+        			
+        		}	
+        	}); 
+        	
         }
         
+
+        
         gridInfos.addComponent(buttons, 1, 14);
+        
+        
+        //Anzeigen, wenn man Anbieter bereits kontaktiert hat       
+        if(VaadinSession.getCurrent().getAttribute("login").equals(true)){
+        	  List<Request> r;
+              r= VaadinSession.getCurrent().getAttribute(User.class).getRequests();  
+        	  if(r.contains(angebot)){
+        		int b = r.indexOf(angebot);
+        		Request re = r.get(b);
+              	Label l = new Label("Sie haben den Anbieter bereits kontaktiert mit dem folgenden Text: " +re.getMessage());
+              	gridInfos.addComponent(l,0,15);
+              } 
+        }
 
 	}
 

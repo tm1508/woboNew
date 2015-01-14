@@ -6,6 +6,7 @@ import javax.persistence.Query;
 
 import com.example.housing.data.model.Favorit;
 import com.example.housing.data.model.Offer;
+import com.example.housing.data.model.Request;
 import com.example.housing.data.model.User;
 
 // TODO: Auto-generated Javadoc
@@ -22,6 +23,11 @@ public class FavoritProvider extends BaseProvider<Favorit>{
 		return Favorit.class;
 	}
 	
+	/**
+	 * Adds the favorit.
+	 *
+	 * @param newFavorit the new favorit
+	 */
 	public void addFavorit(Favorit newFavorit) {
 		
 		if (!super.save(newFavorit)) {
@@ -45,7 +51,7 @@ public class FavoritProvider extends BaseProvider<Favorit>{
 	/**
 	 * Find by user.
 	 *
-	 * @param u the u
+	 * @param user the user
 	 * @return the list
 	 */
 	/*  funktioniert nicht
@@ -69,10 +75,46 @@ public class FavoritProvider extends BaseProvider<Favorit>{
 		List<Favorit> ownFavs = (List<Favorit>) q.getResultList();
 		return ownFavs;
 	}
+	
+	public boolean favoritExists(User user, Offer offer) {
+		
+		try {
+			
+			this.findByUserOffer(user, offer);
+			return true; //es existiert bereits ein Favorit zu dieser User-Offer-Kombi
+			
+		} catch(Exception e) {
+			
+			return false; //Fehlermeldung -> ein Favorit zu dieser User-Offer-Kombi existiert noch nicht
+		
+		}
+	
+	}
+	
+	public Favorit findByUserOffer(User user, Offer offer) {
+		
+		if (!em.isOpen()) {
 
+			em = getEmf().createEntityManager();
+
+		}
+		
+		Query q = em.createQuery("SELECT f FROM Favorit f WHERE f.favorit_idUser =:user AND f.favorit_idOffer =:offer");
+		q.setParameter("user", user);
+		q.setParameter("offer", offer);
+		return (Favorit) q.getSingleResult();
+		
+	}
+
+	/**
+	 * Removes the favorit.
+	 *
+	 * @param f the f
+	 * @return true, if successful
+	 */
 	public boolean removeFavorit(Favorit f) {
-		// TODO Auto-generated method stub
-		return false;
+		return super.delete(f.getIdFavorit());
+		
 	}
 	
 }

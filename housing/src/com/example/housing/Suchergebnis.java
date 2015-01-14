@@ -52,6 +52,11 @@ public class Suchergebnis extends VerticalLayout implements View {
 	List<Offer> angebote; 
 	
 	//Übergabe der Ergebnis aus der Suche
+	/**
+	 * Instantiates a new suchergebnis.
+	 *
+	 * @param offers the offers
+	 */
 	public Suchergebnis(List<Offer> offers){
 		
 		this.angebote = offers;

@@ -12,16 +12,31 @@ import javax.imageio.ImageIO;
 import com.vaadin.ui.Upload.Receiver;
 
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class PhotoUploader.
+ */
 public class PhotoUploader implements Receiver {
 
+	/** The path. */
 	final String path = "C:\\temp\\";
+	
+	/** The file path. */
 	private String filePath;
+	
+	/** The picture data. */
 	private byte[] pictureData;
+	
+	/** The counter. */
 	private int counter;
 	
 	/**
-	* return an OutputStream that simply counts lineends
-	*/
+	 * return an OutputStream that simply counts lineends.
+	 *
+	 * @param filename the filename
+	 * @param MIMEType the MIME type
+	 * @return the output stream
+	 */
 	@Override
 	public OutputStream receiveUpload(String filename, String MIMEType) {
 		
@@ -36,6 +51,11 @@ public class PhotoUploader implements Receiver {
 		
 	}
 	
+	/**
+	 * Gets the picture data.
+	 *
+	 * @return the picture data
+	 */
 	public byte[] getPictureData() {
 		
 		return pictureData;

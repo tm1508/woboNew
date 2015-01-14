@@ -14,12 +14,22 @@ import com.vaadin.ui.Upload.SucceededEvent;
 import com.vaadin.ui.Upload.SucceededListener;
 import com.vaadin.ui.VerticalLayout;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class UploadTest.
+ */
 public class UploadTest extends VerticalLayout implements Receiver, SucceededListener, View
 {
 
+    /** The uploader. */
     private Upload uploader = new Upload ( "Foto hochladen", this );
+    
+    /** The tmp file. */
     ByteArrayOutputStream tmpFile = null;
 
+    /**
+     * Instantiates a new upload test.
+     */
     public UploadTest ()
     {
         super();
@@ -30,6 +40,9 @@ public class UploadTest extends VerticalLayout implements Receiver, SucceededLis
       
     }
 
+    /* (non-Javadoc)
+     * @see com.vaadin.ui.Upload.Receiver#receiveUpload(java.lang.String, java.lang.String)
+     */
     public OutputStream receiveUpload ( String filename, String MIMEType )
     {
         try
@@ -44,6 +57,9 @@ public class UploadTest extends VerticalLayout implements Receiver, SucceededLis
         }
     }
 
+    /* (non-Javadoc)
+     * @see com.vaadin.ui.Upload.SucceededListener#uploadSucceeded(com.vaadin.ui.Upload.SucceededEvent)
+     */
     public void uploadSucceeded ( SucceededEvent event )
     {
     	System.out.println("Bild wurde hochgeladen");
@@ -61,17 +77,31 @@ public class UploadTest extends VerticalLayout implements Receiver, SucceededLis
         }
     }
     
+    /**
+     * Gets the image.
+     *
+     * @param bytes the bytes
+     * @return the image
+     */
     public String getImage(byte[] bytes) {
 		String encodedImage = "";
 		encodedImage = Base64.encode(bytes).toString();
 		return encodedImage;
 	}
     
+    /**
+     * Upload failed.
+     *
+     * @param event the event
+     */
     public void uploadFailed(FailedEvent event){
     	System.out.println("failed");
     }
     
 
+	/* (non-Javadoc)
+	 * @see com.vaadin.navigator.View#enter(com.vaadin.navigator.ViewChangeListener.ViewChangeEvent)
+	 */
 	@Override
 	public void enter(ViewChangeEvent event) {
 		// TODO Auto-generated method stub

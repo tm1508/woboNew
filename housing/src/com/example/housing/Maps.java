@@ -56,6 +56,7 @@ import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
 
+// TODO: Auto-generated Javadoc
 /**
  * Google Maps UI for testing and demoing.
  */
@@ -63,15 +64,26 @@ import com.vaadin.ui.Window;
 public class Maps extends VerticalLayout implements View{
 	/** The content. */
 	private VerticalLayout content;// Layout fuer den Inhalt
+	
+	/** The google map. */
 	private GoogleMap googleMap;
+    
+    /** The kakola marker. */
     private GoogleMapMarker kakolaMarker = new GoogleMapMarker(
             "DRAGGABLE: Kakolan vankila", new LatLon(60.44291, 22.242415),
             true, null);
+    
+    /** The kakola info window. */
     private GoogleMapInfoWindow kakolaInfoWindow = new GoogleMapInfoWindow(
             "Kakola used to be a provincial prison.", kakolaMarker);
+    
+    /** The api key. */
     private final String apiKey = "";
 	
 
+	/**
+	 * Instantiates a new maps.
+	 */
 	public Maps() {
 		
 		
@@ -108,8 +120,11 @@ public class Maps extends VerticalLayout implements View{
 	}
 
 
+	/**
+	 * Sets the content.
+	 */
 	private void setContent() {
-		TextField location = new TextField();
+		final TextField location = new TextField();
 		googleMap = new GoogleMap(null, null, null);
         googleMap.setCenter(new LatLon(60.440963, 22.25122));
         googleMap.setZoom(10);
@@ -139,6 +154,9 @@ public class Maps extends VerticalLayout implements View{
 	}
 
 
+	/* (non-Javadoc)
+	 * @see com.vaadin.navigator.View#enter(com.vaadin.navigator.ViewChangeListener.ViewChangeEvent)
+	 */
 	@Override
 	public void enter(ViewChangeEvent event) {
 		// TODO Auto-generated method stub

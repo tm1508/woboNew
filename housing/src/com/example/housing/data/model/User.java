@@ -38,6 +38,7 @@ public class User {
 	/** The access level. */
 	private int accessLevel;
 	
+	/** The activated. */
 	private boolean activated;
 	
 	/** The offers. */
@@ -250,10 +251,20 @@ public class User {
 		this.favorits = favorits;
 	}
 
+	/**
+	 * Checks if is activated.
+	 *
+	 * @return true, if is activated
+	 */
 	public boolean isActivated() {
 		return activated;
 	}
 
+	/**
+	 * Sets the activated.
+	 *
+	 * @param activated the new activated
+	 */
 	public void setActivated(boolean activated) {
 		this.activated = activated;
 	}
