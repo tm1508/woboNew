@@ -56,6 +56,29 @@ $v-background-color: #F7F7F7;
      	box-shadow: none;
   	}
 	
+	 .v-panel-red {
+     	//background-color: #7e878e;
+     	background-color: #e2001a;
+     	box-shadow: none;
+     	border: 0px;
+     	border-radius: 0px;
+  	}
+  	
+  	.v-verticallayout-navigation{
+  		margin-top:0px;
+  		padding-top: 0px;
+  		padding-bottom:0px;
+  	}
+
+  	.v-horizontallayout-footer{
+  		margin-top:0px;
+  		padding-top: 0px;
+  		//padding-bottom:0px;
+  	}
+  	
+
+
+
     .v-label-title {
   		font-size: 30px;
   		color: #e2001a;

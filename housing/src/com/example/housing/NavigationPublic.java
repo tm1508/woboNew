@@ -44,7 +44,7 @@ public class NavigationPublic extends CustomComponent {
 	public NavigationPublic() {
 		buildMainLayout();
 		setCompositionRoot(mainLayout);
-
+		mainLayout.setStyleName("navigation");
 		// TODO add user code here
 		
 		//Bild
@@ -53,11 +53,12 @@ public class NavigationPublic extends CustomComponent {
 		HorizontalLayout h = new HorizontalLayout();
 		
 		String basepath = VaadinService.getCurrent().getBaseDirectory().getAbsolutePath();
-		FileResource resource = new FileResource(new File(basepath + "/WEB-INF/image/dh.jpg"));
+		FileResource resource = new FileResource(new File(basepath + "/WEB-INF/image/dh.PNG"));
+		
 		Image image = new Image("",resource);
 		h.addComponent(image);
 		
-		mainLayout.addComponent(h);
+		mainLayout.addComponent(image);
 	
 		
 		
@@ -123,6 +124,7 @@ public class NavigationPublic extends CustomComponent {
 		MenuItem nav2 = menuBar_1.addItem("Registrierung", FontAwesome.UNLOCK_ALT, mycommand3);//Navigation
 		MenuItem nav3 = menuBar_1.addItem("Login", FontAwesome.UNLOCK_ALT, mycommand);//Navigation
 		MenuItem nav4 = menuBar_1.addItem("Hilfe", FontAwesome.QUESTION, mycommand4);//Navigation zu FAQ
+	
 		
 		mainLayout.addComponent(menuBar_1);
 		

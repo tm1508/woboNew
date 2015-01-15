@@ -12100,6 +12100,24 @@ div.v-layout.v-horizontal.v-widget {
 	box-shadow: none;
 }
 
+.housing .v-panel-red {
+	background-color: #e2001a;
+	box-shadow: none;
+	border: 0px;
+	border-radius: 0px;
+}
+
+.housing .v-verticallayout-navigation {
+	margin-top: 0px;
+	padding-top: 0px;
+	padding-bottom: 0px;
+}
+
+.housing .v-horizontallayout-footer {
+	margin-top: 0px;
+	padding-top: 0px;
+}
+
 .housing .v-label-title {
 	font-size: 30px;
 	color: #e2001a;

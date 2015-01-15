@@ -14,6 +14,7 @@ import com.vaadin.server.VaadinSession;
 import com.vaadin.ui.Accordion;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Component;
+import com.vaadin.ui.GridLayout;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Link;
@@ -30,7 +31,7 @@ import com.vaadin.ui.Button.ClickEvent;
 /**
  * The Class Startseite.
  */
-public class Startseite extends VerticalLayout implements View{
+public class Startseite extends HorizontalLayout implements View{
 
 	/** The content. */
 	VerticalLayout content;
@@ -45,10 +46,75 @@ public class Startseite extends VerticalLayout implements View{
 		
 	}
 	
+	
+	public Startseite(){
+		this.setWidth("100%");
+		
+		Panel p = new Panel();
+		p.setWidth("100%");
+		p.addStyleName("red");
+		p.setHeight("100%");
+		addComponent(p);
+		this.setExpandRatio(p, 1);
+		
+		VerticalLayout v = new VerticalLayout();
+			
+		
+		//Navigation hinzufuegen
+		Navigation nav = new Navigation();
+		nav.setWidth("100%");
+		nav.addStyleName("navigation");
+		v.addComponent(nav);
+		
+		NavigationPublic navPublic = new NavigationPublic();
+		v.addComponent(navPublic);
+		
+		//falls der Benutzer eingelogt ist verändert sich die Navigation
+		if(VaadinSession.getCurrent().getAttribute("login").equals(true)){
+			nav.setVisible(true);
+			navPublic.setVisible(false);
+		}else{
+			nav.setVisible(false);
+			navPublic.setVisible(true);
+		}
+		
+		//Inhalt hinzufuegen
+		content = new VerticalLayout();
+		content.setMargin(true);
+		content.setWidth("100%");
+		setContent();//Methode zum befuellen des Inhalts aufrufen
+		v.addComponent(content);
+		//v.setExpandRatio(content, 20);
+		
+		//Footer hinzufuegen
+		Footer f = new Footer();
+		v.addComponent(f);
+		
+		Panel p2 = new Panel();
+		p2.setWidth("100%");
+		p2.addStyleName("red");
+		p2.setHeight("30px");
+		
+		v.addComponent(p2);
+	
+		addComponent(v);
+		this.setExpandRatio(v, 12);
+		
+		Panel p1 = new Panel();
+		p1.setWidth("100%");
+		p1.addStyleName("red");
+		p1.setHeight("100%");
+		addComponent(p1);
+		this.setExpandRatio(p1, 1);
+		
+
+	}
 	/**
 	 * Instantiates a new startseite.
 	 */
-	public Startseite(){
+	/*public Startseite(){
+				
+		
 		Navigation nav = new Navigation();
 		addComponent(nav);
 		
@@ -71,9 +137,12 @@ public class Startseite extends VerticalLayout implements View{
 		setContent();
 		addComponent(content);
 		
+		
 		Footer f = new Footer();
 		addComponent(f);
-	}
+		
+		
+	}*/
 	
 	/**
 	 * Sets the content.
@@ -82,6 +151,7 @@ public class Startseite extends VerticalLayout implements View{
 		
 		content = new VerticalLayout();
 		content.setMargin(true);
+		
 	
 		
 		//Horizontales Layout fuer Begrüßungstext und Suchfeld

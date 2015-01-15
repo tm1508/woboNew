@@ -49,8 +49,7 @@ public class Footer extends CustomComponent {
 	public Footer() {
 		buildMainLayout();
 		setCompositionRoot(mainLayout);
-		
-	
+		mainLayout.setStyleName("footer");
 
 		// TODO add user code here
 	}
