@@ -440,8 +440,10 @@ public class Profile extends VerticalLayout implements View {
 							} else {
 
 								Notification not = new Notification(
-										"Ein Nutzer mit dieser E-Mail-Adresse existiert bereits.");
+										"Ein Nutzer mit dieser E-Mail-Adresse existiert bereits.", Type.HUMANIZED_MESSAGE);
 								not.setDelayMsec(300);
+								not.setStyleName("warning");
+								not.setIcon(FontAwesome.EXCLAMATION_TRIANGLE);
 								not.show(Page.getCurrent());
 
 							}
@@ -455,8 +457,11 @@ public class Profile extends VerticalLayout implements View {
 							getUI().getNavigator().addView(name, new Profile());
 							getUI().getNavigator().navigateTo(name);
 
-							Notification
-									.show("Ihre Änderungen wurden erfolgreich gespeichert.", Type.HUMANIZED_MESSAGE);
+							Notification not = new Notification("Ihre Änderungen wurden erfolgreich gespeichert.", Type.HUMANIZED_MESSAGE);
+							not.setDelayMsec(300);
+							not.setStyleName("success");
+							not.setIcon(FontAwesome.CHECK_SQUARE_O);
+							not.show(Page.getCurrent());
 
 						}
 					} else {
@@ -469,14 +474,21 @@ public class Profile extends VerticalLayout implements View {
 						getUI().getNavigator().addView(name, new Profile());
 						getUI().getNavigator().navigateTo(name);
 
-						Notification.show("Ihre Änderungen wurden erfolgreich gespeichert.", Type.HUMANIZED_MESSAGE);
+						Notification not = new Notification("Ihre Änderungen wurden erfolgreich gespeichert.", Type.HUMANIZED_MESSAGE);
+						not.setDelayMsec(300);
+						not.setStyleName("success");
+						not.setIcon(FontAwesome.CHECK_SQUARE_O);
+						not.show(Page.getCurrent());
 					}
 
 					// Meldung an den Nutzer
 				} else {// Registrierung nicht erfolgreich
-					Notification
-							.show("Die Speicherung Ihrer Änderungen war nicht erfolgreich. Bitte überprüfen Sie Ihre Eingaben.",
-									Type.HUMANIZED_MESSAGE);
+					
+					Notification not = new Notification("Die Speicherung Ihrer Änderungen war nicht erfolgreich. Bitte überprüfen Sie Ihre Eingaben.", Type.HUMANIZED_MESSAGE);
+					not.setDelayMsec(300);
+					not.setStyleName("warning");
+					not.setIcon(FontAwesome.EXCLAMATION_TRIANGLE);
+					not.show(Page.getCurrent());
 					// Meldung an den Nutzer
 				}
 			}
@@ -547,6 +559,7 @@ public class Profile extends VerticalLayout implements View {
 							// Meldung an den Nutzer
 							Notification notif = new Notification("Ihr Profil wurde gelöscht!", Type.HUMANIZED_MESSAGE);
 							notif.setDelayMsec(300);
+							notif.setStyleName("success");
 							notif.setIcon(FontAwesome.INFO);
 							notif.show(Page.getCurrent());
 						}

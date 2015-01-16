@@ -116,6 +116,7 @@ public class LoginWindow extends Window{
 								}else{
 									Notification notif = new Notification("Login fehlgeschlagen!","Ihr Konto ist nicht freigeschalten. Bitte folgen Sie dem Link in der E-Mail, die Sie erhalten haben.", Type.HUMANIZED_MESSAGE);
 									notif.setDelayMsec(300);
+									notif.setStyleName("warning");
 									notif.setIcon(FontAwesome.EXCLAMATION_TRIANGLE);
 									notif.show(Page.getCurrent());
 								}
@@ -129,6 +130,7 @@ public class LoginWindow extends Window{
 								Notification notif = new Notification("Login erfolgreich.","Herzlich Willkommen!", Type.HUMANIZED_MESSAGE);//Meldung an den Nutzer
 								notif.setDelayMsec(300);
 								notif.setIcon(FontAwesome.UNLOCK_ALT);
+								notif.setStyleName("success");
 								notif.show(Page.getCurrent());
 								
 								VaadinSession.getCurrent().setAttribute(User.class, u);//User-Objekt in der Session speichern
@@ -143,6 +145,7 @@ public class LoginWindow extends Window{
 								//Fehlermeldung bei falschem Benutzername oder Passwort
 								Notification notif = new Notification("Login fehlgeschlagen!","Bitte überprüfen Sie Benutzername und/oder Passwort.", Type.HUMANIZED_MESSAGE);
 								notif.setDelayMsec(300);
+								notif.setStyleName("warning");
 								notif.setIcon(FontAwesome.EXCLAMATION_TRIANGLE);
 								notif.show(Page.getCurrent());
 							}
@@ -152,6 +155,7 @@ public class LoginWindow extends Window{
 						//Fehlermeldung bei Datenbankproblemen
 						Notification notif = new Notification("Login fehlgeschlagen!","Bitte registrieren Sie sich zuerst.", Type.HUMANIZED_MESSAGE);
 						notif.setDelayMsec(300);
+						notif.setStyleName("warning");
 						notif.setIcon(FontAwesome.EXCLAMATION_TRIANGLE);
 						notif.show(Page.getCurrent());
 					}

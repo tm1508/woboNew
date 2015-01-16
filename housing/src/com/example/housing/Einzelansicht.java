@@ -19,6 +19,7 @@ import com.example.housing.utility.Format;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.server.FileResource;
+import com.vaadin.server.FontAwesome;
 import com.vaadin.server.Page;
 import com.vaadin.server.Resource;
 import com.vaadin.server.StreamResource;
@@ -366,14 +367,26 @@ public class Einzelansicht extends VerticalLayout implements View {
         anfrage.addClickListener(new Button.ClickListener() {
 			public void buttonClick(ClickEvent event) {
 				if(VaadinSession.getCurrent().getAttribute("login").equals(false)) {
-					Notification.show("Sie müssen sich als verifizierter DH-Student einloggen, um eine Anfrage zu einem Wohnungsangebot stellen zu können!", Type.HUMANIZED_MESSAGE);
+					Notification not = new Notification("Sie müssen sich als verifizierter DH-Student einloggen, um eine Anfrage zu einem Wohnungsangebot stellen zu können!",Type.HUMANIZED_MESSAGE);//Meldung an den Nutzer
+					not.setStyleName("warning");
+					not.setIcon(FontAwesome.EXCLAMATION_TRIANGLE);
+					not.setDelayMsec(300);
+					not.show(Page.getCurrent());
 				} else if (VaadinSession.getCurrent().getAttribute(User.class).getAccessLevel() != 1) {
-					Notification.show("Sie müssen sich als DH-Student verifizieren, um eine Anfrage zu einem Wohnungsangebot stellen zu können!", Type.HUMANIZED_MESSAGE);
+					Notification not = new Notification("Sie müssen sich als DH-Student verifizieren, um eine Anfrage zu einem Wohnungsangebot stellen zu können!",Type.HUMANIZED_MESSAGE);//Meldung an den Nutzer
+					not.setDelayMsec(300);
+					not.setStyleName("warning");
+					not.setIcon(FontAwesome.EXCLAMATION_TRIANGLE);
+					not.show(Page.getCurrent());
 				} else if(VaadinSession.getCurrent().getAttribute("login").equals(true)){
 		        	 
 		        	  if(new RequestProvider().requestExists(VaadinSession.getCurrent().getAttribute(User.class), angebot)){
 		        		
-		              	Notification.show("Sie haben den Anbieter bereits kontaktiert"); //+re.getMessage());
+		        		  Notification not = new Notification("Sie haben den Anbieter bereits kontaktiert",Type.HUMANIZED_MESSAGE);//Meldung an den Nutzer
+							not.setDelayMsec(300);
+							not.setStyleName("warning");
+							not.setIcon(FontAwesome.EXCLAMATION_TRIANGLE);
+							not.show(Page.getCurrent());//+re.getMessage());
 		              	
 		              } else {
 					String name = "Anfrageformular";
@@ -414,6 +427,8 @@ public class Einzelansicht extends VerticalLayout implements View {
 					getUI().getNavigator().navigateTo(name);
 					
         			Notification not = new Notification("Das Angebot wurde zu Ihren Favoriten hinzugefügt.");
+        			not.setStyleName("success");
+					not.setIcon(FontAwesome.CHECK_SQUARE_O);
         			not.setDelayMsec(300);
         			not.show(Page.getCurrent());
         			
@@ -438,6 +453,8 @@ public class Einzelansicht extends VerticalLayout implements View {
 					getUI().getNavigator().navigateTo(name);
         			
         			Notification not = new Notification("Das Angebot wurde aus Ihren Favoriten entfernt.");
+        			not.setStyleName("success");
+        			not.setIcon(FontAwesome.CHECK_SQUARE_O);
         			not.setDelayMsec(300);
         			not.show(Page.getCurrent());
         			
