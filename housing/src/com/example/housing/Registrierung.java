@@ -322,6 +322,8 @@ public class Registrierung extends VerticalLayout implements View{
 		
 		// button
 		button = new Button();
+		button.setStyleName("speichern");
+		button.setIcon(FontAwesome.SAVE);
 		button.setCaption("Registrierung abschließen");
 		button.setImmediate(true);
 		button.setDescription("Abschließen der Registrierung, danach können Sie sich anmelden");

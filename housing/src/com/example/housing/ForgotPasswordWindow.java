@@ -112,6 +112,7 @@ public class ForgotPasswordWindow extends Window{
 			HorizontalLayout hl = new HorizontalLayout();
 			// speichern
 			save = new Button();
+			save.setStyleName("speichern");
 			save.setCaption("speichern");
 			save.setIcon(FontAwesome.CHECK);
 			save.setImmediate(true);
@@ -160,6 +161,7 @@ public class ForgotPasswordWindow extends Window{
 			
 			// abbrechen
 			cancel = new Button();
+			cancel.setStyleName("BearbeitenButton");
 			cancel.setCaption("abbrechen");
 			cancel.setIcon(FontAwesome.MAIL_REPLY);
 			cancel.setImmediate(true);

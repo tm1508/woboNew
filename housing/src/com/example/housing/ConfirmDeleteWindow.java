@@ -44,6 +44,8 @@ public class ConfirmDeleteWindow extends Window {
 		
 		//cancel-Button
 		Button cancel = new Button();
+		cancel.setIcon(FontAwesome.MAIL_REPLY);
+		cancel.setStyleName("BearbeitenButton");
 		cancel.setCaption("Abbrechen");
 		cancel.setImmediate(true);
 		cancel.setDescription("Angebot endgültig löschen");
@@ -66,6 +68,8 @@ public class ConfirmDeleteWindow extends Window {
 		
 		//delete-Button
 		Button delete = new Button();
+		delete.setIcon(FontAwesome.TRASH_O);
+		delete.setStyleName("loeschen");
 		delete.setCaption("Löschen");
 		delete.setImmediate(true);
 		delete.setDescription("Angebot endgültig löschen");

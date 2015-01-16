@@ -12153,6 +12153,16 @@ div.v-layout.v-horizontal.v-widget {
 	color: #e2001a;
 	border-color: #e2001a;
 }
+.housing .v-button-speichern {
+	margin-top: 30px;
+	color: #e2001a;
+	border-color: #e2001a;
+}
+.housing .v-button-log {
+	margin-top: 30px;
+	color: #e2001a;
+	border-color: #e2001a;
+}
 
 .housing .v-label-ImportantTitle {
 	font-size: 20px;

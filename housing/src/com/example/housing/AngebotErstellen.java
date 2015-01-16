@@ -471,6 +471,7 @@ public class AngebotErstellen extends VerticalLayout implements View, Receiver, 
 			}
 		});
 		Button abbrechen = new Button();
+		abbrechen.setIcon(FontAwesome.MAIL_REPLY);
 		abbrechen.addStyleName("BearbeitenButton");
 		abbrechen.setCaption("Abbrechen");
 		abbrechen.setImmediate(true);
@@ -861,6 +862,7 @@ public class AngebotErstellen extends VerticalLayout implements View, Receiver, 
 		});
 
 		Button abbrechen = new Button();
+		abbrechen.setIcon(FontAwesome.MAIL_REPLY);
 		abbrechen.addStyleName("BearbeitenButton");
 		abbrechen.setCaption("Abbrechen");
 		abbrechen.setImmediate(true);

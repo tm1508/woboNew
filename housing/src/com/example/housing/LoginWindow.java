@@ -95,6 +95,8 @@ public class LoginWindow extends Window{
 				
 			// loginButton
 			Button loginButton = new Button();
+			loginButton.setIcon(FontAwesome.UNLOCK_ALT);
+			loginButton.setStyleName("log");
 			loginButton.setCaption("Login");
 			loginButton.setImmediate(true);
 			loginButton.setDescription("Login abschlieﬂen");

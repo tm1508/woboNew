@@ -338,6 +338,7 @@ public class Profile extends VerticalLayout implements View {
 
 		// button_1
 		button_1 = new Button();
+		button_1.setStyleName("BearbeitenButton");
 		button_1.setCaption("Profildaten bearbeiten");
 		button_1.setImmediate(true);
 		button_1.setDescription("Bearbeiten Ihrer Profildaten.");
@@ -368,6 +369,7 @@ public class Profile extends VerticalLayout implements View {
 
 		// button_2
 		button_2 = new Button();
+		button_2.setStyleName("BearbeitenButton");
 		button_2.setCaption("Abbrechen");
 		button_2.setIcon(FontAwesome.MAIL_REPLY);
 		button_2.setImmediate(true);
@@ -400,6 +402,7 @@ public class Profile extends VerticalLayout implements View {
 
 		// button_3
 		button_3 = new Button();
+		button_3.setStyleName("BearbeitenButton");
 		button_3.setVisible(false);
 		button_3.setCaption("Änderungen speichern");
 		button_3.setIcon(FontAwesome.SAVE);
@@ -501,6 +504,7 @@ public class Profile extends VerticalLayout implements View {
 		button_4.setDescription("Löschen des Profils.");
 		button_4.setWidth("-1px");
 		button_4.setHeight("-1px");
+		button_4.setIcon(FontAwesome.TRASH_O);
 		content.addComponent(button_4);
 		button_4.addClickListener(new Button.ClickListener() {
 			public void buttonClick(ClickEvent event) {
@@ -529,6 +533,7 @@ public class Profile extends VerticalLayout implements View {
 
 					// Button "Ja"
 					Button yes = new Button();
+					yes.setStyleName("loeschen");
 					yes.setCaption("Ja, ich will mein Profil löschen.");
 					yes.setDescription("Profil löschen");
 					yes.setIcon(FontAwesome.CHECK);
@@ -565,6 +570,7 @@ public class Profile extends VerticalLayout implements View {
 
 					// Abbrechen-Button
 					Button no = new Button();
+					no.setStyleName("loeschen");
 					no.setCaption("Nein, doch nicht.");
 					no.setIcon(FontAwesome.MAIL_REPLY);
 					no.setDescription("Profil nicht löschen");

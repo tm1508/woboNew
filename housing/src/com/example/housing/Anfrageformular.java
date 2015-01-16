@@ -94,6 +94,7 @@ public class Anfrageformular extends VerticalLayout implements View{
 		
 		// button
 		Button sendButton = new Button();
+		sendButton.setIcon(FontAwesome.ENVELOPE_SQUARE);
 		sendButton.setCaption("Anfrage abschicken");
 		//button.setImmediate(true);
 		sendButton.setWidth("-1px");
