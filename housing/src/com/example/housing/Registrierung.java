@@ -14,6 +14,7 @@ import com.vaadin.data.validator.StringLengthValidator;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.server.FontAwesome;
+import com.vaadin.server.Page;
 import com.vaadin.server.UserError;
 import com.vaadin.server.VaadinSession;
 import com.vaadin.ui.Button;
@@ -321,6 +322,8 @@ public class Registrierung extends VerticalLayout implements View{
 		
 		// button
 		button = new Button();
+		button.setStyleName("speichern");
+		button.setIcon(FontAwesome.SAVE);
 		button.setCaption("Registrierung abschließen");
 		button.setImmediate(true);
 		button.setDescription("Abschließen der Registrierung, danach können Sie sich anmelden");
@@ -358,14 +361,24 @@ public class Registrierung extends VerticalLayout implements View{
 						getUI().getNavigator().addView(name, new Startseite());
 						getUI().getNavigator().navigateTo(name);
 						
-						Notification.show("Die Registrierung war erfolgreich. Sie haben eine Email zur Aktivierung erhalten.",Type.HUMANIZED_MESSAGE);//Meldung an den Nutzer
+						Notification not = new Notification("Die Registrierung war erfolgreich. Sie haben eine Email zur Aktivierung erhalten.",Type.HUMANIZED_MESSAGE);//Meldung an den Nutzer
+						not.setStyleName("success");
+						not.setIcon(FontAwesome.CHECK_SQUARE_O);
+						not.setDelayMsec(300);
+						not.show(Page.getCurrent());
 					}else{//ein Nutzer mit dieser E-Mail-Adresse existiert bereits
-						Notification.show("Die Registrierung war nicht erfolgreich. Ein Nutzer mit dieser E-Mail-Adresse existiert bereits.",Type.HUMANIZED_MESSAGE);//Meldung an den Nutzer
+						Notification not = new Notification("Die Registrierung war nicht erfolgreich. Ein Nutzer mit dieser E-Mail-Adresse existiert bereits.",Type.HUMANIZED_MESSAGE);//Meldung an den Nutzer
+						not.setStyleName("failure");
+						not.setDelayMsec(300);
+						not.show(Page.getCurrent());
 					}
 					
 
 				}else{//Registrierung nicht erfolgreich
-					Notification.show("Die Registrierung war nicht erfolgreich. Bitte überprüfen Sie Ihre Eingaben.",Type.HUMANIZED_MESSAGE);//Meldung an den Nutzer
+					Notification not = new Notification("Die Registrierung war nicht erfolgreich. Bitte überprüfen Sie Ihre Eingaben.",Type.HUMANIZED_MESSAGE);//Meldung an den Nutzer
+					not.setStyleName("failure");
+					not.setDelayMsec(300);
+					not.show(Page.getCurrent());
 				}
 			}
 		});

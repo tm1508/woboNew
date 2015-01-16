@@ -8,7 +8,6 @@ import com.vaadin.ui.Button;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Notification;
-import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
 import com.vaadin.ui.Button.ClickEvent;
@@ -45,6 +44,8 @@ public class ConfirmDeleteWindow extends Window {
 		
 		//cancel-Button
 		Button cancel = new Button();
+		cancel.setIcon(FontAwesome.MAIL_REPLY);
+		cancel.setStyleName("BearbeitenButton");
 		cancel.setCaption("Abbrechen");
 		cancel.setImmediate(true);
 		cancel.setDescription("Angebot endgültig löschen");
@@ -56,8 +57,10 @@ public class ConfirmDeleteWindow extends Window {
 			@Override
 			public void buttonClick(ClickEvent event) {
 				
-				Notification.show("Das Angebot wurde nicht gelöscht.", Type.HUMANIZED_MESSAGE);//Meldung an den Nutzer
-				
+				Notification not = new Notification("Das Angebot wurde nicht gelöscht.",Type.HUMANIZED_MESSAGE);//Meldung an den Nutzer
+				not.setStyleName("failure");
+				not.setDelayMsec(300);
+				not.show(Page.getCurrent());
 				ConfirmDeleteWindow.this.close();
 				
 			}
@@ -65,6 +68,8 @@ public class ConfirmDeleteWindow extends Window {
 		
 		//delete-Button
 		Button delete = new Button();
+		delete.setIcon(FontAwesome.TRASH_O);
+		delete.setStyleName("loeschen");
 		delete.setCaption("Löschen");
 		delete.setImmediate(true);
 		delete.setDescription("Angebot endgültig löschen");
@@ -79,8 +84,11 @@ public class ConfirmDeleteWindow extends Window {
 				//TODO
 				new OfferProvider().removeOffer(currentOffer);
 				
-				Notification.show("Das Angebot wurde gelöscht und aus der Datenbank entfernt.", Type.HUMANIZED_MESSAGE);//Meldung an den Nutzer
-				
+				Notification not = new Notification("Das Angebot wurde gelöscht und aus der Datenbank entfernt.",Type.HUMANIZED_MESSAGE);//Meldung an den Nutzer
+				not.setStyleName("success");
+				not.setIcon(FontAwesome.CHECK_SQUARE_O);
+				not.setDelayMsec(300);
+				not.show(Page.getCurrent());
 				String name = "Angebote verwalten";
 				getUI().getNavigator().addView(name, new AngeboteVerwalten());
 				getUI().getNavigator().navigateTo(name);

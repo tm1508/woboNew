@@ -264,6 +264,7 @@ public class Startseite extends HorizontalLayout implements View{
 			
 			//Button zum Starten derv Suche
 			Button sucheStarten = new Button();
+			sucheStarten.setStyleName("AnfrageButton");
 			sucheStarten.setCaption("Suche starten");
 			sucheStarten.setDescription("Suche starten");
 			sucheStarten.setWidth("-1px");

@@ -16,6 +16,8 @@ import com.example.housing.utility.PhotoUploader;
 import com.vaadin.data.Validator.InvalidValueException;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
+import com.vaadin.server.FontAwesome;
+import com.vaadin.server.Page;
 import com.vaadin.server.VaadinSession;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.Button;
@@ -28,6 +30,7 @@ import com.vaadin.ui.Notification;
 import com.vaadin.ui.RichTextArea;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.Upload;
+import com.vaadin.ui.Notification.Type;
 import com.vaadin.ui.Upload.Receiver;
 import com.vaadin.ui.Upload.SucceededEvent;
 import com.vaadin.ui.Upload.SucceededListener;
@@ -315,7 +318,8 @@ public class AngebotErstellen extends VerticalLayout implements View, Receiver, 
 		final CheckBox inactive = new CheckBox("deaktivieren");
 
 		Button save = new Button("Speichern");
-		save.addStyleName("BearbeitenButton");
+		save.setIcon(FontAwesome.SAVE);
+		save.addStyleName("speichern");
 		save.addClickListener(new Button.ClickListener() {
 			public void buttonClick(ClickEvent event) {
 				// Überprüfung ob alle Mussfelder gefüllt sind
@@ -460,10 +464,15 @@ public class AngebotErstellen extends VerticalLayout implements View, Receiver, 
 				} else
 					// Sind nicht alle Mussfelder gefüllt, wird eine Nachricht
 					// auf dem Bildschirm ausgegeben
-					Notification.show("Bitte füllen Sie alle Mussfelder*");
+					Notification.show("");
+					Notification not1 = new Notification("Bitte füllen Sie alle Mussfelder*", Type.HUMANIZED_MESSAGE);
+					not1.setStyleName("failure");
+					not1.setDelayMsec(300);
+					not1.show(Page.getCurrent());
 			}
 		});
 		Button abbrechen = new Button();
+		abbrechen.setIcon(FontAwesome.MAIL_REPLY);
 		abbrechen.addStyleName("BearbeitenButton");
 		abbrechen.setCaption("Abbrechen");
 		abbrechen.setImmediate(true);
@@ -836,17 +845,25 @@ public class AngebotErstellen extends VerticalLayout implements View, Receiver, 
 						getUI().getNavigator().addView(name, new Einzelansicht(o));
 						getUI().getNavigator().navigateTo(name);
 					} else {
-						Notification.show("Das Angebot konnte nicht geändert werden.");
+						Notification not = new Notification("Das Angebot konnte nicht geändert werden.", Type.HUMANIZED_MESSAGE);
+						not.setStyleName("failure");
+						not.setDelayMsec(300);
+						not.show(Page.getCurrent());
 					}
 
 				} else
 					// Sind nicht alle Mussfelder gefüllt, wird eine Nachricht
 					// auf dem Bildschirm ausgegeben
-					Notification.show("Bitte füllen Sie alle Mussfelder*");
+					Notification.show("");
+					Notification not1 = new Notification("Bitte füllen Sie alle Mussfelder*", Type.HUMANIZED_MESSAGE);
+					not1.setStyleName("failure");
+					not1.setDelayMsec(300);
+					not1.show(Page.getCurrent());
 			}
 		});
 
 		Button abbrechen = new Button();
+		abbrechen.setIcon(FontAwesome.MAIL_REPLY);
 		abbrechen.addStyleName("BearbeitenButton");
 		abbrechen.setCaption("Abbrechen");
 		abbrechen.setImmediate(true);

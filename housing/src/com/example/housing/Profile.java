@@ -338,6 +338,7 @@ public class Profile extends VerticalLayout implements View {
 
 		// button_1
 		button_1 = new Button();
+		button_1.setStyleName("BearbeitenButton");
 		button_1.setCaption("Profildaten bearbeiten");
 		button_1.setImmediate(true);
 		button_1.setDescription("Bearbeiten Ihrer Profildaten.");
@@ -368,6 +369,7 @@ public class Profile extends VerticalLayout implements View {
 
 		// button_2
 		button_2 = new Button();
+		button_2.setStyleName("BearbeitenButton");
 		button_2.setCaption("Abbrechen");
 		button_2.setIcon(FontAwesome.MAIL_REPLY);
 		button_2.setImmediate(true);
@@ -400,6 +402,7 @@ public class Profile extends VerticalLayout implements View {
 
 		// button_3
 		button_3 = new Button();
+		button_3.setStyleName("BearbeitenButton");
 		button_3.setVisible(false);
 		button_3.setCaption("Änderungen speichern");
 		button_3.setIcon(FontAwesome.SAVE);
@@ -440,8 +443,9 @@ public class Profile extends VerticalLayout implements View {
 							} else {
 
 								Notification not = new Notification(
-										"Ein Nutzer mit dieser E-Mail-Adresse existiert bereits.");
+										"Ein Nutzer mit dieser E-Mail-Adresse existiert bereits.", Type.HUMANIZED_MESSAGE);
 								not.setDelayMsec(300);
+								not.setStyleName("failure");
 								not.show(Page.getCurrent());
 
 							}
@@ -455,8 +459,11 @@ public class Profile extends VerticalLayout implements View {
 							getUI().getNavigator().addView(name, new Profile());
 							getUI().getNavigator().navigateTo(name);
 
-							Notification
-									.show("Ihre Änderungen wurden erfolgreich gespeichert.", Type.HUMANIZED_MESSAGE);
+							Notification not = new Notification("Ihre Änderungen wurden erfolgreich gespeichert.", Type.HUMANIZED_MESSAGE);
+							not.setDelayMsec(300);
+							not.setStyleName("success");
+							not.setIcon(FontAwesome.CHECK_SQUARE_O);
+							not.show(Page.getCurrent());
 
 						}
 					} else {
@@ -469,14 +476,20 @@ public class Profile extends VerticalLayout implements View {
 						getUI().getNavigator().addView(name, new Profile());
 						getUI().getNavigator().navigateTo(name);
 
-						Notification.show("Ihre Änderungen wurden erfolgreich gespeichert.", Type.HUMANIZED_MESSAGE);
+						Notification not = new Notification("Ihre Änderungen wurden erfolgreich gespeichert.", Type.HUMANIZED_MESSAGE);
+						not.setDelayMsec(300);
+						not.setStyleName("success");
+						not.setIcon(FontAwesome.CHECK_SQUARE_O);
+						not.show(Page.getCurrent());
 					}
 
 					// Meldung an den Nutzer
 				} else {// Registrierung nicht erfolgreich
-					Notification
-							.show("Die Speicherung Ihrer Änderungen war nicht erfolgreich. Bitte überprüfen Sie Ihre Eingaben.",
-									Type.HUMANIZED_MESSAGE);
+					
+					Notification not = new Notification("Die Speicherung Ihrer Änderungen war nicht erfolgreich. Bitte überprüfen Sie Ihre Eingaben.", Type.HUMANIZED_MESSAGE);
+					not.setDelayMsec(300);
+					not.setStyleName("failure");
+					not.show(Page.getCurrent());
 					// Meldung an den Nutzer
 				}
 			}
@@ -491,6 +504,7 @@ public class Profile extends VerticalLayout implements View {
 		button_4.setDescription("Löschen des Profils.");
 		button_4.setWidth("-1px");
 		button_4.setHeight("-1px");
+		button_4.setIcon(FontAwesome.TRASH_O);
 		content.addComponent(button_4);
 		button_4.addClickListener(new Button.ClickListener() {
 			public void buttonClick(ClickEvent event) {
@@ -519,6 +533,7 @@ public class Profile extends VerticalLayout implements View {
 
 					// Button "Ja"
 					Button yes = new Button();
+					yes.setStyleName("loeschen");
 					yes.setCaption("Ja, ich will mein Profil löschen.");
 					yes.setDescription("Profil löschen");
 					yes.setIcon(FontAwesome.CHECK);
@@ -547,6 +562,7 @@ public class Profile extends VerticalLayout implements View {
 							// Meldung an den Nutzer
 							Notification notif = new Notification("Ihr Profil wurde gelöscht!", Type.HUMANIZED_MESSAGE);
 							notif.setDelayMsec(300);
+							notif.setStyleName("success");
 							notif.setIcon(FontAwesome.INFO);
 							notif.show(Page.getCurrent());
 						}
@@ -554,6 +570,7 @@ public class Profile extends VerticalLayout implements View {
 
 					// Abbrechen-Button
 					Button no = new Button();
+					no.setStyleName("loeschen");
 					no.setCaption("Nein, doch nicht.");
 					no.setIcon(FontAwesome.MAIL_REPLY);
 					no.setDescription("Profil nicht löschen");

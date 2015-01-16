@@ -94,6 +94,7 @@ public class Anfrageformular extends VerticalLayout implements View{
 		
 		// button
 		Button sendButton = new Button();
+		sendButton.setIcon(FontAwesome.ENVELOPE_SQUARE);
 		sendButton.setCaption("Anfrage abschicken");
 		//button.setImmediate(true);
 		sendButton.setWidth("-1px");
@@ -115,11 +116,14 @@ public class Anfrageformular extends VerticalLayout implements View{
 					getUI().getNavigator().navigateTo(name);
 					
 					Notification not = new Notification("Die Anfrage war erfolgreich. Der Anbieter kann Sie nun kontaktieren.",Type.HUMANIZED_MESSAGE);//Meldung an den Nutzer
+					not.setStyleName("success");
 					not.setDelayMsec(300);
+					not.setIcon(FontAwesome.CHECK_SQUARE_O);
 					not.show(Page.getCurrent());
 				}else{//eine Anfrage von diesem User für dieses Angebot existiert bereits
 					Notification not = new Notification("Sie hatten bereits eine Anfrage für dieses Angebot abgegeben.",Type.HUMANIZED_MESSAGE);//Meldung an den Nutzer
 					not.setDelayMsec(300);
+					not.setStyleName("failure");
 					not.show(Page.getCurrent());
 				}
 			}

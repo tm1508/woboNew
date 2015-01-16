@@ -82,14 +82,13 @@ public class FAQ extends VerticalLayout implements View{
 		
 		content = new VerticalLayout();
 		content.setMargin(true);
-		content.addComponent(new Label("Hier finden Sie häufig gestellte Fragen und Antworten"));
 	
 		
 		//Kategorien
 		Accordion accordion = new Accordion();
 		accordion.setStyleName("startseite");
 	
-		
+		  accordion.addTab(new Label(), "Hier finden Sie häufig gestellte Fragen und Antworten",FontAwesome.CHEVRON_CIRCLE_DOWN);
 			//Tab 1 ..zu Ihrem Account
 			final VerticalLayout layout = new VerticalLayout();
 			layout.setMargin(true);
@@ -150,37 +149,31 @@ public class FAQ extends VerticalLayout implements View{
 			
 			final Label label_10 = new Label("Hat der Anbieter eines Angebots genug Anfragen oder steht das Angebot aus anderen Gründen zur Zeit nicht zur Verfügung, \nhat der Anbieter die Möglichkeit das Angebot zu deaktivieren und zu einem späteren Zeitpunkt wieder zu aktivieren. \nJedoch kann während ein Angebot deaktiviert ist keine Anfrage gestellt werden.");
 			sub_accordion_2.addTab(label_10, "Warum kann ich zu einem Wohnungsangebot keine Anfrage senden?", FontAwesome.QUESTION);
-			//TODO
-			//Warum wird meine Anfrage nicht verschickt
+			
+			final Label label_11 = new Label("Wenn Sie zu einem Angebot bereits eine Anfrage gestellt haben, wird eine erneute Anfrage für das selbige Angebot nicht versendet. Da der Anbieter bereits eine Anfrage erhalten hat und wir damit sicher stellen wollen, dass die Anwendung nicht missbraucht wird.");
+			sub_accordion_2.addTab(label_11, "Warum warum wird meine Anfrage nicht versendet?", FontAwesome.QUESTION);
+			
+			final Label label_12 = new Label("Um zu sehen welche Angebot Sie bereits angefragt haben müssen Sie sich vorerst einloggen. Klicken sie auf die Registrierkarte \"Persönliche Daten\" und auf \"Meine Anfragen\". Nun erscheint eine Liste von Wohnungsangebote, die Sie bereits angefragt haben.");
+			sub_accordion_2.addTab(label_12, "Woher weiß ich, welche Angebote ich bereits angefragt habe?", FontAwesome.QUESTION);
+			
 			layout_2.addComponent(sub_accordion_2);
 			accordion.addTab(layout_2, "zu Wohnungsangebote allgemein",FontAwesome.THUMB_TACK);//Tab 3 hinzufügen
-        
+			
 	        //Tab 4
 			final VerticalLayout layout_3 = new VerticalLayout();
 	        layout_3.setMargin(true);
+	        //TODO
+	        final Label label_13 = new Label("Sollten Ihre Fragen nicht beantwortet sein, wenden Sie sich bitte an uns:");
+	        final Label label_14 = new Label(" E-Mail-Adresse");
+	        layout_3.addComponent(label_13);
+	        layout_3.addComponent(label_14);
 		       
-	        accordion.addTab(layout_3, "Über uns...",FontAwesome.THUMB_TACK);//Tab 4 hinzufügen
+	        accordion.addTab(layout_3, "Mehr Hilfe?",FontAwesome.THUMB_TACK);//Tab 4 hinzufügen
          
 		content.addComponent(accordion);//verschiedene Kategorien hinzufügen
 		
 
 		
-		//Neuste Angebote
-		Panel p = new Panel("Unsere neusten Angebote");
-		p.setStyleName("startseite");
-		p.setWidth("100%");
-		VerticalLayout v = new VerticalLayout();
-		v.setMargin(true);
-		
-		List<Offer> latestOffers = new OfferProvider().getLatestOffers();
-		for( Offer o : latestOffers) {
-			v.addComponent(new Listenzeile(o));
-		}
-		
-        p.setContent(v);
-		
-		content.addComponent(p);
- 
     }
  
     

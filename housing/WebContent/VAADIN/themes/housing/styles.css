@@ -11331,15 +11331,22 @@ div.v-layout.v-horizontal.v-widget {
 }
 
 .housing .v-Notification.warning {
-	background: #FFF3D2;
+	background: #fff;
+	border: 2px solid #d20000;
 }
 
 .housing .v-Notification.warning h1 {
-	color: #AC7C00;
+	color: #ff0000;
+}
+
+.housing .v-Notification.warning h1:before {
+	font-family: FontAwesome;
+	content: "\f071";
+	margin-right: 0.5em;
 }
 
 .housing .v-Notification.warning p {
-	color: #9D874D;
+	color: #800000;
 }
 
 .housing .v-Notification.error {
@@ -11505,7 +11512,7 @@ div.v-layout.v-horizontal.v-widget {
 
 .housing .v-Notification.success h1:before, .housing .v-Notification.failure h1:before {
 	font-family: FontAwesome;
-	content: "\f00c";
+	content: "\f046";
 	margin-right: 0.5em;
 }
 
@@ -11522,7 +11529,7 @@ div.v-layout.v-horizontal.v-widget {
 }
 
 .housing .v-Notification.failure h1:before {
-	content: "\f05e";
+	content: "\f071";
 }
 
 .housing .valo-menu {
@@ -12265,6 +12272,16 @@ div.v-layout.v-horizontal.v-widget {
 	color: #e2001a;
 	border-color: #e2001a;
 }
+.housing .v-button-speichern {
+	margin-top: 30px;
+	color: #e2001a;
+	border-color: #e2001a;
+}
+.housing .v-button-log {
+	margin-top: 30px;
+	color: #e2001a;
+	border-color: #e2001a;
+}
 
 .housing .v-label-ImportantTitle {
 	font-size: 20px;
@@ -12272,7 +12289,9 @@ div.v-layout.v-horizontal.v-widget {
 }
 
 .housing .v-button-BearbeitenButton {
-	margin-top: 10px;
+	margin-top: 30px;
+	color: #e2001a;
+	border-color: #e2001a;
 }
 
 .housing .v-button-AnfrageButton {

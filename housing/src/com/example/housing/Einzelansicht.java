@@ -328,6 +328,7 @@ public class Einzelansicht extends VerticalLayout implements View {
         		HorizontalLayout userButtons = new HorizontalLayout();
         		
 				Button change = new Button("Bearbeiten");
+				change.setIcon(FontAwesome.PENCIL);
 				change.addStyleName("BearbeitenButton");
 				change.addClickListener(new Button.ClickListener() {
 					public void buttonClick(ClickEvent event) {
@@ -338,6 +339,7 @@ public class Einzelansicht extends VerticalLayout implements View {
 				});
 				
 				Button delete = new Button("Angebot löschen");
+				delete.setIcon(FontAwesome.TRASH_O);
 				delete.addStyleName("BearbeitenButton");
 				delete.addClickListener(new Button.ClickListener() {
 					public void buttonClick(ClickEvent event) {
@@ -359,6 +361,7 @@ public class Einzelansicht extends VerticalLayout implements View {
         //Anfrage-Button
         Button anfrage = new Button("Anfrage");
         anfrage.addStyleName("AnfrageButton");
+        anfrage.setIcon(FontAwesome.MAIL_FORWARD);
         buttons.addComponent(anfrage);
         if(angebot.isInactive()){
         	anfrage.setEnabled(false);
@@ -408,6 +411,7 @@ public class Einzelansicht extends VerticalLayout implements View {
         if(VaadinSession.getCurrent().getAttribute("login").equals(true) && !fp.favoritExists(VaadinSession.getCurrent().getAttribute(User.class), angebot)){
         
         	Button favorit = new Button("Favorit hinzufügen");
+        	favorit.setIcon(FontAwesome.PLUS_SQUARE_O);
         	favorit.addStyleName("AnfrageButton");
         	buttons.addComponent(favorit);
         	
@@ -435,6 +439,7 @@ public class Einzelansicht extends VerticalLayout implements View {
         }else if(VaadinSession.getCurrent().getAttribute("login").equals(true) && fp.favoritExists(VaadinSession.getCurrent().getAttribute(User.class), angebot)){
         	
         	Button removeFavorit = new Button("Favorit entfernen");
+        	removeFavorit.setIcon(FontAwesome.TRASH_O);
         	removeFavorit.addStyleName("AnfrageButton");
         	buttons.addComponent(removeFavorit);
         	
