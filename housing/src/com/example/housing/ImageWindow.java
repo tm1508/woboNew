@@ -3,33 +3,21 @@ package com.example.housing;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.InputStream;
-
 import com.example.housing.data.model.Offer;
-import com.example.housing.data.model.User;
-import com.example.housing.data.provider.UserProvider;
 import com.vaadin.event.MouseEvents.ClickListener;
 import com.vaadin.server.FileResource;
 import com.vaadin.server.FontAwesome;
-import com.vaadin.server.Page;
 import com.vaadin.server.Resource;
 import com.vaadin.server.StreamResource;
 import com.vaadin.server.VaadinService;
-import com.vaadin.server.VaadinSession;
-import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Image;
-import com.vaadin.ui.Label;
-import com.vaadin.ui.Notification;
 import com.vaadin.ui.Panel;
-import com.vaadin.ui.PasswordField;
-import com.vaadin.ui.TextField;
-import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
 import com.vaadin.ui.Button.ClickEvent;
-import com.vaadin.ui.Notification.Type;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -41,19 +29,21 @@ import com.vaadin.ui.Notification.Type;
 @SuppressWarnings("serial")
 public class ImageWindow extends Window{
 	
-	
+	//Groﬂansicht der Bilder
 	Image image00;
 	Image image22;
 	Image image33;
 	Image image44;
 	Image image55;
 	
+	//kleine Ansicht der Bilder
 	Image image;
 	Image image2;
 	Image image3;
 	Image image4;
 	Image image5;
 	
+	//welches Bild wird gerade groﬂ angezeigt?
 	int active=1;
 	
 	/**
@@ -71,8 +61,6 @@ public class ImageWindow extends Window{
 	public void initialisieren(final Offer angebot){
 		this.center();
 		this.setStyleName("image");
-		//this.setHeight("90%");
-	    //this.setWidth("60%");
 	    
 	    final VerticalLayout content = new VerticalLayout();
 	    content.setMargin(true);
