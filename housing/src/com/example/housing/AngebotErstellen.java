@@ -318,7 +318,8 @@ public class AngebotErstellen extends VerticalLayout implements View, Receiver, 
 		final CheckBox inactive = new CheckBox("deaktivieren");
 
 		Button save = new Button("Speichern");
-		save.addStyleName("BearbeitenButton");
+		save.setIcon(FontAwesome.SAVE);
+		save.addStyleName("speichern");
 		save.addClickListener(new Button.ClickListener() {
 			public void buttonClick(ClickEvent event) {
 				// Überprüfung ob alle Mussfelder gefüllt sind

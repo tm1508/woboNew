@@ -8,6 +8,7 @@ import com.example.housing.utility.Format;
 import com.vaadin.navigator.Navigator;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
+import com.vaadin.server.FontAwesome;
 import com.vaadin.server.VaadinSession;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
@@ -145,6 +146,7 @@ public class Suche extends VerticalLayout implements View{
 		
 
 		Button suchButton = new Button("Suchen");
+		suchButton.setIcon(FontAwesome.SEARCH);
 		suchButton.addStyleName("SuchButton");
 		gridSuche.addComponent(suchButton, 0 ,9);
 		
