@@ -197,7 +197,20 @@ public class Einzelansicht extends VerticalLayout implements View {
 		gridPictures.addComponent(image4, 4, 2, 5,3);
 		gridPictures.addComponent(image5, 6, 2, 7,3);
 		gridPictures.setWidth("40%");
-		    
+		
+		
+	    //Plus-Button
+        Button plus = new Button("Bilder vergrößern");
+        plus.setIcon(FontAwesome.SEARCH_PLUS);
+        plus.addStyleName("AnfrageButton");
+        plus.addClickListener(new Button.ClickListener() {
+			public void buttonClick(ClickEvent event) {
+				ImageWindow w = new ImageWindow(angebot);
+				UI.getCurrent().addWindow(w);
+			}
+        });
+        content.addComponent(plus);
+        
 		final GridLayout gridInfos = new GridLayout(2,16); 
 	//	gridInfos.setWidth("60%");
 		content.addComponent(gridInfos);
