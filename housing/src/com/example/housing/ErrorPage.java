@@ -4,7 +4,9 @@ import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.server.VaadinSession;
 import com.vaadin.shared.ui.label.ContentMode;
+import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
+import com.vaadin.ui.Panel;
 import com.vaadin.ui.VerticalLayout;
 
 // TODO: Auto-generated Javadoc
@@ -16,7 +18,7 @@ import com.vaadin.ui.VerticalLayout;
  * @see com.example.housing.HousingUI
  */
 @SuppressWarnings("serial")
-public class ErrorPage extends VerticalLayout implements View{
+public class ErrorPage extends HorizontalLayout implements View{
 	
 	/** The content. */
 	private VerticalLayout content;//Layout fuer den Inhalt
@@ -39,36 +41,65 @@ public class ErrorPage extends VerticalLayout implements View{
 	 * Instantiates a new ErrorPage.
 	 */
 	public ErrorPage(){
-		setMargin(true);
+		this.setWidth("100%");
 		
-		//Navigation hinzufuegen
-		Navigation nav = new Navigation();
-		nav.setWidth("100%");
-		nav.addStyleName("navigation");
-		addComponent(nav);
+		//linkes rotes Panel
+		Panel p = new Panel();
+		p.setWidth("100%");
+		p.setHeight("100%");
+		p.addStyleName("red");
+		addComponent(p);
+		this.setExpandRatio(p, 1);
 		
-		NavigationPublic navPublic = new NavigationPublic();
-		addComponent(navPublic);
+		//mittlerer Teil der Seite
+		VerticalLayout v = new VerticalLayout();
+				
+			//Navigation hinzufuegen
+			Navigation nav = new Navigation();
+			nav.setWidth("100%");
+			nav.addStyleName("navigation");
+			v.addComponent(nav);
+			
+			NavigationPublic navPublic = new NavigationPublic();
+			v.addComponent(navPublic);
+			
+			//falls der Benutzer eingelogt ist verändert sich die Navigation
+			if(VaadinSession.getCurrent().getAttribute("login").equals(true)){
+				nav.setVisible(true);
+				navPublic.setVisible(false);
+			}else{
+				nav.setVisible(false);
+				navPublic.setVisible(true);
+			}
+			
+			//Inhalt hinzufuegen
+			content = new VerticalLayout();
+			content.setMargin(true);
+			content.setWidth("100%");
+			setContent();//Methode zum befuellen des Inhalts aufrufen
+			v.addComponent(content);
+			
+			//Footer hinzufuegen
+			Footer f = new Footer();
+			v.addComponent(f);
+			
+			//rotes Panel unter dem Footer
+			Panel p2 = new Panel();
+			p2.setWidth("100%");
+			p2.addStyleName("red");
+			p2.setHeight("30px");
+			v.addComponent(p2);
+	
+		addComponent(v);
+		this.setExpandRatio(v, 12);
 		
-		//falls der Benutzer eingelogt ist verändert sich die Navigation
-		if(VaadinSession.getCurrent().getAttribute("login").equals(true)){
-			nav.setVisible(true);
-			navPublic.setVisible(false);
-		}else{
-			nav.setVisible(false);
-			navPublic.setVisible(true);
-		}
-		
-		//Inhalt hinzufuegen
-		content = new VerticalLayout();
-		content.setMargin(true);
-		content.setWidth("100%");
-		setContent();//Methode zum befuellen des Inhalts aufrufen
-		addComponent(content);
-		
-		//Footer hinzufuegen
-		Footer f = new Footer();
-		addComponent(f);
+		//rotes rechtes Panel
+		Panel p1 = new Panel();
+		p1.setWidth("100%");
+		p1.addStyleName("red");
+		p1.setHeight("100%");
+		addComponent(p1);
+		this.setExpandRatio(p1, 1);
 	}
 	
 	/**
@@ -91,7 +122,7 @@ public class ErrorPage extends VerticalLayout implements View{
 		text = new Label();
 		text.setImmediate(false);
 		text.setWidth("-1px");
-		text.setHeight("-1px");
+		text.setHeight("500px");
 		text.setValue("Tut uns leid, das hätte nicht passieren dürfen.<br/>"
 				+"<br/><br/> Der Fehler kann folgende Ursachen haben:"
 				+"<br/><br/> - Sie wollten zu einer nicht verfügbaren Seite navigieren. Beispielsweise können Sie die Profilseite nur aufrufen, wenn Sie eingeloggt sind."

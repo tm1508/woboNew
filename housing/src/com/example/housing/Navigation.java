@@ -44,7 +44,7 @@ public class Navigation extends CustomComponent {
 	public Navigation() {
 		buildMainLayout();
 		setCompositionRoot(mainLayout);
-
+		mainLayout.setStyleName("navigation");
 		// TODO add user code here
 		
 		//Bild
@@ -52,7 +52,7 @@ public class Navigation extends CustomComponent {
 		HorizontalLayout h = new HorizontalLayout();
 		
 		String basepath = VaadinService.getCurrent().getBaseDirectory().getAbsolutePath();
-		FileResource resource = new FileResource(new File(basepath + "/WEB-INF/image/dh.jpg"));
+		FileResource resource = new FileResource(new File(basepath + "/WEB-INF/image/dh.PNG"));
 		Image image = new Image("",resource);
 		h.addComponent(image);
 		
