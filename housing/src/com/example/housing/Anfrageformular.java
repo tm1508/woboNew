@@ -122,8 +122,7 @@ public class Anfrageformular extends VerticalLayout implements View{
 				}else{//eine Anfrage von diesem User für dieses Angebot existiert bereits
 					Notification not = new Notification("Sie hatten bereits eine Anfrage für dieses Angebot abgegeben.",Type.HUMANIZED_MESSAGE);//Meldung an den Nutzer
 					not.setDelayMsec(300);
-					not.setStyleName("warning");
-					not.setIcon(FontAwesome.EXCLAMATION_TRIANGLE);
+					not.setStyleName("failure");
 					not.show(Page.getCurrent());
 				}
 			}

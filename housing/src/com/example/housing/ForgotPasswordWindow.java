@@ -144,8 +144,7 @@ public class ForgotPasswordWindow extends Window{
 						}else{
 							Notification notif = new Notification("Änderung des Passworts fehlgeschlagen!","Bitte überprüfen Sie Ihre Eingaben.", Type.HUMANIZED_MESSAGE);
 							notif.setDelayMsec(300);
-							notif.setStyleName("warning");
-							notif.setIcon(FontAwesome.EXCLAMATION_TRIANGLE);
+							notif.setStyleName("failure");
 							notif.show(Page.getCurrent());
 						}
 											
@@ -153,8 +152,7 @@ public class ForgotPasswordWindow extends Window{
 						//Fehlermeldung bei Datenbankproblemen
 						Notification notif = new Notification("Änderung des Passworts fehlgeschlagen!","Es gibt keinen Nutzer mit dieser E-Mail-Adresse.", Type.HUMANIZED_MESSAGE);
 						notif.setDelayMsec(300);
-						notif.setStyleName("warning");
-						notif.setIcon(FontAwesome.EXCLAMATION_TRIANGLE);
+						notif.setStyleName("failure");
 						notif.show(Page.getCurrent());
 					}
 				}

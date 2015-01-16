@@ -465,8 +465,7 @@ public class AngebotErstellen extends VerticalLayout implements View, Receiver, 
 					// auf dem Bildschirm ausgegeben
 					Notification.show("");
 					Notification not1 = new Notification("Bitte füllen Sie alle Mussfelder*", Type.HUMANIZED_MESSAGE);
-					not1.setStyleName("warning");
-					not1.setIcon(FontAwesome.EXCLAMATION_TRIANGLE);
+					not1.setStyleName("failure");
 					not1.setDelayMsec(300);
 					not1.show(Page.getCurrent());
 			}
@@ -845,8 +844,7 @@ public class AngebotErstellen extends VerticalLayout implements View, Receiver, 
 						getUI().getNavigator().navigateTo(name);
 					} else {
 						Notification not = new Notification("Das Angebot konnte nicht geändert werden.", Type.HUMANIZED_MESSAGE);
-						not.setStyleName("warning");
-						not.setIcon(FontAwesome.EXCLAMATION_TRIANGLE);
+						not.setStyleName("failure");
 						not.setDelayMsec(300);
 						not.show(Page.getCurrent());
 					}
@@ -856,8 +854,7 @@ public class AngebotErstellen extends VerticalLayout implements View, Receiver, 
 					// auf dem Bildschirm ausgegeben
 					Notification.show("");
 					Notification not1 = new Notification("Bitte füllen Sie alle Mussfelder*", Type.HUMANIZED_MESSAGE);
-					not1.setStyleName("warning");
-					not1.setIcon(FontAwesome.EXCLAMATION_TRIANGLE);
+					not1.setStyleName("failure");
 					not1.setDelayMsec(300);
 					not1.show(Page.getCurrent());
 			}

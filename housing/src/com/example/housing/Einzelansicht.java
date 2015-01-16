@@ -368,15 +368,13 @@ public class Einzelansicht extends VerticalLayout implements View {
 			public void buttonClick(ClickEvent event) {
 				if(VaadinSession.getCurrent().getAttribute("login").equals(false)) {
 					Notification not = new Notification("Sie müssen sich als verifizierter DH-Student einloggen, um eine Anfrage zu einem Wohnungsangebot stellen zu können!",Type.HUMANIZED_MESSAGE);//Meldung an den Nutzer
-					not.setStyleName("warning");
-					not.setIcon(FontAwesome.EXCLAMATION_TRIANGLE);
+					not.setStyleName("failure");
 					not.setDelayMsec(300);
 					not.show(Page.getCurrent());
 				} else if (VaadinSession.getCurrent().getAttribute(User.class).getAccessLevel() != 1) {
 					Notification not = new Notification("Sie müssen sich als DH-Student verifizieren, um eine Anfrage zu einem Wohnungsangebot stellen zu können!",Type.HUMANIZED_MESSAGE);//Meldung an den Nutzer
 					not.setDelayMsec(300);
-					not.setStyleName("warning");
-					not.setIcon(FontAwesome.EXCLAMATION_TRIANGLE);
+					not.setStyleName("failure");
 					not.show(Page.getCurrent());
 				} else if(VaadinSession.getCurrent().getAttribute("login").equals(true)){
 		        	 
@@ -384,8 +382,7 @@ public class Einzelansicht extends VerticalLayout implements View {
 		        		
 		        		  Notification not = new Notification("Sie haben den Anbieter bereits kontaktiert",Type.HUMANIZED_MESSAGE);//Meldung an den Nutzer
 							not.setDelayMsec(300);
-							not.setStyleName("warning");
-							not.setIcon(FontAwesome.EXCLAMATION_TRIANGLE);
+							not.setStyleName("failure");
 							not.show(Page.getCurrent());//+re.getMessage());
 		              	
 		              } else {

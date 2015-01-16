@@ -366,8 +366,7 @@ public class Registrierung extends VerticalLayout implements View{
 						not.show(Page.getCurrent());
 					}else{//ein Nutzer mit dieser E-Mail-Adresse existiert bereits
 						Notification not = new Notification("Die Registrierung war nicht erfolgreich. Ein Nutzer mit dieser E-Mail-Adresse existiert bereits.",Type.HUMANIZED_MESSAGE);//Meldung an den Nutzer
-						not.setStyleName("warning");
-						not.setIcon(FontAwesome.EXCLAMATION_TRIANGLE);
+						not.setStyleName("failure");
 						not.setDelayMsec(300);
 						not.show(Page.getCurrent());
 					}
@@ -375,8 +374,7 @@ public class Registrierung extends VerticalLayout implements View{
 
 				}else{//Registrierung nicht erfolgreich
 					Notification not = new Notification("Die Registrierung war nicht erfolgreich. Bitte überprüfen Sie Ihre Eingaben.",Type.HUMANIZED_MESSAGE);//Meldung an den Nutzer
-					not.setStyleName("warning");
-					not.setIcon(FontAwesome.EXCLAMATION_TRIANGLE);
+					not.setStyleName("failure");
 					not.setDelayMsec(300);
 					not.show(Page.getCurrent());
 				}

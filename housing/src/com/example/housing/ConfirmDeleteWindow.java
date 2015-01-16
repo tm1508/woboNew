@@ -56,8 +56,7 @@ public class ConfirmDeleteWindow extends Window {
 			public void buttonClick(ClickEvent event) {
 				
 				Notification not = new Notification("Das Angebot wurde nicht gelöscht.",Type.HUMANIZED_MESSAGE);//Meldung an den Nutzer
-				not.setIcon(FontAwesome.EXCLAMATION_TRIANGLE);
-				not.setStyleName("warning");
+				not.setStyleName("failure");
 				not.setDelayMsec(300);
 				not.show(Page.getCurrent());
 				ConfirmDeleteWindow.this.close();

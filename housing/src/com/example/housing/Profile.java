@@ -442,8 +442,7 @@ public class Profile extends VerticalLayout implements View {
 								Notification not = new Notification(
 										"Ein Nutzer mit dieser E-Mail-Adresse existiert bereits.", Type.HUMANIZED_MESSAGE);
 								not.setDelayMsec(300);
-								not.setStyleName("warning");
-								not.setIcon(FontAwesome.EXCLAMATION_TRIANGLE);
+								not.setStyleName("failure");
 								not.show(Page.getCurrent());
 
 							}
@@ -486,8 +485,7 @@ public class Profile extends VerticalLayout implements View {
 					
 					Notification not = new Notification("Die Speicherung Ihrer Änderungen war nicht erfolgreich. Bitte überprüfen Sie Ihre Eingaben.", Type.HUMANIZED_MESSAGE);
 					not.setDelayMsec(300);
-					not.setStyleName("warning");
-					not.setIcon(FontAwesome.EXCLAMATION_TRIANGLE);
+					not.setStyleName("failure");
 					not.show(Page.getCurrent());
 					// Meldung an den Nutzer
 				}
