@@ -953,9 +953,18 @@ public class AngebotErstellen extends HorizontalLayout implements View, Receiver
 
 	@Override
 	public OutputStream receiveUpload(String filename, String mimeType) {
+		
 		try {
+			
+			if(mimeType.contains("image")){
+				
 			tmpImg = new ByteArrayOutputStream();
 			return tmpImg;
+			}
+			else{
+			Notification.show("Bilddatei erforderlich");
+			return null; 
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
