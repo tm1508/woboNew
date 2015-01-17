@@ -141,13 +141,35 @@ public class Einzelansicht extends HorizontalLayout implements View {
 		lTitel.addStyleName("ImportantTitle");
 		content.addComponent(lTitel);
 		
+		//Adresse wird nur verifizierten Studenten angezeigt
+		 if(VaadinSession.getCurrent().getAttribute("login").equals(true)){
+			 
+	if(VaadinSession.getCurrent().getAttribute(User.class).getAccessLevel() == 1) {
+		
+	// if(VaadinSession.getCurrent().getAttribute("login").equals(true)){
+		
 		//adresse
-		String adress = angebot.getStreet();
+		String street = angebot.getStreet();
 		String zip = angebot.getZip();
 		String city = angebot.getCity();
-		Label lAdress = new Label(adress + "   " + zip + "   " + city);
-
+		Label lAdress = new Label("Straße: " + street + "  PLZ: " + zip + "  Ort: " + city);
+		
 		content.addComponent(lAdress);
+		}else{
+			String zip = angebot.getZip();
+			
+			Label lAdress = new Label("PLZ: " + zip + "  Die volle Adresse ist nur für verifizierte Studenten sichtbar.");
+			
+			content.addComponent(lAdress);
+			  }
+	
+	} else{
+		String zip = angebot.getZip();
+		
+		Label lAdress = new Label("PLZ: " + zip + "  Die volle Adresse ist nur für verifizierte Studenten sichtbar.");
+		
+		content.addComponent(lAdress);
+		  }
 		
 		//pictures
 		GridLayout gridPictures = new GridLayout(8, 8);
