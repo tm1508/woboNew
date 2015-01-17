@@ -89,6 +89,7 @@ public class FAQ extends HorizontalLayout implements View {
 		content.setWidth("100%");
 		setContent();// Methode zum befuellen des Inhalts aufrufen
 		v.addComponent(content);
+	
 
 		// Footer hinzufuegen
 		Footer f = new Footer();
@@ -100,6 +101,7 @@ public class FAQ extends HorizontalLayout implements View {
 		p2.addStyleName("red");
 		p2.setHeight("30px");
 		v.addComponent(p2);
+	
 
 		addComponent(v);
 		this.setExpandRatio(v, 12);

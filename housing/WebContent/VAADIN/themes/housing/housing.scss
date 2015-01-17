@@ -96,7 +96,9 @@ $v-background-color: #F7F7F7;
 //Bilder
   	
   	.v-window-image{//gesamtes ImageWindow
-  		
+  		.v-window-caption{
+  			font-size: 16px;
+  		}
   	}
   	
   	 .v-verticallayout-picture{//einzelne groﬂe Ansicht eines Bildes

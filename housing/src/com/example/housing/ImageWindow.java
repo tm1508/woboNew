@@ -54,7 +54,7 @@ public class ImageWindow extends Window {
 	 * Instantiates a new login window.
 	 */
 	public ImageWindow(Offer angebot) {
-		super("Bilder zu diesem Wohnungsangebot");
+		super(" Bilder zu diesem Wohnungsangebot");
 		initialisieren(angebot);
 	}
 
@@ -66,6 +66,8 @@ public class ImageWindow extends Window {
 	public void initialisieren(final Offer angebot) {
 		// Window
 		this.center();
+		this.setIcon(FontAwesome.IMAGE);
+		this.setResizable(false);
 		this.setStyleName("image");
 
 		// Rahmen für die Fotos erzeugen

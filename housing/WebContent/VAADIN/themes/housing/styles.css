@@ -1465,15 +1465,9 @@ div.v-layout.v-horizontal.v-widget {
 	vertical-align: top;
 }
 
+@import "styles.css";
+
 .housing {
-	@-webkit-keyframes moveTarget {
-		0% {
-		left: -700px;
-	}
-		100% {
-		left: 0px;
-	}
-	}
 	@-webkit-keyframes fadeIn {
 		0% {
 		opacity: 0;
@@ -11331,22 +11325,15 @@ div.v-layout.v-horizontal.v-widget {
 }
 
 .housing .v-Notification.warning {
-	background: #fff;
-	border: 2px solid #d20000;
+	background: #FFF3D2;
 }
 
 .housing .v-Notification.warning h1 {
-	color: #ff0000;
-}
-
-.housing .v-Notification.warning h1:before {
-	font-family: FontAwesome;
-	content: "\f071";
-	margin-right: 0.5em;
+	color: #AC7C00;
 }
 
 .housing .v-Notification.warning p {
-	color: #800000;
+	color: #9D874D;
 }
 
 .housing .v-Notification.error {
@@ -11512,7 +11499,7 @@ div.v-layout.v-horizontal.v-widget {
 
 .housing .v-Notification.success h1:before, .housing .v-Notification.failure h1:before {
 	font-family: FontAwesome;
-	content: "\f046";
+	content: "\f00c";
 	margin-right: 0.5em;
 }
 
@@ -11529,7 +11516,7 @@ div.v-layout.v-horizontal.v-widget {
 }
 
 .housing .v-Notification.failure h1:before {
-	content: "\f071";
+	content: "\f05e";
 }
 
 .housing .valo-menu {
@@ -12129,6 +12116,17 @@ div.v-layout.v-horizontal.v-widget {
 	box-shadow: none;
 }
 
+.housing .v-label-title {
+	font-size: 30px;
+	color: #e2001a;
+	margin-bottom: 20px;
+}
+
+.housing .v-textfield {
+	margin-bottom: 15px;
+	margin-right: 30px;
+}
+
 .housing .v-panel-red {
 	background-color: #e2001a;
 	box-shadow: none;
@@ -12147,15 +12145,8 @@ div.v-layout.v-horizontal.v-widget {
 	padding-top: 0px;
 }
 
-.housing .v-label-title {
-	font-size: 30px;
-	color: #e2001a;
-	margin-bottom: 20px;
-}
-
-.housing .v-textfield {
-	margin-bottom: 15px;
-	margin-right: 30px;
+.housing .v-window-image .v-window-caption {
+	font-size: 16px;
 }
 
 .housing .v-verticallayout-picture {
@@ -12272,16 +12263,6 @@ div.v-layout.v-horizontal.v-widget {
 	color: #e2001a;
 	border-color: #e2001a;
 }
-.housing .v-button-speichern {
-	margin-top: 30px;
-	color: #e2001a;
-	border-color: #e2001a;
-}
-.housing .v-button-log {
-	margin-top: 30px;
-	color: #e2001a;
-	border-color: #e2001a;
-}
 
 .housing .v-label-ImportantTitle {
 	font-size: 20px;
@@ -12289,9 +12270,7 @@ div.v-layout.v-horizontal.v-widget {
 }
 
 .housing .v-button-BearbeitenButton {
-	margin-top: 30px;
-	color: #e2001a;
-	border-color: #e2001a;
+	margin-top: 10px;
 }
 
 .housing .v-button-AnfrageButton {
