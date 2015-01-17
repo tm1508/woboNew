@@ -1,0 +1,1 @@
+$wnd.com_example_housing_HousingWidgetset.runAsyncCallback2('Cbb(1672,1,ywd);_.vc=function A8b(){_Yb((!UYb&&(UYb=new eZb),UYb),this.b.e)};Xqd(pi)(2);\n//# sourceURL=com.example.housing.HousingWidgetset-2.js\n')

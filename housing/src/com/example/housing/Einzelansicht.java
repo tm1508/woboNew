@@ -19,6 +19,7 @@ import com.example.housing.utility.Format;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.server.FileResource;
+import com.vaadin.server.FontAwesome;
 import com.vaadin.server.Page;
 import com.vaadin.server.Resource;
 import com.vaadin.server.StreamResource;
@@ -43,7 +44,7 @@ import com.vaadin.ui.Button.ClickEvent;
 /**
  * The Class Einzelansicht.
  */
-public class Einzelansicht extends VerticalLayout implements View {
+public class Einzelansicht extends HorizontalLayout implements View {
 	
 	/** The content. */
 	VerticalLayout content;
@@ -66,31 +67,65 @@ public class Einzelansicht extends VerticalLayout implements View {
 		content.setSizeFull();
 		content.setSpacing(true);
 		
-		Navigation nav = new Navigation();
-		addComponent(nav);
+		this.setWidth("100%");
 		
-		NavigationPublic navPublic = new NavigationPublic();
-		addComponent(navPublic);
+		//linkes rotes Panel
+		Panel p = new Panel();
+		p.setWidth("100%");
+		p.setHeight("100%");
+		p.addStyleName("red");
+		addComponent(p);
+		this.setExpandRatio(p, 1);
 		
-		//Listenzeile list = new Listenzeile();
-		//addComponent(list);
-		
-		//falls der Benutzer eingelogt ist verändert sich die Navigation
-		if(VaadinSession.getCurrent().getAttribute("login").equals(true)){
-			nav.setVisible(true);
-			navPublic.setVisible(false);
-		}else{
-			nav.setVisible(false);
-			navPublic.setVisible(true);
-		}
+		//mittlerer Teil der Seite
+		VerticalLayout v = new VerticalLayout();
+				
+			//Navigation hinzufuegen
+			Navigation nav = new Navigation();
+			nav.setWidth("100%");
+			nav.addStyleName("navigation");
+			v.addComponent(nav);
 			
-		setContent();
-		addComponent(content);
-
-		Footer f = new Footer();
-		addComponent(f);
-//		setComponentAlignment(f, com.vaadin.ui.Alignment.TOP_CENTER);
-		//content.addComponent(f);
+			NavigationPublic navPublic = new NavigationPublic();
+			v.addComponent(navPublic);
+			
+			//falls der Benutzer eingelogt ist verändert sich die Navigation
+			if(VaadinSession.getCurrent().getAttribute("login").equals(true)){
+				nav.setVisible(true);
+				navPublic.setVisible(false);
+			}else{
+				nav.setVisible(false);
+				navPublic.setVisible(true);
+			}
+			
+			//Inhalt hinzufuegen
+			content = new VerticalLayout();
+			content.setMargin(true);
+			content.setWidth("100%");
+			setContent();//Methode zum befuellen des Inhalts aufrufen
+			v.addComponent(content);
+			
+			//Footer hinzufuegen
+			Footer f = new Footer();
+			v.addComponent(f);
+			
+			//rotes Panel unter dem Footer
+			Panel p2 = new Panel();
+			p2.setWidth("100%");
+			p2.addStyleName("red");
+			p2.setHeight("30px");
+			v.addComponent(p2);
+	
+		addComponent(v);
+		this.setExpandRatio(v, 12);
+		
+		//rotes rechtes Panel
+		Panel p1 = new Panel();
+		p1.setWidth("100%");
+		p1.addStyleName("red");
+		p1.setHeight("100%");
+		addComponent(p1);
+		this.setExpandRatio(p1, 1);
 	}
 
 
@@ -196,7 +231,20 @@ public class Einzelansicht extends VerticalLayout implements View {
 		gridPictures.addComponent(image4, 4, 2, 5,3);
 		gridPictures.addComponent(image5, 6, 2, 7,3);
 		gridPictures.setWidth("40%");
-		    
+		
+		
+	    //Plus-Button
+        Button plus = new Button("Bilder vergrößern");
+        plus.setIcon(FontAwesome.SEARCH_PLUS);
+        plus.addStyleName("AnfrageButton");
+        plus.addClickListener(new Button.ClickListener() {
+			public void buttonClick(ClickEvent event) {
+				ImageWindow w = new ImageWindow(angebot);
+				UI.getCurrent().addWindow(w);
+			}
+        });
+        content.addComponent(plus);
+        
 		final GridLayout gridInfos = new GridLayout(2,16); 
 	//	gridInfos.setWidth("60%");
 		content.addComponent(gridInfos);
@@ -327,6 +375,7 @@ public class Einzelansicht extends VerticalLayout implements View {
         		HorizontalLayout userButtons = new HorizontalLayout();
         		
 				Button change = new Button("Bearbeiten");
+				change.setIcon(FontAwesome.PENCIL);
 				change.addStyleName("BearbeitenButton");
 				change.addClickListener(new Button.ClickListener() {
 					public void buttonClick(ClickEvent event) {
@@ -337,6 +386,7 @@ public class Einzelansicht extends VerticalLayout implements View {
 				});
 				
 				Button delete = new Button("Angebot löschen");
+				delete.setIcon(FontAwesome.TRASH_O);
 				delete.addStyleName("BearbeitenButton");
 				delete.addClickListener(new Button.ClickListener() {
 					public void buttonClick(ClickEvent event) {
@@ -358,6 +408,7 @@ public class Einzelansicht extends VerticalLayout implements View {
         //Anfrage-Button
         Button anfrage = new Button("Anfrage");
         anfrage.addStyleName("AnfrageButton");
+        anfrage.setIcon(FontAwesome.MAIL_FORWARD);
         buttons.addComponent(anfrage);
         if(angebot.isInactive()){
         	anfrage.setEnabled(false);
@@ -366,14 +417,23 @@ public class Einzelansicht extends VerticalLayout implements View {
         anfrage.addClickListener(new Button.ClickListener() {
 			public void buttonClick(ClickEvent event) {
 				if(VaadinSession.getCurrent().getAttribute("login").equals(false)) {
-					Notification.show("Sie müssen sich als verifizierter DH-Student einloggen, um eine Anfrage zu einem Wohnungsangebot stellen zu können!", Type.HUMANIZED_MESSAGE);
+					Notification not = new Notification("Sie müssen sich als verifizierter DH-Student einloggen, um eine Anfrage zu einem Wohnungsangebot stellen zu können!",Type.HUMANIZED_MESSAGE);//Meldung an den Nutzer
+					not.setStyleName("failure");
+					not.setDelayMsec(300);
+					not.show(Page.getCurrent());
 				} else if (VaadinSession.getCurrent().getAttribute(User.class).getAccessLevel() != 1) {
-					Notification.show("Sie müssen sich als DH-Student verifizieren, um eine Anfrage zu einem Wohnungsangebot stellen zu können!", Type.HUMANIZED_MESSAGE);
+					Notification not = new Notification("Sie müssen sich als DH-Student verifizieren, um eine Anfrage zu einem Wohnungsangebot stellen zu können!",Type.HUMANIZED_MESSAGE);//Meldung an den Nutzer
+					not.setDelayMsec(300);
+					not.setStyleName("failure");
+					not.show(Page.getCurrent());
 				} else if(VaadinSession.getCurrent().getAttribute("login").equals(true)){
 		        	 
 		        	  if(new RequestProvider().requestExists(VaadinSession.getCurrent().getAttribute(User.class), angebot)){
 		        		
-		              	Notification.show("Sie haben den Anbieter bereits kontaktiert"); //+re.getMessage());
+		        		  Notification not = new Notification("Sie haben den Anbieter bereits kontaktiert",Type.HUMANIZED_MESSAGE);//Meldung an den Nutzer
+							not.setDelayMsec(300);
+							not.setStyleName("failure");
+							not.show(Page.getCurrent());//+re.getMessage());
 		              	
 		              } else {
 					String name = "Anfrageformular";
@@ -398,6 +458,7 @@ public class Einzelansicht extends VerticalLayout implements View {
         if(VaadinSession.getCurrent().getAttribute("login").equals(true) && !fp.favoritExists(VaadinSession.getCurrent().getAttribute(User.class), angebot)){
         
         	Button favorit = new Button("Favorit hinzufügen");
+        	favorit.setIcon(FontAwesome.PLUS_SQUARE_O);
         	favorit.addStyleName("AnfrageButton");
         	buttons.addComponent(favorit);
         	
@@ -414,6 +475,8 @@ public class Einzelansicht extends VerticalLayout implements View {
 					getUI().getNavigator().navigateTo(name);
 					
         			Notification not = new Notification("Das Angebot wurde zu Ihren Favoriten hinzugefügt.");
+        			not.setStyleName("success");
+					not.setIcon(FontAwesome.CHECK_SQUARE_O);
         			not.setDelayMsec(300);
         			not.show(Page.getCurrent());
         			
@@ -423,6 +486,7 @@ public class Einzelansicht extends VerticalLayout implements View {
         }else if(VaadinSession.getCurrent().getAttribute("login").equals(true) && fp.favoritExists(VaadinSession.getCurrent().getAttribute(User.class), angebot)){
         	
         	Button removeFavorit = new Button("Favorit entfernen");
+        	removeFavorit.setIcon(FontAwesome.TRASH_O);
         	removeFavorit.addStyleName("AnfrageButton");
         	buttons.addComponent(removeFavorit);
         	
@@ -438,6 +502,8 @@ public class Einzelansicht extends VerticalLayout implements View {
 					getUI().getNavigator().navigateTo(name);
         			
         			Notification not = new Notification("Das Angebot wurde aus Ihren Favoriten entfernt.");
+        			not.setStyleName("success");
+        			not.setIcon(FontAwesome.CHECK_SQUARE_O);
         			not.setDelayMsec(300);
         			not.show(Page.getCurrent());
         			

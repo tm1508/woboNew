@@ -14,6 +14,7 @@ import com.vaadin.data.validator.StringLengthValidator;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.server.FontAwesome;
+import com.vaadin.server.Page;
 import com.vaadin.server.UserError;
 import com.vaadin.server.VaadinSession;
 import com.vaadin.ui.Button;
@@ -23,6 +24,7 @@ import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Link;
 import com.vaadin.ui.Notification;
+import com.vaadin.ui.Panel;
 import com.vaadin.ui.Notification.Type;
 import com.vaadin.ui.PasswordField;
 import com.vaadin.ui.TextField;
@@ -37,7 +39,7 @@ import com.vaadin.ui.VerticalLayout;
  * @see com.example.housing.HousingUI
  */
 @SuppressWarnings("serial")
-public class Registrierung extends VerticalLayout implements View{
+public class Registrierung extends HorizontalLayout implements View{
 	
 	/** The content. */
 	private VerticalLayout content;//Layout fuer den Inhalt
@@ -98,37 +100,65 @@ public class Registrierung extends VerticalLayout implements View{
 	 * Instantiates a new Registrierung.
 	 */
 	public Registrierung(){
-		setMargin(true);
+this.setWidth("100%");
 		
-		//Navigation hinzufuegen
-		Navigation nav = new Navigation();
-		nav.setWidth("100%");
-		nav.addStyleName("navigation");
-		addComponent(nav);
+		//linkes rotes Panel
+		Panel p = new Panel();
+		p.setWidth("100%");
+		p.setHeight("100%");
+		p.addStyleName("red");
+		addComponent(p);
+		this.setExpandRatio(p, 1);
 		
-		NavigationPublic navPublic = new NavigationPublic();
-		addComponent(navPublic);
+		//mittlerer Teil der Seite
+		VerticalLayout v = new VerticalLayout();
+				
+			//Navigation hinzufuegen
+			Navigation nav = new Navigation();
+			nav.setWidth("100%");
+			nav.addStyleName("navigation");
+			v.addComponent(nav);
+			
+			NavigationPublic navPublic = new NavigationPublic();
+			v.addComponent(navPublic);
+			
+			//falls der Benutzer eingelogt ist verändert sich die Navigation
+			if(VaadinSession.getCurrent().getAttribute("login").equals(true)){
+				nav.setVisible(true);
+				navPublic.setVisible(false);
+			}else{
+				nav.setVisible(false);
+				navPublic.setVisible(true);
+			}
+			
+			//Inhalt hinzufuegen
+			content = new VerticalLayout();
+			content.setMargin(true);
+			content.setWidth("100%");
+			setContent();//Methode zum befuellen des Inhalts aufrufen
+			v.addComponent(content);
+			
+			//Footer hinzufuegen
+			Footer f = new Footer();
+			v.addComponent(f);
+			
+			//rotes Panel unter dem Footer
+			Panel p2 = new Panel();
+			p2.setWidth("100%");
+			p2.addStyleName("red");
+			p2.setHeight("30px");
+			v.addComponent(p2);
+	
+		addComponent(v);
+		this.setExpandRatio(v, 12);
 		
-		//falls der Benutzer eingelogt ist verändert sich die Navigation
-		if(VaadinSession.getCurrent().getAttribute("login").equals(true)){
-			nav.setVisible(true);
-			navPublic.setVisible(false);
-		}else{
-			nav.setVisible(false);
-			navPublic.setVisible(true);
-		}
-		
-		//Inhalt hinzufuegen
-		content = new VerticalLayout();
-		content.setMargin(true);
-		content.setWidth("100%");
-		setContent();//Methode zum befuellen des Inhalts aufrufen
-		addComponent(content);
-		
-		//Footer hinzufuegen
-		Footer f = new Footer();
-		addComponent(f);	
-
+		//rotes rechtes Panel
+		Panel p1 = new Panel();
+		p1.setWidth("100%");
+		p1.addStyleName("red");
+		p1.setHeight("100%");
+		addComponent(p1);
+		this.setExpandRatio(p1, 1);
 	}
 	
 	/**
@@ -321,6 +351,8 @@ public class Registrierung extends VerticalLayout implements View{
 		
 		// button
 		button = new Button();
+		button.setStyleName("speichern");
+		button.setIcon(FontAwesome.SAVE);
 		button.setCaption("Registrierung abschließen");
 		button.setImmediate(true);
 		button.setDescription("Abschließen der Registrierung, danach können Sie sich anmelden");
@@ -358,14 +390,24 @@ public class Registrierung extends VerticalLayout implements View{
 						getUI().getNavigator().addView(name, new Startseite());
 						getUI().getNavigator().navigateTo(name);
 						
-						Notification.show("Die Registrierung war erfolgreich. Sie haben eine Email zur Aktivierung erhalten.",Type.HUMANIZED_MESSAGE);//Meldung an den Nutzer
+						Notification not = new Notification("Die Registrierung war erfolgreich. Sie haben eine Email zur Aktivierung erhalten.",Type.HUMANIZED_MESSAGE);//Meldung an den Nutzer
+						not.setStyleName("success");
+						not.setIcon(FontAwesome.CHECK_SQUARE_O);
+						not.setDelayMsec(300);
+						not.show(Page.getCurrent());
 					}else{//ein Nutzer mit dieser E-Mail-Adresse existiert bereits
-						Notification.show("Die Registrierung war nicht erfolgreich. Ein Nutzer mit dieser E-Mail-Adresse existiert bereits.",Type.HUMANIZED_MESSAGE);//Meldung an den Nutzer
+						Notification not = new Notification("Die Registrierung war nicht erfolgreich. Ein Nutzer mit dieser E-Mail-Adresse existiert bereits.",Type.HUMANIZED_MESSAGE);//Meldung an den Nutzer
+						not.setStyleName("failure");
+						not.setDelayMsec(300);
+						not.show(Page.getCurrent());
 					}
 					
 
 				}else{//Registrierung nicht erfolgreich
-					Notification.show("Die Registrierung war nicht erfolgreich. Bitte überprüfen Sie Ihre Eingaben.",Type.HUMANIZED_MESSAGE);//Meldung an den Nutzer
+					Notification not = new Notification("Die Registrierung war nicht erfolgreich. Bitte überprüfen Sie Ihre Eingaben.",Type.HUMANIZED_MESSAGE);//Meldung an den Nutzer
+					not.setStyleName("failure");
+					not.setDelayMsec(300);
+					not.show(Page.getCurrent());
 				}
 			}
 		});

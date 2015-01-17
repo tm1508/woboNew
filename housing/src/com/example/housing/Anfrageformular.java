@@ -11,15 +11,17 @@ import com.vaadin.server.FontAwesome;
 import com.vaadin.server.Page;
 import com.vaadin.server.VaadinSession;
 import com.vaadin.ui.Button;
+import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Notification;
+import com.vaadin.ui.Panel;
 import com.vaadin.ui.RichTextArea;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Notification.Type;
 
 @SuppressWarnings("serial")
-public class Anfrageformular extends VerticalLayout implements View{
+public class Anfrageformular extends HorizontalLayout implements View{
 
 	private Offer requestedOffer;
 	
@@ -38,33 +40,53 @@ public class Anfrageformular extends VerticalLayout implements View{
 		//Bezug zu Angebot
 		requestedOffer = currentOffer;
 		
-		setMargin(true);
+		this.setWidth("100%");
 		
-		//Navigation hinzufuegen
-		Navigation nav = new Navigation();
-		nav.setWidth("100%");
-		nav.addStyleName("navigation");
-		addComponent(nav);
+		//linkes rotes Panel
+		Panel p = new Panel();
+		p.setWidth("100%");
+		p.setHeight("100%");
+		p.addStyleName("red");
+		addComponent(p);
+		this.setExpandRatio(p, 1);
 		
-		/*//falls der Benutzer eingelogt ist verändert sich die Navigation
-		if(VaadinSession.getCurrent().getAttribute("login").equals(true)){
-			nav.setVisible(true);
-			navPublic.setVisible(false);
-		}else{
-			nav.setVisible(false);
-			navPublic.setVisible(true);
-		}*/
+		//mittlerer Teil der Seite
+		VerticalLayout v = new VerticalLayout();
+				
+			//Navigation hinzufuegen
+			Navigation nav = new Navigation();
+			nav.setWidth("100%");
+			nav.addStyleName("navigation");
+			v.addComponent(nav);
+			
+			//Inhalt hinzufuegen
+			content = new VerticalLayout();
+			content.setMargin(true);
+			content.setWidth("100%");
+			setContent();//Methode zum befuellen des Inhalts aufrufen
+			v.addComponent(content);
+			
+			//Footer hinzufuegen
+			Footer f = new Footer();
+			v.addComponent(f);
+			
+			//rotes Panel unter dem Footer
+			Panel p2 = new Panel();
+			p2.setWidth("100%");
+			p2.addStyleName("red");
+			p2.setHeight("30px");
+			v.addComponent(p2);
+	
+		addComponent(v);
+		this.setExpandRatio(v, 12);
 		
-		//Inhalt hinzufuegen
-		content = new VerticalLayout();
-		content.setMargin(true);
-		content.setWidth("100%");
-		setContent();//Methode zum befuellen des Inhalts aufrufen
-		addComponent(content);
-		
-		//Footer hinzufuegen
-		Footer f = new Footer();
-		addComponent(f);	
+		//rotes rechtes Panel
+		Panel p1 = new Panel();
+		p1.setWidth("100%");
+		p1.addStyleName("red");
+		p1.setHeight("100%");
+		addComponent(p1);
+		this.setExpandRatio(p1, 1);
 	}
 
 	private void setContent() {
@@ -94,6 +116,7 @@ public class Anfrageformular extends VerticalLayout implements View{
 		
 		// button
 		Button sendButton = new Button();
+		sendButton.setIcon(FontAwesome.ENVELOPE_SQUARE);
 		sendButton.setCaption("Anfrage abschicken");
 		//button.setImmediate(true);
 		sendButton.setWidth("-1px");
@@ -115,11 +138,14 @@ public class Anfrageformular extends VerticalLayout implements View{
 					getUI().getNavigator().navigateTo(name);
 					
 					Notification not = new Notification("Die Anfrage war erfolgreich. Der Anbieter kann Sie nun kontaktieren.",Type.HUMANIZED_MESSAGE);//Meldung an den Nutzer
+					not.setStyleName("success");
 					not.setDelayMsec(300);
+					not.setIcon(FontAwesome.CHECK_SQUARE_O);
 					not.show(Page.getCurrent());
 				}else{//eine Anfrage von diesem User für dieses Angebot existiert bereits
 					Notification not = new Notification("Sie hatten bereits eine Anfrage für dieses Angebot abgegeben.",Type.HUMANIZED_MESSAGE);//Meldung an den Nutzer
 					not.setDelayMsec(300);
+					not.setStyleName("failure");
 					not.show(Page.getCurrent());
 				}
 			}

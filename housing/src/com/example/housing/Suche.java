@@ -8,6 +8,7 @@ import com.example.housing.utility.Format;
 import com.vaadin.navigator.Navigator;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
+import com.vaadin.server.FontAwesome;
 import com.vaadin.server.VaadinSession;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
@@ -16,6 +17,7 @@ import com.vaadin.ui.GridLayout;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Notification;
+import com.vaadin.ui.Panel;
 import com.vaadin.ui.PopupDateField;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
@@ -26,7 +28,7 @@ import java.util.List;
 /**
  * The Class Suche.
  */
-public class Suche extends VerticalLayout implements View{
+public class Suche extends HorizontalLayout implements View{
 
 	/** The content. */
 	VerticalLayout content;
@@ -44,27 +46,65 @@ public class Suche extends VerticalLayout implements View{
 	 * Instantiates a new suche.
 	 */
 	public Suche(){
-		Navigation nav = new Navigation();
-		addComponent(nav);
+this.setWidth("100%");
 		
-		NavigationPublic navPublic = new NavigationPublic();
-		addComponent(navPublic);
+		//linkes rotes Panel
+		Panel p = new Panel();
+		p.setWidth("100%");
+		p.setHeight("100%");
+		p.addStyleName("red");
+		addComponent(p);
+		this.setExpandRatio(p, 1);
 		
-		//falls der Benutzer eingelogt ist verï¿½ndert sich die Navigation
-		if(VaadinSession.getCurrent().getAttribute("login").equals(true)){
-			nav.setVisible(true);
-			navPublic.setVisible(false);
-		}else{
-			nav.setVisible(false);
-			navPublic.setVisible(true);
-		}
+		//mittlerer Teil der Seite
+		VerticalLayout v = new VerticalLayout();
+				
+			//Navigation hinzufuegen
+			Navigation nav = new Navigation();
+			nav.setWidth("100%");
+			nav.addStyleName("navigation");
+			v.addComponent(nav);
 			
+			NavigationPublic navPublic = new NavigationPublic();
+			v.addComponent(navPublic);
+			
+			//falls der Benutzer eingelogt ist verändert sich die Navigation
+			if(VaadinSession.getCurrent().getAttribute("login").equals(true)){
+				nav.setVisible(true);
+				navPublic.setVisible(false);
+			}else{
+				nav.setVisible(false);
+				navPublic.setVisible(true);
+			}
+			
+			//Inhalt hinzufuegen
+			content = new VerticalLayout();
+			content.setMargin(true);
+			content.setWidth("100%");
+			setContent();//Methode zum befuellen des Inhalts aufrufen
+			v.addComponent(content);
+			
+			//Footer hinzufuegen
+			Footer f = new Footer();
+			v.addComponent(f);
+			
+			//rotes Panel unter dem Footer
+			Panel p2 = new Panel();
+			p2.setWidth("100%");
+			p2.addStyleName("red");
+			p2.setHeight("30px");
+			v.addComponent(p2);
+	
+		addComponent(v);
+		this.setExpandRatio(v, 12);
 		
-		setContent();
-		addComponent(content);
-		
-		Footer f = new Footer();
-		addComponent(f);
+		//rotes rechtes Panel
+		Panel p1 = new Panel();
+		p1.setWidth("100%");
+		p1.addStyleName("red");
+		p1.setHeight("100%");
+		addComponent(p1);
+		this.setExpandRatio(p1, 1);
 	}
 	
 	/**
@@ -145,6 +185,7 @@ public class Suche extends VerticalLayout implements View{
 		
 
 		Button suchButton = new Button("Suchen");
+		suchButton.setIcon(FontAwesome.SEARCH);
 		suchButton.addStyleName("SuchButton");
 		gridSuche.addComponent(suchButton, 0 ,9);
 		

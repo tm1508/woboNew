@@ -21,6 +21,7 @@ import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.Notification.Type;
+import com.vaadin.ui.Panel;
 import com.vaadin.ui.PasswordField;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.UI;
@@ -36,7 +37,7 @@ import com.vaadin.ui.Window;
  * @see com.example.housing.HousingUI
  */
 @SuppressWarnings("serial")
-public class Profile extends VerticalLayout implements View {
+public class Profile extends HorizontalLayout implements View {
 
 	/** The content. */
 	private VerticalLayout content;// Layout fuer den Inhalt
@@ -112,36 +113,65 @@ public class Profile extends VerticalLayout implements View {
 	 * Instantiates a new Registrierung.
 	 */
 	public Profile() {
-		setMargin(true);
-
-		// Navigation hinzufuegen
-		Navigation nav = new Navigation();
-		nav.setWidth("100%");
-		nav.addStyleName("navigation");
-		addComponent(nav);
-
-		NavigationPublic navPublic = new NavigationPublic();
-		addComponent(navPublic);
-
-		// falls der Benutzer eingelogt ist verändert sich die Navigation
-		if (VaadinSession.getCurrent().getAttribute("login").equals(true)) {
-			nav.setVisible(true);
-			navPublic.setVisible(false);
-		} else {
-			nav.setVisible(false);
-			navPublic.setVisible(true);
-		}
-
-		// Inhalt hinzufuegen
-		content = new VerticalLayout();
-		content.setMargin(true);
-		content.setWidth("100%");
-		setContent();// Methode zum befuellen des Inhalts aufrufen
-		addComponent(content);
-
-		// Footer hinzufuegen
-		Footer f = new Footer();
-		addComponent(f);
+		this.setWidth("100%");
+		
+		//linkes rotes Panel
+		Panel p = new Panel();
+		p.setWidth("100%");
+		p.setHeight("100%");
+		p.addStyleName("red");
+		addComponent(p);
+		this.setExpandRatio(p, 1);
+		
+		//mittlerer Teil der Seite
+		VerticalLayout v = new VerticalLayout();
+				
+			//Navigation hinzufuegen
+			Navigation nav = new Navigation();
+			nav.setWidth("100%");
+			nav.addStyleName("navigation");
+			v.addComponent(nav);
+			
+			NavigationPublic navPublic = new NavigationPublic();
+			v.addComponent(navPublic);
+			
+			//falls der Benutzer eingelogt ist verändert sich die Navigation
+			if(VaadinSession.getCurrent().getAttribute("login").equals(true)){
+				nav.setVisible(true);
+				navPublic.setVisible(false);
+			}else{
+				nav.setVisible(false);
+				navPublic.setVisible(true);
+			}
+			
+			//Inhalt hinzufuegen
+			content = new VerticalLayout();
+			content.setMargin(true);
+			content.setWidth("100%");
+			setContent();//Methode zum befuellen des Inhalts aufrufen
+			v.addComponent(content);
+			
+			//Footer hinzufuegen
+			Footer f = new Footer();
+			v.addComponent(f);
+			
+			//rotes Panel unter dem Footer
+			Panel p2 = new Panel();
+			p2.setWidth("100%");
+			p2.addStyleName("red");
+			p2.setHeight("30px");
+			v.addComponent(p2);
+	
+		addComponent(v);
+		this.setExpandRatio(v, 12);
+		
+		//rotes rechtes Panel
+		Panel p1 = new Panel();
+		p1.setWidth("100%");
+		p1.addStyleName("red");
+		p1.setHeight("100%");
+		addComponent(p1);
+		this.setExpandRatio(p1, 1);
 	}
 
 	/**
@@ -338,6 +368,7 @@ public class Profile extends VerticalLayout implements View {
 
 		// button_1
 		button_1 = new Button();
+		button_1.setStyleName("BearbeitenButton");
 		button_1.setCaption("Profildaten bearbeiten");
 		button_1.setImmediate(true);
 		button_1.setDescription("Bearbeiten Ihrer Profildaten.");
@@ -368,6 +399,7 @@ public class Profile extends VerticalLayout implements View {
 
 		// button_2
 		button_2 = new Button();
+		button_2.setStyleName("BearbeitenButton");
 		button_2.setCaption("Abbrechen");
 		button_2.setIcon(FontAwesome.MAIL_REPLY);
 		button_2.setImmediate(true);
@@ -400,6 +432,7 @@ public class Profile extends VerticalLayout implements View {
 
 		// button_3
 		button_3 = new Button();
+		button_3.setStyleName("BearbeitenButton");
 		button_3.setVisible(false);
 		button_3.setCaption("Änderungen speichern");
 		button_3.setIcon(FontAwesome.SAVE);
@@ -440,8 +473,9 @@ public class Profile extends VerticalLayout implements View {
 							} else {
 
 								Notification not = new Notification(
-										"Ein Nutzer mit dieser E-Mail-Adresse existiert bereits.");
+										"Ein Nutzer mit dieser E-Mail-Adresse existiert bereits.", Type.HUMANIZED_MESSAGE);
 								not.setDelayMsec(300);
+								not.setStyleName("failure");
 								not.show(Page.getCurrent());
 
 							}
@@ -455,8 +489,11 @@ public class Profile extends VerticalLayout implements View {
 							getUI().getNavigator().addView(name, new Profile());
 							getUI().getNavigator().navigateTo(name);
 
-							Notification
-									.show("Ihre Änderungen wurden erfolgreich gespeichert.", Type.HUMANIZED_MESSAGE);
+							Notification not = new Notification("Ihre Änderungen wurden erfolgreich gespeichert.", Type.HUMANIZED_MESSAGE);
+							not.setDelayMsec(300);
+							not.setStyleName("success");
+							not.setIcon(FontAwesome.CHECK_SQUARE_O);
+							not.show(Page.getCurrent());
 
 						}
 					} else {
@@ -469,14 +506,20 @@ public class Profile extends VerticalLayout implements View {
 						getUI().getNavigator().addView(name, new Profile());
 						getUI().getNavigator().navigateTo(name);
 
-						Notification.show("Ihre Änderungen wurden erfolgreich gespeichert.", Type.HUMANIZED_MESSAGE);
+						Notification not = new Notification("Ihre Änderungen wurden erfolgreich gespeichert.", Type.HUMANIZED_MESSAGE);
+						not.setDelayMsec(300);
+						not.setStyleName("success");
+						not.setIcon(FontAwesome.CHECK_SQUARE_O);
+						not.show(Page.getCurrent());
 					}
 
 					// Meldung an den Nutzer
 				} else {// Registrierung nicht erfolgreich
-					Notification
-							.show("Die Speicherung Ihrer Änderungen war nicht erfolgreich. Bitte überprüfen Sie Ihre Eingaben.",
-									Type.HUMANIZED_MESSAGE);
+					
+					Notification not = new Notification("Die Speicherung Ihrer Änderungen war nicht erfolgreich. Bitte überprüfen Sie Ihre Eingaben.", Type.HUMANIZED_MESSAGE);
+					not.setDelayMsec(300);
+					not.setStyleName("failure");
+					not.show(Page.getCurrent());
 					// Meldung an den Nutzer
 				}
 			}
@@ -491,6 +534,7 @@ public class Profile extends VerticalLayout implements View {
 		button_4.setDescription("Löschen des Profils.");
 		button_4.setWidth("-1px");
 		button_4.setHeight("-1px");
+		button_4.setIcon(FontAwesome.TRASH_O);
 		content.addComponent(button_4);
 		button_4.addClickListener(new Button.ClickListener() {
 			public void buttonClick(ClickEvent event) {
@@ -519,6 +563,7 @@ public class Profile extends VerticalLayout implements View {
 
 					// Button "Ja"
 					Button yes = new Button();
+					yes.setStyleName("loeschen");
 					yes.setCaption("Ja, ich will mein Profil löschen.");
 					yes.setDescription("Profil löschen");
 					yes.setIcon(FontAwesome.CHECK);
@@ -547,6 +592,7 @@ public class Profile extends VerticalLayout implements View {
 							// Meldung an den Nutzer
 							Notification notif = new Notification("Ihr Profil wurde gelöscht!", Type.HUMANIZED_MESSAGE);
 							notif.setDelayMsec(300);
+							notif.setStyleName("success");
 							notif.setIcon(FontAwesome.INFO);
 							notif.show(Page.getCurrent());
 						}
@@ -554,6 +600,7 @@ public class Profile extends VerticalLayout implements View {
 
 					// Abbrechen-Button
 					Button no = new Button();
+					no.setStyleName("loeschen");
 					no.setCaption("Nein, doch nicht.");
 					no.setIcon(FontAwesome.MAIL_REPLY);
 					no.setDescription("Profil nicht löschen");

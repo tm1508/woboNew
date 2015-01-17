@@ -9,6 +9,7 @@ import com.vaadin.ui.Label;
 import com.vaadin.ui.Panel;
 import com.vaadin.ui.VerticalLayout;
 
+
 @SuppressWarnings("serial")
 public class LayoutPage extends HorizontalLayout implements View{
 	
@@ -62,6 +63,7 @@ public class LayoutPage extends HorizontalLayout implements View{
 			nav.setVisible(false);
 			navPublic.setVisible(true);
 		}
+		
 		
 		//Inhalt hinzufuegen
 		content = new VerticalLayout();
@@ -120,6 +122,11 @@ public class LayoutPage extends HorizontalLayout implements View{
 		
 		text.setContentMode(ContentMode.HTML);
 		content.addComponent(text);
+		
+		//Window w = new ImageWindow();
+		//UI.getCurrent().addWindow(w);
+		
+		
 	}
 	
 	

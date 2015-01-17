@@ -125,7 +125,7 @@ public class NavigationPublic extends CustomComponent {
 		MenuItem nav3 = menuBar_1.addItem("Login", FontAwesome.UNLOCK_ALT, mycommand);//Navigation
 		MenuItem nav4 = menuBar_1.addItem("Hilfe", FontAwesome.QUESTION, mycommand4);//Navigation zu FAQ
 	
-		
+	
 		mainLayout.addComponent(menuBar_1);
 		
 		

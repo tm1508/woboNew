@@ -4,6 +4,10 @@ import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.util.regex.Pattern;
 
+import com.vaadin.server.FontAwesome;
+import com.vaadin.server.Page;
+import com.vaadin.ui.Notification;
+
 // TODO: Auto-generated Javadoc
 /**
  * The Class Format.
@@ -47,8 +51,17 @@ public class Format {
 	 */
 	public float floatFormat(String s) {
 		if (!s.isEmpty()) {
-			float f = Float.parseFloat(s.replace(",", "."));
-			return f;
+			try{float f = Float.parseFloat(s.replace(",", "."));
+			return f;}
+			catch(NumberFormatException nfe){
+				//TODO
+				Notification not = new Notification("Bitte überprüfen Sie Ihre Eingaben.");
+				not.setDelayMsec(300);
+				not.setStyleName("warning");
+				not.setIcon(FontAwesome.EXCLAMATION_TRIANGLE);
+				not.show(Page.getCurrent()); 
+				return (float) 0.0;
+			}
 		} else {
 			return (float) 0.0;
 		}
