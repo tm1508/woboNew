@@ -960,8 +960,7 @@ public class AngebotErstellen extends HorizontalLayout implements View, Receiver
 				
 			tmpImg = new ByteArrayOutputStream();
 			return tmpImg;
-			}
-			else{
+			} else{
 			Notification.show("Bilddatei erforderlich");
 			return null; 
 			}
