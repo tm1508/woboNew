@@ -22,6 +22,7 @@ import com.vaadin.server.FileResource;
 import com.vaadin.server.Resource;
 import com.vaadin.server.StreamResource;
 import com.vaadin.server.VaadinService;
+import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.AbsoluteLayout;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.CustomComponent;
@@ -103,6 +104,7 @@ public class Listenzeile extends CustomComponent {
 
 		String title = o.getTitle();
 		Label l = new Label(title + " Ort " + o.getCity());
+		l.addStyleName("ImportantTitle");
 		l.setWidth("100%");
 		l.setHeight("20%");
 		ergebnisLayout.addComponent(l, 3, 0, 4, 0);
