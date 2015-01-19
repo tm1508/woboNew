@@ -8,6 +8,9 @@ import com.example.housing.utility.Format;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.server.FontAwesome;
+import com.vaadin.server.VaadinService;
+import com.vaadin.server.VaadinServlet;
+import com.vaadin.server.VaadinServletService;
 import com.vaadin.server.VaadinSession;
 import com.vaadin.ui.Accordion;
 import com.vaadin.ui.Button;
@@ -16,6 +19,7 @@ import com.vaadin.ui.Label;
 import com.vaadin.ui.Link;
 import com.vaadin.ui.Panel;
 import com.vaadin.ui.TextField;
+import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Button.ClickEvent;
 
@@ -217,7 +221,7 @@ public class Startseite extends HorizontalLayout implements View{
 			suchfeld.addStyleName("textfield");
 			suche.addComponent(suchfeld);
 			
-			//Button zum Starten derv Suche
+			//Button zum Starten der Suche
 			Button sucheStarten = new Button();
 			sucheStarten.setStyleName("AnfrageButton");
 			sucheStarten.setCaption("Suche starten");
@@ -246,8 +250,7 @@ public class Startseite extends HorizontalLayout implements View{
 					String name = "AngebotAnzeigen";
 					getUI().getNavigator().addView(name, new Suchergebnis(ergebnisse));
 					getUI().getNavigator().navigateTo(name);
-					
-					
+										
 				}
 			});
 			
