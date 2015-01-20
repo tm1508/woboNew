@@ -2,6 +2,7 @@ package com.example.housing;
 
 import com.example.housing.data.model.User;
 import com.example.housing.data.provider.UserProvider;
+import com.example.housing.utility.GenerateCode;
 import com.example.housing.utility.SendEMail;
 import com.vaadin.data.Validator.InvalidValueException;
 import com.vaadin.server.FontAwesome;
@@ -236,12 +237,12 @@ public class ForgotPasswordWindow extends Window{
 	 */
 	public void sendEMail(){
 		String path = UI.getCurrent().getPage().getLocation().getHost() +":"+UI.getCurrent().getPage().getLocation().getPort()+UI.getCurrent().getPage().getLocation().getPath()+"#!Startseite/";
-		
+		String code = GenerateCode.generateCode(email_1.getValue());
 		// Text der E-Mail mit Style-Informationen
 		String body = "<span style='color: #000000' 'font-family: Arial, sans-serif''font-size: 16pt' >Sehr geehrte Nutzerin, sehr geehrter Nutzer,"
 					 +"<br/><br/>Sie haben Ihr Passwort vergessen und ein neues Passwort angegeben. Ihr Konto muss erneut freigeschalten werden. Bitte folgen sie dem Link unten, dann können Sie sich wieder wie gewohnt einloggen.Dadurch wird sichergestellt, dass keine Unbefungten Ihre E-Mail-Adresse und Ihr Benutzerkonto verwenden können.</span>"
 					 +"<br/><span style='color: #e2001a' 'font-family: Arial, sans-serif''font-size: 20pt' >"
-					 + "<a href='http://"+path+email_1.getValue()+"'>weiter zum Login</a>"
+					 + "<a href='http://"+path+code+"'>weiter zum Login</a>"
 						+ "</span><br/><br/>Mit freundlichen Grüßen<br/>Ihr DHBW Wohungsbörsen-Team<p/><span style='color: #e2001a' 'font-family: Arial, sans-serif''font-size: 8pt' >Anschrift:<br/>DHBW Karlsruhe<br/>Baden-Wuerttemberg Cooperative State University Karlsruhe<br />Erzbergerstraße 121 . 76133 Karlsruhe <br />Postfach 10 01 36 . 76231 Karlsruhe   <br />Telefon +49.721.9735-5 <br />Telefax +49.721.9735-600 <br />E-Mail: dreischer@dhbw-karlsruhe.de<br /><br/><br/>Ansprechpartner:<br/> <br />Dr. Anita Dreischer<br /><br/><b>Copyright DHBW Karlsruhe. Alle Rechte vorbehalten.</b></span>";
 		//E-Mail senden
 		SendEMail.send(email_1.getValue(), "wohnungsboerse_dh@web.de", "Passwort vergessen", body);

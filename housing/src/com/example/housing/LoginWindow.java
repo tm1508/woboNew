@@ -2,6 +2,7 @@ package com.example.housing;
 
 import com.example.housing.data.model.User;
 import com.example.housing.data.provider.UserProvider;
+import com.example.housing.utility.GenerateCode;
 import com.vaadin.annotations.Theme;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.server.Page;
@@ -109,16 +110,18 @@ public class LoginWindow extends Window{
 					
 						//1. User aus der Datenbank auslesen
 						User u = new UserProvider().findByEmail(email_1.getValue());
-
+						String code = GenerateCode.generateCode(email_1.getValue());
+						
 						//2. Prüfen ob das Konto aktiviert ist
 						if(!u.isActivated()){
 							String param = (String) VaadinSession.getCurrent().getAttribute("activated");//Parameter aus der Session auslesen
-							if(email_1.getValue().equals(u.getEmail()) && email_1.getValue().equals(param)){//richtiger Parameter wurde übergeben
+							if(code.equals(param)){//richtiger Parameter wurde übergeben
 									//Aktivierung in DB speichern
 									u.setActivated(true);
 									new UserProvider().alterUser(u);
 								}else{
 									Notification notif = new Notification("Login fehlgeschlagen!","Ihr Konto ist nicht freigeschalten. Bitte folgen Sie dem Link in der E-Mail, die Sie erhalten haben.", Type.HUMANIZED_MESSAGE);
+									notif.setStyleName("failure");
 									notif.setDelayMsec(300);
 									notif.show(Page.getCurrent());
 								}
