@@ -102,7 +102,7 @@ public class HousingUI extends UI {
 		setContent(layout);
 			
 		System.out.println(request.getParameter("v-loc"));
-		String[] msgs = request.getParameter("v-loc").split("/");//Request Parameter auslesen (wurde bei der Registrierung verschickt)
+		String[] msgs = request.getParameter("v-loc").split("#!Startseite/");//Request Parameter auslesen (wurde bei der Registrierung verschickt)
 		String param="";
 		for(int i=0; i<msgs.length; i++){
 			System.out.println(msgs[i]);
