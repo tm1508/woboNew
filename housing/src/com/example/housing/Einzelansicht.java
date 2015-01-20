@@ -61,7 +61,6 @@ public class Einzelansicht extends HorizontalLayout implements View {
 		this.angebot = einzelAngebot;
 		
 		content = new VerticalLayout();
-//		content = (VerticalLayout)this;
 		
 		content.setMargin(true);
 		content.setSizeFull();
@@ -79,42 +78,42 @@ public class Einzelansicht extends HorizontalLayout implements View {
 		
 		//mittlerer Teil der Seite
 		VerticalLayout v = new VerticalLayout();
-				
-			//Navigation hinzufuegen
-			Navigation nav = new Navigation();
-			nav.setWidth("100%");
-			nav.addStyleName("navigation");
-			v.addComponent(nav);
 			
-			NavigationPublic navPublic = new NavigationPublic();
-			v.addComponent(navPublic);
-			
-			//falls der Benutzer eingelogt ist verändert sich die Navigation
-			if(VaadinSession.getCurrent().getAttribute("login").equals(true)){
-				nav.setVisible(true);
-				navPublic.setVisible(false);
-			}else{
-				nav.setVisible(false);
-				navPublic.setVisible(true);
-			}
-			
-			//Inhalt hinzufuegen
-			content = new VerticalLayout();
-			content.setMargin(true);
-			content.setWidth("100%");
-			setContent();//Methode zum befuellen des Inhalts aufrufen
-			v.addComponent(content);
-			
-			//Footer hinzufuegen
-			Footer f = new Footer();
-			v.addComponent(f);
-			
-			//rotes Panel unter dem Footer
-			Panel p2 = new Panel();
-			p2.setWidth("100%");
-			p2.addStyleName("red");
-			p2.setHeight("30px");
-			v.addComponent(p2);
+		//Navigation hinzufuegen
+		Navigation nav = new Navigation();
+		nav.setWidth("100%");
+		nav.addStyleName("navigation");
+		v.addComponent(nav);
+		
+		NavigationPublic navPublic = new NavigationPublic();
+		v.addComponent(navPublic);
+		
+		//falls der Benutzer eingelogt ist verändert sich die Navigation
+		if(VaadinSession.getCurrent().getAttribute("login").equals(true)){
+			nav.setVisible(true);
+			navPublic.setVisible(false);
+		}else{
+			nav.setVisible(false);
+			navPublic.setVisible(true);
+		}
+		
+		//Inhalt hinzufuegen
+		content = new VerticalLayout();
+		content.setMargin(true);
+		content.setWidth("100%");
+		setContent();//Methode zum befuellen des Inhalts aufrufen
+		v.addComponent(content);
+		
+		//Footer hinzufuegen
+		Footer f = new Footer();
+		v.addComponent(f);
+		
+		//rotes Panel unter dem Footer
+		Panel p2 = new Panel();
+		p2.setWidth("100%");
+		p2.addStyleName("red");
+		p2.setHeight("30px");
+		v.addComponent(p2);
 	
 		addComponent(v);
 		this.setExpandRatio(v, 12);
@@ -142,34 +141,39 @@ public class Einzelansicht extends HorizontalLayout implements View {
 		content.addComponent(lTitel);
 		
 		//Adresse wird nur verifizierten Studenten angezeigt
-		 if(VaadinSession.getCurrent().getAttribute("login").equals(true)){
-			 
-	if(VaadinSession.getCurrent().getAttribute(User.class).getAccessLevel() == 1) {
-		
-	// if(VaadinSession.getCurrent().getAttribute("login").equals(true)){
-		
-		//adresse
-		String street = angebot.getStreet();
-		String zip = angebot.getZip();
-		String city = angebot.getCity();
-		Label lAdress = new Label("Straße: " + street + "  PLZ: " + zip + "  Ort: " + city);
-		
-		content.addComponent(lAdress);
-		}else{
-			String zip = angebot.getZip();
+		if(VaadinSession.getCurrent().getAttribute("login").equals(true)) {
 			
-			Label lAdress = new Label("PLZ: " + zip + "  Die volle Adresse ist nur für verifizierte Studenten sichtbar.");
-			
-			content.addComponent(lAdress);
-			  }
+			if(VaadinSession.getCurrent().getAttribute(User.class).getAccessLevel() == 1) {
+				
+				 // if(VaadinSession.getCurrent().getAttribute("login").equals(true)){
+				 
+				 //adresse
+				 String street = angebot.getStreet();
+				 String zip = angebot.getZip();
+				 String city = angebot.getCity();
+				 Label lAdress = new Label("Straße: " + street + "  PLZ: " + zip + "  Ort: " + city);
+				 
+				 content.addComponent(lAdress);
+				 
+			} else {
+				 
+				 String zip = angebot.getZip();
+				 
+				 Label lAdress = new Label("PLZ: " + zip + "  Die volle Adresse ist nur für verifizierte Studenten sichtbar.");
+				 
+				 content.addComponent(lAdress);
+				 
+			}
 	
-	} else{
-		String zip = angebot.getZip();
+		} else {
 		
-		Label lAdress = new Label("PLZ: " + zip + "  Die volle Adresse ist nur für verifizierte Studenten sichtbar.");
-		
-		content.addComponent(lAdress);
-		  }
+			 String zip = angebot.getZip();
+			 
+			 Label lAdress = new Label("PLZ: " + zip + "  Die volle Adresse ist nur für verifizierte Studenten sichtbar.");
+			 
+			 content.addComponent(lAdress);
+			 
+		 }
 		
 		//pictures
 		GridLayout gridPictures = new GridLayout(8, 8);
@@ -189,7 +193,7 @@ public class Einzelansicht extends HorizontalLayout implements View {
 				resource5 = new StreamResource(new StreamResource.StreamSource() {
 					@Override
 					public InputStream getStream(){
-						return new ByteArrayInputStream(angebot.getPhotos().get(4).getPhoto());
+						return new ByteArrayInputStream(angebot.getPhotos().get(4).getPicture());
 					}
 				}, "Bild_5");
 				
@@ -198,7 +202,7 @@ public class Einzelansicht extends HorizontalLayout implements View {
 				resource4 = new StreamResource(new StreamResource.StreamSource() {
 					@Override
 					public InputStream getStream(){
-						return new ByteArrayInputStream(angebot.getPhotos().get(3).getPhoto());
+						return new ByteArrayInputStream(angebot.getPhotos().get(3).getPicture());
 					}
 				}, "Bild_4");
 				
@@ -207,7 +211,7 @@ public class Einzelansicht extends HorizontalLayout implements View {
 				resource3 = new StreamResource(new StreamResource.StreamSource() {
 					@Override
 					public InputStream getStream(){
-						return new ByteArrayInputStream(angebot.getPhotos().get(2).getPhoto());
+						return new ByteArrayInputStream(angebot.getPhotos().get(2).getPicture());
 					}
 				}, "Bild_3");
 				
@@ -216,7 +220,7 @@ public class Einzelansicht extends HorizontalLayout implements View {
 				resource2 = new StreamResource(new StreamResource.StreamSource() {
 					@Override
 					public InputStream getStream(){
-						return new ByteArrayInputStream(angebot.getPhotos().get(1).getPhoto());
+						return new ByteArrayInputStream(angebot.getPhotos().get(1).getPicture());
 					}
 				}, "Bild_2");
 				
@@ -225,7 +229,7 @@ public class Einzelansicht extends HorizontalLayout implements View {
 				resource = new StreamResource(new StreamResource.StreamSource() {
 					@Override
 					public InputStream getStream(){
-						return new ByteArrayInputStream(angebot.getPhotos().get(0).getPhoto());
+						return new ByteArrayInputStream(angebot.getPhotos().get(0).getPicture());
 					}
 				}, "Bild_1");
 				

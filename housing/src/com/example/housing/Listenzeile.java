@@ -22,7 +22,9 @@ import com.vaadin.server.FileResource;
 import com.vaadin.server.Resource;
 import com.vaadin.server.StreamResource;
 import com.vaadin.server.VaadinService;
+import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.AbsoluteLayout;
+import com.vaadin.ui.Component;
 import com.vaadin.ui.CustomComponent;
 import com.vaadin.ui.GridLayout;
 import com.vaadin.ui.HorizontalLayout;
@@ -58,7 +60,8 @@ public class Listenzeile extends CustomComponent {
 		GridLayout ergebnisLayout = new GridLayout(6, 3);
 		ergebnisLayout.setMargin(false);
 		ergebnisLayout.addStyleName("Listenzeile");
-		// ergebnisLayout.setSizeFull();
+		ergebnisLayout.setSizeFull();
+		ergebnisLayout.setHeight("150px");
 
 		// pictures
 		final List<Photo> pictures;
@@ -70,13 +73,17 @@ public class Listenzeile extends CustomComponent {
 			Resource resource = new StreamResource(new StreamResource.StreamSource() {
 				@Override
 				public InputStream getStream(){
-					InputStream bais = new ByteArrayInputStream(pictures.get(0).getPhoto());
+					InputStream bais = new ByteArrayInputStream(pictures.get(0).getPicture());
 					return bais;
 				}
 			}, "Bild_1");
 			Image image = new Image(null, resource);
-			
+			//image.setWidth("100px");
+			//image.setHeight("85px");
 			ergebnisLayout.addComponent(image, 0, 0, 2, 2);
+			Component c = ergebnisLayout.getComponent(0, 2);
+			c.setWidth("70%");
+			c.setHeight("100%");
 			
 		} else {
 			
@@ -84,7 +91,12 @@ public class Listenzeile extends CustomComponent {
 			String basepath = VaadinService.getCurrent().getBaseDirectory().getAbsolutePath();
 			FileResource resource = new FileResource(new File(basepath + "/WEB-INF/image/DefaultBild.jpg"));
 			Image image = new Image("", resource);
+			//image.setWidth("100px");
+			//image.setHeight("85px");
 			ergebnisLayout.addComponent(image, 0, 0, 2, 2);
+			Component c = ergebnisLayout.getComponent(0, 2);
+			c.setWidth("70%");
+			c.setHeight("100%");
 			// String im = "Kein Bild vorhanden";
 			// ergebnisLayout.addComponent(new Label(im),0,0,2,2);
 			
@@ -92,10 +104,13 @@ public class Listenzeile extends CustomComponent {
 
 		String title = o.getTitle();
 		Label l = new Label(title + " Ort " + o.getCity());
-		l.setWidth("250px");
-		ergebnisLayout.addComponent(l, 4, 0);
+		l.addStyleName("ImportantTitle");
+		l.setWidth("100%");
+		l.setHeight("20%");
+		ergebnisLayout.addComponent(l, 3, 0, 4, 0);
 
 		Label l2 = new Label("Warmmiete: " + new Format().stringEuro( o.getPrice()) + " €");
+		l2.setWidth("110px");
 		ergebnisLayout.addComponent(l2, 3, 1);
 
 		float sm = o.getSquareMetre();

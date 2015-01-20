@@ -156,6 +156,7 @@ public class Anfrageformular extends HorizontalLayout implements View{
 	protected void safeToDB() {
 		
 		Request request = new Request();
+		request.setMessage(text.getValue());
 		request.setRequest_idUser(VaadinSession.getCurrent().getAttribute(User.class));
 		request.setRequest_idOffer(requestedOffer);
 		

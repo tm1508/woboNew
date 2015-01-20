@@ -47,17 +47,17 @@ public class Photo {
 	 *
 	 * @return the photo
 	 */
-	public byte[] getPhoto() {
+	public byte[] getPicture() {
 		return picture;
 	}
 	
 	/**
 	 * Sets the photo.
 	 *
-	 * @param photo the new photo
+	 * @param picture the new photo
 	 */
-	public void setPhoto(byte[] photo) {
-		this.picture = photo;
+	public void setPicture(byte[] picture) {
+		this.picture = picture;
 	}
 	
 	/**

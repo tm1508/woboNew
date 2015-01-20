@@ -101,7 +101,7 @@ public class ImageWindow extends Window {
 				@Override
 				public InputStream getStream() {
 					return new ByteArrayInputStream(angebot.getPhotos().get(4)
-							.getPhoto());
+							.getPicture());
 				}
 			}, "Bild_5");
 
@@ -110,7 +110,7 @@ public class ImageWindow extends Window {
 				@Override
 				public InputStream getStream() {
 					return new ByteArrayInputStream(angebot.getPhotos().get(3)
-							.getPhoto());
+							.getPicture());
 				}
 			}, "Bild_4");
 
@@ -119,7 +119,7 @@ public class ImageWindow extends Window {
 				@Override
 				public InputStream getStream() {
 					return new ByteArrayInputStream(angebot.getPhotos().get(2)
-							.getPhoto());
+							.getPicture());
 				}
 			}, "Bild_3");
 
@@ -128,7 +128,7 @@ public class ImageWindow extends Window {
 				@Override
 				public InputStream getStream() {
 					return new ByteArrayInputStream(angebot.getPhotos().get(1)
-							.getPhoto());
+							.getPicture());
 				}
 			}, "Bild_2");
 
@@ -137,7 +137,7 @@ public class ImageWindow extends Window {
 				@Override
 				public InputStream getStream() {
 					return new ByteArrayInputStream(angebot.getPhotos().get(0)
-							.getPhoto());
+							.getPicture());
 				}
 			}, "Bild_1");
 		}
@@ -214,7 +214,7 @@ public class ImageWindow extends Window {
 				@Override
 				public InputStream getStream() {
 					return new ByteArrayInputStream(angebot.getPhotos().get(4)
-							.getPhoto());
+							.getPicture());
 				}
 			}, "Bild_5");
 
@@ -223,7 +223,7 @@ public class ImageWindow extends Window {
 				@Override
 				public InputStream getStream() {
 					return new ByteArrayInputStream(angebot.getPhotos().get(3)
-							.getPhoto());
+							.getPicture());
 				}
 			}, "Bild_4");
 
@@ -232,7 +232,7 @@ public class ImageWindow extends Window {
 				@Override
 				public InputStream getStream() {
 					return new ByteArrayInputStream(angebot.getPhotos().get(2)
-							.getPhoto());
+							.getPicture());
 				}
 			}, "Bild_3");
 
@@ -241,7 +241,7 @@ public class ImageWindow extends Window {
 				@Override
 				public InputStream getStream() {
 					return new ByteArrayInputStream(angebot.getPhotos().get(1)
-							.getPhoto());
+							.getPicture());
 				}
 			}, "Bild_2");
 
@@ -250,7 +250,7 @@ public class ImageWindow extends Window {
 				@Override
 				public InputStream getStream() {
 					return new ByteArrayInputStream(angebot.getPhotos().get(0)
-							.getPhoto());
+							.getPicture());
 				}
 			}, "Bild_1");
 		}

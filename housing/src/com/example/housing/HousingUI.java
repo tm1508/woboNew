@@ -100,8 +100,7 @@ public class HousingUI extends UI {
 		final VerticalLayout layout = new VerticalLayout();
 		layout.setMargin(true);
 		setContent(layout);
-		
-		
+			
 		System.out.println(request.getParameter("v-loc"));
 		String[] msgs = request.getParameter("v-loc").split("/");//Request Parameter auslesen (wurde bei der Registrierung verschickt)
 		String param="";
