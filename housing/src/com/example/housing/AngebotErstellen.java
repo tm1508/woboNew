@@ -1,13 +1,21 @@
 package com.example.housing;
 
+import java.awt.Color;
+import java.awt.Image;
+import java.awt.image.BufferedImage;
+import java.awt.image.RenderedImage;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 import javax.xml.transform.stream.StreamSource;
 
 import com.example.housing.data.model.Offer;
@@ -31,7 +39,6 @@ import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.DateField;
 import com.vaadin.ui.HorizontalLayout;
-import com.vaadin.ui.Image;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.Panel;
@@ -994,12 +1001,12 @@ public class AngebotErstellen extends HorizontalLayout implements View, Receiver
 		if (tmpImg != null) {
 			
 			//TODO Fehler: Bild ist leer
-			//byte[] tmpImgBytes = resizeImage(tmpImg);
+			byte[] tmpImgBytes = resizeImage(tmpImg.toByteArray());
 			
 			Photo newPhoto = new Photo();
 			newPhoto.setPhoto_idOffer(currentOffer);
-			newPhoto.setPicture(tmpImg.toByteArray());
-			//newPhoto.setPicture(tmpImgBytes);
+			//newPhoto.setPicture(tmpImg.toByteArray());
+			newPhoto.setPicture(tmpImgBytes);
 
 			try {
 				newPhotos.add(newPhoto);
@@ -1012,19 +1019,41 @@ public class AngebotErstellen extends HorizontalLayout implements View, Receiver
 
 	}
 
-	private byte[] resizeImage(ByteArrayOutputStream imageStream) {
+	private byte[] resizeImage(byte[] imageData) {
 		
-		Resource rsc = new StreamResource(new StreamResource.StreamSource() {
-			@Override
-			public InputStream getStream(){
-				return new ByteArrayInputStream(tmpImg.toByteArray());
-			}
-		}, "");
-		Image tmpImgObj = new Image("", rsc);
-		tmpImgObj.setWidth("700px");
-		tmpImgObj.setHeight("438px");
+		ByteArrayInputStream in = new ByteArrayInputStream(imageData);
+		ByteArrayOutputStream out = new ByteArrayOutputStream();
+		Image imageWorkingCopy;
+		int width = 700;
+		int height = 483;
+		try {
+			
+			imageWorkingCopy = ImageIO.read(in);
+			
+		} catch (IOException e) {
+
+			e.printStackTrace();
+			return null;
+			
+		}
 		
-		return tmpImgObj.toString().getBytes();
+		// TODO nur wenn Bild größer ist
+		Image imageScaled = imageWorkingCopy.getScaledInstance(width, height, Image.SCALE_SMOOTH);
+		BufferedImage imageBuffered = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
+		imageBuffered.getGraphics().drawImage(imageScaled, 0, 0, null);
+		
+		try {
+			
+			ImageIO.write(imageBuffered, "jpg", out);
+			
+		} catch (IOException e) {
+			
+			e.printStackTrace();
+			return null;
+		}
+		
+		return out.toByteArray();
+		
 	}
 
 }
