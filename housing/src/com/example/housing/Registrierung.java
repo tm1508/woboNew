@@ -218,7 +218,7 @@ this.setWidth("100%");
 			email_1.setRequiredError("Das Feld darf nicht leer sein.");
 			email_1.setIcon(FontAwesome.ENVELOPE);
 			email_1.setInputPrompt("max.mustermann@test.de");
-			email_1.addValidator(new EmailValidator("Das iste keine gültige E-Mail Adresse."));
+			email_1.addValidator(new EmailValidator("Das ist keine gültige E-Mail Adresse."));
 			emailLayout.addComponent(email_1);
 					
 			// email_2
@@ -232,7 +232,7 @@ this.setWidth("100%");
 			email_2.setRequiredError("Das Feld darf nicht leer sein.");
 			email_2.setIcon(FontAwesome.ENVELOPE);
 			email_2.setInputPrompt("max.mustermann@test.de");
-			email_2.addValidator(new EmailValidator("Das iste keine gültige E-Mail Adresse."));
+			email_2.addValidator(new EmailValidator("Das ist keine gültige E-Mail Adresse."));
 			emailLayout.addComponent(email_2);
 		
 		content.addComponent(emailLayout);
