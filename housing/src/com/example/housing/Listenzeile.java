@@ -73,7 +73,7 @@ public class Listenzeile extends CustomComponent {
 			Resource resource = new StreamResource(new StreamResource.StreamSource() {
 				@Override
 				public InputStream getStream(){
-					InputStream bais = new ByteArrayInputStream(pictures.get(0).getPhoto());
+					InputStream bais = new ByteArrayInputStream(pictures.get(0).getPicture());
 					return bais;
 				}
 			}, "Bild_1");

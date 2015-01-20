@@ -1,10 +1,14 @@
 package com.example.housing;
 
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
+import javax.xml.transform.stream.StreamSource;
 
 import com.example.housing.data.model.Offer;
 import com.example.housing.data.model.Photo;
@@ -18,6 +22,8 @@ import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.server.Page;
+import com.vaadin.server.Resource;
+import com.vaadin.server.StreamResource;
 import com.vaadin.server.VaadinSession;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.Button;
@@ -25,6 +31,7 @@ import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.DateField;
 import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.Image;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.Panel;
@@ -890,14 +897,14 @@ public class AngebotErstellen extends HorizontalLayout implements View, Receiver
 						not.show(Page.getCurrent());
 					}
 
-				} else
+				} else {
 					// Sind nicht alle Mussfelder gefüllt, wird eine Nachricht
 					// auf dem Bildschirm ausgegeben
-					Notification.show("");
 					Notification not1 = new Notification("Bitte füllen Sie alle Mussfelder*", Type.HUMANIZED_MESSAGE);
 					not1.setStyleName("failure");
 					not1.setDelayMsec(300);
 					not1.show(Page.getCurrent());
+				}
 			}
 		});
 
@@ -956,17 +963,27 @@ public class AngebotErstellen extends HorizontalLayout implements View, Receiver
 		
 		try {
 			
-			if(mimeType.contains("image")){
+			if(mimeType.contains("image")) {
 				
-			tmpImg = new ByteArrayOutputStream();
-			return tmpImg;
-			} else{
-			Notification.show("Bilddatei erforderlich");
-			return null; 
+				tmpImg = new ByteArrayOutputStream();
+				return tmpImg;
+				
+			} else {
+				
+				//TODO Upload fails! (FailedEvent auslösen?)
+				Notification not = new Notification("Bitte laden Sie eine Bilddatei hoch!", Type.HUMANIZED_MESSAGE);
+				not.setStyleName("failure");
+				not.setDelayMsec(300);
+				not.show(Page.getCurrent());
+				return null;
+				
 			}
+			
 		} catch (Exception e) {
+			
 			e.printStackTrace();
 			return null;
+			
 		}
 	}
 
@@ -975,22 +992,39 @@ public class AngebotErstellen extends HorizontalLayout implements View, Receiver
 
 		System.out.println("Bild wurde hochgeladen");
 		if (tmpImg != null) {
-			// TODO Bild in die Datenbank abspeichern, Byte Array bekommt man
-			// mit tmpFile.toByteArray();
-
+			
+			//TODO Fehler: Bild ist leer
+			//byte[] tmpImgBytes = resizeImage(tmpImg);
+			
 			Photo newPhoto = new Photo();
 			newPhoto.setPhoto_idOffer(currentOffer);
-			newPhoto.setPhoto(tmpImg.toByteArray());
+			newPhoto.setPicture(tmpImg.toByteArray());
+			//newPhoto.setPicture(tmpImgBytes);
 
 			try {
 				newPhotos.add(newPhoto);
-			} catch (NullPointerException ne) { //tut nichts
+			} catch (NullPointerException ne) { //bei Angebot bearbeiten ist newPhotos nicht instantiiert
 			}
 
 			new PhotoProvider().addPhoto(newPhoto);
 
 		}
 
+	}
+
+	private byte[] resizeImage(ByteArrayOutputStream imageStream) {
+		
+		Resource rsc = new StreamResource(new StreamResource.StreamSource() {
+			@Override
+			public InputStream getStream(){
+				return new ByteArrayInputStream(tmpImg.toByteArray());
+			}
+		}, "");
+		Image tmpImgObj = new Image("", rsc);
+		tmpImgObj.setWidth("700px");
+		tmpImgObj.setHeight("438px");
+		
+		return tmpImgObj.toString().getBytes();
 	}
 
 }
