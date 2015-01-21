@@ -86,20 +86,20 @@ public class OfferProvider extends BaseProvider<Offer> {
 		PhotoProvider photoProv = new PhotoProvider();
 		boolean success = true;
 		
-		for (Request r : requests) {
-			
-			success = reqProv.removeRequest(r);
-			
-		}
-		for (Favorit f : favorits) {
-			
-			success = favProv.removeFavorit(f);
-			
-		}
-		for (Photo p : photos) {
-
-			success = photoProv.removePhoto(p);
-
+		try {
+		
+			for (Request r : requests) {
+				success = reqProv.removeRequest(r);
+			}
+		
+			for (Favorit f : favorits) {
+				success = favProv.removeFavorit(f);
+			}
+		
+			for (Photo p : photos) {
+				success = photoProv.removePhoto(p);
+			}
+		} catch (NullPointerException npe) { //falls keine Requests etc vorhanden
 		}
 
 		if(success) {
@@ -127,19 +127,21 @@ public class OfferProvider extends BaseProvider<Offer> {
 	 * @param user the user
 	 * @return the list
 	 */
-	public List<Offer> ownOffers(User user) {
-		StringBuffer owns = new StringBuffer();
-		int offer_idUser = user.getIdUser();
-		owns.append("SELECT o FROM Offer o WHERE o.offer_idUser = " + offer_idUser);
+	public List<Offer> findOwnOffers(User user) {
+		
 		if (!em.isOpen()) {
 
 			em = getEmf().createEntityManager();
 
 		}
-		Query filterAbfrage = em.createQuery(owns.toString());
+		
+		Query q = em.createQuery("SELECT o FROM Offer o WHERE o.offer_idUser =:user AND o.title NOT LIKE ' '");
+		q.setParameter("user", user);
 		@SuppressWarnings("unchecked")
-		List<Offer> ownOffers = (List<Offer>) filterAbfrage.getResultList();
+		List<Offer> ownOffers = (List<Offer>) q.getResultList();
+		
 		return ownOffers;
+		
 	}
 
 	/**
@@ -259,6 +261,23 @@ public class OfferProvider extends BaseProvider<Offer> {
 		}
 		
 		return (List<Offer>) latestFive;
+		
+	}
+
+	public List<Offer> findFailedOffersByUser(User user) {
+		
+		if (!em.isOpen()) {
+
+			em = getEmf().createEntityManager();
+
+		}
+		
+		Query q = em.createQuery("SELECT o FROM Offer o WHERE o.offer_idUser =:user AND o.title LIKE ' '");
+		q.setParameter("user", user);
+		@SuppressWarnings("unchecked")
+		List<Offer> failedOffers = (List<Offer>) q.getResultList();
+		
+		return failedOffers;
 		
 	}
 

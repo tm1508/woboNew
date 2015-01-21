@@ -107,7 +107,7 @@ public class Listenzeile extends CustomComponent {
 		l.addStyleName("ImportantTitle");
 		l.setWidth("100%");
 		l.setHeight("20%");
-		ergebnisLayout.addComponent(l, 3, 0, 4, 0);
+		ergebnisLayout.addComponent(l, 3, 0, 5, 0);
 
 		Label l2 = new Label("Warmmiete: " + new Format().stringEuro( o.getPrice()) + " €");
 		l2.setWidth("110px");

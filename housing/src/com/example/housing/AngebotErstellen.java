@@ -66,6 +66,22 @@ public class AngebotErstellen extends HorizontalLayout implements View, Receiver
 
 	private List<Photo> newPhotos;
 
+	public Offer getCurrentOffer() {
+		return currentOffer;
+	}
+
+	public void setCurrentOffer(Offer currentOffer) {
+		this.currentOffer = currentOffer;
+	}
+
+	public List<Photo> getNewPhotos() {
+		return newPhotos;
+	}
+
+	public void setNewPhotos(List<Photo> newPhotos) {
+		this.newPhotos = newPhotos;
+	}
+
 	private ByteArrayOutputStream tmpImg;
 
 	/*
@@ -164,27 +180,63 @@ public class AngebotErstellen extends HorizontalLayout implements View, Receiver
 		currentOffer = offer;
 		newPhotos = new ArrayList();
 
-		Navigation nav = new Navigation();
-		addComponent(nav);
-		// setSizeFull();
-
-		NavigationPublic navPublic = new NavigationPublic();
-		addComponent(navPublic);
-
-		// falls der Benutzer eingelogt ist verändert sich die Navigation
-		if (VaadinSession.getCurrent().getAttribute("login").equals(true)) {
-			nav.setVisible(true);
-			navPublic.setVisible(false);
-		} else {
-			nav.setVisible(false);
-			navPublic.setVisible(true);
-		}
-
-		setContent(offer);
-		addComponent(content);
-
-		Footer f = new Footer();
-		addComponent(f);
+		this.setWidth("100%");
+		
+		//linkes rotes Panel
+		Panel p = new Panel();
+		p.setWidth("100%");
+		p.setHeight("100%");
+		p.addStyleName("red");
+		addComponent(p);
+		this.setExpandRatio(p, 1);
+		
+		
+		//mittlerer Teil der Seite
+		VerticalLayout v = new VerticalLayout();
+				
+			//Navigation hinzufuegen
+			Navigation nav = new Navigation();
+			nav.setWidth("100%");
+			nav.addStyleName("navigation");
+			v.addComponent(nav);
+			
+			NavigationPublic navPublic = new NavigationPublic();
+			v.addComponent(navPublic);
+			
+			//falls der Benutzer eingelogt ist verändert sich die Navigation
+			if(VaadinSession.getCurrent().getAttribute("login").equals(true)){
+				nav.setVisible(true);
+				navPublic.setVisible(false);
+			}else{
+				nav.setVisible(false);
+				navPublic.setVisible(true);
+			}
+			
+			//Inhalt hinzufuegen
+			setContent(offer);//Methode zum befuellen des Inhalts aufrufen
+			v.addComponent(content);
+			
+			//Footer hinzufuegen
+			Footer f = new Footer();
+			v.addComponent(f);
+			
+			//rotes Panel unter dem Footer
+			Panel p2 = new Panel();
+			p2.setWidth("100%");
+			p2.addStyleName("red");
+			p2.setHeight("30px");
+			v.addComponent(p2);
+	
+		addComponent(v);
+		this.setExpandRatio(v, 12);
+		
+		//rotes rechtes Panel
+		Panel p1 = new Panel();
+		p1.setWidth("100%");
+		p1.addStyleName("red");
+		p1.setHeight("100%");
+		addComponent(p1);
+		this.setExpandRatio(p1, 1);
 	}
 
 	/**
@@ -353,7 +405,7 @@ public class AngebotErstellen extends HorizontalLayout implements View, Receiver
 		text.setRequired(true);
 		text.setRequiredError("Bitte geben Sie eine kurze Beschreibung des Angebots an.");
 		text.setWidth("100%");
-		Label bilder = new Label("Bilder hinzufügen");
+		Label bilder = new Label("Bilder hinzufügen(max. fünf)");
 		bilder.addStyleName("AbschnittLabel");
 		Upload bilderup = new Upload("Foto hochladen", this);
 		bilderup.addSucceededListener(this);
@@ -510,6 +562,9 @@ public class AngebotErstellen extends HorizontalLayout implements View, Receiver
 																	// in
 					// die DB schreiben
 					Offer o = new OfferProvider().find(currentOffer.getIdOffer());
+					
+					VaadinSession.getCurrent().setAttribute("buttonClicked", true);
+					
 					String name = "Einzelansicht";
 					getUI().getNavigator().addView(name, new Einzelansicht(o));
 					getUI().getNavigator().navigateTo(name);
@@ -534,6 +589,8 @@ public class AngebotErstellen extends HorizontalLayout implements View, Receiver
 			public void buttonClick(ClickEvent event) {
 
 				new OfferProvider().removeOffer(currentOffer);
+				
+				VaadinSession.getCurrent().setAttribute("buttonClicked", true);
 
 				String name = "Startseite";
 				getUI().getNavigator().addView(name, new Startseite());
@@ -736,7 +793,7 @@ public class AngebotErstellen extends HorizontalLayout implements View, Receiver
 		text.setRequired(true);
 		text.setRequiredError("Bitte geben Sie eine kurze Beschreibun des Angebots an.");
 		text.setWidth("100%");
-		Label bilder = new Label("Bilder hinzufügen");
+		Label bilder = new Label("Bilder hinzufügen(max. fünf)");
 		bilder.addStyleName("AbschnittLabel");
 
 		Upload bilderup = new Upload("Foto hochladen", this);
@@ -892,6 +949,9 @@ public class AngebotErstellen extends HorizontalLayout implements View, Receiver
 					// changedOffer.setLongitude(longitude);
 					// changedOffer.setPhotos();
 					Offer o = new OfferProvider().find(currentOffer.getIdOffer());
+					
+					VaadinSession.getCurrent().setAttribute("buttonClicked", true);
+					
 					if (new OfferProvider().alterOffer(currentOffer)) {
 						// neues Angebot in die DB schreiben
 						String name = "Einzelansicht";
@@ -929,6 +989,8 @@ public class AngebotErstellen extends HorizontalLayout implements View, Receiver
 					photoProv.removePhoto(p);
 				}
 
+				VaadinSession.getCurrent().setAttribute("buttonClicked", true);
+				
 				String name = "Einzelansicht";
 				getUI().getNavigator().addView(name, new Einzelansicht(offer));
 				getUI().getNavigator().navigateTo(name);
