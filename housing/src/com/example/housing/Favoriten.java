@@ -127,12 +127,15 @@ public class Favoriten extends HorizontalLayout implements View{
 		favs = fp.findFav(VaadinSession.getCurrent().getAttribute(User.class));
 		
 		int anzahl = favs.size();
+		content.addComponent(new Label("Sie haben " + anzahl + " Favoriten"));
+		
 		System.out.println(anzahl);
 		 for(int i = 0; i<anzahl;i++){
-			
+
 			 Offer o = favs.get(i).getFavorit_idOffer();
-			 content.addComponent(new Listenzeile(o));
+			content.addComponent(new Listenzeile(o));
 		} 
+		
 			
 		
 	}

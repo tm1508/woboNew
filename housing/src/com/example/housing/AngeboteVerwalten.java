@@ -129,6 +129,7 @@ public class AngeboteVerwalten extends HorizontalLayout implements View {
 
 		// Anzahl der gefundenen Ergebnisse
 		int anzahl = angebote.size();
+		content.addComponent(new Label("Sie haben " + anzahl + " Angebote"));
 		System.out.println(anzahl);
 		for (int i = 0; i < anzahl; i++) {
 			final Offer o = angebote.get(i);
