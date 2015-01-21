@@ -1,12 +1,18 @@
 package com.example.housing;
 
+import java.util.List;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import com.example.housing.data.model.User;
+
+import com.example.housing.data.model.*;
+import com.example.housing.data.provider.*;
 import com.vaadin.annotations.PreserveOnRefresh;
 import com.vaadin.annotations.Theme;
 import com.vaadin.annotations.VaadinServletConfiguration;
 import com.vaadin.navigator.Navigator;
+import com.vaadin.navigator.ViewChangeListener;
+import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.server.CustomizedSystemMessages;
 import com.vaadin.server.DefaultErrorHandler;
 import com.vaadin.server.ServiceException;
@@ -81,6 +87,7 @@ public class HousingUI extends UI {
 			event.getSession().setAttribute("login", false);//Ist ein Nutzer eingeloggt? true=ja, false=nein
 			event.getSession().setAttribute("activated", "");//speichern des Requestparameters für die Aktivierung
 			event.getSession().setAttribute(User.class, null);//evtl. speichern des eingeloggten Users	
+			event.getSession().setAttribute("buttonClicked", false);
 		}
 		
 		/* (non-Javadoc)
@@ -88,6 +95,21 @@ public class HousingUI extends UI {
 		 */
 		@Override
 		public void sessionDestroy(SessionDestroyEvent event) {
+			
+			if((boolean) event.getSession().getAttribute("login")) {
+				
+				//inaktive, "leere" Angebote des Users löschen
+				User u = event.getSession().getAttribute(User.class);
+				
+				OfferProvider offerProv = new OfferProvider();
+				List<Offer> failedOffers = offerProv.findFailedOffersByUser(u);
+				for (Offer o : failedOffers) {
+					offerProv.removeOffer(o);
+				}
+				
+				//TODO hochgeladene Bilder löschen bei Angebot bearbeiten
+				
+			}
 			
 		}
 	}
@@ -118,6 +140,45 @@ public class HousingUI extends UI {
 		navigator.navigateTo(name);
 		
 		navigator.setErrorView(new ErrorPage());//Navigation zur Fehlerseite
+		navigator.addViewChangeListener(new ViewChangeListener() {
+			
+			@Override
+			public boolean beforeViewChange(ViewChangeEvent event) {
+				
+				System.out.println("Old View: " + event.getOldView().getClass().toString());
+				System.out.println("buttonClicked?: " + VaadinSession.getCurrent().getAttribute("buttonClicked"));
+				
+				//AngebotErstellen ohne Button verlassen
+				//TODO: Button als Auslöser ausschließen!!!
+				if(event.getOldView().getClass().toString().equals("class com.example.housing.AngebotErstellen") && !((boolean) VaadinSession.getCurrent().getAttribute("buttonClicked"))) {
+					System.out.println("Klassen identisch!");		
+					if(((AngebotErstellen) event.getOldView()).getNewPhotos() != null) {
+						//TODO alle Fotos wieder löschen
+						PhotoProvider photoProv = new PhotoProvider();
+						List<Photo> photos = ((AngebotErstellen) event.getOldView()).getNewPhotos();
+						for(Photo p : photos) {
+							photoProv.removePhoto(p);
+						}
+						((AngebotErstellen) event.getOldView()).setNewPhotos(null);
+						System.out.println("Fotos gelöscht");
+						
+					} else {
+						
+						Offer o = new OfferProvider().findById(((AngebotErstellen) event.getOldView()).getCurrentOffer().getIdOffer());
+						new OfferProvider().removeOffer(o);
+						
+					}
+				}
+				return true;
+			} 
+			
+			@Override
+			public void afterViewChange(ViewChangeEvent event) {
+				
+				VaadinSession.getCurrent().setAttribute("buttonClicked", false);
+				
+			}
+		});
 		
 		// Error Handler
 		UI.getCurrent().setErrorHandler(new DefaultErrorHandler() {

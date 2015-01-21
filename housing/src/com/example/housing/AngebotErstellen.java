@@ -66,6 +66,22 @@ public class AngebotErstellen extends HorizontalLayout implements View, Receiver
 
 	private List<Photo> newPhotos;
 
+	public Offer getCurrentOffer() {
+		return currentOffer;
+	}
+
+	public void setCurrentOffer(Offer currentOffer) {
+		this.currentOffer = currentOffer;
+	}
+
+	public List<Photo> getNewPhotos() {
+		return newPhotos;
+	}
+
+	public void setNewPhotos(List<Photo> newPhotos) {
+		this.newPhotos = newPhotos;
+	}
+
 	private ByteArrayOutputStream tmpImg;
 
 	/*
@@ -546,6 +562,9 @@ public class AngebotErstellen extends HorizontalLayout implements View, Receiver
 																	// in
 					// die DB schreiben
 					Offer o = new OfferProvider().find(currentOffer.getIdOffer());
+					
+					VaadinSession.getCurrent().setAttribute("buttonClicked", true);
+					
 					String name = "Einzelansicht";
 					getUI().getNavigator().addView(name, new Einzelansicht(o));
 					getUI().getNavigator().navigateTo(name);
@@ -570,6 +589,8 @@ public class AngebotErstellen extends HorizontalLayout implements View, Receiver
 			public void buttonClick(ClickEvent event) {
 
 				new OfferProvider().removeOffer(currentOffer);
+				
+				VaadinSession.getCurrent().setAttribute("buttonClicked", true);
 
 				String name = "Startseite";
 				getUI().getNavigator().addView(name, new Startseite());
@@ -928,6 +949,9 @@ public class AngebotErstellen extends HorizontalLayout implements View, Receiver
 					// changedOffer.setLongitude(longitude);
 					// changedOffer.setPhotos();
 					Offer o = new OfferProvider().find(currentOffer.getIdOffer());
+					
+					VaadinSession.getCurrent().setAttribute("buttonClicked", true);
+					
 					if (new OfferProvider().alterOffer(currentOffer)) {
 						// neues Angebot in die DB schreiben
 						String name = "Einzelansicht";
@@ -965,6 +989,8 @@ public class AngebotErstellen extends HorizontalLayout implements View, Receiver
 					photoProv.removePhoto(p);
 				}
 
+				VaadinSession.getCurrent().setAttribute("buttonClicked", true);
+				
 				String name = "Einzelansicht";
 				getUI().getNavigator().addView(name, new Einzelansicht(offer));
 				getUI().getNavigator().navigateTo(name);
