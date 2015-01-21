@@ -34,7 +34,7 @@ public class SendEMail {
 		String subject = "Test";
 		String text = "123";
 		String cc = "julia.agricola@web.de";
-		sendCC(to, from, cc, subject, text);
+	
 	}
 	
 	/**
@@ -93,7 +93,7 @@ public class SendEMail {
 	 * @param subject the subject
 	 * @param text the text
 	 */
-	public static void sendCC(String to, String from, String cc, String subject, String text){
+	public static void sendEmailAlias(String to, String from, String alias, String subject, String text){
 		
 		// Properties setzen
 		properties.put("mail.smtp.host", "smtp.web.de");// SMTP-Server von web.de
@@ -115,10 +115,9 @@ public class SendEMail {
 		// neue Message erzeugen
 		SMTPMessage message = (SMTPMessage) new SMTPMessage(session);
 		try {
-			message.setEnvelopeFrom("wohnungsboerse_dh@web.de");// tatsächlicher Absender (E-Mail wird von uns an uns selbst geschickt, unter dem Namen bzw. der E-Mail-Adresse des Nutzers)
-			message.setFrom(new InternetAddress(from));// E-Mail-Adresse des Benutzers
+			message.setEnvelopeFrom(from);// tatsächlicher Absender (E-Mail wird von uns an uns selbst geschickt, unter dem Namen bzw. der E-Mail-Adresse des Nutzers)
+			message.setFrom(new InternetAddress(alias));// E-Mail-Adresse des Benutzers
 			message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(to));// E-Mail-Adresse des Empfängers
-			message.setRecipients(Message.RecipientType.CC, InternetAddress.parse(cc));
 			message.setSubject(subject);// Betreff
 			message.setContent(text, "text/html");// Text der E-Mail (mit html Code für den Style)
 			
