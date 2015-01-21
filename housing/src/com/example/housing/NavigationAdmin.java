@@ -24,7 +24,8 @@ import com.vaadin.ui.VerticalLayout;
 /**
  * The Class Navigation.
  */
-public class Navigation extends CustomComponent {
+@SuppressWarnings("serial")
+public class NavigationAdmin extends CustomComponent {
 
 	/*- VaadinEditorProperties={"grid":"RegularGrid,20","showGrid":true,"snapToGrid":true,"snapToObject":true,"movingGuides":false,"snappingDistance":10} */
 
@@ -43,7 +44,7 @@ public class Navigation extends CustomComponent {
 	/**
 	 * Instantiates a new navigation.
 	 */
-	public Navigation() {
+	public NavigationAdmin() {
 		buildMainLayout();
 		setCompositionRoot(mainLayout);
 		mainLayout.setStyleName("navigation");
@@ -57,6 +58,7 @@ public class Navigation extends CustomComponent {
 		FileResource resource = new FileResource(new File(basepath + "/WEB-INF/image/dh.PNG"));
 		Image image = new Image("",resource);
 		h.addComponent(image);
+	
 		
 		if((boolean) VaadinSession.getCurrent().getAttribute("login")){
 			Label l = new Label("Sie sind angemeldet als:");
@@ -68,14 +70,18 @@ public class Navigation extends CustomComponent {
 			Label l_2 = new Label(VaadinSession.getCurrent().getAttribute(User.class).getEmail());
 			h.addComponent(l_2);
 			
-		
+			Label l_1 = new Label("(ADMINISTRATOR)");
+			h.addComponent(l_1);
 			
 			h.setComponentAlignment(l, Alignment.BOTTOM_LEFT);
 			
 			
-
+			h.setComponentAlignment(l_1, Alignment.BOTTOM_LEFT);
 			h.setComponentAlignment(l_2, Alignment.BOTTOM_LEFT);
 		}
+
+		h.setExpandRatio(image, 1);
+		
 		mainLayout.addComponent(h);
 	
 		
@@ -124,58 +130,10 @@ public class Navigation extends CustomComponent {
 			}  
 		};
 		
-		MenuBar.Command mycommand3 = new MenuBar.Command() {
-			public void menuSelected(MenuItem selectedItem) {
-				String name = "AngebotErstellen";
-				getUI().getNavigator().addView(name, new AngebotErstellen());
-				getUI().getNavigator().navigateTo(name);
-				
-			}  
-		};
-		
-		
-		//Navigator navigator = new Navigator(null, h);
-		MenuBar.Command mycommand4 = new MenuBar.Command() {
-			public void menuSelected(MenuItem selectedItem) {
-				String name = "AngeboteVerwalten";
-				getUI().getNavigator().addView(name, new AngeboteVerwalten());
-				getUI().getNavigator().navigateTo(name);
-				
-			}  
-		};
-		
-		MenuBar.Command mycommand5 = new MenuBar.Command() {
-			public void menuSelected(MenuItem selectedItem) {
-				String name = "Profile";
-				getUI().getNavigator().addView(name, new Profile());
-				getUI().getNavigator().navigateTo(name);
-				
-			}  
-		};
-		
-		MenuBar.Command mycommand6 = new MenuBar.Command() {
-			public void menuSelected(MenuItem selectedItem) {
-				String name = "Favoriten";
-				getUI().getNavigator().addView(name, new Favoriten());
-				getUI().getNavigator().navigateTo(name);
-				
-			}  
-		};
-		
-		MenuBar.Command mycommand7 = new MenuBar.Command() {
-			public void menuSelected(MenuItem selectedItem) {
-				String name = "AnfragenVerwalten";
-				getUI().getNavigator().addView(name, new AnfragenVerwalten());
-				getUI().getNavigator().navigateTo(name);
-				
-			}  
-		};
 		
 		MenuBar.Command mycommand8 = new MenuBar.Command() {
 			public void menuSelected(MenuItem selectedItem) {
-				String name = "Maps";
-				getUI().getNavigator().addView(name, new Maps());
-				getUI().getNavigator().navigateTo(name);
+		
 				
 			}  
 		};
@@ -195,16 +153,10 @@ public class Navigation extends CustomComponent {
 		//Navigationsschaltflächen
 		MenuItem nav0 = menuBar_1.addItem("Startseite", FontAwesome.HOME, mycommand1); //Startesite
 		MenuItem nav1 = menuBar_1.addItem("Suche", FontAwesome.SEARCH, mycommand2); //Suche
-		MenuItem nav2 = menuBar_1.addItem("Wohnung einstellen", FontAwesome.HOME, null); 
-			nav2.addItem("Neue Wohnung anbieten", FontAwesome.PENCIL, mycommand3); //AngebotErstellen
-			nav2.addItem("Wohnungsangebote verwalten", FontAwesome.WRENCH, mycommand4); //AngebotAnzeigen
-		MenuItem nav5 = menuBar_1.addItem("Persönliche Daten", FontAwesome.CHILD, null); 
-			nav5.addItem("Meine Favoriten", FontAwesome.STAR_O, mycommand6);
-			nav5.addItem("Meine Anfragen", FontAwesome.STAR_O, mycommand7);
-			nav5.addItem("Meine Profildaten", FontAwesome.USER, mycommand5); 
+		MenuItem nav8 = menuBar_1.addItem("Benutzer verwalten", FontAwesome.WRENCH, mycommand8);//Navigation
 		MenuItem nav6 = menuBar_1.addItem("Logout", FontAwesome.UNLOCK_ALT, mycommand);//Navigation
-		MenuItem nav8 = menuBar_1.addItem("Maps", FontAwesome.MAP_MARKER, mycommand8);//Navigation
 		MenuItem nav9 = menuBar_1.addItem("Hilfe", FontAwesome.QUESTION, mycommand9);//Navigation zu FAQ
+	
 		
 		mainLayout.addComponent(menuBar_1);
 		
