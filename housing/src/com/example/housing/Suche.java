@@ -124,11 +124,19 @@ this.setWidth("100%");
 	 */
 	public void setContent(){
 		
+		//Titel
+		Label title = new Label();
+		title.setImmediate(false);
+		title.setWidth("-1px");
+		title.setHeight("-1px");
+		title.setValue("Suche");
+		title.addStyleName("title");
+		content.addComponent(title);
+		
 		content = new VerticalLayout();
-		Label suche = new Label("Suche");
-		suche.addStyleName("suchLabel");
-		content.addComponent(suche);
+
 		content.setMargin(true);
+		
 		
 		GridLayout gridSuche = new GridLayout(5,10); 
 		gridSuche.setSpacing(true);

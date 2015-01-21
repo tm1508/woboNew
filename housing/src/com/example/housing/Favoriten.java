@@ -130,7 +130,15 @@ public class Favoriten extends HorizontalLayout implements View{
 	 * Sets the content.
 	 */
 	public void setContent(){
-		
+		//Titel
+		Label title = new Label();
+		title.setImmediate(false);
+		title.setWidth("-1px");
+		title.setHeight("-1px");
+		title.setValue("Meine Favoriten");
+		title.addStyleName("title");
+		content.addComponent(title);
+				
 		FavoritProvider fp = new FavoritProvider();
 		List<Favorit> favs = fp.findFav(VaadinSession.getCurrent().getAttribute(User.class));
 		int anzahl = favs.size();
