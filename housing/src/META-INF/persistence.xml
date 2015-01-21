@@ -15,7 +15,8 @@
 
 			<property name="hibernate.connection.username" value="root"/>
 
-			<property name="hibernate.connection.password" value="kochbuch"/> <!-- Euer Passwort für den root-Account für MySQL-Zugriff eintragen!!! -->
+			<property name="hibernate.connection.password" value=""/> <!-- Euer Passwort für den root-Account für MySQL-Zugriff eintragen!!! -->
+
 
 
 
