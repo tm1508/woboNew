@@ -7,7 +7,7 @@ import javax.persistence.*;
  * The Class Photo.
  */
 @Entity
-@Table(name="photo")
+@Table(name="Photo")
 public class Photo {
 	
 	/** The id photo. */

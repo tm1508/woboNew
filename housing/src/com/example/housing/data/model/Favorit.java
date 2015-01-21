@@ -7,7 +7,7 @@ import javax.persistence.*;
  * The Class Favorit.
  */
 @Entity
-@Table(name="favorit")
+@Table(name="Favorit")
 public class Favorit {
 	
 	/** The id favorit. */
