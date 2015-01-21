@@ -246,9 +246,23 @@ public class FAQ extends HorizontalLayout implements View {
 		// TODO
 		final Label label_13 = new Label(
 				"Sollten Ihre Fragen nicht beantwortet sein, wenden Sie sich bitte an uns:");
-		final Label label_14 = new Label(" E-Mail-Adresse");
+		//Link zum Fenster "Passwort vergessen"
+		Button link_3 = new Button();
+		link_3.setStyleName("link");
+		link_3.setCaption("Kontakt");
+		link_3.setImmediate(false);
+		link_3.setWidth("-1px");
+		link_3.setHeight("-1px");
+		link_3.setIcon(FontAwesome.EXTERNAL_LINK);
+		link_3.addClickListener(new Button.ClickListener(){
+			public void buttonClick(ClickEvent event) {
+				String name = "Kontaktformular";
+				getUI().getNavigator().addView(name, new Kontaktformular());
+				getUI().getNavigator().navigateTo(name);
+			}
+		});
 		layout_3.addComponent(label_13);
-		layout_3.addComponent(label_14);
+		layout_3.addComponent(link_3);
 
 		accordion.addTab(layout_3, "Mehr Hilfe?", FontAwesome.THUMB_TACK);// Tab
 																			// 4
