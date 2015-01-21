@@ -109,6 +109,7 @@ this.setWidth("100%");
 				navPublic.setVisible(true);
 				navAdmin.setVisible(false);
 			}
+			
 			//Inhalt hinzufuegen
 			content = new VerticalLayout();
 			content.setMargin(true);

@@ -133,7 +133,7 @@ public class FAQ extends HorizontalLayout implements View {
 
 		content = new VerticalLayout();
 		content.setMargin(true);
-		
+
 		//Titel
 		Label title = new Label();
 		title.setImmediate(false);
@@ -142,7 +142,7 @@ public class FAQ extends HorizontalLayout implements View {
 		title.setValue("FAQs");
 		title.addStyleName("title");
 		content.addComponent(title);
-		
+
 		// Kategorien
 		Accordion accordion = new Accordion();
 		accordion.setStyleName("startseite");

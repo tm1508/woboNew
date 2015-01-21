@@ -258,7 +258,7 @@ public class AngebotErstellen extends HorizontalLayout implements View, Receiver
 
 		content = new VerticalLayout();
 		content.setMargin(true);
-		
+
 		Label title = new Label();
 		title.setImmediate(false);
 		title.setWidth("-1px");
@@ -266,6 +266,7 @@ public class AngebotErstellen extends HorizontalLayout implements View, Receiver
 		title.setValue("Mein Angebot");
 		title.addStyleName("title");
 		content.addComponent(title);
+		
 		// Titel + Adresse
 		Label ltitel = new Label("Titel");
 		ltitel.setWidth("10%");
@@ -628,7 +629,13 @@ public class AngebotErstellen extends HorizontalLayout implements View, Receiver
 
 		content = new VerticalLayout();
 		content.setMargin(true);
-
+		Label title = new Label();
+		title.setImmediate(false);
+		title.setWidth("-1px");
+		title.setHeight("-1px");
+		title.setValue("Mein Angebot");
+		title.addStyleName("title");
+		content.addComponent(title);
 		// Titel + Adresse
 		HorizontalLayout hl = new HorizontalLayout();
 		hl.setWidth("60%");

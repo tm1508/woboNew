@@ -145,7 +145,7 @@ public class AngeboteVerwalten extends HorizontalLayout implements View {
 		title.setValue("Meine Angebote");
 		title.addStyleName("title");
 		content.addComponent(title);
-		
+
 		// Anzahl der gefundenen Ergebnisse
 		int anzahl = angebote.size();
 		content.addComponent(new Label("Sie haben " + anzahl + " Angebote"));

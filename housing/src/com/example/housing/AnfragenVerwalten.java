@@ -152,5 +152,4 @@ public class AnfragenVerwalten extends HorizontalLayout implements View{
 		
 	}
 
-
 }

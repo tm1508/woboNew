@@ -130,6 +130,7 @@ public class Favoriten extends HorizontalLayout implements View{
 	 * Sets the content.
 	 */
 	public void setContent(){
+
 		//Titel
 		Label title = new Label();
 		title.setImmediate(false);
@@ -152,7 +153,6 @@ public class Favoriten extends HorizontalLayout implements View{
 			content.addComponent(new Listenzeile(o));
 		} 
 		
-			
 		
 	}
 

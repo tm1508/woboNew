@@ -108,6 +108,7 @@ public class Einzelansicht extends HorizontalLayout implements View {
 			navAdmin.setVisible(false);
 		}
 		
+		
 		//Inhalt hinzufuegen
 		content = new VerticalLayout();
 		content.setMargin(true);

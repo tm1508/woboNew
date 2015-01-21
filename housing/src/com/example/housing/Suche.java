@@ -137,7 +137,6 @@ this.setWidth("100%");
 
 		content.setMargin(true);
 		
-		
 		GridLayout gridSuche = new GridLayout(5,10); 
 		gridSuche.setSpacing(true);
 	//	gridSuche.setWidth("40%");
