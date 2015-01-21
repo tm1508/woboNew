@@ -117,7 +117,14 @@ public class AnfragenVerwalten extends HorizontalLayout implements View{
 	
 	public void setContent(){
 		
-	
+		Label title = new Label();
+		title.setImmediate(false);
+		title.setWidth("-1px");
+		title.setHeight("-1px");
+		title.setValue("Meine Anfragen");
+		title.addStyleName("title");
+		content.addComponent(title);
+		
 		RequestProvider rp = new RequestProvider();
 		List<Request> reqs;
 		

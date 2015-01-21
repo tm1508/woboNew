@@ -133,11 +133,19 @@ public class Einzelansicht extends HorizontalLayout implements View {
 	 */
 	@SuppressWarnings("deprecation")
 	public void setContent(){
-			
-		//titel
-		String titel = angebot.getTitle();
-		Label lTitel= new Label(titel + " Ort: " +angebot.getCity());
+		
+		//titel	
+		Label title = new Label();
+		title.setImmediate(false);
+		title.setWidth("-1px");
+		title.setHeight("-1px");
+		title.setValue(angebot.getTitle());
+		title.addStyleName("title");
+		content.addComponent(title);
+				
+		Label lTitel= new Label(" Ort: " +angebot.getCity());
 		lTitel.addStyleName("ImportantTitle");
+		content.addComponent(title );
 		content.addComponent(lTitel);
 		
 		//Adresse wird nur verifizierten Studenten angezeigt

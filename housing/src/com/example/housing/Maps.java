@@ -153,6 +153,15 @@ public class Maps extends HorizontalLayout implements View{
 	 * Sets the content.
 	 */
 	private void setContent() {
+		//Titel
+		Label title = new Label();
+		title.setImmediate(false);
+		title.setWidth("-1px");
+		title.setHeight("-1px");
+		title.setValue("Maps");
+		title.addStyleName("title");
+		content.addComponent(title);
+		
 		final TextField location = new TextField();
 		googleMap = new GoogleMap(null, null, null);
         googleMap.setCenter(new LatLon(60.440963, 22.25122));

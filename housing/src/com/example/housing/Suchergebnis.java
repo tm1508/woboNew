@@ -135,6 +135,14 @@ this.setWidth("100%");
 	@SuppressWarnings("deprecation")
 	public void setContent(){
 		
+		Label title = new Label();
+		title.setImmediate(false);
+		title.setWidth("-1px");
+		title.setHeight("-1px");
+		title.setValue("Suchergebnisse");
+		title.addStyleName("title");
+		content.addComponent(title);
+		
 		if(angebote.size()==0){
 			content.addComponent(new Label("Ihre Suche ergab keine Treffer!"));
 		}else{

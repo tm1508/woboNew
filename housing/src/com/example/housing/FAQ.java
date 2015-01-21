@@ -123,6 +123,14 @@ public class FAQ extends HorizontalLayout implements View {
 		content = new VerticalLayout();
 		content.setMargin(true);
 
+		//Titel
+		Label title = new Label();
+		title.setImmediate(false);
+		title.setWidth("-1px");
+		title.setHeight("-1px");
+		title.setValue("FAQs");
+		title.addStyleName("title");
+		content.addComponent(title);
 		// Kategorien
 		Accordion accordion = new Accordion();
 		accordion.setStyleName("startseite");
