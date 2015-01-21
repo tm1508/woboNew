@@ -70,17 +70,16 @@ public class Startseite extends HorizontalLayout implements View{
 			
 			//falls der Benutzer eingelogt ist verändert sich die Navigation
 			if(VaadinSession.getCurrent().getAttribute("login").equals(true)){
-				if(VaadinSession.getCurrent().getAttribute(User.class).getAccessLevel()==2){
+				if(VaadinSession.getCurrent().getAttribute(User.class).getAccessLevel()==2){//falls der User ein Admin ist
 					nav.setVisible(false);
 					navPublic.setVisible(false);
-					navAdmin.setVisible(true);
-				}else{
+					navAdmin.setVisible(true);//Admin-Navigation
+				}else{//ansonsten: Naviagtion für eingeloggte Nutzer
 					nav.setVisible(true);
 					navPublic.setVisible(false);
 					navAdmin.setVisible(false);
 				}
-
-			}else{
+			}else{//ansonsten Public Navigation (für alle)
 				nav.setVisible(false);
 				navPublic.setVisible(true);
 				navAdmin.setVisible(false);

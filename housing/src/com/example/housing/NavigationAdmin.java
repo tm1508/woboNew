@@ -9,6 +9,7 @@ import com.vaadin.server.FontAwesome;
 import com.vaadin.server.Page;
 import com.vaadin.server.VaadinService;
 import com.vaadin.server.VaadinSession;
+import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.CustomComponent;
 import com.vaadin.ui.HorizontalLayout;
@@ -44,6 +45,7 @@ public class NavigationAdmin extends CustomComponent {
 	/**
 	 * Instantiates a new navigation.
 	 */
+	@SuppressWarnings("unused")
 	public NavigationAdmin() {
 		buildMainLayout();
 		setCompositionRoot(mainLayout);
@@ -61,26 +63,15 @@ public class NavigationAdmin extends CustomComponent {
 	
 		
 		if((boolean) VaadinSession.getCurrent().getAttribute("login")){
-			Label l = new Label("Sie sind angemeldet als:");
-			l.setIcon(FontAwesome.USER);
+			Label l = new Label();
+			l.setContentMode(ContentMode.HTML);
+			l.setValue(""+FontAwesome.USER.getHtml()+"  Sie sind angemeldet als:    "+VaadinSession.getCurrent().getAttribute(User.class).getEmail()+"    (ADMINISTRATOR)");
 			h.addComponent(l);
-			
-			
-			
-			Label l_2 = new Label(VaadinSession.getCurrent().getAttribute(User.class).getEmail());
-			h.addComponent(l_2);
-			
-			Label l_1 = new Label("(ADMINISTRATOR)");
-			h.addComponent(l_1);
-			
 			h.setComponentAlignment(l, Alignment.BOTTOM_LEFT);
 			
-			
-			h.setComponentAlignment(l_1, Alignment.BOTTOM_LEFT);
-			h.setComponentAlignment(l_2, Alignment.BOTTOM_LEFT);
 		}
 
-		h.setExpandRatio(image, 1);
+
 		
 		mainLayout.addComponent(h);
 	
@@ -153,7 +144,7 @@ public class NavigationAdmin extends CustomComponent {
 		//Navigationsschaltflächen
 		MenuItem nav0 = menuBar_1.addItem("Startseite", FontAwesome.HOME, mycommand1); //Startesite
 		MenuItem nav1 = menuBar_1.addItem("Suche", FontAwesome.SEARCH, mycommand2); //Suche
-		MenuItem nav8 = menuBar_1.addItem("Benutzer verwalten", FontAwesome.WRENCH, mycommand8);//Navigation
+		//MenuItem nav8 = menuBar_1.addItem("Benutzer verwalten", FontAwesome.WRENCH, mycommand8);//Navigation
 		MenuItem nav6 = menuBar_1.addItem("Logout", FontAwesome.UNLOCK_ALT, mycommand);//Navigation
 		MenuItem nav9 = menuBar_1.addItem("Hilfe", FontAwesome.QUESTION, mycommand9);//Navigation zu FAQ
 	

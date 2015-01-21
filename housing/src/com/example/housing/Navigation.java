@@ -9,6 +9,7 @@ import com.vaadin.server.FontAwesome;
 import com.vaadin.server.Page;
 import com.vaadin.server.VaadinService;
 import com.vaadin.server.VaadinSession;
+import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.CustomComponent;
 import com.vaadin.ui.HorizontalLayout;
@@ -24,6 +25,7 @@ import com.vaadin.ui.VerticalLayout;
 /**
  * The Class Navigation.
  */
+@SuppressWarnings("serial")
 public class Navigation extends CustomComponent {
 
 	/*- VaadinEditorProperties={"grid":"RegularGrid,20","showGrid":true,"snapToGrid":true,"snapToObject":true,"movingGuides":false,"snappingDistance":10} */
@@ -43,6 +45,7 @@ public class Navigation extends CustomComponent {
 	/**
 	 * Instantiates a new navigation.
 	 */
+	@SuppressWarnings("unused")
 	public Navigation() {
 		buildMainLayout();
 		setCompositionRoot(mainLayout);
@@ -52,30 +55,19 @@ public class Navigation extends CustomComponent {
 		//Bild
 		
 		HorizontalLayout h = new HorizontalLayout();
-		
 		String basepath = VaadinService.getCurrent().getBaseDirectory().getAbsolutePath();
 		FileResource resource = new FileResource(new File(basepath + "/WEB-INF/image/dh.PNG"));
 		Image image = new Image("",resource);
 		h.addComponent(image);
 		
 		if((boolean) VaadinSession.getCurrent().getAttribute("login")){
-			Label l = new Label("Sie sind angemeldet als:");
-			l.setIcon(FontAwesome.USER);
+			Label l = new Label();
+			l.setContentMode(ContentMode.HTML);
+			l.setValue(""+FontAwesome.USER.getHtml()+"  Sie sind angemeldet als:    "+VaadinSession.getCurrent().getAttribute(User.class).getEmail());
 			h.addComponent(l);
-			
-			
-			
-			Label l_2 = new Label(VaadinSession.getCurrent().getAttribute(User.class).getEmail());
-			h.addComponent(l_2);
-			
-		
-			
 			h.setComponentAlignment(l, Alignment.BOTTOM_LEFT);
-			
-			
-
-			h.setComponentAlignment(l_2, Alignment.BOTTOM_LEFT);
 		}
+		
 		mainLayout.addComponent(h);
 	
 		
