@@ -389,7 +389,7 @@ public class AngebotErstellen extends HorizontalLayout implements View, Receiver
 		text.setRequired(true);
 		text.setRequiredError("Bitte geben Sie eine kurze Beschreibung des Angebots an.");
 		text.setWidth("100%");
-		Label bilder = new Label("Bilder hinzufügen");
+		Label bilder = new Label("Bilder hinzufügen(max. fünf)");
 		bilder.addStyleName("AbschnittLabel");
 		Upload bilderup = new Upload("Foto hochladen", this);
 		bilderup.addSucceededListener(this);
@@ -772,7 +772,7 @@ public class AngebotErstellen extends HorizontalLayout implements View, Receiver
 		text.setRequired(true);
 		text.setRequiredError("Bitte geben Sie eine kurze Beschreibun des Angebots an.");
 		text.setWidth("100%");
-		Label bilder = new Label("Bilder hinzufügen");
+		Label bilder = new Label("Bilder hinzufügen(max. fünf)");
 		bilder.addStyleName("AbschnittLabel");
 
 		Upload bilderup = new Upload("Foto hochladen", this);
