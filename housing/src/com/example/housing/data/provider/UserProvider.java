@@ -99,20 +99,19 @@ public class UserProvider extends BaseProvider<User>{
 		RequestProvider requestProv = new RequestProvider();
 		boolean success = true;
 		
-		for(Offer o : offers) {
+		try {
+			for(Offer o : offers) {
+				success = offerProv.removeOffer(o);
+			}
 			
-			success = offerProv.removeOffer(o);
+			for(Favorit f : favorits) {
+				success = favoritProv.removeFavorit(f);
+			}
 			
-		}
-		for(Favorit f : favorits) {
-			
-			success = favoritProv.removeFavorit(f);
-			
-		}
-		for(Request r : requests) {
-			
-			success = requestProv.removeRequest(r);
-			
+			for(Request r : requests) {
+				success = requestProv.removeRequest(r);
+			}
+		} catch (NullPointerException npe) { // falls keine Offers etc vorhanden sind
 		}
 		
 		if(success) {
