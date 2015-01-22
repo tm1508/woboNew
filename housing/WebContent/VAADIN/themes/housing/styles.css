@@ -2239,6 +2239,39 @@ div.v-layout.v-horizontal.v-widget {
 	color: #ff1631;
 }
 
+.housing .v-button-link_footer {
+	border: none;
+	margin-top: 0px;
+	-webkit-box-shadow: none;
+	box-shadow: none;
+	background: transparent;
+	color: inherit;
+	cursor: pointer;
+	color: #e2001a;
+	text-decoration: underline;
+	font-weight: inherit;
+	-webkit-transition: color 140ms;
+	-moz-transition: color 140ms;
+	transition: color 140ms;
+}
+
+.housing .v-button-link_footer:hover:after {
+	background: transparent;
+}
+
+.housing .v-button-link_footer:active {
+	opacity: 0.7;
+	filter: alpha(opacity=70) ;
+}
+
+.housing .v-button-link_footer:active:after {
+	background: transparent;
+}
+
+.housing .v-button-link_footer:hover {
+	color: #ff1631;
+}
+
 .housing .v-button-tiny {
 	height: 28px;
 	padding: 0 13px;
