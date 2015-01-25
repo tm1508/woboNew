@@ -416,7 +416,7 @@ public class Einzelansicht extends HorizontalLayout implements View {
         
         //Bearbeiten- und Löschen-Button
         if(VaadinSession.getCurrent().getAttribute("login").equals(true)){
-        	if(VaadinSession.getCurrent().getAttribute(User.class).getEmail().equals(angebot.getOffer_idUser().getEmail())){
+        	if(VaadinSession.getCurrent().getAttribute(User.class).getEmail().equals(angebot.getOffer_idUser().getEmail())|| VaadinSession.getCurrent().getAttribute(User.class).getAccessLevel()==2){
         		
         		HorizontalLayout userButtons = new HorizontalLayout();
         		
@@ -455,7 +455,16 @@ public class Einzelansicht extends HorizontalLayout implements View {
         Button anfrage = new Button("Anfrage");
         anfrage.addStyleName("AnfrageButton");
         anfrage.setIcon(FontAwesome.MAIL_FORWARD);
+        
+        Button anbieter = new Button("Anbieter kontaktieren");
+        anbieter.addStyleName("AnfrageButton");
+        anfrage.setIcon(FontAwesome.MAIL_FORWARD);
+        
+        if(VaadinSession.getCurrent().getAttribute("login").equals(false)|| VaadinSession.getCurrent().getAttribute(User.class).getAccessLevel()!=2){
         buttons.addComponent(anfrage);
+        }else{
+        buttons.addComponent(anbieter);	
+        }
         if(angebot.isInactive()){
         	anfrage.setEnabled(false);
         }
@@ -489,6 +498,16 @@ public class Einzelansicht extends HorizontalLayout implements View {
 				}
 			}
 		});
+        
+        anbieter.addClickListener(new Button.ClickListener(){
+			public void buttonClick(ClickEvent event) {
+				String name = "AdminanfrageWohnung";
+				
+				getUI().getNavigator().addView(name, new AdminanfrageWohnung(angebot));
+				getUI().getNavigator().navigateTo(name);
+			
+			}
+		});
 
 			
 				
@@ -501,7 +520,7 @@ public class Einzelansicht extends HorizontalLayout implements View {
 
 	    
         //Favoriten-Button TODO
-        if(VaadinSession.getCurrent().getAttribute("login").equals(true) && !fp.favoritExists(VaadinSession.getCurrent().getAttribute(User.class), angebot)){
+        if(VaadinSession.getCurrent().getAttribute("login").equals(true) && !fp.favoritExists(VaadinSession.getCurrent().getAttribute(User.class), angebot)&& VaadinSession.getCurrent().getAttribute(User.class).getAccessLevel()!=2){
         
         	Button favorit = new Button("Favorit hinzufügen");
         	favorit.setIcon(FontAwesome.PLUS_SQUARE_O);
@@ -529,7 +548,7 @@ public class Einzelansicht extends HorizontalLayout implements View {
         		}	
         	}); 
     	
-        }else if(VaadinSession.getCurrent().getAttribute("login").equals(true) && fp.favoritExists(VaadinSession.getCurrent().getAttribute(User.class), angebot)){
+        }else if(VaadinSession.getCurrent().getAttribute("login").equals(true) && fp.favoritExists(VaadinSession.getCurrent().getAttribute(User.class), angebot)&& VaadinSession.getCurrent().getAttribute(User.class).getAccessLevel()!=2){
         	
         	Button removeFavorit = new Button("Favorit entfernen");
         	removeFavorit.setIcon(FontAwesome.TRASH_O);
@@ -572,7 +591,7 @@ public class Einzelansicht extends HorizontalLayout implements View {
         
           
 
-        if(VaadinSession.getCurrent().getAttribute("login").equals(true)){
+        if(VaadinSession.getCurrent().getAttribute("login").equals(true)&& VaadinSession.getCurrent().getAttribute(User.class).getAccessLevel()!=2){
         	User u = VaadinSession.getCurrent().getAttribute(User.class);
             List<Request> r;
             r= u.getRequests(); 
