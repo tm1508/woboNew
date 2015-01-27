@@ -488,7 +488,7 @@ public class Einzelansicht extends HorizontalLayout implements View {
 			public void buttonClick(ClickEvent event) {
 				String name = "AdminanfrageWohnung";
 				
-				//getUI().getNavigator().addView(name, new AdminanfrageWohnung(angebot));
+				getUI().getNavigator().addView(name, new AdminanfrageWohnung(angebot));
 				getUI().getNavigator().navigateTo(name);
 			
 			}
