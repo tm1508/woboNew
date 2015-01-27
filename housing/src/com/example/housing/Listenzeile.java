@@ -77,13 +77,27 @@ public class Listenzeile extends CustomComponent {
 					return bais;
 				}
 			}, "Bild_1");
+			
 			Image image = new Image(null, resource);
-			//image.setWidth("100px");
-			//image.setHeight("85px");
+			image.setHeight("100%"); //100% der Listenzeilen-Höhe
+			image.setWidth("30%");
 			ergebnisLayout.addComponent(image, 0, 0, 2, 2);
+			/*Float dynamicWidthImageCalc = (float) (image.getHeight() * 1.45);
+			System.out.println(Math.round(dynamicWidthImageCalc));
+			Integer dynamicWidthImage = Integer.valueOf(Math.round(dynamicWidthImageCalc));
+			System.out.println(dynamicWidthImage);
+			image.setWidth(dynamicWidthImage.toString() + "px");
+			System.out.println("Bild-Breite: " + dynamicWidthImage.toString()); // Test
+			ergebnisLayout.addComponent(image, 0, 0, 2, 2);
+			Float dynamicWidthRestCalc = ergebnisLayout.getWidth() - image.getWidth();
+			Integer dynamicWidthRest = Integer.valueOf(Math.round(dynamicWidthRestCalc));
 			Component c = ergebnisLayout.getComponent(0, 2);
-			c.setWidth("70%");
+			c.setWidth(dynamicWidthRest.toString() + "px");
+			System.out.println("Rest-Breite: " + dynamicWidthRest.toString()); // Test
+			*/			
+			Component c = ergebnisLayout.getComponent(0, 2);
 			c.setHeight("100%");
+			c.setWidth("70%");
 			
 		} else {
 			
