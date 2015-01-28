@@ -285,7 +285,7 @@ public class Einzelansicht extends HorizontalLayout implements View {
 	    DateField startDate = new DateField();
 	    startDate.setValue(angebot.getStartDate());
 	    startDate.setEnabled(false);
-	    Label start = new Label("Startdatum");
+	    Label start = new Label("Verfügbar von:");
 	    start.setWidth("388px");
 	    gridInfos.addComponent(start, 0, 0);
 	    gridInfos.addComponent(startDate, 1,0);
@@ -294,21 +294,21 @@ public class Einzelansicht extends HorizontalLayout implements View {
 	    DateField endDate = new DateField();
 	    endDate.setValue(angebot.getEndDate());
 	    endDate.setEnabled(false);
-	    gridInfos.addComponent(new Label("Enddatum"), 0,1);
+	    gridInfos.addComponent(new Label("bis:"), 0,1);
 	    gridInfos.addComponent(endDate, 1,1);
 	    
 	    //Size
 		float sm = angebot.getSquareMetre();
 		String sSm = new Format().stringFormat(sm);
 		
-        gridInfos.addComponent(new Label("Größe"),0,2);
+        gridInfos.addComponent(new Label("Größe:"),0,2);
         gridInfos.addComponent(new Label(sSm + " m²"),1 , 2);
         
         //Price
     	float price =  angebot.getPrice();
 		String sPrice = new Format().stringEuro(price);
 		
-        gridInfos.addComponent(new Label("Warmmiete"),0,3);
+        gridInfos.addComponent(new Label("Warmmiete:"),0,3);
         gridInfos.addComponent(new Label(sPrice + " €"),1 , 3);
         
         //IsShared       
@@ -321,45 +321,45 @@ public class Einzelansicht extends HorizontalLayout implements View {
 		}else if(a == 3){
 			s="WG-Zimmer";
 		}
-        gridInfos.addComponent(new Label("Art der Unterkunft: "), 0, 4);
+        gridInfos.addComponent(new Label("Art der Unterkunft:"), 0, 4);
         gridInfos.addComponent(new Label(s), 1, 4);
      
         //Number of Roomates 
         int number = angebot.getNumberOfRoommate();
-        gridInfos.addComponent(new Label("Anzahl Mitbewohner"), 0, 5);
+        gridInfos.addComponent(new Label("Anzahl Mitbewohner:"), 0, 5);
         gridInfos.addComponent(new Label(Integer.toString(number)), 1, 5);
         
         //Internet 
         CheckBox hasInternet = new CheckBox("");       
-        gridInfos.addComponent(new Label("Internet"), 0, 6);
+        gridInfos.addComponent(new Label("Internetanschluss vorhanden:"), 0, 6);
         gridInfos.addComponent(hasInternet, 1,6);
         hasInternet.setEnabled(false);
         hasInternet.setValue( angebot.isInternet());
         
         //furnished       
         CheckBox isFurnished = new CheckBox("");       
-        gridInfos.addComponent(new Label("Möbliert"), 0, 7);
+        gridInfos.addComponent(new Label("Möblierte Wohnung:"), 0, 7);
         gridInfos.addComponent(isFurnished, 1,7);
         isFurnished.setEnabled(false);
         isFurnished.setValue( angebot.isFurnished());
         
         //kitchen       
         CheckBox useKitchen = new CheckBox("");       
-        gridInfos.addComponent(new Label("Küchenmitbenutzung"), 0, 8);
+        gridInfos.addComponent(new Label("Küche vorhanden:"), 0, 8);
         gridInfos.addComponent(useKitchen, 1,8);
         useKitchen.setEnabled(false);
         useKitchen.setValue( angebot.isKitchen());
        
         //smoker
         CheckBox smokingAllowed = new CheckBox("");       
-        gridInfos.addComponent(new Label("Raucher"), 0, 9);
+        gridInfos.addComponent(new Label("Raucher-Wohnung:"), 0, 9);
         gridInfos.addComponent(smokingAllowed, 1,9);
         smokingAllowed.setEnabled(false);
         smokingAllowed.setValue(angebot.isSmoker());
         
         //pets       
         CheckBox petsAllowed = new CheckBox("");       
-        gridInfos.addComponent(new Label("Haustiere erlaubt"), 0, 10);
+        gridInfos.addComponent(new Label("Haustiere erlaubt:"), 0, 10);
         gridInfos.addComponent(petsAllowed, 1,10);
         petsAllowed.setEnabled(false);
         petsAllowed.setValue(angebot.isPets());
@@ -375,7 +375,7 @@ public class Einzelansicht extends HorizontalLayout implements View {
         }
         else if ( g == 3)
         	maleFemale.setValue("weiblich");
-        gridInfos.addComponent(new Label("Bevorzugtes Geschlecht"), 0, 11);
+        gridInfos.addComponent(new Label("Bevorzugtes Geschlecht:"), 0, 11);
         gridInfos.addComponent(maleFemale, 1,11);
 
         
@@ -383,7 +383,7 @@ public class Einzelansicht extends HorizontalLayout implements View {
         float bond =  angebot.getBond();
 		String sBond = new Format().stringEuro(bond) + " €";
 		
-        Label lBond = new Label("Kaution");
+        Label lBond = new Label("Kaution:");
         gridInfos.addComponent(lBond,0,12);
         gridInfos.addComponent(new Label(sBond),1 , 12);
         
@@ -395,7 +395,7 @@ public class Einzelansicht extends HorizontalLayout implements View {
         t.setValue(text);
         t.setEnabled(false);
         t.setWidth("338px");
-        gridInfos.addComponent(new Label("Beschreibung  "), 0, 13);
+        gridInfos.addComponent(new Label("Beschreibung:"), 0, 13);
         gridInfos.addComponent(t, 1,13);
     
         

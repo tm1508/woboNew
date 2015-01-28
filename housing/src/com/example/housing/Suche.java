@@ -133,22 +133,18 @@ this.setWidth("100%");
 		title.addStyleName("title");
 		content.addComponent(title);
 		
-		content = new VerticalLayout();
-
-		content.setMargin(true);
-		
 		GridLayout gridSuche = new GridLayout(5,10); 
 		gridSuche.setSpacing(true);
 	//	gridSuche.setWidth("40%");
 		gridSuche.addStyleName("LayoutSuche");
 		
 		//Stadt
-		gridSuche.addComponent(new Label("Stadt:  "), 0 ,0);
+		gridSuche.addComponent(new Label("Ort:  "), 0 ,0);
 		final TextField stadt = new TextField();
 		gridSuche.addComponent(stadt,1 ,0);
 
 		//Grï¿½ï¿½e
-		gridSuche.addComponent(new Label("Quadratmeter:  "), 0 ,1);
+		gridSuche.addComponent(new Label("Größe (in m²):  "), 0 ,1);
 		gridSuche.addComponent(new Label("von  "), 1 ,1);
 		final TextField sucheVon = new TextField();
 		gridSuche.addComponent(sucheVon, 2,1);
@@ -157,7 +153,7 @@ this.setWidth("100%");
 		gridSuche.addComponent(sucheBis, 4,1);
 		
 		//Preis
-		gridSuche.addComponent(new Label("Preis:  "), 0 ,2);
+		gridSuche.addComponent(new Label("Warmmiete (in €):  "), 0 ,2);
 		gridSuche.addComponent(new Label("von  "), 1 ,2);
 		final TextField preisVon = new TextField();
 		gridSuche.addComponent(preisVon, 2,2);
@@ -166,7 +162,7 @@ this.setWidth("100%");
 		gridSuche.addComponent(preisBis, 4,2);
 		
 		//Zeitraum
-		gridSuche.addComponent(new Label("Zeitraum:  "), 0 ,3);
+		gridSuche.addComponent(new Label("Verfügbarkeit:  "), 0 ,3);
 		gridSuche.addComponent(new Label("von  "), 1 ,3);
 		final PopupDateField zeitVon = new PopupDateField();
 		gridSuche.addComponent(zeitVon, 2,3);
@@ -175,7 +171,7 @@ this.setWidth("100%");
 		gridSuche.addComponent(zeitBis, 4,3);
 		
 		//Art der Unterkunft
-		gridSuche.addComponent(new Label("Unterkunft: "), 0 ,4);
+		gridSuche.addComponent(new Label("Art der Unterkunft: "), 0 ,4);
 		final CheckBox wohnung = new CheckBox("Wohnung");
 		final CheckBox zimmer = new CheckBox("Zimmer");
 		final CheckBox wg = new CheckBox("WG-Zimmer");
@@ -185,20 +181,20 @@ this.setWidth("100%");
 
 		
 		//Sonstiges
-		gridSuche.addComponent(new Label("Sonstiges:"), 0 ,5);
-		gridSuche.addComponent(new Label("Haustiere"), 1 ,5);
+		gridSuche.addComponent(new Label("Sonstige Merkmale:"), 0 ,5);
+		gridSuche.addComponent(new Label("Haustiere erlaubt"), 1 ,5);
 		final CheckBox haustiere = new CheckBox();
 		gridSuche.addComponent(haustiere, 2 ,5);
-		gridSuche.addComponent(new Label("Raucher"), 3 ,5);
+		gridSuche.addComponent(new Label("Raucher-Wohnung"), 3 ,5);
 		final CheckBox rauchen = new CheckBox();
 		gridSuche.addComponent(rauchen, 4 ,5);
-		gridSuche.addComponent(new Label("möbliert"), 1 ,6);
+		gridSuche.addComponent(new Label("Möblierte Wohnung"), 1 ,6);
 		final CheckBox moebliert = new CheckBox();
 		gridSuche.addComponent(moebliert, 2, 6);
-		gridSuche.addComponent(new Label("Küche"), 3 ,6);
+		gridSuche.addComponent(new Label("Küche vorhanden"), 3 ,6);
 		final CheckBox kueche = new CheckBox();
 		gridSuche.addComponent(kueche, 4 ,6);
-		gridSuche.addComponent(new Label("Internet"), 1 ,7);
+		gridSuche.addComponent(new Label("Internetanschluss vorhanden"), 1 ,7);
 		final CheckBox internet = new CheckBox();
 		gridSuche.addComponent(internet, 2 ,7);
 		

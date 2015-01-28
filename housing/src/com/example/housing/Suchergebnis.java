@@ -68,7 +68,7 @@ public class Suchergebnis extends HorizontalLayout implements View {
 		content.setSizeFull();
 		content.setSpacing(true);
 		
-this.setWidth("100%");
+		this.setWidth("100%");
 		
 		//linkes rotes Panel
 		Panel p = new Panel();

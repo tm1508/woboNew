@@ -263,7 +263,7 @@ public class AngebotErstellen extends HorizontalLayout implements View, Receiver
 		title.setImmediate(false);
 		title.setWidth("-1px");
 		title.setHeight("-1px");
-		title.setValue("Mein Angebot");
+		title.setValue("Angebot erstellen");
 		title.addStyleName("title");
 		content.addComponent(title);
 		
@@ -633,7 +633,7 @@ public class AngebotErstellen extends HorizontalLayout implements View, Receiver
 		title.setImmediate(false);
 		title.setWidth("-1px");
 		title.setHeight("-1px");
-		title.setValue("Mein Angebot");
+		title.setValue("Angebot bearbeiten");
 		title.addStyleName("title");
 		content.addComponent(title);
 		// Titel + Adresse
@@ -694,7 +694,7 @@ public class AngebotErstellen extends HorizontalLayout implements View, Receiver
 		Label allgInfo = new Label("Allgemeine Angaben zur Wohnung");
 		allgInfo.addStyleName("AbschnittLabel");
 		label.addComponent(allgInfo);
-		final ComboBox isShared = new ComboBox("Art");
+		final ComboBox isShared = new ComboBox("Art der Unterkunft:");
 		isShared.setRequired(true);
 		isShared.setRequiredError("Bitte geben sie die Art des Angebots an.");
 		isShared.addItem("Wohnung");
@@ -703,7 +703,7 @@ public class AngebotErstellen extends HorizontalLayout implements View, Receiver
 		isShared.addStyleName("AngeboteTextField");
 		isShared.select(art(offer));
 		z1.addComponent(isShared);
-		final TextField squareMetre = new TextField("Größe (in m²)");
+		final TextField squareMetre = new TextField("Größe (in m²):");
 		squareMetre.setValue(String.valueOf(offer.getSquareMetre()));
 		squareMetre.setRequired(true);
 		squareMetre.setRequiredError("Bitte geben Sie die Größe in m² an.");
@@ -716,6 +716,7 @@ public class AngebotErstellen extends HorizontalLayout implements View, Receiver
 		roomMates.addStyleName("AngeboteTextField");
 		z3.addComponent(roomMates);
 		Label date = new Label("Verfügbarkeit");
+		date.addStyleName("AbschnittLabel");
 		final DateField startDate = new DateField("von:");
 		startDate.setValue(offer.getStartDate());
 		startDate.setRequired(true);
@@ -736,20 +737,20 @@ public class AngebotErstellen extends HorizontalLayout implements View, Receiver
 		Label costs = new Label("Kosten");
 		costs.addStyleName("AbschnittLabel");
 		label.addComponent(costs);
-		final TextField price = new TextField("Warmmiete:");
+		final TextField price = new TextField("Warmmiete inkl. regelmäßiger Nebenkosten (in €):");
 		price.setValue(new Format().stringFormat(offer.getPrice()));
 		price.setRequired(true);
 		price.setRequiredError("Bitte geben Sie die Warmmiete an.");
 		price.addStyleName("AngeboteTextField");
 		z1.addComponent(price);
-		final TextField bond = new TextField("Kaution:");
+		final TextField bond = new TextField("Kaution (in €):");
 		try {
 			bond.setValue(new Format().stringFormat(offer.getBond()));
 		} catch (Exception e) {
 		}
 		bond.addStyleName("AngeboteTextField");
 		z2.addComponent(bond);
-		TextField cost = new TextField("Sonstige Kosten:");
+		TextField cost = new TextField("Sonstige einmalige Kosten (in €):");
 		cost.addStyleName("AngeboteTextField");
 		z3.addComponent(cost);
 
@@ -769,23 +770,23 @@ public class AngebotErstellen extends HorizontalLayout implements View, Receiver
 		angaben.addStyleName("AbschnittLabel");
 		HorizontalLayout hl2 = new HorizontalLayout();
 		hl2.setWidth("100%");
-		final CheckBox internet = new CheckBox("Internet");
+		final CheckBox internet = new CheckBox("Internetanschluss vorhanden:");
 		internet.setValue(offer.isInternet());
 		internet.setWidth("20%");
 		internet.addStyleName("AngeboteTextField");
-		final CheckBox furnished = new CheckBox("Möbliert");
+		final CheckBox furnished = new CheckBox("Möblierte Wohnung:");
 		furnished.setValue(offer.isFurnished());
 		furnished.setWidth("20%");
 		furnished.addStyleName("AngeboteTextField");
-		final CheckBox kitchen = new CheckBox("Küche");
+		final CheckBox kitchen = new CheckBox("Küche vorhanden:");
 		kitchen.setValue(offer.isKitchen());
 		kitchen.setWidth("20%");
 		kitchen.addStyleName("AngeboteTextField");
-		final CheckBox smoker = new CheckBox("Raucher");
+		final CheckBox smoker = new CheckBox("Raucher-Wohnung:");
 		smoker.setValue(offer.isSmoker());
 		smoker.setWidth("20%");
 		smoker.addStyleName("AngeboteTextField");
-		final CheckBox pets = new CheckBox("Haustiere");
+		final CheckBox pets = new CheckBox("Haustiere erlaubt:");
 		pets.setValue(offer.isPets());
 		pets.setWidth("20%");
 		pets.addStyleName("AngeboteTextField");
@@ -811,17 +812,17 @@ public class AngebotErstellen extends HorizontalLayout implements View, Receiver
 		content.addComponent(new Label());
 
 		// Anzeigetext + Wohnungsbilder
-		Label anzeigetext = new Label("Anzeigetext");
+		Label anzeigetext = new Label("Beschreibung");
 		anzeigetext.addStyleName("AbschnittLabel");
 		final RichTextArea text = new RichTextArea();
 		text.setValue(offer.getText());
 		text.setRequired(true);
-		text.setRequiredError("Bitte geben Sie eine kurze Beschreibun des Angebots an.");
+		text.setRequiredError("Bitte geben Sie eine kurze Beschreibung des Angebots an.");
 		text.setWidth("100%");
-		Label bilder = new Label("Bilder hinzufügen(max. fünf)");
+		Label bilder = new Label("Bilder");
 		bilder.addStyleName("AbschnittLabel");
 
-		Upload bilderup = new Upload("Foto hochladen", this);
+		Upload bilderup = new Upload("Foto hochladen (max. 5 Fotos pro Angebot möglich!):", this);
 		bilderup.addSucceededListener(this);
 
 		content.addComponent(anzeigetext);

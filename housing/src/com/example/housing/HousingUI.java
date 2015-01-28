@@ -145,13 +145,9 @@ public class HousingUI extends UI {
 			@Override
 			public boolean beforeViewChange(ViewChangeEvent event) {
 				
-				System.out.println("Old View: " + event.getOldView().getClass().toString());
-				System.out.println("buttonClicked?: " + VaadinSession.getCurrent().getAttribute("buttonClicked"));
-				
 				//AngebotErstellen ohne Button verlassen
 				//TODO: Button als Auslöser ausschließen!!!
-				if(event.getOldView().getClass().toString().equals("class com.example.housing.AngebotErstellen") && !((boolean) VaadinSession.getCurrent().getAttribute("buttonClicked"))) {
-					System.out.println("Klassen identisch!");		
+				if(event.getOldView().getClass().toString().equals("class com.example.housing.AngebotErstellen") && !((boolean) VaadinSession.getCurrent().getAttribute("buttonClicked"))) {		
 					if(((AngebotErstellen) event.getOldView()).getNewPhotos() != null) {
 						//TODO alle Fotos wieder löschen
 						PhotoProvider photoProv = new PhotoProvider();
@@ -160,7 +156,6 @@ public class HousingUI extends UI {
 							photoProv.removePhoto(p);
 						}
 						((AngebotErstellen) event.getOldView()).setNewPhotos(null);
-						System.out.println("Fotos gelöscht");
 						
 					} else {
 						
