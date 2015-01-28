@@ -113,8 +113,8 @@ public class NavigationPublic extends CustomComponent {
 		
 		MenuBar.Command mycommand4 = new MenuBar.Command() {
 			public void menuSelected(MenuItem selectedItem) {
-				String name = "Maps";
-				getUI().getNavigator().addView(name, new Maps());
+				String name = "FAQ";
+				getUI().getNavigator().addView(name, new FAQ());
 				getUI().getNavigator().navigateTo(name);
 				
 			}  
