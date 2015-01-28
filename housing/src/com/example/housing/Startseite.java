@@ -251,10 +251,10 @@ public class Startseite extends HorizontalLayout implements View{
 					List<Offer> ergebnisse;				
 					ergebnisse =
 							of.filter(null,null,
-							(new Format().floatFormat("0.0")),
-									(new Format().floatFormat("0.0")), 
-									(new Format().floatFormat("0.0")),
-									( new Format().floatFormat("0.0")),
+							(Format.floatFormat("0.0")),
+									(Format.floatFormat("0.0")), 
+									(Format.floatFormat("0.0")),
+									(Format.floatFormat("0.0")),
 									7, 
 									false, false, false, false,false,
 							suchfeld.getValue());

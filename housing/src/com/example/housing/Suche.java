@@ -232,10 +232,10 @@ this.setWidth("100%");
 				ergebnisse =
 						of.filter(zeitVon.getValue(),
 						zeitBis.getValue(),
-						(new Format().floatFormat(sucheVon.getValue())),
-								(new Format().floatFormat(sucheBis.getValue())), 
-								(new Format().floatFormat(preisVon.getValue())),
-								( new Format().floatFormat(preisBis.getValue())),
+						(Format.floatFormat(sucheVon.getValue())),
+								(Format.floatFormat(sucheBis.getValue())), 
+								(Format.floatFormat(preisVon.getValue())),
+								(Format.floatFormat(preisBis.getValue())),
 						a, internet.getValue(), moebliert.getValue(), kueche.getValue(),rauchen.getValue(),
 						haustiere.getValue(),
 						stadt.getValue());

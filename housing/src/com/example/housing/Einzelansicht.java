@@ -327,14 +327,14 @@ public class Einzelansicht extends HorizontalLayout implements View {
 	    
 	    //Size
 		float sm = angebot.getSquareMetre();
-		String sSm = new Format().stringFormat(sm);
+		String sSm = Format.stringFormat(sm);
 		
         gridInfos.addComponent(new Label("Größe:"),0,2);
         gridInfos.addComponent(new Label(sSm + " m²"),1 , 2);
         
         //Price
     	float price =  angebot.getPrice();
-		String sPrice = new Format().stringEuro(price);
+		String sPrice = Format.euroFormat(price);
 		
         gridInfos.addComponent(new Label("Warmmiete:"),0,3);
         gridInfos.addComponent(new Label(sPrice + " €"),1 , 3);
@@ -395,13 +395,13 @@ public class Einzelansicht extends HorizontalLayout implements View {
         //male / female   
         Label maleFemale = new Label(""); 
         int g = angebot.getGender();
-        if( g==1){
+        if(g == 1){
     	   maleFemale.setValue("egal");
         }
         else if (g == 2){
     	   maleFemale.setValue("männlich");
         }
-        else if ( g == 3)
+        else if (g == 3)
         	maleFemale.setValue("weiblich");
         gridInfos.addComponent(new Label("Bevorzugtes Geschlecht:"), 0, 11);
         gridInfos.addComponent(maleFemale, 1,11);
@@ -409,7 +409,7 @@ public class Einzelansicht extends HorizontalLayout implements View {
         
         //bond
         float bond =  angebot.getBond();
-		String sBond = new Format().stringEuro(bond) + " €";
+		String sBond = Format.euroFormat(bond) + " €";
 		
         Label lBond = new Label("Kaution:");
         gridInfos.addComponent(lBond,0,12);
