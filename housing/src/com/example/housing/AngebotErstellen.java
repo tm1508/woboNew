@@ -67,8 +67,9 @@ public class AngebotErstellen extends HorizontalLayout implements View, Receiver
 
 	/** The content. */
 	private VerticalLayout content;
-	 static Double lat = 0.0;
-     static Double lon = 0.0;
+	
+	private Double lat = 0.0;
+    private Double lon = 0.0;
 
 	private Offer currentOffer;
 
@@ -271,14 +272,14 @@ public class AngebotErstellen extends HorizontalLayout implements View, Receiver
 		title.setImmediate(false);
 		title.setWidth("-1px");
 		title.setHeight("-1px");
-		title.setValue("Angebot erstellen");
+		title.setValue("Wohnungsangebot erstellen");
 		title.addStyleName("title");
 		
 		content.addComponent(title);
 		
 
         
-		// Titel + Adresse
+		// Titel, Map, Adresse
 		Label ltitel = new Label("Titel");
 		ltitel.setWidth("10%");
 		ltitel.addStyleName("AbschnittLabel");
@@ -631,14 +632,10 @@ public class AngebotErstellen extends HorizontalLayout implements View, Receiver
 					currentOffer.setInactive(inactive.getValue());
 					currentOffer.setLatitude(BigDecimal.valueOf(lat));
 					currentOffer.setLongitude(BigDecimal.valueOf(lon));
-					// newOffer.setLatitude(latitude);
-					// newOffer.setLongitude(longitude);
-					// newOffer.setPhotos();
-					new OfferProvider().alterOffer(currentOffer); // neues
-																	// Angebot
-																	// in
-					// die DB schreiben
-					Offer o = new OfferProvider().find(currentOffer.getIdOffer());
+					
+					new OfferProvider().alterOffer(currentOffer); // neues Angebot in die DB schreiben
+					
+					Offer o = new OfferProvider().find(currentOffer.getIdOffer()); //aktualisiertes Angebot auslesen für Weiterleitung auf Einzelansicht
 					
 					VaadinSession.getCurrent().setAttribute("buttonClicked", true);
 					
@@ -647,6 +644,7 @@ public class AngebotErstellen extends HorizontalLayout implements View, Receiver
 					getUI().getNavigator().navigateTo(name);
 
 				} else
+					
 					// Sind nicht alle Mussfelder gefüllt, wird eine Nachricht
 					// auf dem Bildschirm ausgegeben
 					Notification.show("");
@@ -654,6 +652,7 @@ public class AngebotErstellen extends HorizontalLayout implements View, Receiver
 					not1.setStyleName("failure");
 					not1.setDelayMsec(300);
 					not1.show(Page.getCurrent());
+					
 			}
 		});
 		
@@ -693,7 +692,7 @@ public class AngebotErstellen extends HorizontalLayout implements View, Receiver
 		title.setImmediate(false);
 		title.setWidth("-1px");
 		title.setHeight("-1px");
-		title.setValue("Angebot bearbeiten");
+		title.setValue("Wohnungsangebot bearbeiten");
 		title.addStyleName("title");
 		
 		content.addComponent(title);
