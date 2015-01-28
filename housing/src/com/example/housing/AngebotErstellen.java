@@ -844,7 +844,8 @@ public class AngebotErstellen extends HorizontalLayout implements View, Receiver
 		// Button speichern/aktivieren/deaktivieren
 		final CheckBox inactive = new CheckBox("deaktivieren");
 
-		Button save = new Button("speichern");
+		Button save = new Button("Speichern");
+		save.setIcon(FontAwesome.SAVE);
 		save.addStyleName("BearbeitenButton");
 		save.addClickListener(new Button.ClickListener() {
 			public void buttonClick(ClickEvent event) {
