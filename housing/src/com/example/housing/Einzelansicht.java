@@ -315,7 +315,7 @@ public class Einzelansicht extends HorizontalLayout implements View {
         });
         content.addComponent(plus);
         
-		final GridLayout gridInfos = new GridLayout(2,16); 
+		final GridLayout gridInfos = new GridLayout(2,17); 
 	//	gridInfos.setWidth("60%");
 		content.addComponent(gridInfos);
 		
@@ -614,23 +614,43 @@ public class Einzelansicht extends HorizontalLayout implements View {
         
           
 
-        if(VaadinSession.getCurrent().getAttribute("login").equals(true)&& VaadinSession.getCurrent().getAttribute(User.class).getAccessLevel()!=2){
+        if(VaadinSession.getCurrent().getAttribute("login").equals(true)&& VaadinSession.getCurrent().getAttribute(User.class).getAccessLevel()!=2) {
+        	
         	User u = VaadinSession.getCurrent().getAttribute(User.class);
-            List<Request> r;
-            r= u.getRequests(); 
+            List<Request> requests;
+            requests = u.getRequests(); 
 
-        	  boolean b= false;
-        	  int in=0;
+        	  boolean b = false;
+        	  int in = 0;
               
-              for(int i = 0; i<r.size();i++){
-            	  if(r.get(i).getRequest_idOffer().getIdOffer()==angebot.getIdOffer()){
+              for(int i = 0; i<requests.size();i++) {
+            	  
+            	  if(requests.get(i).getRequest_idOffer().getIdOffer()==angebot.getIdOffer()) {
+            		  
             		  b = true;
             		  in = i;
+            		  
             	  }
               }
-              if(b){
-            	Label l = new Label("Sie haben den Anbieter bereits kontaktiert mit dem folgenden Text: " +r.get(in).getMessage());
-                gridInfos.addComponent(l,0,15);
+              
+              if(b) {
+            	  
+            	Label anfrageTitel = new Label("Gesendete Anfrage");
+            	anfrageTitel.setStyleName("ImportantTitle");
+                gridInfos.addComponent(anfrageTitel,0,15);
+                
+                Label anfrageText = new Label("Sie haben folgenden Text an den Anbieter geschickt:");
+                gridInfos.addComponent(anfrageText,0,16);
+                
+                TextArea anfrageMessage = new TextArea();
+                String message = requests.get(in).getMessage();
+               
+                anfrageMessage.setValue(message);
+                anfrageMessage.setEnabled(false);
+                anfrageMessage.setWidth("338px");
+                
+                gridInfos.addComponent(anfrageMessage,1,16);
+                
               }
 
         }
