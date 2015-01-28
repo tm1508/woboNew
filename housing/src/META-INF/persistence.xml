@@ -10,11 +10,11 @@
      	<class>com.example.housing.data.model.Favorit</class>
      	
      	<properties>
-			<property name="hibernate.connection.url" value="jdbc:mysql://localhost:3306/wobo"/>
+			<property name="hibernate.connection.url" value="jdbc:mysql://193.196.7.216:3306/wobo"/>
 			<property name="hibernate.connection.driver_class" value="com.mysql.jdbc.Driver"/>
 
-			<property name="hibernate.connection.username" value="root"/>
-			<property name="hibernate.connection.password" value="6746"/> <!-- Euer Passwort für den root-Account für MySQL-Zugriff eintragen!!! -->
+			<property name="hibernate.connection.username" value="mwi_wobo"/>
+			<property name="hibernate.connection.password" value="mwi2014x4HgPb9x"/> <!-- Euer Passwort für den root-Account für MySQL-Zugriff eintragen!!! -->
 
 
 

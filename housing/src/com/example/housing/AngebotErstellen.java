@@ -1,5 +1,6 @@
 package com.example.housing;
 
+import java.math.BigDecimal;
 import java.awt.Color;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
@@ -10,6 +11,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -34,6 +36,10 @@ import com.vaadin.server.Resource;
 import com.vaadin.server.StreamResource;
 import com.vaadin.server.VaadinSession;
 import com.vaadin.shared.ui.label.ContentMode;
+import com.vaadin.tapio.googlemaps.GoogleMap;
+import com.vaadin.tapio.googlemaps.client.LatLon;
+import com.vaadin.tapio.googlemaps.client.events.MarkerDragListener;
+import com.vaadin.tapio.googlemaps.client.overlays.GoogleMapMarker;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.ComboBox;
@@ -61,6 +67,8 @@ public class AngebotErstellen extends HorizontalLayout implements View, Receiver
 
 	/** The content. */
 	private VerticalLayout content;
+	 static Double lat = 0.0;
+     static Double lon = 0.0;
 
 	private Offer currentOffer;
 
@@ -268,6 +276,8 @@ public class AngebotErstellen extends HorizontalLayout implements View, Receiver
 		
 		content.addComponent(title);
 		
+
+        
 		// Titel + Adresse
 		Label ltitel = new Label("Titel");
 		ltitel.setWidth("10%");
@@ -276,6 +286,42 @@ public class AngebotErstellen extends HorizontalLayout implements View, Receiver
 		titel.setRequired(true);
 		titel.setRequiredError("Bitte geben Sie einen Titel an.");
 		titel.setWidth("80%");
+		titel.addStyleName("ImportantTitle");
+		content.addComponent(ltitel);
+		content.addComponent(titel);
+		content.addComponent(new Label());
+		
+	    /** The kakola marker. */
+	    GoogleMapMarker kakolaMarker = new GoogleMapMarker(
+	            "Karlsruhe", new LatLon(49.00705, 8.40287),
+	            true, null);
+	    
+		GoogleMap googleMap = new GoogleMap(null, null, null);
+        googleMap.setCenter(new LatLon(49.00705, 8.40287));
+        googleMap.setZoom(10);
+        googleMap.setSizeFull();
+        kakolaMarker.setAnimationEnabled(false);
+        googleMap.addMarker(kakolaMarker);
+       
+        googleMap.setMinZoom(4);
+        googleMap.setMaxZoom(16);
+        googleMap.setHeight("500px");
+        googleMap.setWidth("500px");
+        content.addComponent(googleMap);
+        content.addComponent(new Label());
+        
+       
+        googleMap.addMarkerDragListener(new MarkerDragListener() {
+			@Override
+			public void markerDragged(GoogleMapMarker draggedMarker,
+					LatLon oldPosition) {
+				lat = draggedMarker.getPosition().getLat();
+				lon = draggedMarker.getPosition().getLon();
+				// TODO Auto-generated method stub
+				System.out.println(draggedMarker.getPosition().getLat()+"---"+draggedMarker.getPosition().getLon());
+				
+			}
+        });
 		
 		Label adress = new Label("Adresse");
 		adress.addStyleName("AbschnittLabel");
@@ -583,6 +629,8 @@ public class AngebotErstellen extends HorizontalLayout implements View, Receiver
 					} catch (NumberFormatException e) {
 					}
 					currentOffer.setInactive(inactive.getValue());
+					currentOffer.setLatitude(BigDecimal.valueOf(lat));
+					currentOffer.setLongitude(BigDecimal.valueOf(lon));
 					// newOffer.setLatitude(latitude);
 					// newOffer.setLongitude(longitude);
 					// newOffer.setPhotos();

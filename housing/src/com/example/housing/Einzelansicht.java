@@ -25,6 +25,10 @@ import com.vaadin.server.Resource;
 import com.vaadin.server.StreamResource;
 import com.vaadin.server.VaadinService;
 import com.vaadin.server.VaadinSession;
+import com.vaadin.tapio.googlemaps.GoogleMap;
+import com.vaadin.tapio.googlemaps.client.LatLon;
+import com.vaadin.tapio.googlemaps.client.events.MarkerDragListener;
+import com.vaadin.tapio.googlemaps.client.overlays.GoogleMapMarker;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.DateField;
@@ -48,6 +52,8 @@ public class Einzelansicht extends HorizontalLayout implements View {
 	
 	/** The content. */
 	VerticalLayout content;
+	 static Double lat = 0.0;
+     static Double lon = 0.0;
 	
 	/** The angebot. */
 	Offer angebot;
@@ -159,6 +165,38 @@ public class Einzelansicht extends HorizontalLayout implements View {
 		lTitel.addStyleName("ImportantTitle");
 		content.addComponent(title );
 		content.addComponent(lTitel);
+		
+	    /** The kakola marker. */
+	    GoogleMapMarker kakolaMarker = new GoogleMapMarker(
+	            "Karlsruhe", new LatLon(49.00705, 8.40287),
+	            true, null);
+	    
+		GoogleMap googleMap = new GoogleMap(null, null, null);
+        googleMap.setCenter(new LatLon(49.00705, 8.40287));
+        googleMap.setZoom(10);
+        googleMap.setSizeFull();
+        kakolaMarker.setAnimationEnabled(false);
+        googleMap.addMarker(kakolaMarker);
+       
+        googleMap.setMinZoom(4);
+        googleMap.setMaxZoom(16);
+        googleMap.setHeight("500px");
+        googleMap.setWidth("500px");
+        content.addComponent(googleMap);
+        
+       
+        googleMap.addMarkerDragListener(new MarkerDragListener() {
+			@Override
+			public void markerDragged(GoogleMapMarker draggedMarker,
+					LatLon oldPosition) {
+				lat = draggedMarker.getPosition().getLat();
+				lon = draggedMarker.getPosition().getLon();
+				// TODO Auto-generated method stub
+				System.out.println(draggedMarker.getPosition().getLat()+"---"+draggedMarker.getPosition().getLon());
+				
+			}
+        });
+
 		
 		//Adresse wird nur verifizierten Studenten bzw. Admin angezeigt
 		if(VaadinSession.getCurrent().getAttribute("login").equals(true) && VaadinSession.getCurrent().getAttribute(User.class).getAccessLevel() != 0) { 
