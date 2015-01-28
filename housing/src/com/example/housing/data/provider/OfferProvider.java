@@ -280,5 +280,8 @@ public class OfferProvider extends BaseProvider<Offer> {
 		return failedOffers;
 		
 	}
+	
+	
+
 
 }

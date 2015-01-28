@@ -191,7 +191,7 @@ public class HousingUI extends UI {
 				//TODO auskommentieren, damit der User die Fehlermeldungen nicht bekommt
 		        doDefault(event);//falls rotes Ausrufezeichen im Browser angezeigt werden soll
 		    } 
-		}); 
+		});   
 		
 	}
 	
