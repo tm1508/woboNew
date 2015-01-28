@@ -9,7 +9,6 @@ import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import com.sun.mail.smtp.SMTPMessage;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class SendEMail.
  * 
@@ -22,20 +21,6 @@ public class SendEMail {
 	/** Properties. */
 	static Properties properties = new Properties();
 	
-	//Methode wird nur zum Testen verwendet!!!
-	/**
-	 * The main method.
-	 *
-	 * @param args the arguments
-	 */
-	public static void main(String args[]){
-		String to = "wohnungsboerse_dh@web.de";
-		String from = "wohnungsboerse_dh@web.de";
-		String subject = "Test";
-		String text = "123";
-		String cc = "julia.agricola@web.de";
-	
-	}
 	
 	/**
 	 * Sends an E-Mail.
@@ -85,7 +70,7 @@ public class SendEMail {
 	
 	
 	/**
-	 * Send cc.
+	 * Send E-Mail Alias.
 	 *
 	 * @param to the to
 	 * @param from the from
