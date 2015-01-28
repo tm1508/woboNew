@@ -30,14 +30,15 @@ public class ConfirmDeleteWindow extends Window {
 	    
 	    final VerticalLayout content = new VerticalLayout();
 	    content.setMargin(true);
+	    content.setSizeUndefined();
 	    
 	    //text
 	    Label text = new Label();
 		text.setImmediate(false);
-		text.setWidth("-1px");
-		text.setHeight("-1px");
+		//text.setWidth("-1px");
+		//text.setHeight("-1px");
 		//TODO Zeilenumbruch
-		text.setValue("Wollen Sie Ihr Angebot " + currentOffer.getTitle() + " wirklich unwiderruflich löschen? Alternativ können Sie es auch deaktivieren, indem Sie das Angebot bearbeiten und dort den Haken bei \"deaktivieren\" setzen. Auf diese Weise können Sie das Angebot gegebenenfalls später wieder reaktivieren.");
+		text.setValue("Wollen Sie Ihr Angebot " + currentOffer.getTitle() + " wirklich unwiderruflich löschen? Alternativ können Sie es auch vorübergehend deaktivieren, indem Sie das Angebot bearbeiten und dort den Haken bei \"deaktivieren\" setzen. Auf diese Weise können Sie das Angebot gegebenenfalls später wieder reaktivieren.");
 		content.addComponent(text);
 		
 		HorizontalLayout buttons = new HorizontalLayout();
@@ -51,7 +52,6 @@ public class ConfirmDeleteWindow extends Window {
 		cancel.setDescription("Angebot endgültig löschen");
 		cancel.setWidth("-1px");
 		cancel.setHeight("-1px");
-		buttons.addComponent(cancel);
 		cancel.addClickListener(new Button.ClickListener() {
 			
 			@Override
@@ -75,7 +75,6 @@ public class ConfirmDeleteWindow extends Window {
 		delete.setDescription("Angebot endgültig löschen");
 		delete.setWidth("-1px");
 		delete.setHeight("-1px");
-		buttons.addComponent(delete);
 		delete.addClickListener(new Button.ClickListener() {
 			
 			@Override
@@ -86,9 +85,9 @@ public class ConfirmDeleteWindow extends Window {
 				
 				Notification not = new Notification("Das Angebot wurde gelöscht und aus der Datenbank entfernt.",Type.HUMANIZED_MESSAGE);//Meldung an den Nutzer
 				not.setStyleName("success");
-				not.setIcon(FontAwesome.CHECK_SQUARE_O);
 				not.setDelayMsec(300);
 				not.show(Page.getCurrent());
+				
 				String name = "Angebote verwalten";
 				getUI().getNavigator().addView(name, new AngeboteVerwalten());
 				getUI().getNavigator().navigateTo(name);
@@ -97,7 +96,9 @@ public class ConfirmDeleteWindow extends Window {
 				
 			}
 		});
-	    
+		
+		buttons.addComponent(delete);
+		buttons.addComponent(cancel);
 		content.addComponent(buttons);
 		
 	    this.setContent(content);

@@ -601,6 +601,33 @@ public class AngebotErstellen extends HorizontalLayout implements View, Receiver
 
 				if (valid) {// sind alle Mussfelder gefüllt, wird ein neues
 							// Angebot erstellt
+					try { //falls in Zahlenfeder keine Zahlen eingetragen wurden
+						
+						currentOffer.setSquareMetre(Format.floatFormat(squareMetre.getValue()));
+						currentOffer.setPrice(Format.floatFormat(price.getValue()));
+						currentOffer.setBond(Format.floatFormat(bond.getValue()));
+						
+					} catch (NumberFormatException nfe) {
+						
+						Notification not = new Notification("Bitte überprüfen Sie Ihre Eingaben.");
+						not.setDelayMsec(300);
+						not.setStyleName("failure");
+						not.show(Page.getCurrent());
+						return;
+						
+					}
+					try {
+						
+						currentOffer.setNumberOfRoommate(Integer.parseInt(roomMates.getValue()));
+						
+					} catch (Exception e) {
+						
+						Notification not = new Notification("Bitte überprüfen Sie Ihre Eingaben.");
+						not.setDelayMsec(300);
+						not.setStyleName("failure");
+						not.show(Page.getCurrent());
+						return;
+					}
 					currentOffer.setOffer_idUser(VaadinSession.getCurrent().getAttribute(User.class));
 					currentOffer.setTitle(titel.getValue());
 					currentOffer.setStreet(street.getValue());
@@ -610,12 +637,10 @@ public class AngebotErstellen extends HorizontalLayout implements View, Receiver
 					try { // überprüft ob ein Enddatum angegeben ist, da die
 							// Angabe optional ist
 						currentOffer.setEndDate(endDate.getValue());
+						
 					} catch (NullPointerException e) {
 					}
-					currentOffer.setSquareMetre(new Format().floatFormat(squareMetre.getValue()));
-					currentOffer.setPrice(new Format().floatFormat(price.getValue()));
 					currentOffer.setType(type);
-					currentOffer.setNumberOfRoommate(Integer.parseInt(roomMates.getValue()));
 					currentOffer.setInternet(internet.getValue());
 					currentOffer.setFurnished(furnished.getValue());
 					currentOffer.setKitchen(kitchen.getValue());
@@ -623,12 +648,6 @@ public class AngebotErstellen extends HorizontalLayout implements View, Receiver
 					currentOffer.setPets(pets.getValue());
 					currentOffer.setGender(gender);
 					currentOffer.setText(text.getValue());
-
-					try {// überprüft ob eine Kaution angegeben ist, da die
-							// Angabe optional ist
-						currentOffer.setBond(new Format().floatFormat(bond.getValue()));
-					} catch (NumberFormatException e) {
-					}
 					currentOffer.setInactive(inactive.getValue());
 					currentOffer.setLatitude(BigDecimal.valueOf(lat));
 					currentOffer.setLongitude(BigDecimal.valueOf(lon));
@@ -643,7 +662,7 @@ public class AngebotErstellen extends HorizontalLayout implements View, Receiver
 					getUI().getNavigator().addView(name, new Einzelansicht(o));
 					getUI().getNavigator().navigateTo(name);
 
-				} else
+				} else {
 					
 					// Sind nicht alle Mussfelder gefüllt, wird eine Nachricht
 					// auf dem Bildschirm ausgegeben
@@ -652,6 +671,8 @@ public class AngebotErstellen extends HorizontalLayout implements View, Receiver
 					not1.setStyleName("failure");
 					not1.setDelayMsec(300);
 					not1.show(Page.getCurrent());
+					
+				}
 					
 			}
 		});
@@ -762,7 +783,7 @@ public class AngebotErstellen extends HorizontalLayout implements View, Receiver
 		isShared.select(decodeType(offer));
 		z1.addComponent(isShared);
 		final TextField squareMetre = new TextField("Größe (in m²):");
-		squareMetre.setValue(String.valueOf(offer.getSquareMetre()));
+		squareMetre.setValue(Format.stringFormat(offer.getSquareMetre()));
 		squareMetre.setRequired(true);
 		squareMetre.setRequiredError("Bitte geben Sie die Größe in m² an.");
 		z2.addComponent(squareMetre);
@@ -770,7 +791,7 @@ public class AngebotErstellen extends HorizontalLayout implements View, Receiver
 		roomMates.setValue(String.valueOf(offer.getNumberOfRoommate()));
 		roomMates.setRequired(true);
 		roomMates.setRequiredError("Bitte geben Sie die Anzahl an Mitbewohner an.");
-		roomMates.setValue("0");
+		roomMates.setValue(String.valueOf(offer.getNumberOfRoommate()));
 		roomMates.addStyleName("AngeboteTextField");
 		z3.addComponent(roomMates);
 		Label date = new Label("Verfügbarkeit");
@@ -796,14 +817,14 @@ public class AngebotErstellen extends HorizontalLayout implements View, Receiver
 		costs.addStyleName("AbschnittLabel");
 		label.addComponent(costs);
 		final TextField price = new TextField("Warmmiete inkl. Nebenkosten (in €):");
-		price.setValue(new Format().stringFormat(offer.getPrice()));
+		price.setValue(Format.euroFormat(offer.getPrice()));
 		price.setRequired(true);
 		price.setRequiredError("Bitte geben Sie die Warmmiete an.");
 		price.addStyleName("AngeboteTextField");
 		z1.addComponent(price);
 		final TextField bond = new TextField("Kaution (in €):");
 		try {
-			bond.setValue(new Format().stringFormat(offer.getBond()));
+			bond.setValue(Format.euroFormat(offer.getBond()));
 		} catch (Exception e) {
 		}
 		bond.addStyleName("AngeboteTextField");
@@ -1006,20 +1027,45 @@ public class AngebotErstellen extends HorizontalLayout implements View, Receiver
 					// //hat sich nicht geändert
 					// currentOffer.setIdOffer(offer.getIdOffer()); //hat sich
 					// nicht geändert
+					try { //falls in Zahlenfeder keine Zahlen eingetragen wurden
+						
+						currentOffer.setSquareMetre(Format.floatFormat(squareMetre.getValue()));
+						currentOffer.setPrice(Format.floatFormat(price.getValue()));
+						currentOffer.setBond(Format.floatFormat(bond.getValue()));
+						
+					} catch (NumberFormatException nfe) {
+						
+						Notification not = new Notification("Bitte überprüfen Sie Ihre Eingaben.");
+						not.setDelayMsec(300);
+						not.setStyleName("failure");
+						not.show(Page.getCurrent());
+						return;
+						
+					}
+					try {
+						
+						currentOffer.setNumberOfRoommate(Integer.parseInt(roomMates.getValue()));
+						
+					} catch(Exception e) {
+						
+						Notification not = new Notification("Bitte überprüfen Sie Ihre Eingaben.");
+						not.setDelayMsec(300);
+						not.setStyleName("failure");
+						not.show(Page.getCurrent());
+						return;
+					}
 					currentOffer.setTitle(titel.getValue());
-					currentOffer.setStreet(street.getValue());
-					currentOffer.setZip(zip.getValue());
-					currentOffer.setCity(city.getValue());
+					//Adresse sollte sich nicht ändern -> neues Angebot
+					//currentOffer.setStreet(street.getValue());
+					//currentOffer.setZip(zip.getValue());
+					//currentOffer.setCity(city.getValue());
 					currentOffer.setStartDate(startDate.getValue());
 					try { // überprüft ob ein Enddatum angegeben ist, da die
 							// Angabe optional ist
 						currentOffer.setEndDate(endDate.getValue());
 					} catch (NullPointerException e) {
 					}
-					currentOffer.setSquareMetre(new Format().floatFormat(squareMetre.getValue()));
-					currentOffer.setPrice(new Format().floatFormat(price.getValue()));
 					currentOffer.setType(type);
-					currentOffer.setNumberOfRoommate(Integer.parseInt(roomMates.getValue()));
 					currentOffer.setInternet(internet.getValue());
 					currentOffer.setFurnished(furnished.getValue());
 					currentOffer.setKitchen(kitchen.getValue());
@@ -1027,15 +1073,7 @@ public class AngebotErstellen extends HorizontalLayout implements View, Receiver
 					currentOffer.setPets(pets.getValue());
 					currentOffer.setGender(gender);
 					currentOffer.setText(text.getValue());
-					try {// überprüft ob eine Kaution angegeben ist, da die
-							// Angabe optional ist
-						currentOffer.setBond(new Format().floatFormat(bond.getValue()));
-					} catch (NumberFormatException e) {
-					}
-					
 					currentOffer.setInactive(inactive.getValue());
-					// changedOffer.setLatitude(latitude);
-					// changedOffer.setLongitude(longitude);
 					
 					Offer o = new OfferProvider().find(currentOffer.getIdOffer());
 					
@@ -1179,7 +1217,7 @@ public class AngebotErstellen extends HorizontalLayout implements View, Receiver
 			
 		} else {
 			
-			Notification not = new Notification("Sie haben bereits fünf Bilder zu diesem Angebot hochgeladen",Type.HUMANIZED_MESSAGE);//Meldung an den Nutzer
+			Notification not = new Notification("Sie haben bereits fünf Bilder zu diesem Angebot hochgeladen.",Type.HUMANIZED_MESSAGE);//Meldung an den Nutzer
 			not.setDelayMsec(300);
 			not.setStyleName("failure");
 			not.show(Page.getCurrent());

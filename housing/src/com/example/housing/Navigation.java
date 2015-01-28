@@ -93,7 +93,6 @@ public class Navigation extends CustomComponent {
 				
 				Notification notif = new Notification("Logout erfolgreich.","Besuchen Sie uns bald wieder!", Type.HUMANIZED_MESSAGE);//Meldung an den Nutzer
 				notif.setDelayMsec(300);
-				notif.setIcon(FontAwesome.UNLOCK_ALT);
 				notif.setStyleName("success");
 				notif.show(Page.getCurrent());
 			}  
