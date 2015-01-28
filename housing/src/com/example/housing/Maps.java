@@ -199,7 +199,7 @@ public class Maps extends HorizontalLayout implements View{
         });
         content.addComponent(googleMap);
         content.addComponent(location);
-        
+       
 	}
 
 
