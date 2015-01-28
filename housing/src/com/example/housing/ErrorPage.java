@@ -21,6 +21,8 @@ import com.vaadin.ui.VerticalLayout;
 @SuppressWarnings("serial")
 public class ErrorPage extends HorizontalLayout implements View{
 	
+	private com.vaadin.server.ErrorEvent event;
+	
 	/** The content. */
 	private VerticalLayout content;//Layout fuer den Inhalt
 	
@@ -41,7 +43,10 @@ public class ErrorPage extends HorizontalLayout implements View{
 	/**
 	 * Instantiates a new ErrorPage.
 	 */
-	public ErrorPage(){
+	public ErrorPage(com.vaadin.server.ErrorEvent event){
+		
+		this.event = event;
+		
 		this.setWidth("100%");
 		
 		//linkes rotes Panel
@@ -140,7 +145,7 @@ public class ErrorPage extends HorizontalLayout implements View{
 				+"<br/><br/> - Sie wollten zu einer nicht verfügbaren Seite navigieren. Beispielsweise können Sie die Profilseite nur aufrufen, wenn Sie eingeloggt sind."
 				+"<br/><br/> - Das Hochladen eines Bildes hat den Fehler verursacht.  Bitte versuchen Sie es später erneut."
 				+"<br/><br/> - Es gab einen Serverfehler. Sollte der Fehler häufiger auftreten, wenden Sie sich bitte an den Administrator.");
-		
+		text.setValue(event.toString());
 		text.setContentMode(ContentMode.HTML);
 		content.addComponent(text);
 	}
