@@ -33,7 +33,7 @@ import com.vaadin.ui.VerticalLayout;
 /**
  * The Class HousingUI.
  */
-@SuppressWarnings("serial")
+
 @Theme("housing")
 @PreserveOnRefresh 
 public class HousingUI extends UI {
@@ -45,7 +45,7 @@ public class HousingUI extends UI {
 	 * The Class Servlet.
 	 */
 	@WebServlet(value = "/*", asyncSupported = true)
-	@VaadinServletConfiguration(productionMode = false, ui = HousingUI.class)
+	@VaadinServletConfiguration(productionMode = false, ui = HousingUI.class, widgetset = "com.example.housing.HousingWidgetset")
 	
 	public static class Servlet extends VaadinServlet implements SessionInitListener, SessionDestroyListener{
 
