@@ -166,10 +166,12 @@ public class Einzelansicht extends HorizontalLayout implements View {
 		content.addComponent(title );
 		content.addComponent(lTitel);
 		
+		lat=angebot.getLatitude().doubleValue();
+		lon=angebot.getLongitude().doubleValue();
 	    /** The kakola marker. */
 	    GoogleMapMarker kakolaMarker = new GoogleMapMarker(
-	            "Karlsruhe", new LatLon(49.00705, 8.40287),
-	            true, null);
+	            "Hier befindet sich die Wohnung", new LatLon(lat, lon),
+	            false, null);
 	    
 		GoogleMap googleMap = new GoogleMap(null, null, null);
         googleMap.setCenter(new LatLon(49.00705, 8.40287));
