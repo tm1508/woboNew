@@ -235,6 +235,21 @@ public class OfferProvider extends BaseProvider<Offer> {
 		return filterErgebnis;
 	}
 	
+	public List<Offer> getAllOffers() {
+		
+		if (!em.isOpen()) {
+
+			em = getEmf().createEntityManager();
+
+		}
+		
+		Query allAbfrage = em.createQuery("SELECT o FROM Offer o WHERE o.inactive = false ORDER BY o.offerTime DESC");
+		@SuppressWarnings("unchecked")
+		List<Offer> allOffers = (List<Offer>) allAbfrage.getResultList();
+		return (List<Offer>) allOffers;
+		
+	}
+	
 	/**
 	 * Gets the latest offers.
 	 *
