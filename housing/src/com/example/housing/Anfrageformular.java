@@ -139,7 +139,8 @@ public class Anfrageformular extends HorizontalLayout implements View{
 		
 		// button
 		Button sendButton = new Button();
-		sendButton.setIcon(FontAwesome.ENVELOPE_SQUARE);
+		//sendButton.setIcon(FontAwesome.ENVELOPE_SQUARE);
+		sendButton.setIcon(FontAwesome.SEND);
 		sendButton.setCaption("Anfrage abschicken");
 		//button.setImmediate(true);
 		sendButton.setWidth("-1px");

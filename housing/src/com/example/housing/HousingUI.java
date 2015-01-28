@@ -35,7 +35,7 @@ import com.vaadin.ui.VerticalLayout;
  */
 
 @Theme("housing")
-@PreserveOnRefresh 
+@PreserveOnRefresh
 public class HousingUI extends UI {
 
 	/** The navigator. */
