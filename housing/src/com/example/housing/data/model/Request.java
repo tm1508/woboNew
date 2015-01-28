@@ -9,7 +9,7 @@ import javax.persistence.*;
  * The Class Request.
  */
 @Entity
-@Table(name="request")
+@Table(name="Request")
 public class Request {
 	
 	/** The id request. */

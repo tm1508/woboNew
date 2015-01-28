@@ -59,6 +59,29 @@ public class Anfrageformular extends HorizontalLayout implements View{
 			nav.addStyleName("navigation");
 			v.addComponent(nav);
 			
+			NavigationPublic navPublic = new NavigationPublic();
+			v.addComponent(navPublic);
+			
+			NavigationAdmin navAdmin = new NavigationAdmin();
+			v.addComponent(navAdmin);
+			
+			//falls der Benutzer eingelogt ist verändert sich die Navigation
+			if(VaadinSession.getCurrent().getAttribute("login").equals(true)){
+				if(VaadinSession.getCurrent().getAttribute(User.class).getAccessLevel()==2){//falls der User ein Admin ist
+					nav.setVisible(false);
+					navPublic.setVisible(false);
+					navAdmin.setVisible(true);//Admin-Navigation
+				}else{//ansonsten: Naviagtion für eingeloggte Nutzer
+					nav.setVisible(true);
+					navPublic.setVisible(false);
+					navAdmin.setVisible(false);
+				}
+			}else{//ansonsten Public Navigation (für alle)
+				nav.setVisible(false);
+				navPublic.setVisible(true);
+				navAdmin.setVisible(false);
+			}
+			
 			//Inhalt hinzufuegen
 			content = new VerticalLayout();
 			content.setMargin(true);

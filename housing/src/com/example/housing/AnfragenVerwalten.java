@@ -76,13 +76,24 @@ public class AnfragenVerwalten extends HorizontalLayout implements View{
 			NavigationPublic navPublic = new NavigationPublic();
 			v.addComponent(navPublic);
 			
+			NavigationAdmin navAdmin = new NavigationAdmin();
+			v.addComponent(navAdmin);
+			
 			//falls der Benutzer eingelogt ist verändert sich die Navigation
 			if(VaadinSession.getCurrent().getAttribute("login").equals(true)){
-				nav.setVisible(true);
-				navPublic.setVisible(false);
-			}else{
+				if(VaadinSession.getCurrent().getAttribute(User.class).getAccessLevel()==2){//falls der User ein Admin ist
+					nav.setVisible(false);
+					navPublic.setVisible(false);
+					navAdmin.setVisible(true);//Admin-Navigation
+				}else{//ansonsten: Naviagtion für eingeloggte Nutzer
+					nav.setVisible(true);
+					navPublic.setVisible(false);
+					navAdmin.setVisible(false);
+				}
+			}else{//ansonsten Public Navigation (für alle)
 				nav.setVisible(false);
 				navPublic.setVisible(true);
+				navAdmin.setVisible(false);
 			}
 			
 			//Inhalt hinzufuegen
@@ -117,7 +128,14 @@ public class AnfragenVerwalten extends HorizontalLayout implements View{
 	
 	public void setContent(){
 		
-	
+		Label title = new Label();
+		title.setImmediate(false);
+		title.setWidth("-1px");
+		title.setHeight("-1px");
+		title.setValue("Meine Anfragen");
+		title.addStyleName("title");
+		content.addComponent(title);
+		
 		RequestProvider rp = new RequestProvider();
 		List<Request> reqs;
 		
@@ -133,6 +151,5 @@ public class AnfragenVerwalten extends HorizontalLayout implements View{
 			
 		
 	}
-
 
 }

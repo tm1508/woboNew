@@ -11,7 +11,7 @@ import javax.persistence.*;
  * The Class Offer.
  */
 @Entity
-@Table(name="offer")
+@Table(name="Offer")
 public class Offer {
 	
 	/** The id offer. */

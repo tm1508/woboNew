@@ -96,7 +96,7 @@ public class Footer extends CustomComponent {
 		
 		// link_1
 		link_1 = new Button();
-		link_1.setStyleName("link");
+		link_1.setStyleName("link_footer");
 		link_1.setCaption("Impressum");
 		link_1.setImmediate(false);
 		link_1.setWidth("-1px");
@@ -113,7 +113,7 @@ public class Footer extends CustomComponent {
 		
 		//Link zum Fenster "Passwort vergessen"
 		link_3 = new Button();
-		link_3.setStyleName("link");
+		link_3.setStyleName("link_footer");
 		link_3.setCaption("Kontakt");
 		link_3.setImmediate(false);
 		link_3.setWidth("-1px");

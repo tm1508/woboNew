@@ -88,14 +88,26 @@ public class Einzelansicht extends HorizontalLayout implements View {
 		NavigationPublic navPublic = new NavigationPublic();
 		v.addComponent(navPublic);
 		
+		NavigationAdmin navAdmin = new NavigationAdmin();
+		v.addComponent(navAdmin);
+		
 		//falls der Benutzer eingelogt ist verändert sich die Navigation
 		if(VaadinSession.getCurrent().getAttribute("login").equals(true)){
-			nav.setVisible(true);
-			navPublic.setVisible(false);
-		}else{
+			if(VaadinSession.getCurrent().getAttribute(User.class).getAccessLevel()==2){//falls der User ein Admin ist
+				nav.setVisible(false);
+				navPublic.setVisible(false);
+				navAdmin.setVisible(true);//Admin-Navigation
+			}else{//ansonsten: Naviagtion für eingeloggte Nutzer
+				nav.setVisible(true);
+				navPublic.setVisible(false);
+				navAdmin.setVisible(false);
+			}
+		}else{//ansonsten Public Navigation (für alle)
 			nav.setVisible(false);
 			navPublic.setVisible(true);
+			navAdmin.setVisible(false);
 		}
+		
 		
 		//Inhalt hinzufuegen
 		content = new VerticalLayout();
@@ -133,45 +145,39 @@ public class Einzelansicht extends HorizontalLayout implements View {
 	 */
 	@SuppressWarnings("deprecation")
 	public void setContent(){
-			
-		//titel
-		String titel = angebot.getTitle();
-		Label lTitel= new Label(titel + " Ort: " +angebot.getCity());
+		
+		//titel	
+		Label title = new Label();
+		title.setImmediate(false);
+		title.setWidth("-1px");
+		title.setHeight("-1px");
+		title.setValue(angebot.getTitle());
+		title.addStyleName("title");
+		content.addComponent(title);
+				
+		Label lTitel= new Label(" Ort: " +angebot.getCity());
 		lTitel.addStyleName("ImportantTitle");
+		content.addComponent(title );
 		content.addComponent(lTitel);
 		
-		//Adresse wird nur verifizierten Studenten angezeigt
-		if(VaadinSession.getCurrent().getAttribute("login").equals(true)) {
+		//Adresse wird nur verifizierten Studenten bzw. Admin angezeigt
+		if(VaadinSession.getCurrent().getAttribute("login").equals(true) && VaadinSession.getCurrent().getAttribute(User.class).getAccessLevel() != 0) { 
+				 
+			//adresse
+			String street = angebot.getStreet();
+			String zip = angebot.getZip();
+			String city = angebot.getCity();
+			Label lAdress = new Label("Straße: " + street + "  PLZ: " + zip + "  Ort: " + city);
 			
-			if(VaadinSession.getCurrent().getAttribute(User.class).getAccessLevel() == 1) {
-				
-				 // if(VaadinSession.getCurrent().getAttribute("login").equals(true)){
-				 
-				 //adresse
-				 String street = angebot.getStreet();
-				 String zip = angebot.getZip();
-				 String city = angebot.getCity();
-				 Label lAdress = new Label("Straße: " + street + "  PLZ: " + zip + "  Ort: " + city);
-				 
-				 content.addComponent(lAdress);
-				 
-			} else {
-				 
-				 String zip = angebot.getZip();
-				 
-				 Label lAdress = new Label("PLZ: " + zip + "  Die volle Adresse ist nur für verifizierte Studenten sichtbar.");
-				 
-				 content.addComponent(lAdress);
-				 
-			}
-	
+			content.addComponent(lAdress);
+			
 		} else {
 		
-			 String zip = angebot.getZip();
+			String zip = angebot.getZip();
 			 
-			 Label lAdress = new Label("PLZ: " + zip + "  Die volle Adresse ist nur für verifizierte Studenten sichtbar.");
+			Label lAdress = new Label("PLZ: " + zip + "          Die volle Adresse ist nur für verifizierte Studenten sichtbar.");
 			 
-			 content.addComponent(lAdress);
+			content.addComponent(lAdress);
 			 
 		 }
 		
@@ -275,8 +281,7 @@ public class Einzelansicht extends HorizontalLayout implements View {
 	//	gridInfos.setWidth("60%");
 		content.addComponent(gridInfos);
 		
-		//Date
-		
+		//Date	
 	    DateField startDate = new DateField();
 	    startDate.setValue(angebot.getStartDate());
 	    startDate.setEnabled(false);
@@ -294,17 +299,17 @@ public class Einzelansicht extends HorizontalLayout implements View {
 	    
 	    //Size
 		float sm = angebot.getSquareMetre();
-		String sSm = new Format().stringFormat(sm) + "m²";
+		String sSm = new Format().stringFormat(sm);
 		
         gridInfos.addComponent(new Label("Größe"),0,2);
-        gridInfos.addComponent(new Label(sSm),1 , 2);
+        gridInfos.addComponent(new Label(sSm + " m²"),1 , 2);
         
         //Price
     	float price =  angebot.getPrice();
-		String sPrice = new Format().stringEuro(price) + " €";
+		String sPrice = new Format().stringEuro(price);
 		
         gridInfos.addComponent(new Label("Warmmiete"),0,3);
-        gridInfos.addComponent(new Label(sPrice),1 , 3);
+        gridInfos.addComponent(new Label(sPrice + " €"),1 , 3);
         
         //IsShared       
     	int a = angebot.getType();
@@ -396,7 +401,7 @@ public class Einzelansicht extends HorizontalLayout implements View {
         
         //Bearbeiten- und Löschen-Button
         if(VaadinSession.getCurrent().getAttribute("login").equals(true)){
-        	if(VaadinSession.getCurrent().getAttribute(User.class).getEmail().equals(angebot.getOffer_idUser().getEmail())){
+        	if(VaadinSession.getCurrent().getAttribute(User.class).getEmail().equals(angebot.getOffer_idUser().getEmail())|| VaadinSession.getCurrent().getAttribute(User.class).getAccessLevel()==2){
         		
         		HorizontalLayout userButtons = new HorizontalLayout();
         		
@@ -435,7 +440,16 @@ public class Einzelansicht extends HorizontalLayout implements View {
         Button anfrage = new Button("Anfrage");
         anfrage.addStyleName("AnfrageButton");
         anfrage.setIcon(FontAwesome.MAIL_FORWARD);
+        
+        Button anbieter = new Button("Anbieter kontaktieren");
+        anbieter.addStyleName("AnfrageButton");
+        anfrage.setIcon(FontAwesome.MAIL_FORWARD);
+        
+        if(VaadinSession.getCurrent().getAttribute("login").equals(false)|| VaadinSession.getCurrent().getAttribute(User.class).getAccessLevel()!=2){
         buttons.addComponent(anfrage);
+        }else{
+        buttons.addComponent(anbieter);	
+        }
         if(angebot.isInactive()){
         	anfrage.setEnabled(false);
         }
@@ -469,6 +483,16 @@ public class Einzelansicht extends HorizontalLayout implements View {
 				}
 			}
 		});
+        
+        anbieter.addClickListener(new Button.ClickListener(){
+			public void buttonClick(ClickEvent event) {
+				String name = "AdminanfrageWohnung";
+				
+				getUI().getNavigator().addView(name, new AdminanfrageWohnung(angebot));
+				getUI().getNavigator().navigateTo(name);
+			
+			}
+		});
 
 			
 				
@@ -481,7 +505,7 @@ public class Einzelansicht extends HorizontalLayout implements View {
 
 	    
         //Favoriten-Button TODO
-        if(VaadinSession.getCurrent().getAttribute("login").equals(true) && !fp.favoritExists(VaadinSession.getCurrent().getAttribute(User.class), angebot)){
+        if(VaadinSession.getCurrent().getAttribute("login").equals(true) && !fp.favoritExists(VaadinSession.getCurrent().getAttribute(User.class), angebot)&& VaadinSession.getCurrent().getAttribute(User.class).getAccessLevel()!=2){
         
         	Button favorit = new Button("Favorit hinzufügen");
         	favorit.setIcon(FontAwesome.PLUS_SQUARE_O);
@@ -509,7 +533,7 @@ public class Einzelansicht extends HorizontalLayout implements View {
         		}	
         	}); 
     	
-        }else if(VaadinSession.getCurrent().getAttribute("login").equals(true) && fp.favoritExists(VaadinSession.getCurrent().getAttribute(User.class), angebot)){
+        }else if(VaadinSession.getCurrent().getAttribute("login").equals(true) && fp.favoritExists(VaadinSession.getCurrent().getAttribute(User.class), angebot)&& VaadinSession.getCurrent().getAttribute(User.class).getAccessLevel()!=2){
         	
         	Button removeFavorit = new Button("Favorit entfernen");
         	removeFavorit.setIcon(FontAwesome.TRASH_O);
@@ -552,7 +576,7 @@ public class Einzelansicht extends HorizontalLayout implements View {
         
           
 
-        if(VaadinSession.getCurrent().getAttribute("login").equals(true)){
+        if(VaadinSession.getCurrent().getAttribute("login").equals(true)&& VaadinSession.getCurrent().getAttribute(User.class).getAccessLevel()!=2){
         	User u = VaadinSession.getCurrent().getAttribute(User.class);
             List<Request> r;
             r= u.getRequests(); 

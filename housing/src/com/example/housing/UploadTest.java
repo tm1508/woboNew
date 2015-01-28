@@ -2,7 +2,7 @@ package com.example.housing;
 
 import java.io.ByteArrayOutputStream;
 import java.io.OutputStream;
-import com.sun.org.apache.xml.internal.security.utils.Base64;
+//import com.sun.org.apache.xml.internal.security.utils.Base64;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.shared.ui.label.ContentMode;
@@ -62,7 +62,7 @@ public class UploadTest extends VerticalLayout implements Receiver, SucceededLis
      */
     public void uploadSucceeded ( SucceededEvent event )
     {
-    	System.out.println("Bild wurde hochgeladen");
+    	/*System.out.println("Bild wurde hochgeladen");
         if ( tmpFile != null)
         {
             //TODO Bild in die Datenbank abspeichern, Byte Array bekommt man mit tmpFile.toByteArray();
@@ -74,7 +74,7 @@ public class UploadTest extends VerticalLayout implements Receiver, SucceededLis
         
         
         this.addComponent(image);
-        }
+        }*/
     }
     
     /**
@@ -83,11 +83,11 @@ public class UploadTest extends VerticalLayout implements Receiver, SucceededLis
      * @param bytes the bytes
      * @return the image
      */
-    public String getImage(byte[] bytes) {
+    /*public String getImage(byte[] bytes) {
 		String encodedImage = "";
 		encodedImage = Base64.encode(bytes).toString();
 		return encodedImage;
-	}
+	}*/
     
     /**
      * Upload failed.

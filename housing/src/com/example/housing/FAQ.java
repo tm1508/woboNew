@@ -74,13 +74,24 @@ public class FAQ extends HorizontalLayout implements View {
 		NavigationPublic navPublic = new NavigationPublic();
 		v.addComponent(navPublic);
 
-		// falls der Benutzer eingelogt ist verändert sich die Navigation
-		if (VaadinSession.getCurrent().getAttribute("login").equals(true)) {
-			nav.setVisible(true);
-			navPublic.setVisible(false);
-		} else {
+		NavigationAdmin navAdmin = new NavigationAdmin();
+		v.addComponent(navAdmin);
+		
+		//falls der Benutzer eingelogt ist verändert sich die Navigation
+		if(VaadinSession.getCurrent().getAttribute("login").equals(true)){
+			if(VaadinSession.getCurrent().getAttribute(User.class).getAccessLevel()==2){//falls der User ein Admin ist
+				nav.setVisible(false);
+				navPublic.setVisible(false);
+				navAdmin.setVisible(true);//Admin-Navigation
+			}else{//ansonsten: Naviagtion für eingeloggte Nutzer
+				nav.setVisible(true);
+				navPublic.setVisible(false);
+				navAdmin.setVisible(false);
+			}
+		}else{//ansonsten Public Navigation (für alle)
 			nav.setVisible(false);
 			navPublic.setVisible(true);
+			navAdmin.setVisible(false);
 		}
 
 		// Inhalt hinzufuegen
@@ -122,6 +133,15 @@ public class FAQ extends HorizontalLayout implements View {
 
 		content = new VerticalLayout();
 		content.setMargin(true);
+
+		//Titel
+		Label title = new Label();
+		title.setImmediate(false);
+		title.setWidth("-1px");
+		title.setHeight("-1px");
+		title.setValue("FAQs");
+		title.addStyleName("title");
+		content.addComponent(title);
 
 		// Kategorien
 		Accordion accordion = new Accordion();

@@ -1,36 +1,20 @@
 package com.example.housing;
 
-import java.util.List;
-
-import com.example.housing.data.model.Offer;
 import com.example.housing.data.model.User;
-import com.example.housing.data.provider.OfferProvider;
-import com.example.housing.data.provider.UserProvider;
-import com.example.housing.utility.Format;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
-import com.vaadin.server.FontAwesome;
 import com.vaadin.server.VaadinSession;
 import com.vaadin.shared.ui.label.ContentMode;
-import com.vaadin.ui.Accordion;
-import com.vaadin.ui.Button;
-import com.vaadin.ui.Component;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
-import com.vaadin.ui.Link;
 import com.vaadin.ui.Panel;
-import com.vaadin.ui.Table;
-import com.vaadin.ui.TextField;
-import com.vaadin.ui.UI;
-import com.vaadin.ui.Upload;
-import com.vaadin.ui.Upload.FinishedEvent;
 import com.vaadin.ui.VerticalLayout;
-import com.vaadin.ui.Button.ClickEvent;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class Startseite.
  */
+@SuppressWarnings("serial")
 public class Impressum extends HorizontalLayout implements View {
 
 	/** The content. */
@@ -75,13 +59,24 @@ public class Impressum extends HorizontalLayout implements View {
 		NavigationPublic navPublic = new NavigationPublic();
 		v.addComponent(navPublic);
 
-		// falls der Benutzer eingelogt ist verändert sich die Navigation
-		if (VaadinSession.getCurrent().getAttribute("login").equals(true)) {
-			nav.setVisible(true);
-			navPublic.setVisible(false);
-		} else {
+		NavigationAdmin navAdmin = new NavigationAdmin();
+		v.addComponent(navAdmin);
+		
+		//falls der Benutzer eingelogt ist verändert sich die Navigation
+		if(VaadinSession.getCurrent().getAttribute("login").equals(true)){
+			if(VaadinSession.getCurrent().getAttribute(User.class).getAccessLevel()==2){//falls der User ein Admin ist
+				nav.setVisible(false);
+				navPublic.setVisible(false);
+				navAdmin.setVisible(true);//Admin-Navigation
+			}else{//ansonsten: Naviagtion für eingeloggte Nutzer
+				nav.setVisible(true);
+				navPublic.setVisible(false);
+				navAdmin.setVisible(false);
+			}
+		}else{//ansonsten Public Navigation (für alle)
 			nav.setVisible(false);
 			navPublic.setVisible(true);
+			navAdmin.setVisible(false);
 		}
 
 		// Inhalt hinzufuegen
@@ -150,18 +145,16 @@ public class Impressum extends HorizontalLayout implements View {
 				+ "Friedrichstr. 14<br/>"
 				+ "70174 Stuttgart<br/>"
 				+ "info@dhbw-karlsruhe.de<br/>"
-				+ "http://www.dhbw-karlsruhe.de<br/>"
+				+ "<a href=http://www.dhbw-karlsruhe.de/>http://www.dhbw-karlsruhe.de</a><br/>"
 				+ "<br/>"
 				+ "Redaktion und Verantwortung für die Homepage:<br/>"
 				+ "Duale Hochschule Baden-Württemberg Karlsruhe<br/>"
 				+ "<br/>"
 				+ "Haftungsausschluss<br/>"
 				+ "<br/>"
-				+ "<br/>"
 				+ "1. Inhalt des Onlineangebotes<br/>"
 				+ "Die Duale Hochschule Baden-Württemberg Karlsruhe übernimmt keinerlei Gewähr für die Aktualität, Korrektheit, Vollständigkeit oder Qualität der bereitgestellten Informationen. Haftungsansprüche gegen den Autor, welche sich auf Schäden materieller oder ideeller Art beziehen, die durch die Nutzung oder Nichtnutzung der dargebotenen Informationen bzw. durch die Nutzung fehlerhafter und unvollständiger Informationen verursacht wurden, sind grundsätzlich ausgeschlossen, sofern seitens der Dualen Hochschule Baden-Württemberg Karlsruhe kein nachweislich vorsätzliches oder grob fahrlässiges Verschulden vorliegt."
 				+ "Alle Angebote sind freibleibend und unverbindlich. Die Duale Hochschule Baden-Württemberg Karlsruhe behält es sich ausdrücklich vor, Teile der Seiten oder das gesamte Angebot ohne gesonderte Ankündigung zu verändern, zu ergänzen, zu löschen oder die Veröffentlichung zeitweise oder endgültig einzustellen.<br/>"
-				+ "<br/>"
 				+ "<br/>"
 				+ "2. Verweise und Links<br/>"
 				+ "Bei direkten oder indirekten Verweisen auf fremde Internetseiten ('Links'), die außerhalb des Verantwortungsbereiches der Dualen Hochschule Baden-Württemberg Karlsruhe liegen, würde eine Haftungsverpflichtung ausschließlich in dem Fall in Kraft treten, in dem die Duale Hochschule Baden-Württemberg Karlsruhe von den Inhalten Kenntnis hat und es ihr technisch möglich und zumutbar wäre, die Nutzung im Falle rechtswidriger Inhalte zu verhindern."
