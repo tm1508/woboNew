@@ -185,19 +185,7 @@ public class Einzelansicht extends HorizontalLayout implements View {
         googleMap.setHeight("500px");
         googleMap.setWidth("500px");
         content.addComponent(googleMap);
-        
-       
-        googleMap.addMarkerDragListener(new MarkerDragListener() {
-			@Override
-			public void markerDragged(GoogleMapMarker draggedMarker,
-					LatLon oldPosition) {
-				lat = draggedMarker.getPosition().getLat();
-				lon = draggedMarker.getPosition().getLon();
-				// TODO Auto-generated method stub
-				System.out.println(draggedMarker.getPosition().getLat()+"---"+draggedMarker.getPosition().getLon());
-				
-			}
-        });
+
 
 		
 		//Adresse wird nur verifizierten Studenten bzw. Admin angezeigt

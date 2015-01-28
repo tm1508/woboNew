@@ -707,6 +707,38 @@ public class AngebotErstellen extends HorizontalLayout implements View, Receiver
 		titel.setRequiredError("Bitte geben Sie einen Titel an.");
 		titel.setWidth("80%");
 		
+		lat=offer.getLatitude().doubleValue();
+		lon=offer.getLongitude().doubleValue();
+	    /** The kakola marker. */
+	    GoogleMapMarker kakolaMarker = new GoogleMapMarker(
+	            "Hier befindet sich die Wohnung", new LatLon(lat, lon),
+	            true, null);
+	    
+		GoogleMap googleMap = new GoogleMap(null, null, null);
+        googleMap.setCenter(new LatLon(49.00705, 8.40287));
+        googleMap.setZoom(10);
+        googleMap.setSizeFull();
+        kakolaMarker.setAnimationEnabled(false);
+        googleMap.addMarker(kakolaMarker);
+       
+        googleMap.setMinZoom(4);
+        googleMap.setMaxZoom(16);
+        googleMap.setHeight("500px");
+        googleMap.setWidth("500px");
+        content.addComponent(googleMap);
+        
+        googleMap.addMarkerDragListener(new MarkerDragListener() {
+			@Override
+			public void markerDragged(GoogleMapMarker draggedMarker,
+					LatLon oldPosition) {
+				lat = draggedMarker.getPosition().getLat();
+				lon = draggedMarker.getPosition().getLon();
+				// TODO Auto-generated method stub
+				System.out.println(draggedMarker.getPosition().getLat()+"---"+draggedMarker.getPosition().getLon());
+				
+			}
+        });
+		
 		Label adress = new Label("Adresse");
 		adress.addStyleName("AbschnittLabel");
 		final TextField street = new TextField("Straﬂe, Hausnummer");
@@ -1034,6 +1066,9 @@ public class AngebotErstellen extends HorizontalLayout implements View, Receiver
 					}
 					
 					currentOffer.setInactive(inactive.getValue());
+					currentOffer.setLatitude(BigDecimal.valueOf(lat));
+					currentOffer.setLongitude(BigDecimal.valueOf(lon));
+				
 					// changedOffer.setLatitude(latitude);
 					// changedOffer.setLongitude(longitude);
 					
