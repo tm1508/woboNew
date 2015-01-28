@@ -145,7 +145,7 @@ public class Listenzeile extends CustomComponent {
 			s = "";
 		}
 		Label ls = new Label(s);
-		ls.setWidth("250px");
+		ls.setWidth("100px");
 		ergebnisLayout.addComponent(ls, 5, 1);
 
 	

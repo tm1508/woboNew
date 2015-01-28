@@ -426,16 +426,20 @@ public class AngebotErstellen extends HorizontalLayout implements View, Receiver
 		text.setWidth("100%");
 		Label bilder = new Label("Bilder hinzufügen(max. fünf)");
 		bilder.addStyleName("AbschnittLabel");
-		Upload bilderup = new Upload("Foto hochladen", this);
-		bilderup.addSucceededListener(this);
-
+		
 		content.addComponent(anzeigetext);
 		content.addComponent(new Label());
 		content.addComponent(text);
 		content.addComponent(new Label());
 		content.addComponent(bilder);
 		content.addComponent(new Label());
+		Upload bilderup = new Upload("Foto hochladen", this); 
+		bilderup.addSucceededListener(this);
+		//Label max = new Label("Sie haben schon fünf Bilder hochgeladen");
+	
+		
 		content.addComponent(bilderup);
+
 		content.addComponent(new Label());
 
 		// Button speichern/aktivieren/deaktivieren
@@ -819,20 +823,23 @@ public class AngebotErstellen extends HorizontalLayout implements View, Receiver
 		text.setRequired(true);
 		text.setRequiredError("Bitte geben Sie eine kurze Beschreibung des Angebots an.");
 		text.setWidth("100%");
+		content.addComponent(anzeigetext);
+		content.addComponent(new Label());
+		content.addComponent(text);
+		content.addComponent(new Label());
+		
 		Label bilder = new Label("Bilder");
 		bilder.addStyleName("AbschnittLabel");
 
 		Upload bilderup = new Upload("Foto hochladen (max. 5 Fotos pro Angebot möglich!):", this);
 		bilderup.addSucceededListener(this);
-
-		content.addComponent(anzeigetext);
-		content.addComponent(new Label());
-		content.addComponent(text);
-		content.addComponent(new Label());
+		
 		content.addComponent(bilder);
 		content.addComponent(new Label());
+		
 		content.addComponent(bilderup);
-		content.addComponent(new Label());
+		content.addComponent(new Label());	
+		
 
 		// Button speichern/aktivieren/deaktivieren
 		final CheckBox inactive = new CheckBox("deaktivieren");
@@ -1084,10 +1091,13 @@ public class AngebotErstellen extends HorizontalLayout implements View, Receiver
 
 	@Override
 	public void uploadSucceeded(SucceededEvent event) {
+		OfferProvider o = new OfferProvider();
 
+		if(o.findById(currentOffer.getIdOffer()).getPhotos()  == null || o.findById(currentOffer.getIdOffer()).getPhotos().size() < 5 ){
+		
 		System.out.println("Bild wurde hochgeladen");
 		if (tmpImg != null) {
-			
+				
 			//TODO Fehler: Bild ist leer
 			byte[] tmpImgBytes = resizeImage(tmpImg.toByteArray());
 			
@@ -1095,16 +1105,27 @@ public class AngebotErstellen extends HorizontalLayout implements View, Receiver
 			newPhoto.setPhoto_idOffer(currentOffer);
 			//newPhoto.setPicture(tmpImg.toByteArray());
 			newPhoto.setPicture(tmpImgBytes);
-
+			
+			
 			try {
+			
+			
 				newPhotos.add(newPhoto);
-			} catch (NullPointerException ne) { //bei Angebot bearbeiten ist newPhotos nicht instantiiert
+			
+			}catch (NullPointerException ne) { //bei Angebot bearbeiten ist newPhotos nicht instantiiert
 			}
-
 			new PhotoProvider().addPhoto(newPhoto);
-
-		}
-
+			
+			//currentOffer = new OfferProvider().findById(currentOffer.getIdOffer());
+			
+		    }
+			}else{
+				Notification not = new Notification("Sie haben bereits fünf Bilder zu diesem Angebot hochgeladen",Type.HUMANIZED_MESSAGE);//Meldung an den Nutzer
+				not.setDelayMsec(300);
+				not.setStyleName("failure");
+				not.show(Page.getCurrent());
+			} 
+			
 	}
 
 	private byte[] resizeImage(byte[] imageData) {
