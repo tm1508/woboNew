@@ -78,9 +78,12 @@ public class Listenzeile extends CustomComponent {
 				}
 			}, "Bild_1");
 			
+						
 			Image image = new Image(null, resource);
 			image.setHeight("100%"); //100% der Listenzeilen-Höhe
 			image.setWidth("30%");
+			image.markAsDirty();
+		
 			ergebnisLayout.addComponent(image, 0, 0, 2, 2);
 			/*Float dynamicWidthImageCalc = (float) (image.getHeight() * 1.45);
 			System.out.println(Math.round(dynamicWidthImageCalc));

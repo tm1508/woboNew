@@ -166,28 +166,37 @@ public class Einzelansicht extends HorizontalLayout implements View {
 		content.addComponent(title );
 		content.addComponent(lTitel);
 		
-		lat=angebot.getLatitude().doubleValue();
-		lon=angebot.getLongitude().doubleValue();
-	    /** The kakola marker. */
-	    GoogleMapMarker kakolaMarker = new GoogleMapMarker(
-	            "Hier befindet sich die Wohnung", new LatLon(lat, lon),
-	            false, null);
+		if(angebot.getLatitude()!=null){
+			lat=angebot.getLatitude().doubleValue();
+			lon=angebot.getLongitude().doubleValue();
+		    /** The kakola marker. */
+		    GoogleMapMarker kakolaMarker = new GoogleMapMarker(
+		            "Hier befindet sich die Wohnung", new LatLon(lat, lon),
+		            false, null);
+		    
+
+	        
+	        GoogleMap googleMap = new GoogleMap(null, null, null);
+	        googleMap.setCenter(new LatLon(49.00705, 8.40287));
+	        googleMap.setZoom(10);
+	        googleMap.setSizeFull();
+
+	        kakolaMarker.setAnimationEnabled(false);
+	        googleMap.addMarker(kakolaMarker);
+	        
+	        googleMap.setMinZoom(4);
+	        googleMap.setMaxZoom(16);
+	        googleMap.setHeight("500px");
+	        googleMap.setWidth("500px");
+	        content.addComponent(googleMap);
+
+		}else{
+			Label map = new Label("Es wurde kein Standort auf einer Karte angegeben.");
+			content.addComponent(map);
+		}
+
+
 	    
-		GoogleMap googleMap = new GoogleMap(null, null, null);
-        googleMap.setCenter(new LatLon(49.00705, 8.40287));
-        googleMap.setZoom(10);
-        googleMap.setSizeFull();
-        kakolaMarker.setAnimationEnabled(false);
-        googleMap.addMarker(kakolaMarker);
-       
-        googleMap.setMinZoom(4);
-        googleMap.setMaxZoom(16);
-        googleMap.setHeight("500px");
-        googleMap.setWidth("500px");
-        content.addComponent(googleMap);
-
-
-		
 		//Adresse wird nur verifizierten Studenten bzw. Admin angezeigt
 		if(VaadinSession.getCurrent().getAttribute("login").equals(true) && VaadinSession.getCurrent().getAttribute(User.class).getAccessLevel() != 0) { 
 				 
