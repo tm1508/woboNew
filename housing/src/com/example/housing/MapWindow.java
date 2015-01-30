@@ -1,55 +1,23 @@
 package com.example.housing;
 
-import java.io.ByteArrayInputStream;
-import java.io.File;
-import java.io.InputStream;
-
 import com.example.housing.data.model.Offer;
-import com.vaadin.event.MouseEvents.ClickListener;
-import com.vaadin.server.FileResource;
 import com.vaadin.server.FontAwesome;
-import com.vaadin.server.Resource;
-import com.vaadin.server.StreamResource;
-import com.vaadin.server.VaadinService;
 import com.vaadin.tapio.googlemaps.GoogleMap;
 import com.vaadin.tapio.googlemaps.client.LatLon;
 import com.vaadin.tapio.googlemaps.client.overlays.GoogleMapMarker;
-import com.vaadin.ui.Alignment;
-import com.vaadin.ui.Button;
 import com.vaadin.ui.HorizontalLayout;
-import com.vaadin.ui.Image;
-import com.vaadin.ui.Panel;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
-import com.vaadin.ui.Button.ClickEvent;
 
-// TODO: Auto-generated Javadoc
-/**
- * The Class LoginWindow.
- * 
- * @author MWI Wohungsbörse 2014
- * @version 1.0
- * @see com.example.housing.Registrierung
- */
-/*
- * StyleNames (CSS) v-panel-box
- */
 @SuppressWarnings("serial")
 public class MapWindow extends Window {
 
-	/**
-	 * Instantiates a new login window.
-	 */
 	public MapWindow(Offer angebot) {
 		super(" Standort zu diesem Wohnungsangebot");
 		initialisieren(angebot);
 	}
 
-	/**
-	 * Initialisieren.
-	 * 
-	 * @see com.vaadin.ui.Window
-	 */
+
 	public void initialisieren(final Offer angebot) {
 		// Window
 		this.center();

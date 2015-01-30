@@ -292,6 +292,38 @@ public class AngebotErstellen extends HorizontalLayout implements View, Receiver
 		content.addComponent(titel);
 		content.addComponent(new Label());
 		
+	
+		
+		Label adress = new Label("Adresse");
+		adress.addStyleName("AbschnittLabel");
+		final TextField street = new TextField("Straﬂe, Hausnummer:");
+		street.setRequired(true);
+		street.setRequiredError("Bitte geben Sie Straﬂe und Hausnummer an.");
+		street.addStyleName("AngeboteTextField");
+		HorizontalLayout hl0 = new HorizontalLayout();
+		hl0.setWidth("50%");
+		final TextField zip = new TextField("PLZ:");
+		zip.setRequired(true);
+		zip.setRequiredError("Bitte geben Sie die Postleitzahl an.");
+		zip.setWidth("50%");
+		zip.addStyleName("AngeboteTextField");
+		final TextField city = new TextField("Ort:");
+		city.setRequired(true);
+		city.setRequiredError("Bitte geben Sie den Ort an.");
+		city.addStyleName("AngeboteTextField");
+		city.setWidth("50%");
+		hl0.addComponent(zip);
+		hl0.addComponent(city);
+		
+		content.addComponent(ltitel);
+		content.addComponent(titel);
+		content.addComponent(new Label());
+		content.addComponent(adress);
+		//content.addComponent(new Label());
+		content.addComponent(street);
+		content.addComponent(hl0);
+		content.addComponent(new Label());
+		
 	    /** The kakola marker. */
 	    GoogleMapMarker kakolaMarker = new GoogleMapMarker(
 	            "Karlsruhe", new LatLon(49.00705, 8.40287),
@@ -323,37 +355,6 @@ public class AngebotErstellen extends HorizontalLayout implements View, Receiver
 				
 			}
         });
-		
-		Label adress = new Label("Adresse");
-		adress.addStyleName("AbschnittLabel");
-		final TextField street = new TextField("Straﬂe, Hausnummer:");
-		street.setRequired(true);
-		street.setRequiredError("Bitte geben Sie Straﬂe und Hausnummer an.");
-		street.addStyleName("AngeboteTextField");
-		HorizontalLayout hl0 = new HorizontalLayout();
-		hl0.setWidth("50%");
-		final TextField zip = new TextField("PLZ:");
-		zip.setRequired(true);
-		zip.setRequiredError("Bitte geben Sie die Postleitzahl an.");
-		zip.setWidth("50%");
-		zip.addStyleName("AngeboteTextField");
-		final TextField city = new TextField("Ort:");
-		city.setRequired(true);
-		city.setRequiredError("Bitte geben Sie den Ort an.");
-		city.addStyleName("AngeboteTextField");
-		city.setWidth("50%");
-		hl0.addComponent(zip);
-		hl0.addComponent(city);
-		
-		content.addComponent(ltitel);
-		content.addComponent(titel);
-		content.addComponent(new Label());
-		content.addComponent(adress);
-		//content.addComponent(new Label());
-		content.addComponent(street);
-		content.addComponent(hl0);
-		content.addComponent(new Label());
-
 		// Allgemeine Informationen
 		HorizontalLayout label = new HorizontalLayout();
 		label.setWidth("100%");
@@ -728,6 +729,43 @@ public class AngebotErstellen extends HorizontalLayout implements View, Receiver
 		titel.setRequiredError("Bitte geben Sie einen Titel an.");
 		titel.setWidth("80%");
 		
+	
+
+		
+		Label adress = new Label("Adresse");
+		adress.addStyleName("AbschnittLabel");
+		final TextField street = new TextField("Straﬂe, Hausnummer");
+		street.setValue(offer.getStreet());
+		street.setRequired(true);
+		street.setRequiredError("Bitte geben Sie Straﬂe und Hausnummer an.");
+		street.addStyleName("AngeboteTextField");
+		HorizontalLayout hl0 = new HorizontalLayout();
+		hl0.setWidth("50%");
+		final TextField zip = new TextField("PLZ");
+		zip.setValue(offer.getZip());
+		zip.setRequired(true);
+		zip.setRequiredError("Bitte geben Sie die Postleitzahl an.");
+		zip.setWidth("50%");
+		zip.addStyleName("AngeboteTextField");
+		final TextField city = new TextField("Ort");
+		city.setValue(offer.getCity());
+		city.setRequired(true);
+		city.setRequiredError("Bitte geben Sie den Ort an.");
+		city.addStyleName("AngeboteTextField");
+		city.setWidth("50%");
+		hl0.addComponent(zip);
+		hl0.addComponent(city);
+
+		content.addComponent(ltitel);
+		content.addComponent(titel);
+		content.addComponent(new Label());
+		content.addComponent(adress);
+		//content.addComponent(new Label());
+		content.addComponent(street);
+		content.addComponent(hl0);
+		content.addComponent(new Label());
+		
+		
 		if(offer.getLatitude()!=null && offer.getLatitude()!=BigDecimal.valueOf(0.0)){
 
 		    /** The kakola marker. */
@@ -798,40 +836,6 @@ public class AngebotErstellen extends HorizontalLayout implements View, Receiver
 	        });
 		}
         
-
-		
-		Label adress = new Label("Adresse");
-		adress.addStyleName("AbschnittLabel");
-		final TextField street = new TextField("Straﬂe, Hausnummer");
-		street.setValue(offer.getStreet());
-		street.setRequired(true);
-		street.setRequiredError("Bitte geben Sie Straﬂe und Hausnummer an.");
-		street.addStyleName("AngeboteTextField");
-		HorizontalLayout hl0 = new HorizontalLayout();
-		hl0.setWidth("50%");
-		final TextField zip = new TextField("PLZ");
-		zip.setValue(offer.getZip());
-		zip.setRequired(true);
-		zip.setRequiredError("Bitte geben Sie die Postleitzahl an.");
-		zip.setWidth("50%");
-		zip.addStyleName("AngeboteTextField");
-		final TextField city = new TextField("Ort");
-		city.setValue(offer.getCity());
-		city.setRequired(true);
-		city.setRequiredError("Bitte geben Sie den Ort an.");
-		city.addStyleName("AngeboteTextField");
-		city.setWidth("50%");
-		hl0.addComponent(zip);
-		hl0.addComponent(city);
-
-		content.addComponent(ltitel);
-		content.addComponent(titel);
-		content.addComponent(new Label());
-		content.addComponent(adress);
-		//content.addComponent(new Label());
-		content.addComponent(street);
-		content.addComponent(hl0);
-		content.addComponent(new Label());
 
 		// Allgemeine Informationen
 		HorizontalLayout label = new HorizontalLayout();
