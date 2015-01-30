@@ -103,7 +103,7 @@ public class Registrierung extends HorizontalLayout implements View{
 	 * Instantiates a new Registrierung.
 	 */
 	public Registrierung(){
-this.setWidth("100%");
+		this.setWidth("100%");
 		
 		//linkes rotes Panel
 		Panel p = new Panel();
@@ -115,6 +115,7 @@ this.setWidth("100%");
 		
 		//mittlerer Teil der Seite
 		VerticalLayout v = new VerticalLayout();
+	
 				
 			//Navigation hinzufuegen
 			Navigation nav = new Navigation();

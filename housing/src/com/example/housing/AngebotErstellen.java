@@ -728,37 +728,77 @@ public class AngebotErstellen extends HorizontalLayout implements View, Receiver
 		titel.setRequiredError("Bitte geben Sie einen Titel an.");
 		titel.setWidth("80%");
 		
-		lat=offer.getLatitude().doubleValue();
-		lon=offer.getLongitude().doubleValue();
-	    /** The kakola marker. */
-	    GoogleMapMarker kakolaMarker = new GoogleMapMarker(
-	            "Hier befindet sich die Wohnung", new LatLon(lat, lon),
-	            true, null);
-	    
-		GoogleMap googleMap = new GoogleMap(null, null, null);
-        googleMap.setCenter(new LatLon(49.00705, 8.40287));
-        googleMap.setZoom(10);
-        googleMap.setSizeFull();
-        kakolaMarker.setAnimationEnabled(false);
-        googleMap.addMarker(kakolaMarker);
-       
-        googleMap.setMinZoom(4);
-        googleMap.setMaxZoom(16);
-        googleMap.setHeight("500px");
-        googleMap.setWidth("500px");
-        content.addComponent(googleMap);
+		if(offer.getLatitude()!=null && offer.getLatitude()!=BigDecimal.valueOf(0.0)){
+
+		    /** The kakola marker. */
+		    GoogleMapMarker kakolaMarker = new GoogleMapMarker(
+		            "Hier befindet sich die Wohnung", new LatLon(offer.getLatitude().doubleValue(), offer.getLongitude().doubleValue()),
+		            false, null);
+		    
+
+	        
+	        GoogleMap googleMap = new GoogleMap(null, null, null);
+	        googleMap.setCenter(new LatLon(offer.getLatitude().doubleValue(), offer.getLongitude().doubleValue()));
+	        googleMap.setZoom(10);
+	        googleMap.setSizeFull();
+
+	        kakolaMarker.setAnimationEnabled(false);
+	        googleMap.addMarker(kakolaMarker);
+	        
+	        googleMap.setMinZoom(4);
+	        googleMap.setMaxZoom(16);
+	        googleMap.setHeight("500px");
+	        googleMap.setWidth("500px");
+	        content.addComponent(googleMap);
+	        
+	        googleMap.addMarkerDragListener(new MarkerDragListener() {
+				@Override
+				public void markerDragged(GoogleMapMarker draggedMarker,
+						LatLon oldPosition) {
+					lat = draggedMarker.getPosition().getLat();
+					lon = draggedMarker.getPosition().getLon();
+					// TODO Auto-generated method stub
+					System.out.println(draggedMarker.getPosition().getLat()+"---"+draggedMarker.getPosition().getLon());
+					
+				}
+	        });
+
+		}else{
+			 /** The kakola marker. */
+		    GoogleMapMarker kakolaMarker = new GoogleMapMarker(
+		            "Standort ändern", new LatLon(49.00705, 8.40287),
+		            true, null);
+		    
+
+	        
+	        GoogleMap googleMap = new GoogleMap(null, null, null);
+	        googleMap.setCenter(new LatLon(49.00705, 8.40287));
+	        googleMap.setZoom(10);
+	        googleMap.setSizeFull();
+
+	        kakolaMarker.setAnimationEnabled(false);
+	        googleMap.addMarker(kakolaMarker);
+	        
+	        googleMap.setMinZoom(4);
+	        googleMap.setMaxZoom(16);
+	        googleMap.setHeight("500px");
+	        googleMap.setWidth("500px");
+	        content.addComponent(googleMap);
+	        
+	        googleMap.addMarkerDragListener(new MarkerDragListener() {
+				@Override
+				public void markerDragged(GoogleMapMarker draggedMarker,
+						LatLon oldPosition) {
+					lat = draggedMarker.getPosition().getLat();
+					lon = draggedMarker.getPosition().getLon();
+					// TODO Auto-generated method stub
+					System.out.println(draggedMarker.getPosition().getLat()+"---"+draggedMarker.getPosition().getLon());
+					
+				}
+	        });
+		}
         
-        googleMap.addMarkerDragListener(new MarkerDragListener() {
-			@Override
-			public void markerDragged(GoogleMapMarker draggedMarker,
-					LatLon oldPosition) {
-				lat = draggedMarker.getPosition().getLat();
-				lon = draggedMarker.getPosition().getLon();
-				// TODO Auto-generated method stub
-				System.out.println(draggedMarker.getPosition().getLat()+"---"+draggedMarker.getPosition().getLon());
-				
-			}
-        });
+
 		
 		Label adress = new Label("Adresse");
 		adress.addStyleName("AbschnittLabel");
