@@ -43,7 +43,7 @@ public class ErrorPage extends HorizontalLayout implements View{
 	/**
 	 * Instantiates a new ErrorPage.
 	 */
-	public ErrorPage(com.vaadin.server.ErrorEvent event){
+	public ErrorPage(){
 		
 		this.event = event;
 		
@@ -145,7 +145,6 @@ public class ErrorPage extends HorizontalLayout implements View{
 				+"<br/><br/> - Sie wollten zu einer nicht verfügbaren Seite navigieren. Beispielsweise können Sie die Profilseite nur aufrufen, wenn Sie eingeloggt sind."
 				+"<br/><br/> - Das Hochladen eines Bildes hat den Fehler verursacht.  Bitte versuchen Sie es später erneut."
 				+"<br/><br/> - Es gab einen Serverfehler. Sollte der Fehler häufiger auftreten, wenden Sie sich bitte an den Administrator.");
-		text.setValue(event.toString());
 		text.setContentMode(ContentMode.HTML);
 		content.addComponent(text);
 	}

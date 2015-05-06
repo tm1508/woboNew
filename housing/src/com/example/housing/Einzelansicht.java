@@ -3,6 +3,7 @@ package com.example.housing;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.InputStream;
+import java.math.BigDecimal;
 import java.sql.Date;
 import java.util.List;
 
@@ -166,40 +167,6 @@ public class Einzelansicht extends HorizontalLayout implements View {
 		content.addComponent(title );
 		content.addComponent(lTitel);
 		
-		lat=angebot.getLatitude().doubleValue();
-		lon=angebot.getLongitude().doubleValue();
-	    /** The kakola marker. */
-	    GoogleMapMarker kakolaMarker = new GoogleMapMarker(
-	            "Hier befindet sich die Wohnung", new LatLon(lat, lon),
-	            false, null);
-	    
-		GoogleMap googleMap = new GoogleMap(null, null, null);
-        googleMap.setCenter(new LatLon(49.00705, 8.40287));
-        googleMap.setZoom(10);
-        googleMap.setSizeFull();
-        kakolaMarker.setAnimationEnabled(false);
-        googleMap.addMarker(kakolaMarker);
-       
-        googleMap.setMinZoom(4);
-        googleMap.setMaxZoom(16);
-        googleMap.setHeight("500px");
-        googleMap.setWidth("500px");
-        content.addComponent(googleMap);
-        
-       
-        googleMap.addMarkerDragListener(new MarkerDragListener() {
-			@Override
-			public void markerDragged(GoogleMapMarker draggedMarker,
-					LatLon oldPosition) {
-				lat = draggedMarker.getPosition().getLat();
-				lon = draggedMarker.getPosition().getLon();
-				// TODO Auto-generated method stub
-				System.out.println(draggedMarker.getPosition().getLat()+"---"+draggedMarker.getPosition().getLon());
-				
-			}
-        });
-
-		
 		//Adresse wird nur verifizierten Studenten bzw. Admin angezeigt
 		if(VaadinSession.getCurrent().getAttribute("login").equals(true) && VaadinSession.getCurrent().getAttribute(User.class).getAccessLevel() != 0) { 
 				 
@@ -220,6 +187,24 @@ public class Einzelansicht extends HorizontalLayout implements View {
 			content.addComponent(lAdress);
 			 
 		 }
+		
+	    //Plus-Button
+        Button map = new Button("Karte anzeigen");
+        map.setIcon(FontAwesome.MAP_MARKER);
+        map.addStyleName("AnfrageButton");
+        map.addClickListener(new Button.ClickListener() {
+			public void buttonClick(ClickEvent event) {
+				//MapWindow w = new MapWindow(angebot);
+				//UI.getCurrent().addWindow(w);
+			}
+        });
+        content.addComponent(map);
+        
+		if(angebot.getLatitude()!=null && angebot.getLatitude()!=BigDecimal.valueOf(0.0)){
+
+		}else{
+			map.setEnabled(false);
+		}
 		
 		//pictures
 		GridLayout gridPictures = new GridLayout(8, 8);

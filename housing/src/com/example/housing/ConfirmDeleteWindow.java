@@ -37,7 +37,6 @@ public class ConfirmDeleteWindow extends Window {
 		text.setImmediate(false);
 		//text.setWidth("-1px");
 		//text.setHeight("-1px");
-		//TODO Zeilenumbruch
 		text.setValue("Wollen Sie Ihr Angebot " + currentOffer.getTitle() + " wirklich unwiderruflich löschen? Alternativ können Sie es auch vorübergehend deaktivieren, indem Sie das Angebot bearbeiten und dort den Haken bei \"deaktivieren\" setzen. Auf diese Weise können Sie das Angebot gegebenenfalls später wieder reaktivieren.");
 		content.addComponent(text);
 		
