@@ -1,5 +1,6 @@
 package com.example.housing.data.model;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.*;
@@ -10,7 +11,7 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name="Request")
-public class Request {
+public class Request implements Serializable{
 	
 	/** The id request. */
 	@Id
