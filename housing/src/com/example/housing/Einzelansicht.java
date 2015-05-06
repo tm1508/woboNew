@@ -194,8 +194,8 @@ public class Einzelansicht extends HorizontalLayout implements View {
         map.addStyleName("AnfrageButton");
         map.addClickListener(new Button.ClickListener() {
 			public void buttonClick(ClickEvent event) {
-				//MapWindow w = new MapWindow(angebot);
-				//UI.getCurrent().addWindow(w);
+				MapWindow w = new MapWindow(angebot);
+				UI.getCurrent().addWindow(w);
 			}
         });
         content.addComponent(map);

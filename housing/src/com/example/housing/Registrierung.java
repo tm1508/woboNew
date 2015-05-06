@@ -16,6 +16,7 @@ import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.server.Page;
+import com.vaadin.server.Scrollable;
 import com.vaadin.server.UserError;
 import com.vaadin.server.VaadinSession;
 import com.vaadin.ui.Button;
@@ -102,7 +103,7 @@ public class Registrierung extends HorizontalLayout implements View{
 	 * Instantiates a new Registrierung.
 	 */
 	public Registrierung(){
-this.setWidth("100%");
+		this.setWidth("100%");
 		
 		//linkes rotes Panel
 		Panel p = new Panel();
@@ -114,6 +115,7 @@ this.setWidth("100%");
 		
 		//mittlerer Teil der Seite
 		VerticalLayout v = new VerticalLayout();
+	
 				
 			//Navigation hinzufuegen
 			Navigation nav = new Navigation();
@@ -150,6 +152,7 @@ this.setWidth("100%");
 			content.setWidth("100%");
 			setContent();//Methode zum befuellen des Inhalts aufrufen
 			v.addComponent(content);
+		
 			
 			//Footer hinzufuegen
 			Footer f = new Footer();
@@ -527,6 +530,8 @@ this.setWidth("100%");
 		//E-Mail senden
 		SendEMail.send(email_1.getValue(), "wohnungsboerse_dh@web.de", "Danke für Ihre Registrierung", body);
 	}
+
+
 
 }
 

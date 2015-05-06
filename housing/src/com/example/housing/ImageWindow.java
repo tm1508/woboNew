@@ -555,6 +555,18 @@ public class ImageWindow extends Window {
 
 		content.setExpandRatio(hl1, 1);//groﬂe Bilder bekommen mehr Platz
 		content.setExpandRatio(hl, 4);
+		
+		image.markAsDirty();
+		image2.markAsDirty();
+		image3.markAsDirty();
+		image4.markAsDirty();
+		image5.markAsDirty();
+		
+		image00.markAsDirty();
+		image22.markAsDirty();
+		image33.markAsDirty();
+		image44.markAsDirty();
+		image55.markAsDirty();
 
 	}
 }

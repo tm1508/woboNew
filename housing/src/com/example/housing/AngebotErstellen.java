@@ -292,6 +292,38 @@ public class AngebotErstellen extends HorizontalLayout implements View, Receiver
 		content.addComponent(titel);
 		content.addComponent(new Label());
 		
+	
+		
+		Label adress = new Label("Adresse");
+		adress.addStyleName("AbschnittLabel");
+		final TextField street = new TextField("Straﬂe, Hausnummer:");
+		street.setRequired(true);
+		street.setRequiredError("Bitte geben Sie Straﬂe und Hausnummer an.");
+		street.addStyleName("AngeboteTextField");
+		HorizontalLayout hl0 = new HorizontalLayout();
+		hl0.setWidth("50%");
+		final TextField zip = new TextField("PLZ:");
+		zip.setRequired(true);
+		zip.setRequiredError("Bitte geben Sie die Postleitzahl an.");
+		zip.setWidth("50%");
+		zip.addStyleName("AngeboteTextField");
+		final TextField city = new TextField("Ort:");
+		city.setRequired(true);
+		city.setRequiredError("Bitte geben Sie den Ort an.");
+		city.addStyleName("AngeboteTextField");
+		city.setWidth("50%");
+		hl0.addComponent(zip);
+		hl0.addComponent(city);
+		
+		content.addComponent(ltitel);
+		content.addComponent(titel);
+		content.addComponent(new Label());
+		content.addComponent(adress);
+		//content.addComponent(new Label());
+		content.addComponent(street);
+		content.addComponent(hl0);
+		content.addComponent(new Label());
+		
 	    /** The kakola marker. */
 	    GoogleMapMarker kakolaMarker = new GoogleMapMarker(
 	            "Karlsruhe", new LatLon(49.00705, 8.40287),
@@ -323,37 +355,6 @@ public class AngebotErstellen extends HorizontalLayout implements View, Receiver
 				
 			}
         });
-		
-		Label adress = new Label("Adresse");
-		adress.addStyleName("AbschnittLabel");
-		final TextField street = new TextField("Straﬂe, Hausnummer:");
-		street.setRequired(true);
-		street.setRequiredError("Bitte geben Sie Straﬂe und Hausnummer an.");
-		street.addStyleName("AngeboteTextField");
-		HorizontalLayout hl0 = new HorizontalLayout();
-		hl0.setWidth("50%");
-		final TextField zip = new TextField("PLZ:");
-		zip.setRequired(true);
-		zip.setRequiredError("Bitte geben Sie die Postleitzahl an.");
-		zip.setWidth("50%");
-		zip.addStyleName("AngeboteTextField");
-		final TextField city = new TextField("Ort:");
-		city.setRequired(true);
-		city.setRequiredError("Bitte geben Sie den Ort an.");
-		city.addStyleName("AngeboteTextField");
-		city.setWidth("50%");
-		hl0.addComponent(zip);
-		hl0.addComponent(city);
-		
-		content.addComponent(ltitel);
-		content.addComponent(titel);
-		content.addComponent(new Label());
-		content.addComponent(adress);
-		//content.addComponent(new Label());
-		content.addComponent(street);
-		content.addComponent(hl0);
-		content.addComponent(new Label());
-
 		// Allgemeine Informationen
 		HorizontalLayout label = new HorizontalLayout();
 		label.setWidth("100%");
@@ -728,6 +729,9 @@ public class AngebotErstellen extends HorizontalLayout implements View, Receiver
 		titel.setRequiredError("Bitte geben Sie einen Titel an.");
 		titel.setWidth("80%");
 		
+	
+
+		
 		Label adress = new Label("Adresse");
 		adress.addStyleName("AbschnittLabel");
 		final TextField street = new TextField("Straﬂe, Hausnummer");
@@ -760,6 +764,78 @@ public class AngebotErstellen extends HorizontalLayout implements View, Receiver
 		content.addComponent(street);
 		content.addComponent(hl0);
 		content.addComponent(new Label());
+		
+		
+		if(offer.getLatitude()!=null && offer.getLatitude()!=BigDecimal.valueOf(0.0)){
+
+		    /** The kakola marker. */
+		    GoogleMapMarker kakolaMarker = new GoogleMapMarker(
+		            "Hier befindet sich die Wohnung", new LatLon(offer.getLatitude().doubleValue(), offer.getLongitude().doubleValue()),
+		            false, null);
+		    
+
+	        
+	        GoogleMap googleMap = new GoogleMap(null, null, null);
+	        googleMap.setCenter(new LatLon(offer.getLatitude().doubleValue(), offer.getLongitude().doubleValue()));
+	        googleMap.setZoom(10);
+	        googleMap.setSizeFull();
+
+	        kakolaMarker.setAnimationEnabled(false);
+	        googleMap.addMarker(kakolaMarker);
+	        
+	        googleMap.setMinZoom(4);
+	        googleMap.setMaxZoom(16);
+	        googleMap.setHeight("500px");
+	        googleMap.setWidth("500px");
+	        content.addComponent(googleMap);
+	        
+	        googleMap.addMarkerDragListener(new MarkerDragListener() {
+				@Override
+				public void markerDragged(GoogleMapMarker draggedMarker,
+						LatLon oldPosition) {
+					lat = draggedMarker.getPosition().getLat();
+					lon = draggedMarker.getPosition().getLon();
+					// TODO Auto-generated method stub
+					System.out.println(draggedMarker.getPosition().getLat()+"---"+draggedMarker.getPosition().getLon());
+					
+				}
+	        });
+
+		}else{
+			 /** The kakola marker. */
+		    GoogleMapMarker kakolaMarker = new GoogleMapMarker(
+		            "Standort ‰ndern", new LatLon(49.00705, 8.40287),
+		            true, null);
+		    
+
+	        
+	        GoogleMap googleMap = new GoogleMap(null, null, null);
+	        googleMap.setCenter(new LatLon(49.00705, 8.40287));
+	        googleMap.setZoom(10);
+	        googleMap.setSizeFull();
+
+	        kakolaMarker.setAnimationEnabled(false);
+	        googleMap.addMarker(kakolaMarker);
+	        
+	        googleMap.setMinZoom(4);
+	        googleMap.setMaxZoom(16);
+	        googleMap.setHeight("500px");
+	        googleMap.setWidth("500px");
+	        content.addComponent(googleMap);
+	        
+	        googleMap.addMarkerDragListener(new MarkerDragListener() {
+				@Override
+				public void markerDragged(GoogleMapMarker draggedMarker,
+						LatLon oldPosition) {
+					lat = draggedMarker.getPosition().getLat();
+					lon = draggedMarker.getPosition().getLon();
+					// TODO Auto-generated method stub
+					System.out.println(draggedMarker.getPosition().getLat()+"---"+draggedMarker.getPosition().getLon());
+					
+				}
+	        });
+		}
+        
 
 		// Allgemeine Informationen
 		HorizontalLayout label = new HorizontalLayout();
@@ -1074,6 +1150,11 @@ public class AngebotErstellen extends HorizontalLayout implements View, Receiver
 					currentOffer.setGender(gender);
 					currentOffer.setText(text.getValue());
 					currentOffer.setInactive(inactive.getValue());
+
+					currentOffer.setLatitude(BigDecimal.valueOf(lat));
+					currentOffer.setLongitude(BigDecimal.valueOf(lon));
+				
+
 					
 					Offer o = new OfferProvider().find(currentOffer.getIdOffer());
 					
