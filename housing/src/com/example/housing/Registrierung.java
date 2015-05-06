@@ -16,6 +16,7 @@ import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.server.Page;
+import com.vaadin.server.Scrollable;
 import com.vaadin.server.UserError;
 import com.vaadin.server.VaadinSession;
 import com.vaadin.ui.Button;
@@ -102,7 +103,7 @@ public class Registrierung extends HorizontalLayout implements View{
 	 * Instantiates a new Registrierung.
 	 */
 	public Registrierung(){
-this.setWidth("100%");
+		this.setWidth("100%");
 		
 		//linkes rotes Panel
 		Panel p = new Panel();
@@ -114,6 +115,7 @@ this.setWidth("100%");
 		
 		//mittlerer Teil der Seite
 		VerticalLayout v = new VerticalLayout();
+	
 				
 			//Navigation hinzufuegen
 			Navigation nav = new Navigation();
@@ -150,6 +152,7 @@ this.setWidth("100%");
 			content.setWidth("100%");
 			setContent();//Methode zum befuellen des Inhalts aufrufen
 			v.addComponent(content);
+		
 			
 			//Footer hinzufuegen
 			Footer f = new Footer();
@@ -289,9 +292,11 @@ this.setWidth("100%");
 		handy.setInputPrompt("01234/567890123");
 		content.addComponent(handy);
 		
+		content.addComponent(new Label());
+		
 		// dhstud
 		dhstud = new CheckBox();
-		dhstud.setCaption("Ich bin Dualer Student an der DH Karlsruhe.");
+		dhstud.setCaption("Ich bin Dualer Student an der DHBW Karlsruhe.");
 		dhstud.setImmediate(false);
 		dhstud.setDescription("Als Dualer Student können Sie mehr Funktionen nutzen. Moodle Anmeldedaten zur Validierung erforderlich");
 		dhstud.setWidth("-1px");
@@ -343,6 +348,8 @@ this.setWidth("100%");
 		passwordmoodle.setIcon(FontAwesome.KEY);
 		content.addComponent(passwordmoodle);
 		
+		content.addComponent(new Label());
+		
 		// agbs
 		agbs = new CheckBox();
 		agbs.setCaption("Ich akzeptiere die ");
@@ -362,6 +369,8 @@ this.setWidth("100%");
 		link_1.setIcon(FontAwesome.EXTERNAL_LINK);
 		content.addComponent(link_1);
 		
+		content.addComponent(new Label());
+		
 		// button
 		button = new Button();
 		button.setStyleName("speichern");
@@ -375,18 +384,6 @@ this.setWidth("100%");
 		//Abschließen der Registrierung
 		button.addClickListener(new Button.ClickListener() {
 			public void buttonClick(ClickEvent event) {
-				
-				/*User u = new User();
-				u.setFirstname("Max");
-				u.setLastname("Mustermann");
-				u.setAccessLevel(1);
-				u.setActivated(false);
-				u.setDhMail("max.mustermann@dh-karlsruhe.de");
-				u.setEmail("max.mustermann@web.de");
-				u.setPassword("12345");
-				u.setMobile("123456789");
-			
-				new UserProvider().addUser(u);*/
 				
 				//Validierung der Felder
 				boolean validate = validate();
@@ -533,6 +530,8 @@ this.setWidth("100%");
 		//E-Mail senden
 		SendEMail.send(email_1.getValue(), "wohnungsboerse_dh@web.de", "Danke für Ihre Registrierung", body);
 	}
+
+
 
 }
 

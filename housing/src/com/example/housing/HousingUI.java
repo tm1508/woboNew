@@ -13,6 +13,9 @@ import com.vaadin.annotations.VaadinServletConfiguration;
 import com.vaadin.navigator.Navigator;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
+import com.vaadin.server.BootstrapFragmentResponse;
+import com.vaadin.server.BootstrapListener;
+import com.vaadin.server.BootstrapPageResponse;
 import com.vaadin.server.CustomizedSystemMessages;
 import com.vaadin.server.DefaultErrorHandler;
 import com.vaadin.server.ServiceException;
@@ -35,7 +38,7 @@ import com.vaadin.ui.VerticalLayout;
  */
 
 @Theme("housing")
-@PreserveOnRefresh 
+@PreserveOnRefresh
 public class HousingUI extends UI {
 
 	/** The navigator. */
@@ -88,6 +91,7 @@ public class HousingUI extends UI {
 			event.getSession().setAttribute("activated", "");//speichern des Requestparameters für die Aktivierung
 			event.getSession().setAttribute(User.class, null);//evtl. speichern des eingeloggten Users	
 			event.getSession().setAttribute("buttonClicked", false);
+			
 		}
 		
 		/* (non-Javadoc)
@@ -136,10 +140,9 @@ public class HousingUI extends UI {
 		navigator = new Navigator(this, this);
 		String name = "Startseite";
 		navigator.addView(name, new Startseite());
-		//navigator.addView(name, new UploadTest());
 		navigator.navigateTo(name);
 		
-		navigator.setErrorView(new ErrorPage());//Navigation zur Fehlerseite
+		//navigator.setErrorView(new ErrorPage(null));//Navigation zur Fehlerseite
 		navigator.addViewChangeListener(new ViewChangeListener() {
 			
 			@Override
@@ -180,7 +183,7 @@ public class HousingUI extends UI {
 		    @Override
 		    public void error(com.vaadin.server.ErrorEvent event) {
 		    	//Navigation zur Fehlerseite
-				navigator.addView("Error", new ErrorPage());
+				navigator.addView("Error", new ErrorPage(event));
 				navigator.navigateTo("Error");
 				
 				//TODO auskommentieren, damit der User die Fehlermeldungen nicht bekommt

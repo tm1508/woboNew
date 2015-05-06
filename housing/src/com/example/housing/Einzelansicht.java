@@ -3,6 +3,7 @@ package com.example.housing;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.InputStream;
+import java.math.BigDecimal;
 import java.sql.Date;
 import java.util.List;
 
@@ -25,6 +26,10 @@ import com.vaadin.server.Resource;
 import com.vaadin.server.StreamResource;
 import com.vaadin.server.VaadinService;
 import com.vaadin.server.VaadinSession;
+import com.vaadin.tapio.googlemaps.GoogleMap;
+import com.vaadin.tapio.googlemaps.client.LatLon;
+import com.vaadin.tapio.googlemaps.client.events.MarkerDragListener;
+import com.vaadin.tapio.googlemaps.client.overlays.GoogleMapMarker;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.DateField;
@@ -48,6 +53,8 @@ public class Einzelansicht extends HorizontalLayout implements View {
 	
 	/** The content. */
 	VerticalLayout content;
+	 static Double lat = 0.0;
+     static Double lon = 0.0;
 	
 	/** The angebot. */
 	Offer angebot;
@@ -181,6 +188,24 @@ public class Einzelansicht extends HorizontalLayout implements View {
 			 
 		 }
 		
+	    //Plus-Button
+        Button map = new Button("Karte anzeigen");
+        map.setIcon(FontAwesome.MAP_MARKER);
+        map.addStyleName("AnfrageButton");
+        map.addClickListener(new Button.ClickListener() {
+			public void buttonClick(ClickEvent event) {
+				MapWindow w = new MapWindow(angebot);
+				UI.getCurrent().addWindow(w);
+			}
+        });
+        content.addComponent(map);
+        
+		if(angebot.getLatitude()!=null && angebot.getLatitude()!=BigDecimal.valueOf(0.0)){
+
+		}else{
+			map.setEnabled(false);
+		}
+		
 		//pictures
 		GridLayout gridPictures = new GridLayout(8, 8);
 		gridPictures.setMargin(false);
@@ -277,7 +302,7 @@ public class Einzelansicht extends HorizontalLayout implements View {
         });
         content.addComponent(plus);
         
-		final GridLayout gridInfos = new GridLayout(2,16); 
+		final GridLayout gridInfos = new GridLayout(2,17); 
 	//	gridInfos.setWidth("60%");
 		content.addComponent(gridInfos);
 		
@@ -299,14 +324,14 @@ public class Einzelansicht extends HorizontalLayout implements View {
 	    
 	    //Size
 		float sm = angebot.getSquareMetre();
-		String sSm = new Format().stringFormat(sm);
+		String sSm = Format.stringFormat(sm);
 		
         gridInfos.addComponent(new Label("Größe:"),0,2);
         gridInfos.addComponent(new Label(sSm + " m²"),1 , 2);
         
         //Price
     	float price =  angebot.getPrice();
-		String sPrice = new Format().stringEuro(price);
+		String sPrice = Format.euroFormat(price);
 		
         gridInfos.addComponent(new Label("Warmmiete:"),0,3);
         gridInfos.addComponent(new Label(sPrice + " €"),1 , 3);
@@ -367,13 +392,13 @@ public class Einzelansicht extends HorizontalLayout implements View {
         //male / female   
         Label maleFemale = new Label(""); 
         int g = angebot.getGender();
-        if( g==1){
+        if(g == 1){
     	   maleFemale.setValue("egal");
         }
         else if (g == 2){
     	   maleFemale.setValue("männlich");
         }
-        else if ( g == 3)
+        else if (g == 3)
         	maleFemale.setValue("weiblich");
         gridInfos.addComponent(new Label("Bevorzugtes Geschlecht:"), 0, 11);
         gridInfos.addComponent(maleFemale, 1,11);
@@ -381,7 +406,7 @@ public class Einzelansicht extends HorizontalLayout implements View {
         
         //bond
         float bond =  angebot.getBond();
-		String sBond = new Format().stringEuro(bond) + " €";
+		String sBond = Format.euroFormat(bond) + " €";
 		
         Label lBond = new Label("Kaution:");
         gridInfos.addComponent(lBond,0,12);
@@ -576,23 +601,43 @@ public class Einzelansicht extends HorizontalLayout implements View {
         
           
 
-        if(VaadinSession.getCurrent().getAttribute("login").equals(true)&& VaadinSession.getCurrent().getAttribute(User.class).getAccessLevel()!=2){
+        if(VaadinSession.getCurrent().getAttribute("login").equals(true)&& VaadinSession.getCurrent().getAttribute(User.class).getAccessLevel()!=2) {
+        	
         	User u = VaadinSession.getCurrent().getAttribute(User.class);
-            List<Request> r;
-            r= u.getRequests(); 
+            List<Request> requests;
+            requests = u.getRequests(); 
 
-        	  boolean b= false;
-        	  int in=0;
+        	  boolean b = false;
+        	  int in = 0;
               
-              for(int i = 0; i<r.size();i++){
-            	  if(r.get(i).getRequest_idOffer().getIdOffer()==angebot.getIdOffer()){
+              for(int i = 0; i<requests.size();i++) {
+            	  
+            	  if(requests.get(i).getRequest_idOffer().getIdOffer()==angebot.getIdOffer()) {
+            		  
             		  b = true;
             		  in = i;
+            		  
             	  }
               }
-              if(b){
-            	Label l = new Label("Sie haben den Anbieter bereits kontaktiert mit dem folgenden Text: " +r.get(in).getMessage());
-                gridInfos.addComponent(l,0,15);
+              
+              if(b) {
+            	  
+            	Label anfrageTitel = new Label("Gesendete Anfrage");
+            	anfrageTitel.setStyleName("ImportantTitle");
+                gridInfos.addComponent(anfrageTitel,0,15);
+                
+                Label anfrageText = new Label("Sie haben folgenden Text an den Anbieter geschickt:");
+                gridInfos.addComponent(anfrageText,0,16);
+                
+                TextArea anfrageMessage = new TextArea();
+                String message = requests.get(in).getMessage();
+               
+                anfrageMessage.setValue(message);
+                anfrageMessage.setEnabled(false);
+                anfrageMessage.setWidth("338px");
+                
+                gridInfos.addComponent(anfrageMessage,1,16);
+                
               }
 
         }

@@ -142,18 +142,21 @@ public class AngeboteVerwalten extends HorizontalLayout implements View {
 		title.setImmediate(false);
 		title.setWidth("-1px");
 		title.setHeight("-1px");
-		title.setValue("Meine Angebote");
+		title.setValue("Meine Wohnungsangebote");
 		title.addStyleName("title");
 		content.addComponent(title);
 
 		// Anzahl der gefundenen Ergebnisse
 		int anzahl = angebote.size();
-		content.addComponent(new Label("Sie haben " + anzahl + " Angebote"));
-		System.out.println(anzahl);
+		Label eigeneAngeboteString = new Label("Sie haben folgende " + anzahl + " Wohnungsangebote eingestellt.");
+		eigeneAngeboteString.addStyleName("AbschnittLabel");
+		content.addComponent(eigeneAngeboteString);
+		
 		for (int i = 0; i < anzahl; i++) {
+			
 			final Offer o = angebote.get(i);
-
 			content.addComponent(new Listenzeile(o));
+			
 		}
 
 	}

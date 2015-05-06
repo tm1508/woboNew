@@ -93,7 +93,6 @@ public class Navigation extends CustomComponent {
 				
 				Notification notif = new Notification("Logout erfolgreich.","Besuchen Sie uns bald wieder!", Type.HUMANIZED_MESSAGE);//Meldung an den Nutzer
 				notif.setDelayMsec(300);
-				notif.setIcon(FontAwesome.UNLOCK_ALT);
 				notif.setStyleName("success");
 				notif.show(Page.getCurrent());
 			}  
@@ -208,7 +207,7 @@ public class Navigation extends CustomComponent {
 			nav5.addItem("Meine Anfragen", FontAwesome.STAR_O, mycommand7);
 			nav5.addItem("Meine Profildaten", FontAwesome.USER, mycommand5); 
 		MenuItem nav6 = menuBar_1.addItem("Logout", FontAwesome.UNLOCK_ALT, mycommand);//Navigation
-		MenuItem nav8 = menuBar_1.addItem("Maps", FontAwesome.MAP_MARKER, mycommand8);//Navigation
+		//MenuItem nav8 = menuBar_1.addItem("Maps", FontAwesome.MAP_MARKER, mycommand8);//Navigation
 		MenuItem nav9 = menuBar_1.addItem("Hilfe", FontAwesome.QUESTION, mycommand9);//Navigation zu FAQ
 		
 		mainLayout.addComponent(menuBar_1);			

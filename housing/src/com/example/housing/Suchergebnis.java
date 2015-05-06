@@ -155,10 +155,18 @@ public class Suchergebnis extends HorizontalLayout implements View {
 		title.addStyleName("title");
 		content.addComponent(title);
 		
-		if(angebote.size()==0){
-			content.addComponent(new Label("Ihre Suche ergab keine Treffer!"));
-		}else{
-			content.addComponent(new Label("Ihre Suche ergab " + angebote.size()+" Treffer!"));
+		if(angebote.size()==0) {
+			
+			Label ergebnisString = new Label("Ihre Suche ergab leider keine Treffer.");
+			ergebnisString.addStyleName("AbschnittLabel");
+			content.addComponent(ergebnisString);
+			
+		} else {
+			
+			Label ergebnisString = new Label("Ihre Suche ergab " + angebote.size()+" Treffer:");
+			ergebnisString.addStyleName("AbschnittLabel");
+			content.addComponent(ergebnisString);
+			
 		}
 		
 		for(Offer o : angebote) {

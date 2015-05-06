@@ -21,6 +21,8 @@ import com.vaadin.ui.VerticalLayout;
 @SuppressWarnings("serial")
 public class ErrorPage extends HorizontalLayout implements View{
 	
+	private com.vaadin.server.ErrorEvent event;
+	
 	/** The content. */
 	private VerticalLayout content;//Layout fuer den Inhalt
 	
@@ -41,7 +43,10 @@ public class ErrorPage extends HorizontalLayout implements View{
 	/**
 	 * Instantiates a new ErrorPage.
 	 */
-	public ErrorPage(){
+	public ErrorPage(com.vaadin.server.ErrorEvent event){
+		
+		this.event = event;
+		
 		this.setWidth("100%");
 		
 		//linkes rotes Panel
@@ -135,12 +140,12 @@ public class ErrorPage extends HorizontalLayout implements View{
 		text.setImmediate(false);
 		text.setWidth("-1px");
 		text.setHeight("500px");
-		text.setValue("Tut uns leid, das hätte nicht passieren dürfen.<br/>"
-				+"<br/><br/> Der Fehler kann folgende Ursachen haben:"
+		text.setValue("Das tut uns leid und hätte nicht passieren dürfen!<br/>"
+				+"<br/><br/> Der Fehler kann unter anderem folgende Ursachen haben:"
 				+"<br/><br/> - Sie wollten zu einer nicht verfügbaren Seite navigieren. Beispielsweise können Sie die Profilseite nur aufrufen, wenn Sie eingeloggt sind."
-				+"<br/><br/> - Das hochladen eines Bildes hat den Fehler verursacht.  Bitte versuchen Sie es später erneut."
-				+"<br/><br/> - Es gab einen Serverfehler. Wenn der Fehler öfters auftritt wenden Sie sich bitte an den Administrator.");
-		
+				+"<br/><br/> - Das Hochladen eines Bildes hat den Fehler verursacht.  Bitte versuchen Sie es später erneut."
+				+"<br/><br/> - Es gab einen Serverfehler. Sollte der Fehler häufiger auftreten, wenden Sie sich bitte an den Administrator.");
+		text.setValue(event.toString());
 		text.setContentMode(ContentMode.HTML);
 		content.addComponent(text);
 	}

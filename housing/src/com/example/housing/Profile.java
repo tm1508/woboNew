@@ -466,16 +466,15 @@ public class Profile extends HorizontalLayout implements View {
 					u.setEmail(email_1.getValue());
 					u.setPassword(password_1.getValue());
 					u.setMobile(handy.getValue());
-					if (dhstud.getValue()) {
+					if (DHStudValidator.validate(moodlename.getValue(), passwordmoodle.getValue())) {
 						u.setAccessLevel(1);
+						//TODO Fehlermeldung ausgeben, falls false!!!
 					}
 					if (!prüf.getEmail().equals(u.getEmail())) {
 
 						if (new UserProvider().userExists(email_1.getValue())) {
 
-							System.out.println("-----------------------------------------------------------------ok1");
 							if (!new UserProvider().userExists(email_1.getValue())) {
-								System.out.println("------------------------------------------------------------ok2");
 								// Werte in der DB speichern
 								new UserProvider().alterUser(u);
 								// neues User-Objekt in der Session speichern
@@ -483,8 +482,7 @@ public class Profile extends HorizontalLayout implements View {
 
 							} else {
 
-								Notification not = new Notification(
-										"Ein Nutzer mit dieser E-Mail-Adresse existiert bereits.", Type.HUMANIZED_MESSAGE);
+								Notification not = new Notification("Ein Nutzer mit dieser E-Mail-Adresse existiert bereits.", Type.HUMANIZED_MESSAGE);
 								not.setDelayMsec(300);
 								not.setStyleName("failure");
 								not.show(Page.getCurrent());
@@ -503,7 +501,6 @@ public class Profile extends HorizontalLayout implements View {
 							Notification not = new Notification("Ihre Änderungen wurden erfolgreich gespeichert.", Type.HUMANIZED_MESSAGE);
 							not.setDelayMsec(300);
 							not.setStyleName("success");
-							not.setIcon(FontAwesome.CHECK_SQUARE_O);
 							not.show(Page.getCurrent());
 
 						}
@@ -520,7 +517,6 @@ public class Profile extends HorizontalLayout implements View {
 						Notification not = new Notification("Ihre Änderungen wurden erfolgreich gespeichert.", Type.HUMANIZED_MESSAGE);
 						not.setDelayMsec(300);
 						not.setStyleName("success");
-						not.setIcon(FontAwesome.CHECK_SQUARE_O);
 						not.show(Page.getCurrent());
 					}
 

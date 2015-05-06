@@ -78,9 +78,12 @@ public class Listenzeile extends CustomComponent {
 				}
 			}, "Bild_1");
 			
+						
 			Image image = new Image(null, resource);
 			image.setHeight("100%"); //100% der Listenzeilen-Höhe
 			image.setWidth("30%");
+			image.markAsDirty();
+		
 			ergebnisLayout.addComponent(image, 0, 0, 2, 2);
 			/*Float dynamicWidthImageCalc = (float) (image.getHeight() * 1.45);
 			System.out.println(Math.round(dynamicWidthImageCalc));
@@ -123,12 +126,12 @@ public class Listenzeile extends CustomComponent {
 		l.setHeight("20%");
 		ergebnisLayout.addComponent(l, 3, 0, 5, 0);
 
-		Label l2 = new Label("Warmmiete: " + new Format().stringEuro( o.getPrice()) + " €");
+		Label l2 = new Label("Warmmiete: " + Format.euroFormat(o.getPrice()) + " €");
 		l2.setWidth("110px");
 		ergebnisLayout.addComponent(l2, 3, 1);
 
 		float sm = o.getSquareMetre();
-		String sSm = "Größe: " + new Format().stringFormat(sm) + " m²";
+		String sSm = "Größe: " + Format.stringFormat(sm) + " m²";
 		Label lsm = new Label(sSm);
 		lsm.setWidth("110px");
 		ergebnisLayout.addComponent(lsm, 4, 1);
@@ -150,12 +153,12 @@ public class Listenzeile extends CustomComponent {
 
 	
 		Date start = (Date) o.getStartDate();
-		String dateS = new Format().dateFormat(start);
+		String dateS = Format.dateFormat(start);
 		ergebnisLayout.addComponent(new Label("Startdatum: " +  dateS ), 3, 2);
 
 		try {
 			Date end = (Date) o.getEndDate();
-			String dateSs = new Format().dateFormat(end);
+			String dateSs = Format.dateFormat(end);
 			ergebnisLayout.addComponent(new Label("Enddatum: " + dateSs), 5, 2);
 		} catch (Exception e) {//tut nichts, da Enddatum keine Muss-Angabe ist
 		}

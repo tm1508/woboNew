@@ -132,23 +132,27 @@ public class AnfragenVerwalten extends HorizontalLayout implements View{
 		title.setImmediate(false);
 		title.setWidth("-1px");
 		title.setHeight("-1px");
-		title.setValue("Meine Anfragen");
+		title.setValue("Meine gesendeten Anfragen");
 		title.addStyleName("title");
 		content.addComponent(title);
 		
-		RequestProvider rp = new RequestProvider();
+		RequestProvider requestProv = new RequestProvider();
 		List<Request> reqs;
 		
-		reqs = rp.findReq(VaadinSession.getCurrent().getAttribute(User.class));
+		reqs = requestProv.findReq(VaadinSession.getCurrent().getAttribute(User.class));
 		
 		int anzahl = reqs.size();
-		System.out.println(anzahl);
-		 for(int i = 0; i<anzahl;i++){
+		
+		Label anfragenString = new Label("Sie haben zu folgenden " + anzahl + " Wohnungen bereits eine Anfrage gesendet.");
+		anfragenString.addStyleName("AbschnittLabel");
+		content.addComponent(anfragenString);
+		
+		for(int i = 0; i<anzahl; i++) {
 			
 			 Offer o = reqs.get(i).getRequest_idOffer();
 			 content.addComponent(new Listenzeile(o));
-		} 
-			
+			 
+		}	
 		
 	}
 

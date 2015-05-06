@@ -29,13 +29,13 @@ public class Format {
 	 * @param d the d
 	 * @return the string
 	 */
-	public String dateFormat(Date d) {
+	public static String dateFormat(Date d) {
 		SimpleDateFormat sd = new SimpleDateFormat("dd.MM.yyyy");
 		String dateS = sd.format(d);
 		return dateS;
 	}
 
-	public String stringFormat (float f) {
+	public static String stringFormat (float f) {
 		String s = String.valueOf(f);
 		char oldChar = '.';
         char newChar = ',';
@@ -49,21 +49,17 @@ public class Format {
 	 * @param s the s
 	 * @return the float
 	 */
-	public float floatFormat(String s) {
+	public static float floatFormat(String s) throws NumberFormatException {
+		
 		if (!s.isEmpty()) {
-			try{float f = Float.parseFloat(s.replace(",", "."));
-			return f;}
-			catch(NumberFormatException nfe){
-				//TODO
-				Notification not = new Notification("Bitte überprüfen Sie Ihre Eingaben.");
-				not.setDelayMsec(300);
-				not.setStyleName("warning");
-				not.setIcon(FontAwesome.EXCLAMATION_TRIANGLE);
-				not.show(Page.getCurrent()); 
-				return (float) 0.0;
-			}
+			
+			float f = Float.parseFloat(s.replace(",", "."));
+			return f;
+			
 		} else {
+			
 			return (float) 0.0;
+			
 		}
 	}
 
@@ -73,7 +69,7 @@ public class Format {
 	 * @param f the f
 	 * @return the string
 	 */
-	public String stringEuro(float f) {
+	public static String euroFormat(float f) {
 		String s = String.valueOf(f);
 		String[] a = s.split(Pattern.quote("."));
 		if (a[1].length() == 1){

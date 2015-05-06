@@ -136,14 +136,17 @@ public class Favoriten extends HorizontalLayout implements View{
 		title.setImmediate(false);
 		title.setWidth("-1px");
 		title.setHeight("-1px");
-		title.setValue("Meine Favoriten");
+		title.setValue("Meine gespeicherten Favoriten");
 		title.addStyleName("title");
 		content.addComponent(title);
 				
 		FavoritProvider fp = new FavoritProvider();
 		List<Favorit> favs = fp.findFav(VaadinSession.getCurrent().getAttribute(User.class));
 		int anzahl = favs.size();
-		content.addComponent(new Label("Sie haben " + anzahl + " Favoriten"));
+		
+		Label favoritenString = new Label("Sie haben " + anzahl + " Wohnungsangebote in Ihrer Favoriten-Liste gespeichert.");
+		favoritenString.addStyleName("AbschnittLabel");
+		content.addComponent(favoritenString);
 		
 		
 
