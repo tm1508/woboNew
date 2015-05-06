@@ -1,5 +1,6 @@
 package com.example.housing.data.model;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
@@ -12,7 +13,7 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name="Offer")
-public class Offer {
+public class Offer implements Serializable{
 	
 	/** The id offer. */
 	@Id

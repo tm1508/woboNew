@@ -1,5 +1,6 @@
 package com.example.housing.data.model;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.*;
@@ -10,7 +11,7 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name="User")
-public class User {
+public class User implements Serializable{
 	
 	/** The id user. */
 	@Id

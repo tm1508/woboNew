@@ -21,6 +21,9 @@ public class SendEMail {
 	/** Properties. */
 	static Properties properties = new Properties();
 	
+	public static void main(String args[]){
+		send("julia.agricola@web.de", "test@web.de", "test", "<span>äöüß&%$§</span>");
+	}
 	
 	/**
 	 * Sends an E-Mail.
@@ -59,7 +62,7 @@ public class SendEMail {
 			message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(to));// E-Mail-Adresse des Empfängers
 			message.setSubject(subject);// Betreff
 			message.setContent(text, "text/html");// Text der E-Mail (mit html Code für den Style)
-			
+			//message.setAllow8bitMIME(true);
 			// E-Mail senden
 			Transport.send(message);
 

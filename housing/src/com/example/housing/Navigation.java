@@ -91,6 +91,9 @@ public class Navigation extends CustomComponent {
 				getUI().getNavigator().addView(name, new Startseite());
 				getUI().getNavigator().navigateTo(name);
 				
+				//TODO
+				System.out.println("Session ID" + VaadinSession.getCurrent().getSession().getId());
+				
 				Notification notif = new Notification("Logout erfolgreich.","Besuchen Sie uns bald wieder!", Type.HUMANIZED_MESSAGE);//Meldung an den Nutzer
 				notif.setDelayMsec(300);
 				notif.setStyleName("success");
@@ -103,6 +106,9 @@ public class Navigation extends CustomComponent {
 				String name = "Startseite";
 				getUI().getNavigator().addView(name, new Startseite());
 				getUI().getNavigator().navigateTo(name);
+				//TODO
+				System.out.println("Session ID" + VaadinSession.getCurrent().getSession().getId());
+				
 				
 			}  
 		};
@@ -115,6 +121,10 @@ public class Navigation extends CustomComponent {
 				getUI().getNavigator().addView(name, new Suche());
 				getUI().getNavigator().navigateTo(name);
 				
+				//TODO
+				System.out.println("Session ID" + VaadinSession.getCurrent().getSession().getId());
+				
+				
 			}  
 		};
 		
@@ -123,6 +133,10 @@ public class Navigation extends CustomComponent {
 				String name = "AngebotErstellen";
 				getUI().getNavigator().addView(name, new AngebotErstellen());
 				getUI().getNavigator().navigateTo(name);
+				
+				//TODO
+				System.out.println("Session ID" + VaadinSession.getCurrent().getSession().getId());
+				
 				
 			}  
 		};
@@ -135,6 +149,10 @@ public class Navigation extends CustomComponent {
 				getUI().getNavigator().addView(name, new AngeboteVerwalten());
 				getUI().getNavigator().navigateTo(name);
 				
+				//TODO
+				System.out.println("Session ID" + VaadinSession.getCurrent().getSession().getId());
+				
+				
 			}  
 		};
 		
@@ -143,6 +161,10 @@ public class Navigation extends CustomComponent {
 				String name = "Profile";
 				getUI().getNavigator().addView(name, new Profile());
 				getUI().getNavigator().navigateTo(name);
+				
+				//TODO
+				System.out.println("Session ID" + VaadinSession.getCurrent().getSession().getId());
+				
 				
 			}  
 		};
@@ -153,6 +175,10 @@ public class Navigation extends CustomComponent {
 				getUI().getNavigator().addView(name, new Favoriten());
 				getUI().getNavigator().navigateTo(name);
 				
+				//TODO
+				System.out.println("Session ID" + VaadinSession.getCurrent().getSession().getId());
+				
+				
 			}  
 		};
 		
@@ -161,6 +187,9 @@ public class Navigation extends CustomComponent {
 				String name = "AnfragenVerwalten";
 				getUI().getNavigator().addView(name, new AnfragenVerwalten());
 				getUI().getNavigator().navigateTo(name);
+				
+				//TODO
+				System.out.println("Session ID" + VaadinSession.getCurrent().getSession().getId());
 				
 			}  
 		};
@@ -171,6 +200,10 @@ public class Navigation extends CustomComponent {
 				getUI().getNavigator().addView(name, new Maps());
 				getUI().getNavigator().navigateTo(name);
 				
+				//TODO
+				System.out.println("Session ID" + VaadinSession.getCurrent().getSession().getId());
+				
+				
 			}  
 		};
 			
@@ -179,6 +212,10 @@ public class Navigation extends CustomComponent {
 				String name = "FAQ";
 				getUI().getNavigator().addView(name, new FAQ());
 				getUI().getNavigator().navigateTo(name);
+				
+				
+				//TODO
+				System.out.println("Session ID" + VaadinSession.getCurrent().getSession().getId());
 				
 			}  
 		};
@@ -191,6 +228,10 @@ public class Navigation extends CustomComponent {
 				String name = "Angebotsliste";
 				getUI().getNavigator().addView(name, new Suchergebnis(allOffers));
 				getUI().getNavigator().navigateTo(name);
+				
+				//TODO
+				System.out.println("Session ID" + VaadinSession.getCurrent().getSession().getId());
+				
 			}
 		};
 					
