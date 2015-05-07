@@ -10,7 +10,7 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name="Photo")
-public class Photo {
+public class Photo implements Serializable {
 
 	/** The id photo. */
 	@Id

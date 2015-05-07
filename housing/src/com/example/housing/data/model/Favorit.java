@@ -10,8 +10,8 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name="Favorit")
-public class Favorit {
-	
+public class Favorit implements Serializable {
+
 	/** The id favorit. */
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
