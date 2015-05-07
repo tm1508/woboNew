@@ -70,19 +70,21 @@ public class Listenzeile extends CustomComponent {
 		// falls Bilder zu der Wohnung vorhanden sind
 		if (pictures.size() > 0) {
 			
-			Resource resource = new StreamResource(new StreamResource.StreamSource() {
+			StreamResource resource = new StreamResource(new StreamResource.StreamSource() {
 				@Override
 				public InputStream getStream(){
 					InputStream bais = new ByteArrayInputStream(pictures.get(0).getPicture());
 					return bais;
 				}
+												
 			}, "Bild_1");
-			
+			resource.setCacheTime(0);
 						
 			Image image = new Image(null, resource);
 			image.setHeight("100%"); //100% der Listenzeilen-Höhe
 			image.setWidth("30%");
 			image.markAsDirty();
+	
 		
 			ergebnisLayout.addComponent(image, 0, 0, 2, 2);
 			/*Float dynamicWidthImageCalc = (float) (image.getHeight() * 1.45);

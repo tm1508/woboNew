@@ -1,5 +1,7 @@
 package com.example.housing.data.model;
 
+import java.io.Serializable;
+
 import javax.persistence.*;
 
 // TODO: Auto-generated Javadoc
@@ -8,7 +10,7 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name="Photo")
-public class Photo {
+public class Photo implements Serializable{
 	
 	/** The id photo. */
 	@Id

@@ -91,6 +91,7 @@ public class HousingUI extends UI {
 			event.getSession().setAttribute("activated", "");//speichern des Requestparameters für die Aktivierung
 			event.getSession().setAttribute(User.class, null);//evtl. speichern des eingeloggten Users	
 			event.getSession().setAttribute("buttonClicked", false);
+			System.out.println("Session ID" + VaadinSession.getCurrent().getSession().getId());
 			
 		}
 		
