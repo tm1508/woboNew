@@ -10,8 +10,8 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name="Photo")
-public class Photo implements Serializable{
-	
+public class Photo {
+
 	/** The id photo. */
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)

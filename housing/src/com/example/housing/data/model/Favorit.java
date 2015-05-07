@@ -10,7 +10,7 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name="Favorit")
-public class Favorit implements Serializable{
+public class Favorit {
 	
 	/** The id favorit. */
 	@Id

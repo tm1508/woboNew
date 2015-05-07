@@ -13,7 +13,7 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name="Offer")
-public class Offer implements Serializable{
+public class Offer {
 	
 	/** The id offer. */
 	@Id
