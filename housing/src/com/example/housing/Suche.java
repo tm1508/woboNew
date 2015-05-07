@@ -20,6 +20,7 @@ import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.GridLayout;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
+import com.vaadin.ui.NativeSelect;
 import com.vaadin.ui.Panel;
 import com.vaadin.ui.PopupDateField;
 import com.vaadin.ui.TextField;
@@ -31,17 +32,14 @@ import java.util.List;
  * The Class Suche.
  */
 public class Suche extends HorizontalLayout implements View {
-
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 
 	/** The content. */
 	VerticalLayout content;
 
-	private Double lat = 0.0;
-	private Double lon = 0.0;
+	private Double lat = 49.00705;
+	private Double lon = 8.40287;
+	private Double umkreis = 5.00;
 
 	/*
 	 * (non-Javadoc)
@@ -216,7 +214,7 @@ public class Suche extends HorizontalLayout implements View {
 		suchButton.addStyleName("SuchButton");
 		tabelleInnen.addComponent(suchButton, 0, 6);
 
-		//Marker
+		// Marker
 		GoogleMapMarker kakolaMarker = new GoogleMapMarker("Karlsruhe",
 				new LatLon(49.00705, 8.40287), true, null);
 
@@ -232,11 +230,10 @@ public class Suche extends HorizontalLayout implements View {
 		googleMap.setHeight("500px");
 		googleMap.setWidth("500px");
 		googleMap.setVisible(false);
-		
-		//Listener für Marker
+
+		// Listener für Marker
 		googleMap.addMarkerDragListener(new MarkerDragListener() {
 			private static final long serialVersionUID = 1L;
-
 			@Override
 			public void markerDragged(GoogleMapMarker draggedMarker,
 					LatLon oldPosition) {
@@ -245,9 +242,35 @@ public class Suche extends HorizontalLayout implements View {
 			}
 		});
 
-		//Checkbox: Mit Karte Suchen
-		final CheckBox mitKarteSuchen = new CheckBox("Statdessen auf der Karte Suchen",
-				false);
+		// Checkbox: Mit Karte Suchen
+		final CheckBox mitKarteSuchen = new CheckBox(
+				"Statdessen auf der Karte suchen", false);
+		
+		//Umkreis
+		final NativeSelect selectUmkreis = new NativeSelect("Umkreis in km");
+		selectUmkreis.addItem(5.00);
+		selectUmkreis.setItemCaption(5.00, "5 km");
+		selectUmkreis.addItem(10.00);
+		selectUmkreis.setItemCaption(10.00, "10 km");
+		selectUmkreis.addItem(20.00);
+		selectUmkreis.setItemCaption(20.00, "20 km");
+		selectUmkreis.addItem(30.00);
+		selectUmkreis.setItemCaption(30.00, "30 km");
+		selectUmkreis.addItem(50.00);
+		selectUmkreis.setItemCaption(50.00, "50 km");
+		selectUmkreis.setVisible(false);
+		
+		selectUmkreis.setNullSelectionAllowed(false);
+		selectUmkreis.setValue(5.00);
+		selectUmkreis.setImmediate(true);
+		selectUmkreis.addValueChangeListener(new ValueChangeListener() {
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public void valueChange(final ValueChangeEvent event) {
+				umkreis = (Double) event.getProperty().getValue();
+			}
+		});
 
 		mitKarteSuchen.addValueChangeListener(new ValueChangeListener() {
 			private static final long serialVersionUID = 1L;
@@ -255,24 +278,30 @@ public class Suche extends HorizontalLayout implements View {
 			@Override
 			public void valueChange(final ValueChangeEvent event) {
 				final boolean value = (boolean) event.getProperty().getValue();
-				if (value == true) {// Anzeigen der Moodle Felder sobald das Kontrollkästchen angekreuzt wird
+				if (value == true) {// Anzeigen der Moodle Felder sobald das
+									// Kontrollkästchen angekreuzt wird
 					stadt.setEnabled(false);
 					stadt.setValue("");
 					googleMap.setVisible(true);
-				} else {// ausblednen der Felder wenn das Kästchen nicht angekreuzt ist
+					selectUmkreis.setVisible(true);
+				} else {// ausblednen der Felder wenn das Kästchen nicht
+						// angekreuzt ist
 					stadt.setEnabled(true);
 					googleMap.setVisible(false);
+					selectUmkreis.setVisible(false);
 				}
 			}
 		});
+		
 
+		
 		VerticalLayout verticalLayoutMaps = new VerticalLayout();
 		verticalLayoutMaps.setSpacing(true);
 		verticalLayoutMaps.addComponent(mitKarteSuchen);
+		verticalLayoutMaps.addComponent(selectUmkreis);
 		verticalLayoutMaps.addComponent(googleMap);
 		tabelleAussen.addComponent(verticalLayoutMaps, 1, 0);
 
-		
 		// Suchfunktion
 		suchButton.addClickListener(new Button.ClickListener() {
 			private static final long serialVersionUID = 1L;
@@ -307,8 +336,9 @@ public class Suche extends HorizontalLayout implements View {
 						kueche.getValue(), rauchen.getValue(),
 						haustiere.getValue(), stadt.getValue());
 
+				//nur bei Suche über Karte
 				if (mitKarteSuchen.booleanValue()) {
-					ergebnisse = of.filterMaps(ergebnisse, 10.00, lat, lon);
+					ergebnisse = of.filterMaps(ergebnisse, umkreis, lat, lon);
 				}
 
 				String name = "AngebotAnzeigen";
@@ -319,7 +349,5 @@ public class Suche extends HorizontalLayout implements View {
 		});
 
 		content.addComponent(tabelleAussen);
-
 	}
-
 }
