@@ -6,11 +6,17 @@ import com.example.housing.data.model.Offer;
 import com.example.housing.data.model.User;
 import com.example.housing.data.provider.OfferProvider;
 import com.example.housing.utility.Format;
+import com.vaadin.data.Property.ValueChangeEvent;
+import com.vaadin.data.Property.ValueChangeListener;
 import com.vaadin.navigator.Navigator;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.server.VaadinSession;
+import com.vaadin.tapio.googlemaps.GoogleMap;
+import com.vaadin.tapio.googlemaps.client.LatLon;
+import com.vaadin.tapio.googlemaps.client.events.MarkerDragListener;
+import com.vaadin.tapio.googlemaps.client.overlays.GoogleMapMarker;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.CheckBox;
@@ -34,6 +40,8 @@ public class Suche extends HorizontalLayout implements View{
 	/** The content. */
 	VerticalLayout content;
 	
+	private Double lat = 0.0;
+    private Double lon = 0.0;
 	/* (non-Javadoc)
 	 * @see com.vaadin.navigator.View#enter(com.vaadin.navigator.ViewChangeListener.ViewChangeEvent)
 	 */
@@ -138,11 +146,67 @@ this.setWidth("100%");
 	//	gridSuche.setWidth("40%");
 		gridSuche.addStyleName("LayoutSuche");
 		
+		
 		//Stadt
 		gridSuche.addComponent(new Label("Ort:  "), 0 ,0);
 		final TextField stadt = new TextField();
 		gridSuche.addComponent(stadt,1 ,0);
+		
+		//Maps
 
+	    /** The kakola marker. */
+	    GoogleMapMarker kakolaMarker = new GoogleMapMarker(
+	            "Karlsruhe", new LatLon(49.00705, 8.40287),
+	            true, null);
+	    
+		final GoogleMap googleMap = new GoogleMap(null, null, null);
+        googleMap.setCenter(new LatLon(49.00705, 8.40287));
+        googleMap.setZoom(10);
+        googleMap.setSizeFull();
+        kakolaMarker.setAnimationEnabled(false);
+        googleMap.addMarker(kakolaMarker);
+       
+        googleMap.setMinZoom(4);
+        googleMap.setMaxZoom(16);
+        googleMap.setHeight("500px");
+        googleMap.setWidth("500px");
+        gridSuche.addComponent(googleMap);
+        googleMap.setVisible(false);
+        
+       
+        googleMap.addMarkerDragListener(new MarkerDragListener() {
+			@Override
+			public void markerDragged(GoogleMapMarker draggedMarker,
+					LatLon oldPosition) {
+				lat = draggedMarker.getPosition().getLat();
+				lon = draggedMarker.getPosition().getLon();
+				// TODO Auto-generated method stub
+				System.out.println(draggedMarker.getPosition().getLat()+"---"+draggedMarker.getPosition().getLon());
+				
+			}
+        });
+
+        
+		final CheckBox b= new CheckBox("Statdessen auf der Karte Suchen", false);
+		gridSuche.addComponent(b);
+		b.addValueChangeListener(new ValueChangeListener() {
+            @Override
+            public void valueChange(final ValueChangeEvent event) {
+                final boolean value = (boolean) event.getProperty().getValue();
+                
+                if(value==true){//Anzeigen der Moodle Felder sobald das Kontrollkästchen angekreuzt wird
+                	stadt.setVisible(false);
+                	stadt.setValue("");
+                	googleMap.setVisible(true);
+                	
+                }else{//ausblednen der Felder wenn das Kästchen nicht angekreuzt ist
+                  	stadt.setVisible(true);
+                	googleMap.setVisible(false);
+                }
+            }
+		});
+        
+        
 		//Grï¿½ï¿½e
 		gridSuche.addComponent(new Label("Größe (in m²):  "), 0 ,1);
 		gridSuche.addComponent(new Label("von  "), 1 ,1);
@@ -208,6 +272,7 @@ this.setWidth("100%");
 	
 
 		suchButton.addClickListener(new Button.ClickListener() {
+			@SuppressWarnings("deprecation")
 			public void buttonClick(ClickEvent event) {
 				int a = 7;
 				if(wohnung.getValue()&&zimmer.getValue()&& wg.getValue()){
@@ -239,6 +304,11 @@ this.setWidth("100%");
 						a, internet.getValue(), moebliert.getValue(), kueche.getValue(),rauchen.getValue(),
 						haustiere.getValue(),
 						stadt.getValue());
+				
+				if(b.booleanValue()){
+					ergebnisse = of.filterMaps(ergebnisse, 10.00, lat, lon);
+				}
+				
 				
 				String name = "AngebotAnzeigen";
 				getUI().getNavigator().addView(name, new Suchergebnis(ergebnisse));

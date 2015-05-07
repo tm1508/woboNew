@@ -68,8 +68,8 @@ public class AngebotErstellen extends HorizontalLayout implements View, Receiver
 	/** The content. */
 	private VerticalLayout content;
 	
-	private Double lat = 0.0;
-    private Double lon = 0.0;
+	private Double lat = 49.00705;
+    private Double lon = 8.40287;
 
 	private Offer currentOffer;
 
