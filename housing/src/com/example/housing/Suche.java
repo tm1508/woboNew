@@ -27,11 +27,15 @@ import com.vaadin.ui.VerticalLayout;
 
 import java.util.List;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class Suche.
  */
 public class Suche extends HorizontalLayout implements View {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
 	/** The content. */
 	VerticalLayout content;
@@ -142,143 +146,137 @@ public class Suche extends HorizontalLayout implements View {
 		title.addStyleName("title");
 		content.addComponent(title);
 
-		GridLayout grid1 = new GridLayout(2, 1);
-		grid1.setSpacing(true);
+		GridLayout tabelleAussen = new GridLayout(2, 1);
+		tabelleAussen.setSpacing(true);
 
-		GridLayout grid2 = new GridLayout(3, 7);
-		grid1.addComponent(grid2, 0, 0);
+		GridLayout tabelleInnen = new GridLayout(3, 7);
+		tabelleAussen.addComponent(tabelleInnen, 0, 0);
 
 		// Stadt
-		grid2.addComponent(new Label("Ort:  "), 0, 0);
+		tabelleInnen.addComponent(new Label("Ort:  "), 0, 0);
 		final TextField stadt = new TextField();
-		grid2.addComponent(stadt, 1, 0);
+		tabelleInnen.addComponent(stadt, 1, 0);
 
 		// Groesse
-		grid2.addComponent(new Label("Größe (in m²):  "), 0, 1);
+		tabelleInnen.addComponent(new Label("Größe (in m²):  "), 0, 1);
 		final TextField sucheVon = new TextField("von");
-		grid2.addComponent(sucheVon, 1, 1);
+		tabelleInnen.addComponent(sucheVon, 1, 1);
 		final TextField sucheBis = new TextField("bis");
-		grid2.addComponent(sucheBis, 2, 1);
+		tabelleInnen.addComponent(sucheBis, 2, 1);
 
 		// Preis
-		grid2.addComponent(new Label("Warmmiete (in €):  "), 0, 2);
+		tabelleInnen.addComponent(new Label("Warmmiete (in €):  "), 0, 2);
 		final TextField preisVon = new TextField("von");
-		grid2.addComponent(preisVon, 1, 2);
+		tabelleInnen.addComponent(preisVon, 1, 2);
 		final TextField preisBis = new TextField("bis");
-		grid2.addComponent(preisBis, 2, 2);
+		tabelleInnen.addComponent(preisBis, 2, 2);
 
 		// Zeitraum
-		grid2.addComponent(new Label("Verfügbarkeit:  "), 0, 3);
+		tabelleInnen.addComponent(new Label("Verfügbarkeit:  "), 0, 3);
 		final PopupDateField zeitVon = new PopupDateField("von");
-		grid2.addComponent(zeitVon, 1, 3);
+		tabelleInnen.addComponent(zeitVon, 1, 3);
 		final PopupDateField zeitBis = new PopupDateField("bis");
-		grid2.addComponent(zeitBis, 2, 3);
+		tabelleInnen.addComponent(zeitBis, 2, 3);
 
 		// Art der Unterkunft
-		grid2.addComponent(new Label("Art der Unterkunft: "), 0, 4);
+		tabelleInnen.addComponent(new Label("Art der Unterkunft: "), 0, 4);
 		final CheckBox wohnung = new CheckBox("Wohnung");
 		final CheckBox zimmer = new CheckBox("Zimmer");
 		final CheckBox wg = new CheckBox("WG-Zimmer");
-		VerticalLayout h = new VerticalLayout();
-		h.setSpacing(true);
-		h.addComponent(new Label());
-		h.addComponent(wohnung);
-		h.addComponent(zimmer);
-		h.addComponent(wg);
-		h.addComponent(new Label());
-		grid2.addComponent(h, 1, 4);
+		VerticalLayout verticalLayoutArtderUnterkunft = new VerticalLayout();
+		verticalLayoutArtderUnterkunft.setSpacing(true);
+		verticalLayoutArtderUnterkunft.addComponent(new Label());
+		verticalLayoutArtderUnterkunft.addComponent(wohnung);
+		verticalLayoutArtderUnterkunft.addComponent(zimmer);
+		verticalLayoutArtderUnterkunft.addComponent(wg);
+		verticalLayoutArtderUnterkunft.addComponent(new Label());
+		tabelleInnen.addComponent(verticalLayoutArtderUnterkunft, 1, 4);
 
 		// Sonstiges
-		grid2.addComponent(new Label("Sonstige Merkmale:"), 0, 5);
+		tabelleInnen.addComponent(new Label("Sonstige Merkmale:"), 0, 5);
 		final CheckBox haustiere = new CheckBox("Haustiere erlaubt");
 		final CheckBox rauchen = new CheckBox("Raucher-Wohnung");
 		final CheckBox moebliert = new CheckBox("Möblierte Wohnung");
 		final CheckBox kueche = new CheckBox("Küche vorhanden");
 		final CheckBox internet = new CheckBox("Internetanschluss vorhanden");
 
-		VerticalLayout h2 = new VerticalLayout();
-		h2.setSpacing(true);
-		h2.addComponent(new Label());
-		h2.addComponent(haustiere);
-		h2.addComponent(rauchen);
-		h2.addComponent(moebliert);
-		h2.addComponent(kueche);
-		h2.addComponent(internet);
-		h2.addComponent(new Label());
-		grid2.addComponent(h2, 1, 5);
+		VerticalLayout verticalLayoutSonstiges = new VerticalLayout();
+		verticalLayoutSonstiges.setSpacing(true);
+		verticalLayoutSonstiges.addComponent(new Label());
+		verticalLayoutSonstiges.addComponent(haustiere);
+		verticalLayoutSonstiges.addComponent(rauchen);
+		verticalLayoutSonstiges.addComponent(moebliert);
+		verticalLayoutSonstiges.addComponent(kueche);
+		verticalLayoutSonstiges.addComponent(internet);
+		verticalLayoutSonstiges.addComponent(new Label());
+		tabelleInnen.addComponent(verticalLayoutSonstiges, 1, 5);
 
 		Button suchButton = new Button("Suchen");
 		suchButton.setIcon(FontAwesome.SEARCH);
 		suchButton.addStyleName("SuchButton");
-		grid2.addComponent(suchButton, 0, 6);
+		tabelleInnen.addComponent(suchButton, 0, 6);
 
-		// Rechte Spalte
-
-		// Maps
-
-		// ** The kakola marker. *//*
+		//Marker
 		GoogleMapMarker kakolaMarker = new GoogleMapMarker("Karlsruhe",
 				new LatLon(49.00705, 8.40287), true, null);
 
+		// Maps
 		final GoogleMap googleMap = new GoogleMap(null, null, null);
 		googleMap.setCenter(new LatLon(49.00705, 8.40287));
 		googleMap.setZoom(10);
 		googleMap.setSizeFull();
 		kakolaMarker.setAnimationEnabled(false);
 		googleMap.addMarker(kakolaMarker);
-
 		googleMap.setMinZoom(4);
 		googleMap.setMaxZoom(16);
 		googleMap.setHeight("500px");
 		googleMap.setWidth("500px");
+		googleMap.setVisible(false);
+		
+		//Listener für Marker
+		googleMap.addMarkerDragListener(new MarkerDragListener() {
+			private static final long serialVersionUID = 1L;
 
-		final CheckBox b = new CheckBox("Statdessen auf der Karte Suchen",
+			@Override
+			public void markerDragged(GoogleMapMarker draggedMarker,
+					LatLon oldPosition) {
+				lat = draggedMarker.getPosition().getLat();
+				lon = draggedMarker.getPosition().getLon();
+			}
+		});
+
+		//Checkbox: Mit Karte Suchen
+		final CheckBox mitKarteSuchen = new CheckBox("Statdessen auf der Karte Suchen",
 				false);
 
-		b.addValueChangeListener(new ValueChangeListener() {
+		mitKarteSuchen.addValueChangeListener(new ValueChangeListener() {
+			private static final long serialVersionUID = 1L;
+
 			@Override
 			public void valueChange(final ValueChangeEvent event) {
 				final boolean value = (boolean) event.getProperty().getValue();
-
-				if (value == true) {// Anzeigen der Moodle Felder sobald das
-									// Kontrollkästchen angekreuzt wird
+				if (value == true) {// Anzeigen der Moodle Felder sobald das Kontrollkästchen angekreuzt wird
 					stadt.setEnabled(false);
 					stadt.setValue("");
 					googleMap.setVisible(true);
-
-				} else {// ausblednen der Felder wenn das Kästchen nicht
-						// angekreuzt ist
+				} else {// ausblednen der Felder wenn das Kästchen nicht angekreuzt ist
 					stadt.setEnabled(true);
 					googleMap.setVisible(false);
 				}
 			}
 		});
 
-		VerticalLayout h3 = new VerticalLayout();
-		h3.setSpacing(true);
-		h3.addComponent(b);
-		h3.addComponent(googleMap);
+		VerticalLayout verticalLayoutMaps = new VerticalLayout();
+		verticalLayoutMaps.setSpacing(true);
+		verticalLayoutMaps.addComponent(mitKarteSuchen);
+		verticalLayoutMaps.addComponent(googleMap);
+		tabelleAussen.addComponent(verticalLayoutMaps, 1, 0);
 
-		grid1.addComponent(h3, 1, 0);
-
-		googleMap.setVisible(false);
-
-		googleMap.addMarkerDragListener(new MarkerDragListener() {
-			@Override
-			public void markerDragged(GoogleMapMarker draggedMarker,
-					LatLon oldPosition) {
-				lat = draggedMarker.getPosition().getLat();
-				lon = draggedMarker.getPosition().getLon();
-				// TODO Auto-generated method stub
-				System.out.println(draggedMarker.getPosition().getLat() + "---"
-						+ draggedMarker.getPosition().getLon());
-
-			}
-		});
-
+		
 		// Suchfunktion
-
 		suchButton.addClickListener(new Button.ClickListener() {
+			private static final long serialVersionUID = 1L;
+
 			@SuppressWarnings("deprecation")
 			public void buttonClick(ClickEvent event) {
 				int a = 7;
@@ -309,7 +307,7 @@ public class Suche extends HorizontalLayout implements View {
 						kueche.getValue(), rauchen.getValue(),
 						haustiere.getValue(), stadt.getValue());
 
-				if (b.booleanValue()) {
+				if (mitKarteSuchen.booleanValue()) {
 					ergebnisse = of.filterMaps(ergebnisse, 10.00, lat, lon);
 				}
 
@@ -320,7 +318,7 @@ public class Suche extends HorizontalLayout implements View {
 			}
 		});
 
-		content.addComponent(grid1);
+		content.addComponent(tabelleAussen);
 
 	}
 
