@@ -59,8 +59,8 @@ public class AngebotErstellen extends HorizontalLayout implements View, Receiver
 	/** The content. */
 	private VerticalLayout content;
 	
-	private Double lat = 49.00705;
-    private Double lon = 8.40287;
+	private Double lat = null;
+    private Double lon = null;
 
 	private Offer currentOffer;
 
@@ -641,8 +641,11 @@ public class AngebotErstellen extends HorizontalLayout implements View, Receiver
 					currentOffer.setGender(gender);
 					currentOffer.setText(text.getValue());
 					currentOffer.setInactive(inactive.getValue());
-					currentOffer.setLatitude(BigDecimal.valueOf(lat));
-					currentOffer.setLongitude(BigDecimal.valueOf(lon));
+					if(lat != null){
+						currentOffer.setLatitude(BigDecimal.valueOf(lat));
+						currentOffer.setLongitude(BigDecimal.valueOf(lon));
+					}
+
 					
 					new OfferProvider().alterOffer(currentOffer); // neues Angebot in die DB schreiben
 					
@@ -1153,8 +1156,11 @@ public class AngebotErstellen extends HorizontalLayout implements View, Receiver
 					currentOffer.setText(text.getValue());
 					currentOffer.setInactive(inactive.getValue());
 
-					currentOffer.setLatitude(BigDecimal.valueOf(lat));
-					currentOffer.setLongitude(BigDecimal.valueOf(lon));
+					if(lat != null){
+						currentOffer.setLatitude(BigDecimal.valueOf(lat));
+						currentOffer.setLongitude(BigDecimal.valueOf(lon));
+					}
+
 				
 
 					
