@@ -1,5 +1,8 @@
 package com.example.housing;
 
+import java.util.ArrayList;
+import java.util.Collection;
+
 import com.example.housing.data.model.User;
 import com.example.housing.data.provider.UserProvider;
 import com.example.housing.utility.GenerateCode;
@@ -90,7 +93,7 @@ public class ForgotPasswordWindow extends Window{
 			content.addComponent(email_1);
 				
 			// password_1
-			password_1 = new PasswordField();
+			/*password_1 = new PasswordField();
 			password_1.setCaption("Neues Passwort");
 			password_1.setImmediate(false);
 			password_1.setDescription("Bitte Passwort eingeben");
@@ -109,7 +112,7 @@ public class ForgotPasswordWindow extends Window{
 			password_2.setHeight("-1px");
 			password_2.setRequired(true);
 			password_2.setIcon(FontAwesome.KEY);
-			content.addComponent(password_2);
+			content.addComponent(password_2);*/
 			
 			HorizontalLayout hl = new HorizontalLayout();
 			// speichern
@@ -131,21 +134,23 @@ public class ForgotPasswordWindow extends Window{
 						
 						//2. Validate: Passwörter sind gleich?
 						if(validate()){
-							u.setPassword(password_1.getValue());//neues Passwort setzen
-							u.setActivated(false);//Nutzer deaktivieren
+							//int zahl = (int)((Math.random()) * 4 + 1);
+							String password = generatePassword();
+							u.setPassword(password);//neues Passwort setzen
+							//u.setActivated(false);//Nutzer deaktivieren
 							new UserProvider().alterUser(u);//User in der DB updaten
 			
 							//E-Mail an den Nutzer senden
-							sendEMail();
+							sendEMail(password);
 							
 							ForgotPasswordWindow.this.close();//Fenster schließen
-							Notification notif = new Notification("Ihr Passwort wurde geändert","Bitte folgen Sie dem Link in der E-Mail, die Sie erhalten haben.", Type.HUMANIZED_MESSAGE);
+							Notification notif = new Notification("Ihr Passwort wurde zurückgesetzt","Bitte folgen Sie dem Link in der E-Mail, die Sie erhalten haben.", Type.HUMANIZED_MESSAGE);
 							notif.setDelayMsec(300);
 							notif.setIcon(FontAwesome.CHECK_SQUARE_O);
 							notif.setStyleName("success");
 							notif.show(Page.getCurrent());
 						}else{
-							Notification notif = new Notification("Änderung des Passworts fehlgeschlagen!","Bitte überprüfen Sie Ihre Eingaben.", Type.HUMANIZED_MESSAGE);
+							Notification notif = new Notification("Zurücksetzen des Passworts fehlgeschlagen!","Bitte überprüfen Sie Ihre Eingaben.", Type.HUMANIZED_MESSAGE);
 							notif.setDelayMsec(300);
 							notif.setStyleName("failure");
 							notif.show(Page.getCurrent());
@@ -153,7 +158,7 @@ public class ForgotPasswordWindow extends Window{
 											
 					}catch(Exception e){
 						//Fehlermeldung bei Datenbankproblemen
-						Notification notif = new Notification("Änderung des Passworts fehlgeschlagen!","Es gibt keinen Nutzer mit dieser E-Mail-Adresse.", Type.HUMANIZED_MESSAGE);
+						Notification notif = new Notification("Zurücksetzen des Passworts fehlgeschlagen!","Es gibt keinen Nutzer mit dieser E-Mail-Adresse.", Type.HUMANIZED_MESSAGE);
 						notif.setDelayMsec(300);
 						notif.setStyleName("failure");
 						notif.show(Page.getCurrent());
@@ -163,7 +168,7 @@ public class ForgotPasswordWindow extends Window{
 			
 			// abbrechen
 			cancel = new Button();
-			cancel.setStyleName("BearbeitenButton");
+			cancel.setStyleName("speichern");
 			cancel.setCaption("abbrechen");
 			cancel.setIcon(FontAwesome.MAIL_REPLY);
 			cancel.setImmediate(true);
@@ -206,7 +211,7 @@ public class ForgotPasswordWindow extends Window{
 			erfolgreich=false;
 		}
 		
-		try {
+		/*try {
 			password_1.validate();
 		} catch (InvalidValueException e) {
 			erfolgreich=false;
@@ -225,9 +230,38 @@ public class ForgotPasswordWindow extends Window{
 			password_1.setComponentError(new UserError("Die beiden Passwörter stimmen nicht überein."));
 			password_2.setComponentError(new UserError("Die beiden Passwörter stimmen nicht überein."));
 			erfolgreich=false;
-		}
+		}*/
 			
 		return erfolgreich;
+	}
+	//passwort generieren:
+	public static String generatePassword() {
+		StringBuilder password = new StringBuilder();
+
+		for (int i = 0; i < 5; i++) {
+			switch (rand(0, 2)) {
+				case 0: // Zahlen
+					password.append(rand(0, 9));
+					break;
+				case 1: // Großbuchstaben
+					password.append((char) rand(65, 90));
+					break;
+				case 2: // Kleinbuchstaben
+					password.append((char) rand(97, 122));
+					break;
+				case 3: // Kleinbuchstaben
+					password.append((char) rand(97, 122));
+					break;
+				case 4: // Großbuchstaben
+					password.append((char) rand(65, 90));
+					break;
+			}
+		}
+
+		return password.toString();
+	}
+	private static int rand(int min, int max) {
+		return (int) (Math.random() * (max - min + 1)) + min;
 	}
 	
 	
@@ -235,12 +269,12 @@ public class ForgotPasswordWindow extends Window{
 	 * Sends an EMail to the User.
 	 * @see com.example.housing.utility.SendEMail
 	 */
-	public void sendEMail(){
+	public void sendEMail(String password){
 		String path = UI.getCurrent().getPage().getLocation().getHost() +":"+UI.getCurrent().getPage().getLocation().getPort()+UI.getCurrent().getPage().getLocation().getPath()+"#!Startseite/";
 		String code = GenerateCode.generateCode(email_1.getValue());
 		// Text der E-Mail mit Style-Informationen
 		String body = "<span style='color: #000000' 'font-family: Arial, sans-serif''font-size: 16pt' >Sehr geehrte Nutzerin, sehr geehrter Nutzer,"
-					 +"<br/><br/>Sie haben Ihr Passwort vergessen und ein neues Passwort angegeben. Ihr Konto muss erneut freigeschalten werden. Bitte folgen sie dem Link unten, dann können Sie sich wieder wie gewohnt einloggen.Dadurch wird sichergestellt, dass keine Unbefungten Ihre E-Mail-Adresse und Ihr Benutzerkonto verwenden können.</span>"
+					 +"<br/><br/>Ihr Passwort wurde zurückgesetzt. Ihr neues Passwort lautet:" + password +". Bitte folgen sie dem Link unten, dann können Sie sich wieder wie gewohnt einloggen. Dadurch wird sichergestellt, dass keine Unbefungten Ihre E-Mail-Adresse und Ihr Benutzerkonto verwenden können. <br/><br/> Unter \"Persönlichen Einstellungen\" können Sie ihr Passwort ändern.</span>"
 					 +"<br/><span style='color: #e2001a' 'font-family: Arial, sans-serif''font-size: 20pt' >"
 					 + "<a href='http://"+path+code+"'>weiter zum Login</a>"
 						+ "</span><br/><br/>Mit freundlichen Grüßen<br/>Ihr DHBW Wohungsbörsen-Team<p/><span style='color: #e2001a' 'font-family: Arial, sans-serif''font-size: 8pt' >Anschrift:<br/>DHBW Karlsruhe<br/>Baden-Wuerttemberg Cooperative State University Karlsruhe<br />Erzbergerstraße 121 . 76133 Karlsruhe <br />Postfach 10 01 36 . 76231 Karlsruhe   <br />Telefon +49.721.9735-5 <br />Telefax +49.721.9735-600 <br />E-Mail: dreischer@dhbw-karlsruhe.de<br /><br/><br/>Ansprechpartner:<br/> <br />Dr. Anita Dreischer<br /><br/><b>Copyright DHBW Karlsruhe. Alle Rechte vorbehalten.</b></span>";

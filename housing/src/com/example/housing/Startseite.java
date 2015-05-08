@@ -140,14 +140,14 @@ public class Startseite extends HorizontalLayout implements View{
 			final VerticalLayout layout = new VerticalLayout();
 	        layout.setMargin(true);
 	        layout.addComponent(new Label("Herzlich Willkommen auf unserer Webseite!"));
-	        	Label label = new Label("Auf unserer Webseite können Sie einen Nach- oder Zwischenmieter für Ihre Wohung oder Ihr Zimmer finden. Als Dualer Student der DHBW Karlsruhe können Sie die passende Wohung oder das passende Zimmer finden (auch zur Zwischenmiete) und den Vermieter kontaktieren.");
+	        	Label label = new Label("Auf unserer Webseite können Sie einen Nach- oder Zwischenmieter für Ihre Wohnung oder Ihr Zimmer finden. Als duale Studentin/ dualer Student der DHBW Karlsruhe können Sie die passende Wohnung oder das passende Zimmer finden (auch zur Zwischenmiete) und den Vermieter kontaktieren.");
 	        	layout.addComponent(label);
 	        accordion.addTab(layout, "Herzlich Willkommen",FontAwesome.HEART);//Tab 1 hinzufügen
          
 	        //Tab 2
 			final VerticalLayout layout_1 = new VerticalLayout();
 	        layout_1.setMargin(true);
-		        Label label_1 = new Label("Wenn Sie eine Wohnung vermieten wollen sind Sie bei uns genau richtig! Jeder registrierte Benutzer kann Wohnungen anbieten. Registrieren Sie sich bitte hier. Ihre Wohung oder Ihr Zimmer wird ausschließlich an Studenten der DHBW Karlsruhe vermietet.");
+		        Label label_1 = new Label("Wenn Sie eine Wohnung vermieten wollen sind Sie bei uns genau richtig! Jeder registrierte Benutzer kann Wohnungen anbieten. Registrieren Sie sich bitte hier. Ihre Wohung oder Ihr Zimmer wird ausschließlich an Studierende der DHBW Karlsruhe vermietet.");
 		        layout_1.addComponent(label_1);
 		        
 				//Link zu Registrierung
@@ -173,7 +173,7 @@ public class Startseite extends HorizontalLayout implements View{
 	        //Tab 3
 			final VerticalLayout layout_2 = new VerticalLayout();
 	        layout_2.setMargin(true);
-	        	layout_2.addComponent(new Label("Für alle, die eine Wohnung suchen...: Sie sind Dualer Student an der DHBW Karlsruhe? Dann finden Sie bei uns die passende Wohung oder das passende Zimmer. Wir haben ein großes Angebot an Zimmern und Wohnungen..."));
+	        	layout_2.addComponent(new Label("Für alle, die eine Wohnung suchen...: Sie studieren an der DHBW Karlsruhe? Dann finden Sie bei uns die passende Wohnung oder das passende Zimmer. Wir haben ein großes Angebot an Zimmern und Wohnungen..."));
 	
 				//Link zu Registrierung
 				Button link_2 = new Button();
@@ -198,8 +198,8 @@ public class Startseite extends HorizontalLayout implements View{
 	        //Tab 4
 			final VerticalLayout layout_3 = new VerticalLayout();
 	        layout_3.setMargin(true);
-		        Label label_3 = new Label("Wir sind DH-Studenten der DHBW Karlsruhe...");
-		        Label label_4 = new Label("Sie haben Anregungen, Wünsche oder Kritik? Bitte kontaktieren Sie uns! Falls Sie als Austauschstudent an die Duale Hochschule Karlsruhe kommen, bitte kontaktieren Sie den Administrator, damit Sie als Dualer Student freigeschaltet werden.");
+		        Label label_3 = new Label("Wir sind Studierende der DHBW Karlsruhe...");
+		        Label label_4 = new Label("Sie haben Anregungen, Wünsche oder Kritik? Bitte kontaktieren Sie uns! Falls Sie als AustauschstudentIn an die Duale Hochschule Karlsruhe kommen, bitte kontaktieren Sie den Administrator, damit Sie als Studierender der DHBW Karlsruhe freigeschaltet werden.");
 		        layout_3.addComponent(label_3);
 		        layout_3.addComponent(label_4);
 		        
