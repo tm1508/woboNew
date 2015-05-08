@@ -12459,11 +12459,11 @@ div.v-layout.v-horizontal.v-widget {
 }
 
 .housing .v-label-footer {
-	margin-top: 10px;
+	margin-top: 8px;
 }
 
 .housing .v-link-footer {
-	margin-top: 10px;
+	margin-top: 8px;
 }
 
 .housing .v-verticallayout-navigation {
@@ -12594,6 +12594,10 @@ div.v-layout.v-horizontal.v-widget {
 	margin-top: 10px;
 	color: #e2001a;
 	border-color: #e2001a;
+}
+
+.housing .v-checkbox-link {
+	margin-top: 8px;
 }
 
 .housing .v-label-ImportantTitle {

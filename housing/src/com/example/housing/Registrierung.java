@@ -84,7 +84,7 @@ public class Registrierung extends HorizontalLayout implements View{
 	private CheckBox agbs;
 	
 	/** The link_1. */
-	private Link link_1;
+	private Button link_1;
 	
 	/** The button. */
 	private Button button;
@@ -282,9 +282,9 @@ public class Registrierung extends HorizontalLayout implements View{
 		
 		// handy
 		handy = new TextField();
-		handy.setCaption("Handynummer");
+		handy.setCaption("Mobiltelefonnummer");
 		handy.setImmediate(false);
-		handy.setDescription("Bitte Handynummer angeben (optional)");
+		handy.setDescription("Bitte Mobiltelefonnummer angeben (optional)");
 		handy.setWidth("220px");
 		handy.setHeight("-1px");
 		handy.setIcon(FontAwesome.PHONE);
@@ -349,24 +349,36 @@ public class Registrierung extends HorizontalLayout implements View{
 		
 		content.addComponent(new Label());
 		
+		HorizontalLayout agbLayout = new HorizontalLayout();
 		// agbs
 		agbs = new CheckBox();
-		agbs.setCaption("Ich akzeptiere die ");
+		agbs.setStyleName("link");
+		agbs.setCaption("Ich akzeptiere den ");
 		agbs.setImmediate(false);
-		agbs.setDescription("Sie müssen die AGBs akzeptieren damit Sie sich registrieren können");
+		agbs.setDescription("Sie müssen den Haftungsausschluss akzeptieren damit Sie sich registrieren können");
 		agbs.setWidth("-1px");
 		agbs.setHeight("-1px");
-		content.addComponent(agbs);
+		agbLayout.addComponent(agbs);
 		
 		// link_1
-		link_1 = new Link();
-		link_1.setStyleName("text");
-		link_1.setCaption("AGBs");
+		link_1 = new Button();
+		link_1.setStyleName("link");
+		link_1.setCaption("Haftungsausschluss");
 		link_1.setImmediate(false);
 		link_1.setWidth("-1px");
 		link_1.setHeight("-1px");
 		link_1.setIcon(FontAwesome.EXTERNAL_LINK);
-		content.addComponent(link_1);
+		link_1.addClickListener(new Button.ClickListener(){
+			private static final long serialVersionUID = 1L;
+			public void buttonClick(ClickEvent event) {
+				String name = "Impressum";
+				getUI().getNavigator().addView(name, new Impressum());
+				getUI().getNavigator().navigateTo(name);
+			}
+		});
+		agbLayout.addComponent(link_1);
+		
+		content.addComponent(agbLayout);
 		
 		content.addComponent(new Label());
 		

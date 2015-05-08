@@ -79,11 +79,11 @@ $v-background-color: #F7F7F7;
   	
 //Footer
 	.v-label-footer{
-		margin-top:10px;
+		margin-top:8px;
 	}
 	
 	.v-link-footer{
-		margin-top:10px;
+		margin-top:8px;
 	}
   
 //Layout der Navigationsleiste
@@ -246,6 +246,10 @@ $v-background-color: #F7F7F7;
 		margin-top:10px;
 		color: #e2001a;
 		border-color: #e2001a;
+	}
+	
+	.v-checkbox-link{
+		margin-top:8px;
 	}
   	
   	//Einzelansicht 
