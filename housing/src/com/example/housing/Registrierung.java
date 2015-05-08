@@ -401,7 +401,7 @@ public class Registrierung extends HorizontalLayout implements View{
 						
 						Notification not = new Notification("Die Registrierung war erfolgreich. Sie haben eine Email zur Aktivierung erhalten.",Type.HUMANIZED_MESSAGE);//Meldung an den Nutzer
 						not.setStyleName("success");
-						not.setIcon(FontAwesome.CHECK_SQUARE_O);
+						//not.setIcon(FontAwesome.CHECK_SQUARE_O);
 						not.setDelayMsec(300);
 						not.show(Page.getCurrent());
 					}else{//ein Nutzer mit dieser E-Mail-Adresse existiert bereits

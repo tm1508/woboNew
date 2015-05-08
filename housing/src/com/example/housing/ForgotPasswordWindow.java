@@ -118,7 +118,7 @@ public class ForgotPasswordWindow extends Window{
 			// speichern
 			save = new Button();
 			save.setStyleName("speichern");
-			save.setCaption("speichern");
+			save.setCaption("neues Passwort anfordern");
 			save.setIcon(FontAwesome.CHECK);
 			save.setImmediate(true);
 			save.setDescription("Neues Passwort speichern");
@@ -146,7 +146,7 @@ public class ForgotPasswordWindow extends Window{
 							ForgotPasswordWindow.this.close();//Fenster schließen
 							Notification notif = new Notification("Ihr Passwort wurde zurückgesetzt","Bitte folgen Sie dem Link in der E-Mail, die Sie erhalten haben.", Type.HUMANIZED_MESSAGE);
 							notif.setDelayMsec(300);
-							notif.setIcon(FontAwesome.CHECK_SQUARE_O);
+							//notif.setIcon(FontAwesome.CHECK_SQUARE_O);
 							notif.setStyleName("success");
 							notif.show(Page.getCurrent());
 						}else{
@@ -186,7 +186,7 @@ public class ForgotPasswordWindow extends Window{
 			hl.addComponent(save);
 			content.addComponent(hl);
 			
-			text = new Label("Wenn Sie Ihr neues Passwort speichern erhalten Sie eine E-Mail an die angegebene E-Mail-Adresse. Um Sich erneut einloggen zu können folgen Sie bitte dem Link in der E-Mail.");
+			text = new Label("Wenn Sie Ihr Passwort vergessen haben, können Sie hier Ihr Passwort zurücksetzten und ein neues anfordern. Um Sich erneut einloggen zu können folgen Sie bitte dem Link in der E-Mail.");
 			content.addComponent(text);
 			
 			this.setContent(content);    
