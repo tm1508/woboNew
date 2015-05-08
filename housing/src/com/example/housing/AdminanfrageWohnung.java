@@ -104,16 +104,16 @@ private void setContent() {
 		title.setImmediate(false);
 		title.setWidth("-1px");
 		title.setHeight("-1px");
-		title.setValue("Anfrageformular");
+		title.setValue("Anbieter kontaktieren");
 		title.addStyleName("title");
 		content.addComponent(title);
 		
 		//Infolabel
-		Label infoText = new Label("Hier können Sie eine Nachricht an den Anbieter verfassen.");
+		Label infoText = new Label("Hier können Sie eine Nachricht an den Anbieter des Wohnungsangebotes verfassen. Bitten Sie ihn beispielsweise um die Entfernung illegaler, nicht gewünschter oder nicht mehr aktueller Inhalte.");
 		content.addComponent(infoText);
 		
 		//text
-		Label anfrage = new Label("Anfrage");
+		Label anfrage = new Label("Nachricht");
 		anfrage.addStyleName("AbschnittLabel");
 		text = new RichTextArea();
 		text.setRequired(true);
@@ -126,7 +126,7 @@ private void setContent() {
 		Button sendButton = new Button();
 		//sendButton.setIcon(FontAwesome.ENVELOPE_SQUARE);
 		sendButton.setIcon(FontAwesome.SEND);
-		sendButton.setCaption("Anfrage abschicken");
+		sendButton.setCaption("Nachricht abschicken");
 		//button.setImmediate(true);
 		sendButton.setWidth("-1px");
 		sendButton.setHeight("-1px");
@@ -144,7 +144,7 @@ private void setContent() {
 					getUI().getNavigator().addView(name, new Einzelansicht(angebot));
 					getUI().getNavigator().navigateTo(name);
 					
-					Notification not = new Notification("Die Anfrage war erfolgreich!",Type.HUMANIZED_MESSAGE);//Meldung an den Nutzer
+					Notification not = new Notification("Die Nachricht wurde erfolgreich übermittelt!",Type.HUMANIZED_MESSAGE);//Meldung an den Nutzer
 					not.setStyleName("success");
 					not.setDelayMsec(300);
 					not.setIcon(FontAwesome.CHECK_SQUARE_O);
@@ -155,20 +155,21 @@ private void setContent() {
 		});
 	}
 	
-	
-	
 	protected void sendEMail() {
 		
+		String message = "<span style='color: #000000' 'font-family: Arial, sans-serif''font-size: 16pt' >Sehr geehrte Nutzerin, sehr geehrter Nutzer,"
+				+"<br/><br/>Sie haben eine Nachricht eines Portal-Administrators zu Ihrem Angebot: \"" + angebot.getTitle() + "\" in der Wohnungsbörse der DHBW erhalten:"
+				+"<br/><br/>" + text.getValue() 
+				+"<br/></span>"
+				+"<br/><span style='color: #e2001a' 'font-family: Arial, sans-serif''font-size: 20pt' >"
+				+ "</span><br/><br/>Mit freundlichen Grüßen<br/>Ihr DHBW Wohungsbörsen-Team<p/><span style='color: #e2001a' 'font-family: Arial, sans-serif''font-size: 8pt' >Anschrift:<br/>DHBW Karlsruhe<br/>Baden-Wuerttemberg Cooperative State University Karlsruhe<br />Erzbergerstraße 121 . 76133 Karlsruhe <br />Postfach 10 01 36 . 76231 Karlsruhe   <br />Telefon +49.721.9735-5 <br />Telefax +49.721.9735-600 <br />E-Mail: dreischer@dhbw-karlsruhe.de<br /><br/><br/>Ansprechpartner:<br/> <br />Dr. Anita Dreischer<br /><br/><b>Copyright DHBW Karlsruhe. Alle Rechte vorbehalten.</b></span>";
 		
-		//Email an Anfrager senden
-		
-		SendEMail.send(angebot.getOffer_idUser().getEmail(), "wohnungsboerse_dh@web.de", "Ihre Anfrage in der DHBW-Wohnungsbörse",text.getValue());
-		
-		
+		//Email an Anbieter senden
+		SendEMail.send(angebot.getOffer_idUser().getEmail(), "wohnungsboerse_dh@web.de", "Ihr Wohnungsangebot in der DHBW-Wohnungsbörse", message);
 	
+		//TODO irgendwo hinterlegen, abspeichern,... damit Admin die Nachricht auch später noch sehen kann
+		
 	}
-	
-	
 
 	@Override
 	public void enter(ViewChangeEvent event) {

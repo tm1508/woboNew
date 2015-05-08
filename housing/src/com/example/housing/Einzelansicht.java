@@ -479,69 +479,79 @@ public class Einzelansicht extends HorizontalLayout implements View {
         
         Button anbieter = new Button("Anbieter kontaktieren");
         anbieter.addStyleName("AnfrageButton");
-        anfrage.setIcon(FontAwesome.MAIL_FORWARD);
+        anbieter.setIcon(FontAwesome.MAIL_FORWARD);
         
-        if(VaadinSession.getCurrent().getAttribute("login").equals(false)|| VaadinSession.getCurrent().getAttribute(User.class).getAccessLevel()!=2){
-        buttons.addComponent(anfrage);
-        }else{
-        buttons.addComponent(anbieter);	
+        //Anfrage-Button (für User) oder Anbieter kontaktieren-Button (für Admin)
+        if(VaadinSession.getCurrent().getAttribute("login").equals(false) || VaadinSession.getCurrent().getAttribute(User.class).getAccessLevel()!=2){
+        
+        	buttons.addComponent(anfrage);
+       
+        } else {
+        	
+        	buttons.addComponent(anbieter);	
+        
         }
+        
+        //Anfrage-Button deaktivieren bei deaktivierten Angeboten
         if(angebot.isInactive()){
+        	
         	anfrage.setEnabled(false);
+        	
         }
         
         anfrage.addClickListener(new Button.ClickListener() {
 			public void buttonClick(ClickEvent event) {
-				if(VaadinSession.getCurrent().getAttribute("login").equals(false)) {
+				if(VaadinSession.getCurrent().getAttribute("login").equals(false)) { //nicht eingeloggt
+					
 					Notification not = new Notification("Sie müssen sich als verifizierter DH-Student einloggen, um eine Anfrage zu einem Wohnungsangebot stellen zu können!",Type.HUMANIZED_MESSAGE);//Meldung an den Nutzer
 					not.setStyleName("failure");
 					not.setDelayMsec(300);
 					not.show(Page.getCurrent());
-				} else if (VaadinSession.getCurrent().getAttribute(User.class).getAccessLevel() != 1) {
+					
+				} else if(VaadinSession.getCurrent().getAttribute(User.class).getAccessLevel() != 1) { //nicht als DH-Student verifiziert
+					
 					Notification not = new Notification("Sie müssen sich als DH-Student verifizieren, um eine Anfrage zu einem Wohnungsangebot stellen zu können!",Type.HUMANIZED_MESSAGE);//Meldung an den Nutzer
 					not.setDelayMsec(300);
 					not.setStyleName("failure");
 					not.show(Page.getCurrent());
-				} else if(VaadinSession.getCurrent().getAttribute("login").equals(true)){
+					
+				} else if(VaadinSession.getCurrent().getAttribute("login").equals(true)) { //eingeloggt als DH-Student
 		        	 
-		        	  if(new RequestProvider().requestExists(VaadinSession.getCurrent().getAttribute(User.class), angebot)){
-		        		
-		        		  Notification not = new Notification("Sie haben den Anbieter bereits kontaktiert",Type.HUMANIZED_MESSAGE);//Meldung an den Nutzer
-							not.setDelayMsec(300);
-							not.setStyleName("failure");
-							not.show(Page.getCurrent());//+re.getMessage());
+		        	  if(new RequestProvider().requestExists(VaadinSession.getCurrent().getAttribute(User.class), angebot)) { //Anfrage bereits gesendet
+		        		  
+		        		  Notification not = new Notification("Sie haben den Anbieter bereits kontaktiert",Type.HUMANIZED_MESSAGE);
+		        		  not.setDelayMsec(300);
+		        		  not.setStyleName("failure");
+		        		  not.show(Page.getCurrent());
 		              	
-		              } else {
-					String name = "Anfrageformular";
-					getUI().getNavigator().addView(name, new Anfrageformular(angebot));
-					getUI().getNavigator().navigateTo(name);
-				}
+		              } else { //Anfrage senden
+		            	  
+		            	  String name = "Anfrageformular";
+		            	  getUI().getNavigator().addView(name, new Anfrageformular(angebot));
+		            	  getUI().getNavigator().navigateTo(name);
+		              
+		              }
 				}
 			}
-		});
+        });
         
-        anbieter.addClickListener(new Button.ClickListener(){
+        anbieter.addClickListener(new Button.ClickListener() {
+        	
 			public void buttonClick(ClickEvent event) {
+				
 				String name = "AdminanfrageWohnung";
 				
 				getUI().getNavigator().addView(name, new AdminanfrageWohnung(angebot));
 				getUI().getNavigator().navigateTo(name);
 			
 			}
-		});
-
-			
-				
-				
-				
-				
-         
+		
+        });
         
 		final FavoritProvider fp = new FavoritProvider();
-
 	    
-        //Favoriten-Button TODO
-        if(VaadinSession.getCurrent().getAttribute("login").equals(true) && !fp.favoritExists(VaadinSession.getCurrent().getAttribute(User.class), angebot)&& VaadinSession.getCurrent().getAttribute(User.class).getAccessLevel()!=2){
+        //Favoriten-Button
+        if(VaadinSession.getCurrent().getAttribute("login").equals(true) && !fp.favoritExists(VaadinSession.getCurrent().getAttribute(User.class), angebot) && VaadinSession.getCurrent().getAttribute(User.class).getAccessLevel()!=2) { //Favorit hinzufügen
         
         	Button favorit = new Button("Favorit hinzufügen");
         	favorit.setIcon(FontAwesome.PLUS_SQUARE_O);
@@ -550,6 +560,7 @@ public class Einzelansicht extends HorizontalLayout implements View {
         	
         	favorit.addClickListener(new Button.ClickListener() {
         		public void buttonClick(ClickEvent event) {
+        			
         			Favorit newFavorit = new Favorit();
         			newFavorit.setFavorit_idOffer(angebot);
         			newFavorit.setFavorit_idUser(VaadinSession.getCurrent().getAttribute(User.class));
@@ -566,10 +577,10 @@ public class Einzelansicht extends HorizontalLayout implements View {
         			not.setDelayMsec(300);
         			not.show(Page.getCurrent());
         			
-        		}	
+        		}
         	}); 
     	
-        }else if(VaadinSession.getCurrent().getAttribute("login").equals(true) && fp.favoritExists(VaadinSession.getCurrent().getAttribute(User.class), angebot)&& VaadinSession.getCurrent().getAttribute(User.class).getAccessLevel()!=2){
+        } else if(VaadinSession.getCurrent().getAttribute("login").equals(true) && fp.favoritExists(VaadinSession.getCurrent().getAttribute(User.class), angebot)&& VaadinSession.getCurrent().getAttribute(User.class).getAccessLevel()!=2) { //Favorit entfernen
         	
         	Button removeFavorit = new Button("Favorit entfernen");
         	removeFavorit.setIcon(FontAwesome.TRASH_O);
