@@ -658,7 +658,7 @@ public class AngebotErstellen extends HorizontalLayout implements View, Receiver
 					
 					// Sind nicht alle Mussfelder gefüllt, wird eine Nachricht
 					// auf dem Bildschirm ausgegeben
-					Notification.show("");
+					//Notification.show("");
 					Notification not1 = new Notification("Bitte füllen Sie alle Mussfelder*", Type.HUMANIZED_MESSAGE);
 					not1.setStyleName("failure");
 					not1.setDelayMsec(300);
@@ -1293,13 +1293,15 @@ public class AngebotErstellen extends HorizontalLayout implements View, Receiver
 					
 					newPhotos.add(newPhoto);
 			
-				}catch (NullPointerException ne) { //bei Angebot bearbeiten ist newPhotos nicht instantiiert
-					
-					System.out.println(ne.getStackTrace());
-					
+				}catch (NullPointerException ne) { //bei Angebot bearbeiten ist newPhotos nicht instantiiert	
 				}
 				
 				new PhotoProvider().addPhoto(newPhoto);
+				
+				Notification not = new Notification("Bild wurde erfolgreich hochgeladen!", Type.HUMANIZED_MESSAGE);
+				not.setStyleName("success");
+				not.setDelayMsec(300);
+				not.show(Page.getCurrent());
 			
 		    }
 			
