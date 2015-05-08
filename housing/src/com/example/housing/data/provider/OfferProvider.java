@@ -4,6 +4,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.persistence.Query;
@@ -296,7 +297,34 @@ public class OfferProvider extends BaseProvider<Offer> {
 		
 	}
 	
+	//filtert Ergebnisliste nach Abstand übergebenem Punkt
+	public List<Offer> filterMaps(List<Offer> filterErgebnis, double radius, double lat, double lon){
+		Iterator<Offer> it = filterErgebnis.iterator();
+		while(it.hasNext()){
+			Offer o = it.next();
+			double distance;
+			if(o.getLatitude()!=null){
+				distance = getDistance(o.getLatitude().doubleValue(),lat,  o.getLongitude().doubleValue(), lon);
+				if(distance > radius){
+					it.remove();
+				}
+			}else{
+				it.remove();
+			}
+			
+
+		}
+		return filterErgebnis;
+	}
 	
+	//berechnet die Distanz zwischen zwei Punkten
+	public static double getDistance(double lat1, double lat2, double lon1, double lon2){
+		double dx = 71.5 * (lon1 - lon2);
+		double dy = 111.3 * (lat1 - lat2);
+		
+		double distance = Math.sqrt(dx * dx + dy * dy);
+		return distance;
+	}
 
 
 }

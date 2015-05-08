@@ -68,8 +68,8 @@ public class AngebotErstellen extends HorizontalLayout implements View, Receiver
 	/** The content. */
 	private VerticalLayout content;
 	
-	private Double lat = 0.0;
-    private Double lon = 0.0;
+	private Double lat = 49.00705;
+    private Double lon = 8.40287;
 
 	private Offer currentOffer;
 
@@ -484,7 +484,7 @@ public class AngebotErstellen extends HorizontalLayout implements View, Receiver
 		Label bilder = new Label("Bilder");
 		bilder.addStyleName("AbschnittLabel");
 		
-		Upload bilderup = new Upload("Fotos hochladen (max. 5 Fotos pro Angebot):", this); 
+		Upload bilderup = new Upload("Fotos hochladen (max. 5 Fotos pro Angebot):", this);
 		bilderup.addSucceededListener(this);
 		
 		content.addComponent(bilder);
@@ -1279,7 +1279,9 @@ public class AngebotErstellen extends HorizontalLayout implements View, Receiver
 			if (tmpImg != null) { // ist null, wenn kein Bild-Dateiformat hochgeladen wurde (siehe Methode receiveUpload)
 				
 				//TODO Fehler: Bild ist leer
-				byte[] tmpImgBytes = resizeImage(tmpImg.toByteArray());
+				//TODO
+				//byte[] tmpImgBytes = resizeImage(tmpImg.toByteArray());
+				byte[] tmpImgBytes = tmpImg.toByteArray();
 				
 				Photo newPhoto = new Photo();
 				newPhoto.setPhoto_idOffer(currentOffer);
@@ -1290,6 +1292,9 @@ public class AngebotErstellen extends HorizontalLayout implements View, Receiver
 					newPhotos.add(newPhoto);
 			
 				}catch (NullPointerException ne) { //bei Angebot bearbeiten ist newPhotos nicht instantiiert
+					
+					System.out.println(ne.getStackTrace());
+					
 				}
 				
 				new PhotoProvider().addPhoto(newPhoto);

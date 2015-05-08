@@ -93,6 +93,9 @@ public class HousingUI extends UI {
 			event.getSession().setAttribute("buttonClicked", false);
 			System.out.println("Session ID" + VaadinSession.getCurrent().getSession().getId());
 			
+			//TODO
+			System.out.println("Session-ID: " + VaadinSession.getCurrent().getSession().getId());
+			
 		}
 		
 		/* (non-Javadoc)
@@ -184,7 +187,7 @@ public class HousingUI extends UI {
 		    @Override
 		    public void error(com.vaadin.server.ErrorEvent event) {
 		    	//Navigation zur Fehlerseite
-				navigator.addView("Error", new ErrorPage(event));
+				navigator.addView("Error", new ErrorPage(/*event*/));
 				navigator.navigateTo("Error");
 				
 				//TODO auskommentieren, damit der User die Fehlermeldungen nicht bekommt
