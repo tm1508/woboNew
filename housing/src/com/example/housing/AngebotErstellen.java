@@ -1,24 +1,18 @@
 package com.example.housing;
 
 import java.math.BigDecimal;
-import java.awt.Color;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
-import java.awt.image.RenderedImage;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.OutputStream;
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.imageio.ImageIO;
-import javax.swing.ImageIcon;
-import javax.xml.transform.stream.StreamSource;
 
 import com.example.housing.data.model.Offer;
 import com.example.housing.data.model.Photo;
@@ -26,16 +20,12 @@ import com.example.housing.data.model.User;
 import com.example.housing.data.provider.OfferProvider;
 import com.example.housing.data.provider.PhotoProvider;
 import com.example.housing.utility.Format;
-import com.example.housing.utility.PhotoUploader;
 import com.vaadin.data.Validator.InvalidValueException;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.server.Page;
-import com.vaadin.server.Resource;
-import com.vaadin.server.StreamResource;
 import com.vaadin.server.VaadinSession;
-import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.tapio.googlemaps.GoogleMap;
 import com.vaadin.tapio.googlemaps.client.LatLon;
 import com.vaadin.tapio.googlemaps.client.events.MarkerDragListener;
@@ -57,13 +47,14 @@ import com.vaadin.ui.Upload.SucceededEvent;
 import com.vaadin.ui.Upload.SucceededListener;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Button.ClickEvent;
-import com.vaadin.ui.Upload.FinishedEvent;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class AngebotErstellen.
  */
 public class AngebotErstellen extends HorizontalLayout implements View, Receiver, SucceededListener {
+
+	private static final long serialVersionUID = 1L;
 
 	/** The content. */
 	private VerticalLayout content;
@@ -985,11 +976,22 @@ public class AngebotErstellen extends HorizontalLayout implements View, Receiver
 
 		Upload bilderup = new Upload("Fotos hochladen (max. 5 Fotos pro Angebot):", this);
 		bilderup.addSucceededListener(this);
-		
+				
 		content.addComponent(bilder);
 		//content.addComponent(new Label());
 		content.addComponent(bilderup);
 		content.addComponent(new Label());		
+		
+		
+		//Bilder Löschen
+		List<Photo> photo = offer.getPhotos();
+		Iterator<Photo> it = photo.iterator();
+		int i = 0;
+		while(it.hasNext()){
+			Fotozeile f = new Fotozeile(it.next(), offer);
+			content.addComponent(f);
+			i++;
+		}
 
 		// Button speichern/aktivieren/deaktivieren
 		final CheckBox inactive = new CheckBox("deaktivieren");
