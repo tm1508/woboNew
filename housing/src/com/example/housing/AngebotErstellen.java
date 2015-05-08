@@ -61,6 +61,7 @@ public class AngebotErstellen extends HorizontalLayout implements View, Receiver
 	
 	private Double lat = null;
     private Double lon = null;
+    private Label title;
 
 	private Offer currentOffer;
 
@@ -259,7 +260,7 @@ public class AngebotErstellen extends HorizontalLayout implements View, Receiver
 		content = new VerticalLayout();
 		content.setMargin(true);
 
-		Label title = new Label();
+		title = new Label();
 		title.setImmediate(false);
 		title.setWidth("-1px");
 		title.setHeight("-1px");
@@ -315,8 +316,8 @@ public class AngebotErstellen extends HorizontalLayout implements View, Receiver
 		content.addComponent(hl0);
 		content.addComponent(new Label());
 		
-	    /** The kakola marker. */
-	    GoogleMapMarker kakolaMarker = new GoogleMapMarker(
+	   //Google Maps
+	    GoogleMapMarker mapMarker = new GoogleMapMarker(
 	            "Karlsruhe", new LatLon(49.00705, 8.40287),
 	            true, null);
 	    
@@ -324,9 +325,8 @@ public class AngebotErstellen extends HorizontalLayout implements View, Receiver
         googleMap.setCenter(new LatLon(49.00705, 8.40287));
         googleMap.setZoom(10);
         googleMap.setSizeFull();
-        kakolaMarker.setAnimationEnabled(false);
-        googleMap.addMarker(kakolaMarker);
-       
+        mapMarker.setAnimationEnabled(false);
+        googleMap.addMarker(mapMarker);
         googleMap.setMinZoom(4);
         googleMap.setMaxZoom(16);
         googleMap.setHeight("500px");
@@ -334,18 +334,15 @@ public class AngebotErstellen extends HorizontalLayout implements View, Receiver
         content.addComponent(googleMap);
         content.addComponent(new Label());
         
-       
         googleMap.addMarkerDragListener(new MarkerDragListener() {
 			@Override
 			public void markerDragged(GoogleMapMarker draggedMarker,
 					LatLon oldPosition) {
 				lat = draggedMarker.getPosition().getLat();
-				lon = draggedMarker.getPosition().getLon();
-				// TODO Auto-generated method stub
-				System.out.println(draggedMarker.getPosition().getLat()+"---"+draggedMarker.getPosition().getLon());
-				
+				lon = draggedMarker.getPosition().getLon();			
 			}
         });
+        
 		// Allgemeine Informationen
 		HorizontalLayout label = new HorizontalLayout();
 		label.setWidth("100%");
@@ -482,6 +479,7 @@ public class AngebotErstellen extends HorizontalLayout implements View, Receiver
 		//content.addComponent(new Label());
 		content.addComponent(bilderup);
 		content.addComponent(new Label());
+			
 
 		// Button speichern/aktivieren/deaktivieren
 		final CheckBox inactive = new CheckBox("deaktivieren");
@@ -704,7 +702,7 @@ public class AngebotErstellen extends HorizontalLayout implements View, Receiver
 		content = new VerticalLayout();
 		content.setMargin(true);
 		
-		Label title = new Label();
+		title = new Label();
 		title.setImmediate(false);
 		title.setWidth("-1px");
 		title.setHeight("-1px");
@@ -974,7 +972,7 @@ public class AngebotErstellen extends HorizontalLayout implements View, Receiver
 		content.addComponent(text);
 		content.addComponent(new Label());
 		
-		Label bilder = new Label("Bilder");
+		Label bilder = new Label("Bilder hinzufügen");
 		bilder.addStyleName("AbschnittLabel");
 
 		Upload bilderup = new Upload("Fotos hochladen (max. 5 Fotos pro Angebot):", this);
@@ -987,14 +985,20 @@ public class AngebotErstellen extends HorizontalLayout implements View, Receiver
 		
 		
 		//Bilder Löschen
+		Label bilderLoeschen = new Label("Bilder löschen");
+		bilderLoeschen.addStyleName("AbschnittLabel");
+		content.addComponent(bilderLoeschen);
 		List<Photo> photo = offer.getPhotos();
 		Iterator<Photo> it = photo.iterator();
-		int i = 0;
-		while(it.hasNext()){
-			Fotozeile f = new Fotozeile(it.next(), offer);
-			content.addComponent(f);
-			i++;
+		if(!it.hasNext()){
+			content.addComponent(new Label("Es wurden noch keine Bilder zu diesem Angebot hochgeladen."));
+		}else{
+			while(it.hasNext()){
+				Fotozeile f = new Fotozeile(it.next(), offer);
+				content.addComponent(f);
+			}
 		}
+		content.addComponent(new Label());	
 
 		// Button speichern/aktivieren/deaktivieren
 		final CheckBox inactive = new CheckBox("deaktivieren");
@@ -1308,7 +1312,17 @@ public class AngebotErstellen extends HorizontalLayout implements View, Receiver
 				not.setStyleName("success");
 				not.setDelayMsec(300);
 				not.show(Page.getCurrent());
-			
+				
+				if(!title.getValue().equals("Wohnungsangebot erstellen")){
+					int id = currentOffer.getIdOffer();//Angebot muss neu aus der DB geladen werden
+					OfferProvider offerProvider = new OfferProvider();
+					Offer newOffer = offerProvider.find(id);
+					String name = "AngebotErstellen";
+					getUI().getNavigator().addView(name,
+							new AngebotErstellen(newOffer));
+					getUI().getNavigator().navigateTo(name);
+				}
+
 		    }
 			
 		} else {

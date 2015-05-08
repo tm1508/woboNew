@@ -124,7 +124,6 @@ public class ErrorPage extends HorizontalLayout implements View {
 	 */
 	public void setContent() {
 
-		// title
 		titleLabel = new Label();
 		titleLabel.setImmediate(false);
 		titleLabel.setWidth("-1px");
@@ -133,7 +132,6 @@ public class ErrorPage extends HorizontalLayout implements View {
 		titleLabel.addStyleName("title");
 		content.addComponent(titleLabel);
 
-		// text
 		errorTextLabel = new Label();
 		errorTextLabel.setImmediate(false);
 		errorTextLabel.setWidth("-1px");
