@@ -1,4 +1,3 @@
-
 package com.example.housing;
 
 import java.math.BigDecimal;
@@ -259,7 +258,6 @@ public class AngebotErstellen extends HorizontalLayout implements View, Receiver
 
 		content = new VerticalLayout();
 		content.setMargin(true);
-
 		Label title = new Label();
 		title.setImmediate(false);
 		title.setWidth("-1px");
@@ -974,7 +972,6 @@ public class AngebotErstellen extends HorizontalLayout implements View, Receiver
 		
 		Label bilder = new Label("Bilder");
 		bilder.addStyleName("AbschnittLabel");
-
 		Upload bilderup = new Upload("Fotos hochladen (max. 5 Fotos pro Angebot):", this);
 		bilderup.addSucceededListener(this);
 				
@@ -1153,11 +1150,9 @@ public class AngebotErstellen extends HorizontalLayout implements View, Receiver
 					currentOffer.setGender(gender);
 					currentOffer.setText(text.getValue());
 					currentOffer.setInactive(inactive.getValue());
-
 					currentOffer.setLatitude(BigDecimal.valueOf(lat));
 					currentOffer.setLongitude(BigDecimal.valueOf(lon));
 				
-
 					
 					Offer o = new OfferProvider().find(currentOffer.getIdOffer());
 					
