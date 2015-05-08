@@ -109,7 +109,7 @@ private void setContent() {
 		content.addComponent(title);
 		
 		//Infolabel
-		Label infoText = new Label("Hier können Sie eine Nachricht an den Anbieter des Wohnungsangebotes verfassen. Bitten Sie ihn um die Beseitigung illegaler, nicht gewünschter oder nicht mehr aktueller Inhalte.");
+		Label infoText = new Label("Hier können Sie eine Nachricht an den Anbieter des Wohnungsangebotes verfassen. Bitten Sie ihn beispielsweise um die Entfernung illegaler, nicht gewünschter oder nicht mehr aktueller Inhalte.");
 		content.addComponent(infoText);
 		
 		//text
