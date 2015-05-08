@@ -71,13 +71,20 @@ $v-background-color: #F7F7F7;
   	
 //Grobaufbau der Seite (rote Panels)
 	 .v-panel-red {
-     	//background-color: #7e878e;
-     	//background-color: #e2001a;
      	background-color:#E65C5C;
      	box-shadow: none;
      	border: 0px;
      	border-radius: 0px;
   	}
+  	
+//Footer
+	.v-label-footer{
+		margin-top:10px;
+	}
+	
+	.v-link-footer{
+		margin-top:10px;
+	}
   
 //Layout der Navigationsleiste
   	.v-verticallayout-navigation{
@@ -90,7 +97,6 @@ $v-background-color: #F7F7F7;
   	.v-horizontallayout-footer{
   		margin-top:0px;
   		padding-top: 0px;
-  		//padding-bottom:0px;
   	}
   	
 
@@ -214,9 +220,6 @@ $v-background-color: #F7F7F7;
 	  	-webkit-animation-iteration-count: 1;
 	  	-webkit-animation-delay: 0s;
 	}
-  	
-  	
-  	
 
   	//Ganzes UI
   	
@@ -238,7 +241,6 @@ $v-background-color: #F7F7F7;
   	}
   	
 
-  	
   	//Profil
   	.v-button-loeschen{
 		margin-top:10px;
