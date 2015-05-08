@@ -13,6 +13,7 @@ import com.vaadin.ui.Button;
 import com.vaadin.ui.CustomComponent;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Image;
+import com.vaadin.ui.Label;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Button.ClickEvent;
 
@@ -27,7 +28,7 @@ public class Fotozeile extends CustomComponent {
 		buildMainLayout();
 		setCompositionRoot(mainLayout);
 		HorizontalLayout ergebnisLayout = new HorizontalLayout();
-		ergebnisLayout.setMargin(true);
+		ergebnisLayout.setMargin(false);
 		ergebnisLayout.setHeight("100px");
 
 		//Bild
@@ -49,6 +50,7 @@ public class Fotozeile extends CustomComponent {
 		image.setWidth("80px");
 		image.markAsDirty();
 		ergebnisLayout.addComponent(image);
+		ergebnisLayout.addComponent(new Label());
 
 		//Loeschen Button
 		Button loeschenButton = new Button("Dieses Bild löschen");
