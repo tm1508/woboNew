@@ -261,7 +261,6 @@ public class Registrierung extends HorizontalLayout implements View{
 			password_1.setHeight("-1px");
 			password_1.setRequired(true);
 			password_1.setRequiredError("Das Feld darf nicht leer sein.");
-			password_1.addValidator(new StringLengthValidator("Das Passwort ist zu kurz. Es muss mindestens 5 Zeichen lang sein.", 5, null, false));
 			password_1.setIcon(FontAwesome.KEY);
 			passwordLayout.addComponent(password_1);
 					
@@ -274,7 +273,6 @@ public class Registrierung extends HorizontalLayout implements View{
 			password_2.setHeight("-1px");
 			password_2.setRequired(true);
 			password_2.setRequiredError("Das Feld darf nicht leer sein.");
-			password_2.addValidator(new StringLengthValidator("Das Passwort ist zu kurz. Es muss mindestens 5 Zeichen lang sein.", 5, null, false));
 			password_2.setIcon(FontAwesome.KEY);
 			passwordLayout.addComponent(password_2);
 		
@@ -494,7 +492,13 @@ public class Registrierung extends HorizontalLayout implements View{
 			email_2.setComponentError(new UserError("Die beiden E-Mail Adressen stimmen nicht überein."));
 			erfolgreich=false;
 		}
-			
+		
+		System.out.println(password_1.getValue());
+		System.out.println(password_1.getValue().length());
+		if(password_1.getValue().length()< 5){
+			password_1.setComponentError(new UserError("Das Passwort ist zu kurz. Es muss mindestens 5 Zeichen beinhalten."));
+			erfolgreich=false;
+		}
 			
 		if(!password_1.getValue().equals(password_2.getValue())){
 			System.out.println(password_1.getValue());
