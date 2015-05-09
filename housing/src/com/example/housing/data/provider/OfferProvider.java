@@ -317,6 +317,7 @@ public class OfferProvider extends BaseProvider<Offer> {
 		return filterErgebnis;
 	}
 	
+	
 	//berechnet die Distanz zwischen zwei Punkten
 	public static double getDistance(double lat1, double lat2, double lon1, double lon2){
 		double dx = 71.5 * (lon1 - lon2);

@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.IOException;
 import java.sql.Date;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import javax.imageio.ImageIO;
@@ -16,7 +17,12 @@ import com.example.housing.data.model.Offer;
 import com.example.housing.data.model.Photo;
 import com.example.housing.data.model.User;
 import com.example.housing.utility.Format;
+import com.example.housing.utility.SortByMonatsmiete;
+import com.example.housing.utility.SortByOfferTime;
+import com.example.housing.utility.SortByTitle;
 import com.vaadin.data.Buffered;
+import com.vaadin.data.Property.ValueChangeEvent;
+import com.vaadin.data.Property.ValueChangeListener;
 import com.vaadin.event.LayoutEvents.LayoutClickEvent;
 import com.vaadin.event.LayoutEvents.LayoutClickListener;
 import com.vaadin.navigator.View;
@@ -32,6 +38,7 @@ import com.vaadin.ui.GridLayout;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Image;
 import com.vaadin.ui.Label;
+import com.vaadin.ui.NativeSelect;
 import com.vaadin.ui.Panel;
 import com.vaadin.ui.TextArea;
 import com.vaadin.ui.VerticalLayout;
@@ -46,6 +53,7 @@ public class Suchergebnis extends HorizontalLayout implements View {
 	/** The content. */
 	VerticalLayout content;
 	
+	String sort= null;
 	/**
 	 * Instantiates a new suchergebnis.
 	 */
@@ -163,12 +171,72 @@ public class Suchergebnis extends HorizontalLayout implements View {
 			
 		} else {
 			
-			Label ergebnisString = new Label("Ihre Suche ergab " + angebote.size()+" Treffer:");
+			final Label ergebnisString = new Label("Ihre Suche ergab " + angebote.size()+" Treffer:");
 			ergebnisString.addStyleName("AbschnittLabel");
+						
 			content.addComponent(ergebnisString);
 			
+			
+			final NativeSelect sortBy = new NativeSelect("Sortieren der Ergebnisse nach");
+			sortBy.setNullSelectionAllowed(false);
+			sortBy.addItem(1);
+			sortBy.setItemCaption(1, "Titel (alphabetisch)");
+			sortBy.addItem(2);
+			sortBy.setItemCaption(2, "Datum des Angebots (neustes zuerst)");
+			sortBy.addItem(3);
+			sortBy.setItemCaption(3, "Monatsmiete (billigste zuerst)");
+			sortBy.setValue(2);
+			content.addComponent(sortBy);
+			sortBy.addValueChangeListener(new ValueChangeListener() {
+				private static final long serialVersionUID = 1L;
+				@Override
+				public void valueChange(final ValueChangeEvent event) {
+					sort = event.getProperty().getValue().toString();
+					if(sort != null){
+						if(sortBy.getValue().equals(1)){
+							Collections.sort(angebote, new SortByTitle());
+							content.removeAllComponents();
+							content.addComponent(ergebnisString);
+							content.addComponent(sortBy);
+							content.addComponent(new Label());
+							for(Offer o : angebote) {
+								content.addComponent(new Listenzeile(o));
+							}
+						}
+						
+						if(sortBy.getValue().equals(2)){
+							Collections.sort(angebote, new SortByOfferTime());
+							content.removeAllComponents();
+							content.addComponent(ergebnisString);
+							content.addComponent(sortBy);
+							content.addComponent(new Label());
+							for(Offer o : angebote) {
+								content.addComponent(new Listenzeile(o));
+							}
+
+						}
+						
+						if(sortBy.getValue().equals(3)){
+							Collections.sort(angebote, new SortByMonatsmiete());
+							content.removeAllComponents();
+							content.addComponent(ergebnisString);
+							content.addComponent(sortBy);
+							content.addComponent(new Label());
+							for(Offer o : angebote) {
+								content.addComponent(new Listenzeile(o));
+							}
+
+						}
+					}
+				}
+			});
+			
+
+
+		
 		}
 		
+		content.addComponent(new Label());
 		for(Offer o : angebote) {
 			
 			content.addComponent(new Listenzeile(o));
