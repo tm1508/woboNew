@@ -273,7 +273,7 @@ public class ForgotPasswordWindow extends Window{
 		String path = UI.getCurrent().getPage().getLocation().getHost() +":"+UI.getCurrent().getPage().getLocation().getPort()+UI.getCurrent().getPage().getLocation().getPath()+"#!Startseite/";
 		String code = GenerateCode.generateCode(email_1.getValue());
 		// Text der E-Mail mit Style-Informationen
-		String body = "<meta charset='utf-8'/><span style='color: #000000' 'font-family: Arial, sans-serif''font-size: 16pt' >Sehr geehrte Nutzerin, sehr geehrter Nutzer,"
+		String body = "<meta charset='utf-8'/><img src='http://193.196.7.216:8080/housing/APP/connector/0/12/source/dh.PNG'/><br/><br/><span style='color: #000000' 'font-family: Arial, sans-serif''font-size: 16pt' >Sehr geehrte Nutzerin, sehr geehrter Nutzer,"
 					 +"<br/><br/>Ihr Passwort wurde zurückgesetzt. Ihr neues Passwort lautet:" + password +". Bitte folgen sie dem Link unten, dann können Sie sich wieder wie gewohnt einloggen. Dadurch wird sichergestellt, dass keine Unbefungten Ihre E-Mail-Adresse und Ihr Benutzerkonto verwenden können. <br/><br/> Unter \"Persönlichen Einstellungen\" können Sie ihr Passwort ändern.</span>"
 					 +"<br/><span style='color: #e2001a' 'font-family: Arial, sans-serif''font-size: 20pt' >"
 					 + "<a href='http://"+path+code+"'>weiter zum Login</a>"

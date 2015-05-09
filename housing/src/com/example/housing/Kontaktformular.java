@@ -21,6 +21,7 @@ import com.vaadin.ui.Notification;
 import com.vaadin.ui.Panel;
 import com.vaadin.ui.RichTextArea;
 import com.vaadin.ui.TextField;
+import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Notification.Type;
@@ -211,8 +212,8 @@ public class Kontaktformular extends HorizontalLayout implements View{
 
 	
 	protected void sendEMail() {
-		
-		String bodyAnfrager = "<meta charset='utf-8'/><span style='color: #000000' 'font-family: Arial, sans-serif''font-size: 16pt' >Sehr geehrter Administrator,"
+			
+		String bodyAnfrager = "<meta charset='utf-8'/><img src='http://193.196.7.216:8080/housing/APP/connector/0/12/source/dh.PNG'/><br/><br/><span style='color: #000000' 'font-family: Arial, sans-serif''font-size: 16pt' >Sehr geehrter Administrator,"
 				+"<br/><br/>Sie haben eine Frage zu der DHBW-Wohungsbörse erhalten:"
 				+"<br/><br/>" + text.getValue() 
 				+"<br/>" + "Kontaktdaten des Absenders: "

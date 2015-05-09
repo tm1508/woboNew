@@ -531,7 +531,7 @@ public class Registrierung extends HorizontalLayout implements View{
 		String path = UI.getCurrent().getPage().getLocation().getHost() +":"+UI.getCurrent().getPage().getLocation().getPort()+UI.getCurrent().getPage().getLocation().getPath()+"#!Startseite/";
 		String code = GenerateCode.generateCode(email_1.getValue());
 		// Text der E-Mail mit Style-Informationen
-		String body = "<meta charset='utf-8'/><span style='color: #000000' 'font-family: Arial, sans-serif''font-size: 16pt' >Sehr geehrte Nutzerin, sehr geehrter Nutzer,"
+		String body = "<meta charset='utf-8'/><img src='http://193.196.7.216:8080/housing/APP/connector/0/12/source/dh.PNG'/><br/><br/><span style='color: #000000' 'font-family: Arial, sans-serif''font-size: 16pt' >Sehr geehrte Nutzerin, sehr geehrter Nutzer,"
 					 +"<br/><br/>vielen Dank, dass Sie sich für uns entschieden haben. Damit Sie sich erstmalig anmelden können, folgen Sie bitte dem folgenden Link. Dadurch wird sichergestellt, dass keine Unbefungten Ihre E-Mail-Adresse dazu verwenden können, um sich bei uns zu registrieren.</span>"
 					 +"<br/><span style='color: #e2001a' 'font-family: Arial, sans-serif''font-size: 20pt' >"
 					//+ "<a href='http://193.196.7.216:8080/wohnen/#!Startseite/"+email_1.getValue()+"'>Weiter zum Login</a>"
