@@ -123,6 +123,15 @@ public class Startseite extends HorizontalLayout implements View{
 		content = new VerticalLayout();
 		content.setMargin(true);
 		
+		
+		// title
+		Label title = new Label();
+		title.setImmediate(false);
+		title.setWidth("-1px");
+		title.setHeight("-1px");
+		title.setValue("Willkommen bei der Wohnungsbörse der DHBW Karlsruhe");
+		title.addStyleName("title");
+		content.addComponent(title);
 	
 		
 		//Horizontales Layout fuer Begrüßungstext und Suchfeld
