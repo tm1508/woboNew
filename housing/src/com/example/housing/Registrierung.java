@@ -11,7 +11,6 @@ import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;
 import com.vaadin.data.Validator.InvalidValueException;
 import com.vaadin.data.validator.EmailValidator;
-import com.vaadin.data.validator.StringLengthValidator;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.server.FontAwesome;
@@ -23,7 +22,6 @@ import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
-import com.vaadin.ui.Link;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.Panel;
 import com.vaadin.ui.UI;
@@ -84,10 +82,10 @@ public class Registrierung extends HorizontalLayout implements View{
 	private CheckBox agbs;
 	
 	/** The link_1. */
-	private Button link_1;
+	private Button haftungsausschlussLink;
 	
 	/** The button. */
-	private Button button;
+	private Button registrierungAbschliessen;
 
 
 	/* (non-Javadoc)
@@ -359,14 +357,14 @@ public class Registrierung extends HorizontalLayout implements View{
 		agbLayout.addComponent(agbs);
 		
 		// link_1
-		link_1 = new Button();
-		link_1.setStyleName("link");
-		link_1.setCaption("Haftungsausschluss");
-		link_1.setImmediate(false);
-		link_1.setWidth("-1px");
-		link_1.setHeight("-1px");
-		link_1.setIcon(FontAwesome.EXTERNAL_LINK);
-		link_1.addClickListener(new Button.ClickListener(){
+		haftungsausschlussLink = new Button();
+		haftungsausschlussLink.setStyleName("link");
+		haftungsausschlussLink.setCaption("Haftungsausschluss");
+		haftungsausschlussLink.setImmediate(false);
+		haftungsausschlussLink.setWidth("-1px");
+		haftungsausschlussLink.setHeight("-1px");
+		haftungsausschlussLink.setIcon(FontAwesome.EXTERNAL_LINK);
+		haftungsausschlussLink.addClickListener(new Button.ClickListener(){
 			private static final long serialVersionUID = 1L;
 			public void buttonClick(ClickEvent event) {
 				String name = "Impressum";
@@ -374,24 +372,23 @@ public class Registrierung extends HorizontalLayout implements View{
 				getUI().getNavigator().navigateTo(name);
 			}
 		});
-		agbLayout.addComponent(link_1);
-		
+		agbLayout.addComponent(haftungsausschlussLink);		
 		content.addComponent(agbLayout);
-		
 		content.addComponent(new Label());
 		
 		// button
-		button = new Button();
-		button.setStyleName("speichern");
-		button.setIcon(FontAwesome.SAVE);
-		button.setCaption("Registrierung abschließen");
-		button.setImmediate(true);
-		button.setDescription("Abschließen der Registrierung, danach können Sie sich anmelden");
-		button.setWidth("-1px");
-		button.setHeight("-1px");
-		content.addComponent(button);
+		registrierungAbschliessen = new Button();
+		registrierungAbschliessen.setStyleName("speichern");
+		registrierungAbschliessen.setIcon(FontAwesome.SAVE);
+		registrierungAbschliessen.setCaption("Registrierung abschließen");
+		registrierungAbschliessen.setImmediate(true);
+		registrierungAbschliessen.setDescription("Abschließen der Registrierung, danach können Sie sich anmelden");
+		registrierungAbschliessen.setWidth("-1px");
+		registrierungAbschliessen.setHeight("-1px");
+		content.addComponent(registrierungAbschliessen);
+		
 		//Abschließen der Registrierung
-		button.addClickListener(new Button.ClickListener() {
+		registrierungAbschliessen.addClickListener(new Button.ClickListener() {
 			public void buttonClick(ClickEvent event) {
 				
 				//Validierung der Felder
@@ -411,7 +408,6 @@ public class Registrierung extends HorizontalLayout implements View{
 						
 						Notification not = new Notification("Die Registrierung war erfolgreich. Sie haben eine Email zur Aktivierung erhalten.",Type.HUMANIZED_MESSAGE);//Meldung an den Nutzer
 						not.setStyleName("success");
-						//not.setIcon(FontAwesome.CHECK_SQUARE_O);
 						not.setDelayMsec(300);
 						not.show(Page.getCurrent());
 					}else{//ein Nutzer mit dieser E-Mail-Adresse existiert bereits
@@ -421,7 +417,6 @@ public class Registrierung extends HorizontalLayout implements View{
 						not.show(Page.getCurrent());
 					}
 					
-
 				}else{//Registrierung nicht erfolgreich
 					Notification not = new Notification("Die Registrierung war nicht erfolgreich. Bitte überprüfen Sie Ihre Eingaben.",Type.HUMANIZED_MESSAGE);//Meldung an den Nutzer
 					not.setStyleName("failure");
@@ -538,16 +533,10 @@ public class Registrierung extends HorizontalLayout implements View{
 		String body = "<meta charset='utf-8'/><img src='http://193.196.7.216:8080/housing/APP/connector/0/12/source/dh.PNG'/><br/><br/><span style='color: #000000' 'font-family: Arial, sans-serif''font-size: 16pt' >Sehr geehrte Nutzerin, sehr geehrter Nutzer,"
 					 +"<br/><br/>vielen Dank, dass Sie sich für uns entschieden haben. Damit Sie sich erstmalig anmelden können, folgen Sie bitte dem folgenden Link. Dadurch wird sichergestellt, dass keine Unbefungten Ihre E-Mail-Adresse dazu verwenden können, um sich bei uns zu registrieren.</span>"
 					 +"<br/><span style='color: #e2001a' 'font-family: Arial, sans-serif''font-size: 20pt' >"
-					//+ "<a href='http://193.196.7.216:8080/wohnen/#!Startseite/"+email_1.getValue()+"'>Weiter zum Login</a>"
-					 + "<a href='http://"+path+code+"'>weiter zum Login</a>"
-					 + "</span><br/><br/>Mit freundlichen Grüßen<br/>Ihr DHBW Wohungsbörsen-Team<p/><span style='color: #e2001a' 'font-family: Arial, sans-serif''font-size: 8pt' >Anschrift:<br/>DHBW Karlsruhe<br/>Baden-Wuerttemberg Cooperative State University Karlsruhe<br />Erzbergerstraße 121 . 76133 Karlsruhe <br />Postfach 10 01 36 . 76231 Karlsruhe   <br />Telefon +49.721.9735-5 <br />Telefax +49.721.9735-600 <br />E-Mail: dreischer@dhbw-karlsruhe.de<br /><br/><br/>Ansprechpartner:<br/> <br />Dr. Anita Dreischer<br /><br/><b>Copyright DHBW Karlsruhe. Alle Rechte vorbehalten.</b></span>";
+					 +"<a href='http://"+path+code+"'>weiter zum Login</a>"
+					 +"</span><br/><br/>Mit freundlichen Grüßen<br/>Ihr DHBW Wohungsbörsen-Team<p/><span style='color: #e2001a' 'font-family: Arial, sans-serif''font-size: 8pt' >Anschrift:<br/>DHBW Karlsruhe<br/>Baden-Wuerttemberg Cooperative State University Karlsruhe<br />Erzbergerstraße 121 . 76133 Karlsruhe <br />Postfach 10 01 36 . 76231 Karlsruhe   <br />Telefon +49.721.9735-5 <br />Telefax +49.721.9735-600 <br />E-Mail: dreischer@dhbw-karlsruhe.de<br /><br/><br/>Ansprechpartner:<br/> <br />Dr. Anita Dreischer<br /><br/><b>Copyright DHBW Karlsruhe. Alle Rechte vorbehalten.</b></span>";
 		System.out.println(body);
 		//E-Mail senden
 		SendEMail.send(email_1.getValue(), "wohnungsboerse_dh@web.de", "Danke für Ihre Registrierung", body);
 	}
-
-
-
 }
-
-

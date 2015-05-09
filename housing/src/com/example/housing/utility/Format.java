@@ -4,10 +4,6 @@ import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.util.regex.Pattern;
 
-import com.vaadin.server.FontAwesome;
-import com.vaadin.server.Page;
-import com.vaadin.ui.Notification;
-
 // TODO: Auto-generated Javadoc
 /**
  * The Class Format.
