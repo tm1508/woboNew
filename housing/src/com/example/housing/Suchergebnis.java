@@ -1,63 +1,34 @@
 package com.example.housing;
 
-import java.io.ByteArrayInputStream;
-import java.io.File;
-import java.io.IOException;
-import java.sql.Date;
-import java.util.ArrayList;
+
 import java.util.Collections;
 import java.util.List;
 
-import javax.imageio.ImageIO;
-import javax.imageio.stream.ImageInputStream;
-import javax.swing.GroupLayout.Alignment;
-import javax.swing.ImageIcon;
-
 import com.example.housing.data.model.Offer;
-import com.example.housing.data.model.Photo;
 import com.example.housing.data.model.User;
-import com.example.housing.utility.Format;
 import com.example.housing.utility.SortByMonatsmiete;
 import com.example.housing.utility.SortByOfferTime;
 import com.example.housing.utility.SortByTitle;
-import com.vaadin.data.Buffered;
 import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;
-import com.vaadin.event.LayoutEvents.LayoutClickEvent;
-import com.vaadin.event.LayoutEvents.LayoutClickListener;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
-import com.vaadin.server.FileResource;
-import com.vaadin.server.VaadinService;
 import com.vaadin.server.VaadinSession;
-import com.vaadin.ui.Button;
-import com.vaadin.ui.CheckBox;
-import com.vaadin.ui.Component;
-import com.vaadin.ui.DateField;
-import com.vaadin.ui.GridLayout;
 import com.vaadin.ui.HorizontalLayout;
-import com.vaadin.ui.Image;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.NativeSelect;
 import com.vaadin.ui.Panel;
-import com.vaadin.ui.TextArea;
 import com.vaadin.ui.VerticalLayout;
-import com.vaadin.ui.Button.ClickEvent;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class Suchergebnis.
  */
 public class Suchergebnis extends HorizontalLayout implements View {
-	
-	/** The content. */
-	VerticalLayout content;
-	
-	String sort= null;
-	/**
-	 * Instantiates a new suchergebnis.
-	 */
+	private static final long serialVersionUID = 1L;
 
+	VerticalLayout content;
+	String sort= null;//Auswahlbox für Sortierung der Liste
 	List<Offer> angebote; 
 	
 	//Übergabe der Ergebnis aus der Suche
@@ -67,15 +38,12 @@ public class Suchergebnis extends HorizontalLayout implements View {
 	 * @param offers the offers
 	 */
 	public Suchergebnis(List<Offer> offers){
-		
 		this.angebote = offers;
 		
 		content = new VerticalLayout();
-				
     	content.setMargin(true);
 		content.setSizeFull();
 		content.setSpacing(true);
-		
 		this.setWidth("100%");
 		
 		//linkes rotes Panel
@@ -148,11 +116,9 @@ public class Suchergebnis extends HorizontalLayout implements View {
 		this.setExpandRatio(p1, 1);
 	}
 
-
 	/**
 	 * Sets the content.
 	 */
-	@SuppressWarnings("deprecation")
 	public void setContent(){
 		
 		Label title = new Label();
@@ -170,13 +136,12 @@ public class Suchergebnis extends HorizontalLayout implements View {
 			content.addComponent(ergebnisString);
 			
 		} else {
-			
+			//Anzahl der Treffer
 			final Label ergebnisString = new Label("Ihre Suche ergab " + angebote.size()+" Treffer:");
-			ergebnisString.addStyleName("AbschnittLabel");
-						
+			ergebnisString.addStyleName("AbschnittLabel");	
 			content.addComponent(ergebnisString);
 			
-			
+			//Sortieren der Liste
 			final NativeSelect sortBy = new NativeSelect("Sortieren der Ergebnisse nach");
 			sortBy.setNullSelectionAllowed(false);
 			sortBy.addItem(1);
@@ -195,65 +160,39 @@ public class Suchergebnis extends HorizontalLayout implements View {
 					if(sort != null){
 						if(sortBy.getValue().equals(1)){
 							Collections.sort(angebote, new SortByTitle());
-							content.removeAllComponents();
-							content.addComponent(ergebnisString);
-							content.addComponent(sortBy);
-							content.addComponent(new Label());
-							for(Offer o : angebote) {
-								content.addComponent(new Listenzeile(o));
-							}
+							reloadPage();
 						}
-						
 						if(sortBy.getValue().equals(2)){
 							Collections.sort(angebote, new SortByOfferTime());
-							content.removeAllComponents();
-							content.addComponent(ergebnisString);
-							content.addComponent(sortBy);
-							content.addComponent(new Label());
-							for(Offer o : angebote) {
-								content.addComponent(new Listenzeile(o));
-							}
-
+							reloadPage();
 						}
-						
 						if(sortBy.getValue().equals(3)){
 							Collections.sort(angebote, new SortByMonatsmiete());
-							content.removeAllComponents();
-							content.addComponent(ergebnisString);
-							content.addComponent(sortBy);
-							content.addComponent(new Label());
-							for(Offer o : angebote) {
-								content.addComponent(new Listenzeile(o));
-							}
-
+							reloadPage();
 						}
 					}
 				}
+				
+				public void reloadPage(){//alle Komponenten der Seite müssen neu geladen werden
+					content.removeAllComponents();
+					content.addComponent(ergebnisString);
+					content.addComponent(sortBy);
+					content.addComponent(new Label());
+					for(Offer o : angebote) {
+						content.addComponent(new Listenzeile(o));
+					}
+				}
 			});
-			
 
-
-		
 		}
 		
 		content.addComponent(new Label());
 		for(Offer o : angebote) {
-			
 			content.addComponent(new Listenzeile(o));
-		
 		}
-
 	}
 
-	/* (non-Javadoc)
-	 * @see com.vaadin.navigator.View#enter(com.vaadin.navigator.ViewChangeListener.ViewChangeEvent)
-	 */
 	@Override
 	public void enter(ViewChangeEvent event) {
-		// TODO Auto-generated method stub
-		
 	}
-
 }
-
-
