@@ -1319,9 +1319,18 @@ public class AngebotErstellen extends HorizontalLayout implements View, Receiver
 		
 			if (tmpImg != null) { // ist null, wenn kein Bild-Dateiformat hochgeladen wurde (siehe Methode receiveUpload)
 				
-				//TODO
-				//byte[] tmpImgBytes = resizeImage(tmpImg.toByteArray());
 				byte[] tmpImgBytes = tmpImg.toByteArray();
+				
+				//Größe prüfen
+				if(tmpImgBytes.length > 1050000){
+					
+					Notification failFileSize = new Notification("Bitte laden Sie eine kleinere Bilddatei hoch (max. 1MB)!", Type.HUMANIZED_MESSAGE);
+					failFileSize.setStyleName("failure");
+					failFileSize.setDelayMsec(300);
+					failFileSize.show(Page.getCurrent());
+					return;
+					
+				}
 				
 				Photo newPhoto = new Photo();
 				newPhoto.setPhoto_idOffer(currentOffer);
@@ -1345,6 +1354,7 @@ public class AngebotErstellen extends HorizontalLayout implements View, Receiver
 					int id = currentOffer.getIdOffer();//Angebot muss neu aus der DB geladen werden
 					OfferProvider offerProvider = new OfferProvider();
 					Offer newOffer = offerProvider.find(id);
+					
 					String name = "AngebotErstellen";
 					getUI().getNavigator().addView(name,
 							new AngebotErstellen(newOffer));
