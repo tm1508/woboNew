@@ -49,7 +49,6 @@ public class HousingUI extends UI {
 	 */
 	@WebServlet(value = "/*", asyncSupported = true)
 	@VaadinServletConfiguration(productionMode = false, ui = HousingUI.class, widgetset = "com.example.housing.HousingWidgetset")
-	
 	public static class Servlet extends VaadinServlet implements SessionInitListener, SessionDestroyListener{
 
 		/* (non-Javadoc)
@@ -86,7 +85,7 @@ public class HousingUI extends UI {
 		 * @see com.vaadin.server.SessionInitListener#sessionInit(com.vaadin.server.SessionInitEvent)
 		 */
 		@Override
-		public void sessionInit(SessionInitEvent event)throws ServiceException {
+		public void sessionInit(SessionInitEvent event) throws ServiceException {
 			event.getSession().setAttribute("login", false);//Ist ein Nutzer eingeloggt? true=ja, false=nein
 			event.getSession().setAttribute("activated", "");//speichern des Requestparameters für die Aktivierung
 			event.getSession().setAttribute(User.class, null);//evtl. speichern des eingeloggten Users	

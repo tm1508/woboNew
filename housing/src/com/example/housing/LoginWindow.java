@@ -140,9 +140,6 @@ public class LoginWindow extends Window{
 								VaadinSession.getCurrent().setAttribute(User.class, u);//User-Objekt in der Session speichern
 								VaadinSession.getCurrent().setAttribute("login", true);//Login-Attribut auf true setzen (wird auf jeder Seite abgefragt, um zu prüfen welche Navigationsleiste angezeigt werden soll)
 								
-								//TODO
-								System.out.println("Session-ID: " + VaadinSession.getCurrent().getSession().getId());
-								
 								String name = "Startseite";
 								getUI().getNavigator().addView(name, new Startseite());
 								getUI().getNavigator().navigateTo(name);

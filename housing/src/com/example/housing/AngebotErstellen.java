@@ -599,37 +599,42 @@ public class AngebotErstellen extends HorizontalLayout implements View, Receiver
 						
 					} catch (NumberFormatException nfe) {
 						
-						Notification not = new Notification("Bitte überprüfen Sie Ihre Eingaben.");
-						not.setDelayMsec(300);
-						not.setStyleName("failure");
-						not.show(Page.getCurrent());
+						Notification failNumberFormat = new Notification("Bitte überprüfen Sie Ihre Eingaben.");
+						failNumberFormat.setDelayMsec(300);
+						failNumberFormat.setStyleName("failure");
+						failNumberFormat.show(Page.getCurrent());
 						return;
 						
 					}
-					try {
+					
+					try { //falls in Anzahl Mitbewohner keine richtige Zahl eingetragen wurde
 						
 						currentOffer.setNumberOfRoommate(Integer.parseInt(roomMates.getValue()));
 						
 					} catch (Exception e) {
 						
-						Notification not = new Notification("Bitte überprüfen Sie Ihre Eingaben.");
-						not.setDelayMsec(300);
-						not.setStyleName("failure");
-						not.show(Page.getCurrent());
+						Notification failNumberFormat = new Notification("Bitte überprüfen Sie Ihre Eingaben.");
+						failNumberFormat.setDelayMsec(300);
+						failNumberFormat.setStyleName("failure");
+						failNumberFormat.show(Page.getCurrent());
 						return;
+						
 					}
+					
 					currentOffer.setOffer_idUser(VaadinSession.getCurrent().getAttribute(User.class));
 					currentOffer.setTitle(titel.getValue());
 					currentOffer.setStreet(street.getValue());
 					currentOffer.setZip(zip.getValue());
 					currentOffer.setCity(city.getValue());
 					currentOffer.setStartDate(startDate.getValue());
+					
 					try { // überprüft ob ein Enddatum angegeben ist, da die
 							// Angabe optional ist
 						currentOffer.setEndDate(endDate.getValue());
 						
 					} catch (NullPointerException e) {
 					}
+					
 					currentOffer.setType(type);
 					currentOffer.setInternet(internet.getValue());
 					currentOffer.setFurnished(furnished.getValue());
@@ -639,31 +644,45 @@ public class AngebotErstellen extends HorizontalLayout implements View, Receiver
 					currentOffer.setGender(gender);
 					currentOffer.setText(text.getValue());
 					currentOffer.setInactive(inactive.getValue());
+					
 					if(lat != null){
 						currentOffer.setLatitude(BigDecimal.valueOf(lat));
 						currentOffer.setLongitude(BigDecimal.valueOf(lon));
 					}
 
-					
-					new OfferProvider().alterOffer(currentOffer); // neues Angebot in die DB schreiben
-					
-					Offer o = new OfferProvider().find(currentOffer.getIdOffer()); //aktualisiertes Angebot auslesen für Weiterleitung auf Einzelansicht
-					
 					VaadinSession.getCurrent().setAttribute("buttonClicked", true);
 					
-					String name = "Einzelansicht";
-					getUI().getNavigator().addView(name, new Einzelansicht(o));
-					getUI().getNavigator().navigateTo(name);
+					if (new OfferProvider().alterOffer(currentOffer)) { //neues Angebot in die DB schreiben
+						
+						Offer o = new OfferProvider().find(currentOffer.getIdOffer());
+						
+						Notification success = new Notification("Ihr neues Angebot wurde gespeichert.", Type.HUMANIZED_MESSAGE);
+						success.setStyleName("success");
+						success.setDelayMsec(300);
+						success.show(Page.getCurrent());
+						
+						String name = "Einzelansicht";
+						getUI().getNavigator().addView(name, new Einzelansicht(o));
+						getUI().getNavigator().navigateTo(name);
+						
+					} else { //Fehler beim DB-Zugriff
+						
+						Notification failDB = new Notification("Das Angebot konnte nicht gespeichert werden.", Type.HUMANIZED_MESSAGE);
+						failDB.setStyleName("failure");
+						failDB.setDelayMsec(300);
+						failDB.show(Page.getCurrent());
+						
+					}
 
 				} else {
 					
 					// Sind nicht alle Mussfelder gefüllt, wird eine Nachricht
 					// auf dem Bildschirm ausgegeben
 					//Notification.show("");
-					Notification not1 = new Notification("Bitte füllen Sie alle Mussfelder*", Type.HUMANIZED_MESSAGE);
-					not1.setStyleName("failure");
-					not1.setDelayMsec(300);
-					not1.show(Page.getCurrent());
+					Notification failNotFilled = new Notification("Bitte füllen Sie alle Mussfelder*", Type.HUMANIZED_MESSAGE);
+					failNotFilled.setStyleName("failure");
+					failNotFilled.setDelayMsec(300);
+					failNotFilled.show(Page.getCurrent());
 					
 				}
 					
@@ -680,6 +699,11 @@ public class AngebotErstellen extends HorizontalLayout implements View, Receiver
 			public void buttonClick(ClickEvent event) {
 
 				new OfferProvider().removeOffer(currentOffer);
+				
+				Notification success = new Notification("Ihr Angebot wurde nicht gespeichert.", Type.HUMANIZED_MESSAGE);
+				success.setStyleName("success");
+				success.setDelayMsec(300);
+				success.show(Page.getCurrent());
 				
 				VaadinSession.getCurrent().setAttribute("buttonClicked", true);
 
@@ -721,9 +745,6 @@ public class AngebotErstellen extends HorizontalLayout implements View, Receiver
 		titel.setRequiredError("Bitte geben Sie einen Titel an.");
 		titel.setWidth("80%");
 		
-	
-
-		
 		Label adress = new Label("Adresse");
 		adress.addStyleName("AbschnittLabel");
 		final TextField street = new TextField("Straße, Hausnummer");
@@ -757,7 +778,7 @@ public class AngebotErstellen extends HorizontalLayout implements View, Receiver
 		content.addComponent(hl0);
 		content.addComponent(new Label());
 		
-		
+		//GoogleMaps
 		if(offer.getLatitude()!=null && offer.getLatitude()!=BigDecimal.valueOf(0.0)){
 
 		    /** The kakola marker. */
@@ -958,7 +979,7 @@ public class AngebotErstellen extends HorizontalLayout implements View, Receiver
 		content.addComponent(genders);
 		content.addComponent(new Label());
 
-		// Anzeigetext + Wohnungsbilder
+		// Anzeigetext
 		Label anzeigetext = new Label("Beschreibung");
 		anzeigetext.addStyleName("AbschnittLabel");
 		final RichTextArea text = new RichTextArea();
@@ -972,6 +993,7 @@ public class AngebotErstellen extends HorizontalLayout implements View, Receiver
 		content.addComponent(text);
 		content.addComponent(new Label());
 		
+		//Bilder
 		Label bilder = new Label("Bilder hinzufügen");
 		bilder.addStyleName("AbschnittLabel");
 
@@ -983,9 +1005,8 @@ public class AngebotErstellen extends HorizontalLayout implements View, Receiver
 		content.addComponent(bilderup);
 		content.addComponent(new Label());		
 		
-		
 		//Bilder Löschen
-		Label bilderLoeschen = new Label("Bilder löschen");
+		Label bilderLoeschen = new Label("Aktuelle Bilder");
 		bilderLoeschen.addStyleName("AbschnittLabel");
 		content.addComponent(bilderLoeschen);
 		List<Photo> photo = offer.getPhotos();
@@ -1164,27 +1185,28 @@ public class AngebotErstellen extends HorizontalLayout implements View, Receiver
 						currentOffer.setLatitude(BigDecimal.valueOf(lat));
 						currentOffer.setLongitude(BigDecimal.valueOf(lon));
 					}
-
-				
-
-					
-					Offer o = new OfferProvider().find(currentOffer.getIdOffer());
 					
 					VaadinSession.getCurrent().setAttribute("buttonClicked", true);
 					
 					if (new OfferProvider().alterOffer(currentOffer)) { //neues Angebot in die DB schreiben
 						
+						Offer o = new OfferProvider().find(currentOffer.getIdOffer());
+						
+						Notification success = new Notification("Ihre Änderungen an diesem Angebot wurden gespeichert.", Type.HUMANIZED_MESSAGE);
+						success.setStyleName("success");
+						success.setDelayMsec(300);
+						success.show(Page.getCurrent());
+						
 						String name = "Einzelansicht";
 						getUI().getNavigator().addView(name, new Einzelansicht(o));
 						getUI().getNavigator().navigateTo(name);
 						
-					} else {
+					} else { //Fehler beim DB-Zugriff
 						
-						//Fehler beim DB-Zugriff
-						Notification not = new Notification("Das Angebot konnte nicht geändert werden.", Type.HUMANIZED_MESSAGE);
-						not.setStyleName("failure");
-						not.setDelayMsec(300);
-						not.show(Page.getCurrent());
+						Notification failDB = new Notification("Das Angebot konnte nicht geändert werden.", Type.HUMANIZED_MESSAGE);
+						failDB.setStyleName("failure");
+						failDB.setDelayMsec(300);
+						failDB.show(Page.getCurrent());
 						
 					}
 
@@ -1192,10 +1214,10 @@ public class AngebotErstellen extends HorizontalLayout implements View, Receiver
 					
 					// Sind nicht alle Mussfelder gefüllt, wird eine Nachricht
 					// auf dem Bildschirm ausgegeben
-					Notification not1 = new Notification("Bitte füllen Sie alle Mussfelder*", Type.HUMANIZED_MESSAGE);
-					not1.setStyleName("failure");
-					not1.setDelayMsec(300);
-					not1.show(Page.getCurrent());
+					Notification failNotFilled = new Notification("Bitte füllen Sie alle Mussfelder*", Type.HUMANIZED_MESSAGE);
+					failNotFilled.setStyleName("failure");
+					failNotFilled.setDelayMsec(300);
+					failNotFilled.show(Page.getCurrent());
 					
 				}
 			}
@@ -1214,11 +1236,18 @@ public class AngebotErstellen extends HorizontalLayout implements View, Receiver
 				for (Photo p : newPhotos) {
 					photoProv.removePhoto(p);
 				}
-
+				
 				VaadinSession.getCurrent().setAttribute("buttonClicked", true);
 				
+				Notification success = new Notification("Ihre Änderungen an diesem Angebot wurden nicht gespeichert.", Type.HUMANIZED_MESSAGE);
+				success.setStyleName("success");
+				success.setDelayMsec(300);
+				success.show(Page.getCurrent());
+				
+				Offer o = new OfferProvider().findById(currentOffer.getIdOffer());
+				
 				String name = "Einzelansicht";
-				getUI().getNavigator().addView(name, new Einzelansicht(offer));
+				getUI().getNavigator().addView(name, new Einzelansicht(o));
 				getUI().getNavigator().navigateTo(name);
 
 			}
