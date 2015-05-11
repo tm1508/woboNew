@@ -201,7 +201,7 @@ public class Navigation extends CustomComponent {
 			nav1.addItem("Alle Wohnungsangebote", FontAwesome.TH_LIST, alleAngebote);
 		MenuItem nav2 = menuBar.addItem("Wohnung anbieten", FontAwesome.HOME, null); 
 			nav2.addItem("Neues Wohnungsangebot einstellen", FontAwesome.PENCIL, angebotErstellen); //AngebotErstellen
-			nav2.addItem("Wohnungsangebote verwalten", FontAwesome.WRENCH, meineAngebote); //AngebotAnzeigen
+			nav2.addItem("Meine Wohnungsangebote verwalten", FontAwesome.WRENCH, meineAngebote); //AngebotAnzeigen
 		MenuItem nav5 = menuBar.addItem("Persönliche Daten", FontAwesome.CHILD, null); 
 			nav5.addItem("Meine Favoriten", FontAwesome.STAR_O, meineFavoriten);
 			nav5.addItem("Meine Anfragen", FontAwesome.STAR_O, meineAnfragen);

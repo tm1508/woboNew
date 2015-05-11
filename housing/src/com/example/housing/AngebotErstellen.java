@@ -1294,10 +1294,10 @@ public class AngebotErstellen extends HorizontalLayout implements View, Receiver
 				
 			} else {
 				
-				Notification not = new Notification("Bitte laden Sie eine Bilddatei hoch!", Type.HUMANIZED_MESSAGE);
-				not.setStyleName("failure");
-				not.setDelayMsec(300);
-				not.show(Page.getCurrent());
+				Notification failFileFormat = new Notification("Bitte laden Sie eine Bilddatei hoch!", Type.HUMANIZED_MESSAGE);
+				failFileFormat.setStyleName("failure");
+				failFileFormat.setDelayMsec(300);
+				failFileFormat.show(Page.getCurrent());
 				return null;
 				
 			}
@@ -1319,7 +1319,6 @@ public class AngebotErstellen extends HorizontalLayout implements View, Receiver
 		
 			if (tmpImg != null) { // ist null, wenn kein Bild-Dateiformat hochgeladen wurde (siehe Methode receiveUpload)
 				
-				//TODO Fehler: Bild ist leer
 				//TODO
 				//byte[] tmpImgBytes = resizeImage(tmpImg.toByteArray());
 				byte[] tmpImgBytes = tmpImg.toByteArray();
