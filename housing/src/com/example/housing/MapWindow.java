@@ -9,14 +9,14 @@ import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
 
-@SuppressWarnings("serial")
+
 public class MapWindow extends Window {
+	private static final long serialVersionUID = 1L;
 
 	public MapWindow(Offer angebot) {
 		super(" Standort zu diesem Wohnungsangebot");
 		initialisieren(angebot);
 	}
-
 
 	public void initialisieren(final Offer angebot) {
 		// Window
@@ -30,50 +30,36 @@ public class MapWindow extends Window {
 		content.setMargin(true);
 		content.setStyleName("box");
 
-		
-
 		// Layout für das große Bild
-		final VerticalLayout hl = new VerticalLayout();
+		final VerticalLayout kartenLayout = new VerticalLayout();
 			
-	    /** The kakola marker. */
-	    GoogleMapMarker kakolaMarker = new GoogleMapMarker(
+	    //Map-Marker
+	    GoogleMapMarker mapMarker = new GoogleMapMarker(
 	            "Hier befindet sich die Wohnung", new LatLon(angebot.getLatitude().doubleValue(), angebot.getLongitude().doubleValue()),
 	            false, null);
 	   
         GoogleMap googleMap = new GoogleMap(null, null, null);
         googleMap.setCenter(new LatLon(angebot.getLatitude().doubleValue(), angebot.getLongitude().doubleValue()));
         googleMap.setZoom(10);
-        //googleMap.setSizeFull();
 
-        kakolaMarker.setAnimationEnabled(false);
-        googleMap.addMarker(kakolaMarker);
+        mapMarker.setAnimationEnabled(false);
+        googleMap.addMarker(mapMarker);
         
         googleMap.setMinZoom(4);
         googleMap.setMaxZoom(16);
 
         googleMap.setHeight("473px");
         googleMap.setWidth("700px");
-        hl.addComponent(googleMap);
-	
-	
-		// Layout für das große Bild hinzufügen
-		hl.setStyleName("picture");
-		content.addComponent(hl);
+        kartenLayout.addComponent(googleMap);
+		kartenLayout.setStyleName("picture");
+		content.addComponent(kartenLayout);
 		
-		
-		// kleine Bilder
-				final HorizontalLayout hl1 = new HorizontalLayout();
-
-		//Layout für kleine Bilder hinzufügen
-		hl1.setStyleName("picture");
-		content.addComponent(hl1);
+		final HorizontalLayout layoutUnten = new HorizontalLayout();
+		layoutUnten.setStyleName("picture");
+		content.addComponent(layoutUnten);
 
 		this.setContent(content);
-
-		content.setExpandRatio(hl1, 1);//große Bilder bekommen mehr Platz
-		content.setExpandRatio(hl, 4);
-
-	
-
+		content.setExpandRatio(layoutUnten, 1);//oberes Layout bekommt mehr Platz
+		content.setExpandRatio(kartenLayout, 4);
 	}
 }
