@@ -5,11 +5,13 @@ import java.io.File;
 import java.io.InputStream;
 import java.math.BigDecimal;
 import java.util.List;
+
 import com.example.housing.data.model.Favorit;
 import com.example.housing.data.model.Offer;
 import com.example.housing.data.model.User;
 import com.example.housing.data.model.Request;
 import com.example.housing.data.provider.FavoritProvider;
+import com.example.housing.data.provider.OfferProvider;
 import com.example.housing.data.provider.RequestProvider;
 import com.example.housing.utility.Format;
 import com.vaadin.navigator.View;
@@ -350,40 +352,116 @@ public class Einzelansicht extends CustomHorizontalLayout implements View {
         gridInfos.addComponent(t, 1,13);
     
         
-        //Bearbeiten- und Löschen-Button
-        if(VaadinSession.getCurrent().getAttribute("login").equals(true)){
-        	if(VaadinSession.getCurrent().getAttribute(User.class).getEmail().equals(angebot.getOffer_idUser().getEmail())|| VaadinSession.getCurrent().getAttribute(User.class).getAccessLevel()==2){
+        //Bearbeiten- und Löschen-Button für User
+        if((boolean) VaadinSession.getCurrent().getAttribute("login") && VaadinSession.getCurrent().getAttribute(User.class).getEmail().equals(angebot.getOffer_idUser().getEmail())){
+        	HorizontalLayout userButtons = new HorizontalLayout();
         		
-        		HorizontalLayout userButtons = new HorizontalLayout();
-        		
-				Button change = new Button("Bearbeiten");
-				change.setIcon(FontAwesome.PENCIL);
-				change.addStyleName("BearbeitenButton");
-				change.addClickListener(new Button.ClickListener() {
-					public void buttonClick(ClickEvent event) {
-						String name = "AngebotErstellen";
-						getUI().getNavigator().addView(name, new AngebotErstellen(angebot)); // momentan angezeigtes Angebot soll übergeben werden...
-						getUI().getNavigator().navigateTo(name);
-					}
-				});
-				
-				Button delete = new Button("Angebot löschen");
-				delete.setIcon(FontAwesome.TRASH_O);
-				delete.addStyleName("BearbeitenButton");
-				delete.addClickListener(new Button.ClickListener() {
-					public void buttonClick(ClickEvent event) {
-						ConfirmDeleteWindow cdw = new ConfirmDeleteWindow(angebot);
-						UI.getCurrent().addWindow(cdw);	
-					}
-				});
-				
-				userButtons.addComponent(change);
-				userButtons.addComponent(delete);
-				
-				gridInfos.addComponent(userButtons, 0 , 14);
+			Button change = new Button("Bearbeiten");
+			change.setIcon(FontAwesome.PENCIL);
+			change.addStyleName("BearbeitenButton");
+			change.addClickListener(new Button.ClickListener() {
+				public void buttonClick(ClickEvent event) {
+					String name = "AngebotErstellen";
+					getUI().getNavigator().addView(name, new AngebotErstellen(angebot)); // momentan angezeigtes Angebot soll übergeben werden...
+					getUI().getNavigator().navigateTo(name);
+				}
+			});
 			
-        	}
+			Button delete = new Button("Angebot löschen");
+			delete.setIcon(FontAwesome.TRASH_O);
+			delete.addStyleName("BearbeitenButton");
+			delete.addClickListener(new Button.ClickListener() {
+				public void buttonClick(ClickEvent event) {
+					ConfirmDeleteWindow cdw = new ConfirmDeleteWindow(angebot);
+					UI.getCurrent().addWindow(cdw);	
+				}
+			});
+				
+			userButtons.addComponent(change);
+			userButtons.addComponent(delete);
+			
+			gridInfos.addComponent(userButtons, 0 , 14);
+		
         }
+        
+        //Deaktivieren- und Löschen-Button für Admin
+        if((boolean) VaadinSession.getCurrent().getAttribute("login") && VaadinSession.getCurrent().getAttribute(User.class).getAccessLevel() == 2){
+    		
+    		HorizontalLayout adminButtons = new HorizontalLayout();
+    		
+			Button deacitvate = new Button("Deaktivieren");
+			deacitvate.setIcon(FontAwesome.PENCIL); 			//TODO Icon
+			deacitvate.addStyleName("BearbeitenButton");
+			deacitvate.addClickListener(new Button.ClickListener() {
+				public void buttonClick(ClickEvent event) {
+					
+					angebot.setInactive(true);
+					
+					if(new OfferProvider().alterOffer(angebot)) {					
+						
+						Notification success = new Notification("Das Angebot wurde deaktiviert.", Type.HUMANIZED_MESSAGE);
+						success.setStyleName("success");
+						success.setDelayMsec(300);
+						success.show(Page.getCurrent());
+						
+						//TODO E-Mail an Anbieter???
+						
+						Offer o = new OfferProvider().findById(angebot.getIdOffer());
+						
+						String name = "Einzelansicht";
+						getUI().getNavigator().addView(name, new Einzelansicht(o)); // momentan angezeigtes Angebot soll übergeben werden...
+						getUI().getNavigator().navigateTo(name);
+						
+					} else {
+						
+						Notification failDB = new Notification("Das Angebot konnte nicht deaktiviert werden.", Type.HUMANIZED_MESSAGE);
+						failDB.setStyleName("failure");
+						failDB.setDelayMsec(300);
+						failDB.show(Page.getCurrent());
+						
+					}
+				}
+			});
+			
+			Button delete = new Button("Angebot löschen");
+			delete.setIcon(FontAwesome.TRASH_O);
+			delete.addStyleName("BearbeitenButton");
+			delete.addClickListener(new Button.ClickListener() {
+				public void buttonClick(ClickEvent event) {
+					
+					if(new OfferProvider().removeOffer(angebot)) {
+						
+						Notification not = new Notification("Das Angebot wurde gelöscht und aus der Datenbank entfernt.",Type.HUMANIZED_MESSAGE);//Meldung an den Nutzer
+						not.setStyleName("success");
+						not.setDelayMsec(300);
+						not.show(Page.getCurrent());
+						
+						//TODO E-Mail an Anbieter???
+						
+						List<Offer> allOffers = new OfferProvider().getAllOffers();
+						
+						String name = "Angebotsliste";
+						getUI().getNavigator().addView(name, new Suchergebnis(allOffers));
+						getUI().getNavigator().navigateTo(name);
+						
+					} else {
+						
+						Notification failDB = new Notification("Das Angebot konnte nicht gelöscht werden.", Type.HUMANIZED_MESSAGE);
+						failDB.setStyleName("failure");
+						failDB.setDelayMsec(300);
+						failDB.show(Page.getCurrent());
+						
+					}
+					
+				}
+			});
+			
+			adminButtons.addComponent(deacitvate);
+			adminButtons.addComponent(delete);
+			
+			gridInfos.addComponent(adminButtons, 0 , 14);
+		
+    	}
         
         HorizontalLayout buttons = new HorizontalLayout();
         
@@ -392,6 +470,7 @@ public class Einzelansicht extends CustomHorizontalLayout implements View {
         anfrage.addStyleName("AnfrageButton");
         anfrage.setIcon(FontAwesome.MAIL_FORWARD);
         
+        //Anbieter kontaktieren-Button
         Button anbieter = new Button("Anbieter kontaktieren");
         anbieter.addStyleName("AnfrageButton");
         anbieter.setIcon(FontAwesome.MAIL_FORWARD);
@@ -586,7 +665,6 @@ public class Einzelansicht extends CustomHorizontalLayout implements View {
 	 */
 	@Override
 	public void enter(ViewChangeEvent event) {
-		// TODO Auto-generated method stub
 		
 	}
 

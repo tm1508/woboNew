@@ -82,19 +82,29 @@ public class ConfirmDeleteWindow extends Window {
 			@Override
 			public void buttonClick(ClickEvent event) {
 				
-				//TODO
-				new OfferProvider().removeOffer(currentOffer);
-				
-				Notification not = new Notification("Das Angebot wurde gelöscht und aus der Datenbank entfernt.",Type.HUMANIZED_MESSAGE);//Meldung an den Nutzer
-				not.setStyleName("success");
-				not.setDelayMsec(300);
-				not.show(Page.getCurrent());
-				
-				String name = "Angebote verwalten";
-				getUI().getNavigator().addView(name, new AngeboteVerwalten());
-				getUI().getNavigator().navigateTo(name);
-				
-				ConfirmDeleteWindow.this.close();
+				if(new OfferProvider().removeOffer(currentOffer)) {
+					
+					Notification not = new Notification("Das Angebot wurde gelöscht und aus der Datenbank entfernt.",Type.HUMANIZED_MESSAGE);//Meldung an den Nutzer
+					not.setStyleName("success");
+					not.setDelayMsec(300);
+					not.show(Page.getCurrent());
+					
+					String name = "Angebote verwalten";
+					getUI().getNavigator().addView(name, new AngeboteVerwalten());
+					getUI().getNavigator().navigateTo(name);
+					
+					ConfirmDeleteWindow.this.close();
+					
+				} else {
+					
+					Notification failDB = new Notification("Das Angebot konnte nicht gelöscht werden.", Type.HUMANIZED_MESSAGE);
+					failDB.setStyleName("failure");
+					failDB.setDelayMsec(300);
+					failDB.show(Page.getCurrent());
+					
+					ConfirmDeleteWindow.this.close();
+					
+				}
 				
 			}
 		});
