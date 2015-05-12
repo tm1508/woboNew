@@ -14,6 +14,7 @@ import com.example.housing.data.provider.FavoritProvider;
 import com.example.housing.data.provider.OfferProvider;
 import com.example.housing.data.provider.RequestProvider;
 import com.example.housing.utility.Format;
+import com.example.housing.utility.SendEMail;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.server.FileResource;
@@ -397,14 +398,25 @@ public class Einzelansicht extends CustomHorizontalLayout implements View {
 					
 					angebot.setInactive(true);
 					
-					if(new OfferProvider().alterOffer(angebot)) {					
+					if(new OfferProvider().alterOffer(angebot)) {	
+						
+						String deactivationMessage = "<span style='color: #000000' 'font-family: Arial, sans-serif''font-size: 16pt' >Sehr geehrte Nutzerin, sehr geehrter Nutzer,"
+								+"<br/><br/>Ihr Angebot \"" + angebot.getTitle() + "\" in der Wohnungsbörse der DHBW wurde von einem Portal-Administrator deaktiviert."
+								+"<br/><br/>"
+								+"<br/><br/>Dies kann verschiedene Gründe haben:"
+								+"<br/><br/>-Es liegen Bedenken über die Aktualität des Angebotes vor."
+								+"<br/><br/>-Es wurde Ihnen eine Aufforderung zur Anpassung des Angebotes geschickt, die Sie noch bearbeiten müssen."
+								+"<br/><br/>-Sie reagieren nicht auf Anfragen oder Benachrichtigungen durch die Portal-Administratoren und Sie scheinen das betreffende Angebot aktuell nicht mehr zu pflegen."
+								+"<br/></span>"
+								+"<br/><span style='color: #e2001a' 'font-family: Arial, sans-serif''font-size: 20pt' >"
+								+ "</span><br/><br/>Mit freundlichen Grüßen<br/>Ihr DHBW Wohungsbörsen-Team<p/><span style='color: #e2001a' 'font-family: Arial, sans-serif''font-size: 8pt' >Anschrift:<br/>DHBW Karlsruhe<br/>Baden-Wuerttemberg Cooperative State University Karlsruhe<br />Erzbergerstraße 121 . 76133 Karlsruhe <br />Postfach 10 01 36 . 76231 Karlsruhe   <br />Telefon +49.721.9735-5 <br />Telefax +49.721.9735-600 <br />E-Mail: dreischer@dhbw-karlsruhe.de<br /><br/><br/>Ansprechpartner:<br/> <br />Dr. Anita Dreischer<br /><br/><b>Copyright DHBW Karlsruhe. Alle Rechte vorbehalten.</b></span>";
+						
+						SendEMail.send(angebot.getOffer_idUser().getEmail(), "wohnungsboerse_dh@web.de", "Deaktivierung Ihres Angebots in der DHBW-Wohnungsbörse", deactivationMessage);
 						
 						Notification success = new Notification("Das Angebot wurde deaktiviert.", Type.HUMANIZED_MESSAGE);
 						success.setStyleName("success");
 						success.setDelayMsec(300);
 						success.show(Page.getCurrent());
-						
-						//TODO E-Mail an Anbieter???
 						
 						Offer o = new OfferProvider().findById(angebot.getIdOffer());
 						
@@ -431,12 +443,23 @@ public class Einzelansicht extends CustomHorizontalLayout implements View {
 					
 					if(new OfferProvider().removeOffer(angebot)) {
 						
+						String deleteMessage = "<span style='color: #000000' 'font-family: Arial, sans-serif''font-size: 16pt' >Sehr geehrte Nutzerin, sehr geehrter Nutzer,"
+								+"<br/><br/>Ihr Angebot \"" + angebot.getTitle() + "\" in der Wohnungsbörse der DHBW wurde von einem Portal-Administrator gelöscht."
+								+"<br/><br/>"
+								+"<br/><br/>Dies kann verschiedene Gründe haben:"
+								+"<br/><br/>-Es liegen Bedenken über die Korrektheit oder Legalität des Angebotes vor."
+								+"<br/><br/>-Geforderte inhaltliche Anpassungen des Wohnungsangebotes sind nach mehrmaliger Aufforderung nicht erfolgt."
+								+"<br/><br/>-Sie reagieren nicht auf Anfragen oder Benachrichtigungen vonseiten der Portal-Administratoren und Sie scheinen Ihr Profil sowie Ihre Angebote in der DHBW-Wohnungsbörse nicht mehr zu pflegen."
+								+"<br/></span>"
+								+"<br/><span style='color: #e2001a' 'font-family: Arial, sans-serif''font-size: 20pt' >"
+								+ "</span><br/><br/>Mit freundlichen Grüßen<br/>Ihr DHBW Wohungsbörsen-Team<p/><span style='color: #e2001a' 'font-family: Arial, sans-serif''font-size: 8pt' >Anschrift:<br/>DHBW Karlsruhe<br/>Baden-Wuerttemberg Cooperative State University Karlsruhe<br />Erzbergerstraße 121 . 76133 Karlsruhe <br />Postfach 10 01 36 . 76231 Karlsruhe   <br />Telefon +49.721.9735-5 <br />Telefax +49.721.9735-600 <br />E-Mail: dreischer@dhbw-karlsruhe.de<br /><br/><br/>Ansprechpartner:<br/> <br />Dr. Anita Dreischer<br /><br/><b>Copyright DHBW Karlsruhe. Alle Rechte vorbehalten.</b></span>";
+						
+						SendEMail.send(angebot.getOffer_idUser().getEmail(), "wohnungsboerse_dh@web.de", "Löschung Ihres Angebots in der DHBW-Wohnungsbörse", deleteMessage);
+						
 						Notification not = new Notification("Das Angebot wurde gelöscht und aus der Datenbank entfernt.",Type.HUMANIZED_MESSAGE);//Meldung an den Nutzer
 						not.setStyleName("success");
 						not.setDelayMsec(300);
 						not.show(Page.getCurrent());
-						
-						//TODO E-Mail an Anbieter???
 						
 						List<Offer> allOffers = new OfferProvider().getAllOffers();
 						

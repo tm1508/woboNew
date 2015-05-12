@@ -145,7 +145,7 @@ public class Anfrageformular extends CustomHorizontalLayout implements View{
 		//Email an Anfrager senden
 		SendEMail.send(VaadinSession.getCurrent().getAttribute(User.class).getEmail(), "wohnungsboerse_dh@web.de", "Ihre Anfrage in der DHBW-Wohnungsbörse", bodyAnfrager);
 		//Email an Anbieter senden
-		SendEMail.send(requestedOffer.getOffer_idUser().getEmail(), "wohnungsboerse_dh@web.de", "Neue Anfrage in der DHBW-Wohnungsbörse", bodyAnbieter);
+		SendEMail.send(requestedOffer.getOffer_idUser().getEmail(), "wohnungsboerse_dh@web.de", "Neue Anfrage zu Ihrem Angebot in der DHBW-Wohnungsbörse", bodyAnbieter);
 	
 	}
 	
