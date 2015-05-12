@@ -44,7 +44,7 @@ public class HousingUI extends UI {
 	 * The Class Servlet.
 	 */
 	@WebServlet(value = "/*", asyncSupported = true)
-	@VaadinServletConfiguration(productionMode = false, ui = HousingUI.class, widgetset = "com.example.housing.HousingWidgetset")
+	@VaadinServletConfiguration(productionMode = false, ui = HousingUI.class, widgetset = "com.example.housing.HousingWidgetset", resourceCacheTime = 10)
 	public static class Servlet extends VaadinServlet implements SessionInitListener, SessionDestroyListener{
 
 		/* (non-Javadoc)
@@ -67,7 +67,7 @@ public class HousingUI extends UI {
 				                new CustomizedSystemMessages();
 				  		//Fehlertexte		        
 				        messages.setSessionExpiredCaption("Ihre Session ist abgelaufen.");
-				        messages.setSessionExpiredMessage("Bitte laden Sie die Seite neu oder drücken Sie ESC. Sie müssen sich eventuell erneut einloggen.");
+				        messages.setSessionExpiredMessage("Bitte laden Sie die Seite neu oder drücken Sie ESC. Sie müssen sich gegebenenfalls erneut einloggen.");
 				        messages.setCommunicationErrorCaption("Ein Kommunikationsproblem ist aufgetreten.");
 				        messages.setCommunicationErrorMessage("Bitte notieren Sie sich Ihre noch nicht gespeicherten Eingaben.");
 				        messages.setInternalErrorCaption("Ein Serverproblem ist aufgetreten.");
