@@ -60,6 +60,8 @@ public class Listenzeile extends CustomComponent {
 		if (pictures.size() > 0) {
 			
 			StreamResource resource = new StreamResource(new StreamResource.StreamSource() {
+				private static final long serialVersionUID = 1L;
+
 				@Override
 				public InputStream getStream(){
 					InputStream bais = new ByteArrayInputStream(pictures.get(0).getPicture());
@@ -155,6 +157,8 @@ public class Listenzeile extends CustomComponent {
 		}
 
 		ergebnisLayout.addLayoutClickListener(new LayoutClickListener() {
+			private static final long serialVersionUID = 1L;
+
 			public void layoutClick(LayoutClickEvent event) {
 				String name = "Einzelansicht";
 				getUI().getNavigator().addView(name, new Einzelansicht(o));

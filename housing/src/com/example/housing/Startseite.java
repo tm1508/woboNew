@@ -1,7 +1,6 @@
 package com.example.housing;
 
 import java.util.List;
-
 import com.example.housing.data.model.Offer;
 import com.example.housing.data.provider.OfferProvider;
 import com.example.housing.utility.Format;
@@ -18,7 +17,7 @@ import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Button.ClickEvent;
 
-// TODO: Auto-generated Javadoc
+
 /**
  * The Class Startseite.
  */
@@ -27,15 +26,6 @@ public class Startseite extends CustomHorizontalLayout implements View{
 
 	/** The content. */
 	VerticalLayout content;
-	
-	/* (non-Javadoc)
-	 * @see com.vaadin.navigator.View#enter(com.vaadin.navigator.ViewChangeListener.ViewChangeEvent)
-	 */
-	@Override
-	public void enter(ViewChangeEvent event) {
-		// TODO Auto-generated method stub	
-	}
-	
 	
 	public Startseite(){
 		content = super.initCustomHorizontalLayout();
@@ -46,11 +36,7 @@ public class Startseite extends CustomHorizontalLayout implements View{
 	 * Sets the content.
 	 */
 	public void setContent(){
-		
-		content = new VerticalLayout();
-		content.setMargin(true);
-		
-		
+				
 		// title
 		Label title = new Label();
 		title.setImmediate(false);
@@ -60,43 +46,41 @@ public class Startseite extends CustomHorizontalLayout implements View{
 		title.addStyleName("title");
 		content.addComponent(title);
 	
-		
 		//Horizontales Layout fuer Begrüßungstext und Suchfeld
-		HorizontalLayout h = new HorizontalLayout();
-		h.setWidth("100%");
-		h.setMargin(false);
+		HorizontalLayout layoutTextUndSuche = new HorizontalLayout();
+		layoutTextUndSuche.setWidth("100%");
+		layoutTextUndSuche.setMargin(false);
 		
 		//Begrüßungstext
-		Accordion accordion = new Accordion();
-		accordion.setHeight("400px");
-		accordion.setStyleName("startseite");
+		Accordion textAccordion = new Accordion();
+		textAccordion.setHeight("400px");
+		textAccordion.setStyleName("startseite");
 	
 		
 			//Tab 1
-			final VerticalLayout layout = new VerticalLayout();
-	        layout.setMargin(true);
-	        layout.addComponent(new Label("Herzlich Willkommen auf unserer Webseite!"));
+			final VerticalLayout tab1Layout = new VerticalLayout();
+	        tab1Layout.setMargin(true);
+	        tab1Layout.addComponent(new Label("Herzlich Willkommen auf unserer Webseite!"));
 	        	Label label = new Label("Auf unserer Webseite können Sie einen Nach- oder Zwischenmieter für Ihre Wohnung oder Ihr Zimmer finden. Als duale Studentin/ dualer Student der DHBW Karlsruhe können Sie die passende Wohnung oder das passende Zimmer finden (auch zur Zwischenmiete) und den Vermieter kontaktieren.");
-	        	layout.addComponent(label);
-	        accordion.addTab(layout, "Herzlich Willkommen",FontAwesome.HEART);//Tab 1 hinzufügen
+	        	tab1Layout.addComponent(label);
+	        textAccordion.addTab(tab1Layout, "Herzlich Willkommen",FontAwesome.HEART);//Tab 1 hinzufügen
          
 	        //Tab 2
-			final VerticalLayout layout_1 = new VerticalLayout();
-	        layout_1.setMargin(true);
+			final VerticalLayout tab2Layout = new VerticalLayout();
+	        tab2Layout.setMargin(true);
 		        Label label_1 = new Label("Wenn Sie eine Wohnung vermieten wollen sind Sie bei uns genau richtig! Jeder registrierte Benutzer kann Wohnungen anbieten. Registrieren Sie sich bitte hier. Ihre Wohung oder Ihr Zimmer wird ausschließlich an Studierende der DHBW Karlsruhe vermietet.");
-		        layout_1.addComponent(label_1);
+		        tab2Layout.addComponent(label_1);
 		        
 				//Link zu Registrierung
-				Button link_1 = new Button();
-				link_1.setStyleName("link");
-				link_1.setCaption("Registrierung");
-				link_1.setImmediate(false);
-				link_1.setWidth("-1px");
-				link_1.setHeight("-1px");
-				link_1.setIcon(FontAwesome.EXTERNAL_LINK);
-				link_1.addClickListener(new Button.ClickListener(){
+				Button registrierungLink = new Button();
+				registrierungLink.setStyleName("link");
+				registrierungLink.setCaption("Registrierung");
+				registrierungLink.setImmediate(false);
+				registrierungLink.setWidth("-1px");
+				registrierungLink.setHeight("-1px");
+				registrierungLink.setIcon(FontAwesome.EXTERNAL_LINK);
+				registrierungLink.addClickListener(new Button.ClickListener(){
 					private static final long serialVersionUID = 1L;
-
 					public void buttonClick(ClickEvent event) {
 						String name = "Registrierung";
 						getUI().getNavigator().addView(name, new Registrierung());
@@ -104,26 +88,25 @@ public class Startseite extends CustomHorizontalLayout implements View{
 					}
 				});
 				
-				layout_1.addComponent(link_1);
+				tab2Layout.addComponent(registrierungLink);
 				
-			accordion.addTab(layout_1, "Für Vermieter...",FontAwesome.HOME);//Tab 2 hinzufügen
+			textAccordion.addTab(tab2Layout, "Für Vermieter...",FontAwesome.HOME);//Tab 2 hinzufügen
         
 	        //Tab 3
-			final VerticalLayout layout_2 = new VerticalLayout();
-	        layout_2.setMargin(true);
-	        	layout_2.addComponent(new Label("Für alle, die eine Wohnung suchen...: Sie studieren an der DHBW Karlsruhe? Dann finden Sie bei uns die passende Wohnung oder das passende Zimmer. Wir haben ein großes Angebot an Zimmern und Wohnungen..."));
+			final VerticalLayout tab3Layout = new VerticalLayout();
+	        tab3Layout.setMargin(true);
+	        	tab3Layout.addComponent(new Label("Für alle, die eine Wohnung suchen...: Sie studieren an der DHBW Karlsruhe? Dann finden Sie bei uns die passende Wohnung oder das passende Zimmer. Wir haben ein großes Angebot an Zimmern und Wohnungen..."));
 	
 				//Link zu Registrierung
-				Button link_2 = new Button();
-				link_2.setStyleName("link");
-				link_2.setCaption("Registrierung");
-				link_2.setImmediate(false);
-				link_2.setWidth("-1px");
-				link_2.setHeight("-1px");
-				link_2.setIcon(FontAwesome.EXTERNAL_LINK);
-				link_2.addClickListener(new Button.ClickListener(){
+				Button registrierungLink_2 = new Button();
+				registrierungLink_2.setStyleName("link");
+				registrierungLink_2.setCaption("Registrierung");
+				registrierungLink_2.setImmediate(false);
+				registrierungLink_2.setWidth("-1px");
+				registrierungLink_2.setHeight("-1px");
+				registrierungLink_2.setIcon(FontAwesome.EXTERNAL_LINK);
+				registrierungLink_2.addClickListener(new Button.ClickListener(){
 					private static final long serialVersionUID = 1L;
-
 					public void buttonClick(ClickEvent event) {
 						String name = "Registrierung";
 						getUI().getNavigator().addView(name, new Registrierung());
@@ -131,17 +114,17 @@ public class Startseite extends CustomHorizontalLayout implements View{
 					}
 				});
 				
-				layout_2.addComponent(link_2);
+				tab3Layout.addComponent(registrierungLink_2);
 				
-			accordion.addTab(layout_2, "Für Mieter...",FontAwesome.SEARCH);//Tab 3 hinzufügen
+			textAccordion.addTab(tab3Layout, "Für Mieter...",FontAwesome.SEARCH);//Tab 3 hinzufügen
         
 	        //Tab 4
-			final VerticalLayout layout_3 = new VerticalLayout();
-	        layout_3.setMargin(true);
+			final VerticalLayout tab3layout = new VerticalLayout();
+	        tab3layout.setMargin(true);
 		        Label label_3 = new Label("Wir sind Studierende der DHBW Karlsruhe...");
 		        Label label_4 = new Label("Sie haben Anregungen, Wünsche oder Kritik? Bitte kontaktieren Sie uns! Falls Sie als AustauschstudentIn an die Duale Hochschule Karlsruhe kommen, bitte kontaktieren Sie den Administrator, damit Sie als Studierender der DHBW Karlsruhe freigeschaltet werden.");
-		        layout_3.addComponent(label_3);
-		        layout_3.addComponent(label_4);
+		        tab3layout.addComponent(label_3);
+		        tab3layout.addComponent(label_4);
 		        
 		        Link link_3 = new Link();
 				link_3.setStyleName("text");
@@ -150,16 +133,16 @@ public class Startseite extends CustomHorizontalLayout implements View{
 				link_3.setWidth("-1px");
 				link_3.setHeight("-1px");
 				link_3.setIcon(FontAwesome.EXTERNAL_LINK);
-				layout_3.addComponent(link_3);
-	        accordion.addTab(layout_3, "Über uns...",FontAwesome.ENVELOPE);//Tab 4 hinzufügen
+				tab3layout.addComponent(link_3);
+	        textAccordion.addTab(tab3layout, "Über uns...",FontAwesome.ENVELOPE);//Tab 4 hinzufügen
          
-		h.addComponent(accordion);//Begrüßungstext hinzufügen
+		layoutTextUndSuche.addComponent(textAccordion);//Begrüßungstext hinzufügen
 		
 		//Panel für Suchfeld
-		Panel panel = new Panel("Suche");
-		panel.setStyleName("startseite");
-		panel.setHeight("400px");
-		panel.setIcon(FontAwesome.SEARCH);
+		Panel suchePanel = new Panel("Suche");
+		suchePanel.setStyleName("startseite");
+		suchePanel.setHeight("400px");
+		suchePanel.setIcon(FontAwesome.SEARCH);
 		VerticalLayout suche = new VerticalLayout();
 		suche.setMargin(true);
 		
@@ -184,10 +167,8 @@ public class Startseite extends CustomHorizontalLayout implements View{
 			suche.addComponent(sucheStarten);
 			sucheStarten.addClickListener(new Button.ClickListener() {
 				private static final long serialVersionUID = 1L;
-
 				@Override
 				public void buttonClick(ClickEvent event) {
-					
 					OfferProvider of = new OfferProvider();
 					List<Offer> ergebnisse;				
 					ergebnisse =
@@ -207,34 +188,34 @@ public class Startseite extends CustomHorizontalLayout implements View{
 				}
 			});
 			
-			
-
-
-		panel.setContent(suche);
-		h.addComponent(panel);//Panel hinzufügen
+		suchePanel.setContent(suche);
+		layoutTextUndSuche.addComponent(suchePanel);//Panel hinzufügen
 		
-		content.addComponent(h);//Begrüßungstext und Suchfeld hinzufügen
+		content.addComponent(layoutTextUndSuche);//Begrüßungstext und Suchfeld hinzufügen
 		
 		//Neuste Angebote
-		Panel p = new Panel("Unsere neusten Angebote");
-		p.setStyleName("startseite");
-		p.setWidth("100%");
-		VerticalLayout v = new VerticalLayout();
-		v.setMargin(true);
+		Panel panelNeusteANgebote = new Panel("Unsere neusten Angebote");
+		panelNeusteANgebote.setStyleName("startseite");
+		panelNeusteANgebote.setWidth("100%");
+		VerticalLayout layoutNuesteAnngebote = new VerticalLayout();
+		layoutNuesteAnngebote.setMargin(true);
 		
 		List<Offer> latestOffers = new OfferProvider().getLatestOffers();
 		for( Offer o : latestOffers) {
-			v.addComponent(new Listenzeile(o));
+			layoutNuesteAnngebote.addComponent(new Listenzeile(o));
 		}
 		
-        p.setContent(v);
+        panelNeusteANgebote.setContent(layoutNuesteAnngebote);
 		
-		content.addComponent(p);
+		content.addComponent(panelNeusteANgebote);
  
     }
  
-    
+	/* (non-Javadoc)
+	 * @see com.vaadin.navigator.View#enter(com.vaadin.navigator.ViewChangeListener.ViewChangeEvent)
+	 */
+	@Override
+	public void enter(ViewChangeEvent event) {
+		// TODO Auto-generated method stub	
+	}   
 }
-	
-	
-
