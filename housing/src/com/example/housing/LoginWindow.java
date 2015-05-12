@@ -155,6 +155,10 @@ public class LoginWindow extends Window{
 						}
 	
 					}catch(Exception e){
+						
+						VaadinSession.getCurrent().setAttribute("login", false);
+						VaadinSession.getCurrent().setAttribute(User.class, null);
+						
 						//Fehlermeldung bei Datenbankproblemen
 						Notification notif = new Notification("Login fehlgeschlagen!","Bitte registrieren Sie sich zuerst.", Type.HUMANIZED_MESSAGE);
 						notif.setDelayMsec(300);

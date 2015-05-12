@@ -66,7 +66,7 @@ public class ErrorPage extends CustomHorizontalLayout implements View {
 				.setValue("Das tut uns leid und hätte nicht passieren dürfen!<br/>"
 						+ "<br/><br/> Der Fehler kann unter anderem folgende Ursachen haben:"
 						+ "<br/><br/> - Sie wollten zu einer nicht verfügbaren Seite navigieren. Beispielsweise können Sie die Profilseite nur aufrufen, wenn Sie eingeloggt sind."
-						+ "<br/><br/> - Das Hochladen eines Bildes hat den Fehler verursacht.  Bitte versuchen Sie es später erneut."
+						+ "<br/><br/> - Das Hochladen eines Bildes hat den Fehler verursacht. Bitte versuchen Sie es später erneut."
 						+ "<br/><br/> - Es gab einen Serverfehler. Sollte der Fehler häufiger auftreten, wenden Sie sich bitte an den Administrator.");
 		errorTextLabel.setContentMode(ContentMode.HTML);
 		content.addComponent(errorTextLabel);
