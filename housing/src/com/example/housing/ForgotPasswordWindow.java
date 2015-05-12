@@ -1,8 +1,5 @@
 package com.example.housing;
 
-import java.util.ArrayList;
-import java.util.Collection;
-
 import com.example.housing.data.model.User;
 import com.example.housing.data.provider.UserProvider;
 import com.example.housing.utility.GenerateCode;
@@ -10,7 +7,6 @@ import com.example.housing.utility.SendEMail;
 import com.vaadin.data.Validator.InvalidValueException;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.server.Page;
-import com.vaadin.server.UserError;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;

@@ -14,6 +14,7 @@ import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Notification.Type;
 
 public class ConfirmDeleteWindow extends Window {
+	private static final long serialVersionUID = 1L;
 	
 	private static Offer currentOffer;
 	
@@ -52,7 +53,8 @@ public class ConfirmDeleteWindow extends Window {
 		cancel.setWidth("-1px");
 		cancel.setHeight("-1px");
 		cancel.addClickListener(new Button.ClickListener() {
-			
+			private static final long serialVersionUID = 1L;
+
 			@Override
 			public void buttonClick(ClickEvent event) {
 				
@@ -75,7 +77,8 @@ public class ConfirmDeleteWindow extends Window {
 		delete.setWidth("-1px");
 		delete.setHeight("-1px");
 		delete.addClickListener(new Button.ClickListener() {
-			
+			private static final long serialVersionUID = 1L;
+
 			@Override
 			public void buttonClick(ClickEvent event) {
 				

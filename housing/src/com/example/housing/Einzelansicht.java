@@ -4,17 +4,12 @@ import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.InputStream;
 import java.math.BigDecimal;
-import java.sql.Date;
 import java.util.List;
-
-import javax.swing.GroupLayout.Alignment;
-
 import com.example.housing.data.model.Favorit;
 import com.example.housing.data.model.Offer;
 import com.example.housing.data.model.User;
 import com.example.housing.data.model.Request;
 import com.example.housing.data.provider.FavoritProvider;
-import com.example.housing.data.provider.PhotoProvider;
 import com.example.housing.data.provider.RequestProvider;
 import com.example.housing.utility.Format;
 import com.vaadin.navigator.View;
@@ -26,10 +21,6 @@ import com.vaadin.server.Resource;
 import com.vaadin.server.StreamResource;
 import com.vaadin.server.VaadinService;
 import com.vaadin.server.VaadinSession;
-import com.vaadin.tapio.googlemaps.GoogleMap;
-import com.vaadin.tapio.googlemaps.client.LatLon;
-import com.vaadin.tapio.googlemaps.client.events.MarkerDragListener;
-import com.vaadin.tapio.googlemaps.client.overlays.GoogleMapMarker;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.DateField;
@@ -40,7 +31,6 @@ import com.vaadin.ui.Label;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.Notification.*;
-import com.vaadin.ui.Panel;
 import com.vaadin.ui.TextArea;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Button.ClickEvent;
@@ -49,7 +39,8 @@ import com.vaadin.ui.Button.ClickEvent;
 /**
  * The Class Einzelansicht.
  */
-public class Einzelansicht extends HorizontalLayout implements View {
+public class Einzelansicht extends CustomHorizontalLayout implements View {
+	private static final long serialVersionUID = 1L;
 	
 	/** The content. */
 	VerticalLayout content;
@@ -67,90 +58,14 @@ public class Einzelansicht extends HorizontalLayout implements View {
 	public Einzelansicht(Offer einzelAngebot){
 		this.angebot = einzelAngebot;
 		
-		content = new VerticalLayout();
-		
-		content.setMargin(true);
-		content.setSizeFull();
-		content.setSpacing(true);
-		
-		this.setWidth("100%");
-		
-		//linkes rotes Panel
-		Panel p = new Panel();
-		p.setWidth("100%");
-		p.setHeight("100%");
-		p.addStyleName("red");
-		addComponent(p);
-		this.setExpandRatio(p, 1);
-		
-		//mittlerer Teil der Seite
-		VerticalLayout v = new VerticalLayout();
-			
-		//Navigation hinzufuegen
-		Navigation nav = new Navigation();
-		nav.setWidth("100%");
-		nav.addStyleName("navigation");
-		v.addComponent(nav);
-		
-		NavigationPublic navPublic = new NavigationPublic();
-		v.addComponent(navPublic);
-		
-		NavigationAdmin navAdmin = new NavigationAdmin();
-		v.addComponent(navAdmin);
-		
-		//falls der Benutzer eingelogt ist verändert sich die Navigation
-		if(VaadinSession.getCurrent().getAttribute("login").equals(true)){
-			if(VaadinSession.getCurrent().getAttribute(User.class).getAccessLevel()==2){//falls der User ein Admin ist
-				nav.setVisible(false);
-				navPublic.setVisible(false);
-				navAdmin.setVisible(true);//Admin-Navigation
-			}else{//ansonsten: Naviagtion für eingeloggte Nutzer
-				nav.setVisible(true);
-				navPublic.setVisible(false);
-				navAdmin.setVisible(false);
-			}
-		}else{//ansonsten Public Navigation (für alle)
-			nav.setVisible(false);
-			navPublic.setVisible(true);
-			navAdmin.setVisible(false);
-		}
-		
-		
-		//Inhalt hinzufuegen
-		content = new VerticalLayout();
-		content.setMargin(true);
-		content.setWidth("100%");
-		setContent();//Methode zum befuellen des Inhalts aufrufen
-		v.addComponent(content);
-		
-		//Footer hinzufuegen
-		Footer f = new Footer();
-		v.addComponent(f);
-		
-		//rotes Panel unter dem Footer
-		Panel p2 = new Panel();
-		p2.setWidth("100%");
-		p2.addStyleName("red");
-		p2.setHeight("30px");
-		v.addComponent(p2);
-	
-		addComponent(v);
-		this.setExpandRatio(v, 12);
-		
-		//rotes rechtes Panel
-		Panel p1 = new Panel();
-		p1.setWidth("100%");
-		p1.addStyleName("red");
-		p1.setHeight("100%");
-		addComponent(p1);
-		this.setExpandRatio(p1, 1);
+		content = super.initCustomHorizontalLayout();
+		setContent();
 	}
 
 
 	/**
 	 * Sets the content.
 	 */
-	@SuppressWarnings("deprecation")
 	public void setContent(){
 		
 		//titel	
