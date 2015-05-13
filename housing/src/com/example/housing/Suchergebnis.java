@@ -1,7 +1,5 @@
 package com.example.housing;
 
-
-import java.math.BigDecimal;
 import java.util.Collections;
 import java.util.List;
 
@@ -32,7 +30,9 @@ public class Suchergebnis extends CustomHorizontalLayout implements View {
 
 	VerticalLayout content;
 	String sort= null;//Auswahlbox für Sortierung der Liste
-	List<Offer> angebote; 
+	List<Offer> angebote;
+
+	private Button map; 
 	
 	//Übergabe der Ergebnis aus der Suche
 	/**
@@ -65,6 +65,7 @@ public class Suchergebnis extends CustomHorizontalLayout implements View {
 			Label ergebnisString = new Label("Ihre Suche ergab leider keine Treffer.");
 			ergebnisString.addStyleName("AbschnittLabel");
 			content.addComponent(ergebnisString);
+		
 			
 		} else {
 			//Anzahl der Treffer
@@ -117,8 +118,7 @@ public class Suchergebnis extends CustomHorizontalLayout implements View {
 
 		}
 		
-	    //Map-Button
-        Button map = new Button("Karte anzeigen");
+	    map = new Button("Karte anzeigen");
         map.setIcon(FontAwesome.MAP_MARKER);
         map.addStyleName("AnfrageButton");
         map.addClickListener(new Button.ClickListener() {

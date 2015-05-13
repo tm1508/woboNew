@@ -3,19 +3,16 @@ package com.example.housing;
 import java.math.BigDecimal;
 import java.util.Iterator;
 import java.util.List;
-
 import com.example.housing.data.model.Offer;
 import com.example.housing.data.provider.OfferProvider;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.tapio.googlemaps.GoogleMap;
 import com.vaadin.tapio.googlemaps.client.LatLon;
 import com.vaadin.tapio.googlemaps.client.events.MarkerClickListener;
-import com.vaadin.tapio.googlemaps.client.events.MarkerDragListener;
 import com.vaadin.tapio.googlemaps.client.overlays.GoogleMapMarker;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
-
 
 public class MapWindowSuchergebnisse extends Window {
 	private static final long serialVersionUID = 1L;
@@ -64,6 +61,8 @@ public class MapWindowSuchergebnisse extends Window {
 		
 
         googleMap.addMarkerClickListener(new MarkerClickListener() {
+			private static final long serialVersionUID = 1L;
+
 			@Override
 			public void markerClicked(GoogleMapMarker clickedMarker) {
 				// TODO Auto-generated method stub
@@ -77,8 +76,6 @@ public class MapWindowSuchergebnisse extends Window {
 			}
         });
 	   
-        
-
         
         googleMap.setMinZoom(4);
         googleMap.setMaxZoom(16);
