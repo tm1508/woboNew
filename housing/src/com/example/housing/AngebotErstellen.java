@@ -14,6 +14,8 @@ import java.util.List;
 
 import javax.imageio.ImageIO;
 
+import org.jsoup.Jsoup;
+
 import com.example.housing.data.model.Offer;
 import com.example.housing.data.model.Photo;
 import com.example.housing.data.model.User;
@@ -642,7 +644,10 @@ public class AngebotErstellen extends HorizontalLayout implements View, Receiver
 					currentOffer.setSmoker(smoker.getValue());
 					currentOffer.setPets(pets.getValue());
 					currentOffer.setGender(gender);
-					currentOffer.setText(text.getValue());
+					String te = text.getValue();
+			        String tex = te.replace("<br>", "\n");
+			        String text1 = Jsoup.parse(tex).text();
+					currentOffer.setText(text1);
 					currentOffer.setInactive(inactive.getValue());
 					
 					if(lat != null){
@@ -1189,7 +1194,10 @@ public class AngebotErstellen extends HorizontalLayout implements View, Receiver
 					currentOffer.setSmoker(smoker.getValue());
 					currentOffer.setPets(pets.getValue());
 					currentOffer.setGender(gender);
-					currentOffer.setText(text.getValue());
+					String te = text.getValue();
+			        String tex = te.replace("<br>", "\n");
+			        String text1 = Jsoup.parse(tex).text();
+					currentOffer.setText(text1);
 					currentOffer.setInactive(inactive.getValue());
 
 					if(lat != null){

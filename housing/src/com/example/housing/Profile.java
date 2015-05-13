@@ -328,6 +328,7 @@ public class Profile extends CustomHorizontalLayout implements View {
 				button_1.setVisible(false);
 				button_2.setVisible(true);
 				button_3.setVisible(true);
+				button_4.setVisible(true);
 				prename.setEnabled(true);
 				lastname.setEnabled(true);
 				email_1.setEnabled(true);
@@ -470,7 +471,7 @@ public class Profile extends CustomHorizontalLayout implements View {
 		// button_4
 		button_4 = new Button();
 		button_4.setStyleName("loeschen");
-		button_4.setVisible(true);
+		button_4.setVisible(false);
 		button_4.setCaption("Profil löschen");
 		button_4.setImmediate(true);
 		button_4.setDescription("Löschen des Profils.");
@@ -478,7 +479,7 @@ public class Profile extends CustomHorizontalLayout implements View {
 		button_4.setHeight("-1px");
 		button_4.setIcon(FontAwesome.TRASH_O);
 		buttons.addComponent(button_4);
-		content.addComponent(buttons);
+		content.addComponent(buttons1);
 		button_4.addClickListener(new Button.ClickListener() {
 			public void buttonClick(ClickEvent event) {
 				CheckWindow w = new CheckWindow();// Wollen Sie Ihr Profil
