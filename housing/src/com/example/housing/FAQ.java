@@ -42,8 +42,8 @@ public class FAQ extends CustomHorizontalLayout implements View {
 	 */
 	public void setContent() {
 
-		content = new VerticalLayout();
-		content.setMargin(true);
+	//	content = new VerticalLayout();
+	//	content.setMargin(true);
 
 		//Titel
 		Label title = new Label();
