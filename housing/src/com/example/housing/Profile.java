@@ -309,6 +309,7 @@ public class Profile extends CustomHorizontalLayout implements View {
 		content.addComponent(passwordmoodle);
 
 		// button_1
+		HorizontalLayout buttons = new HorizontalLayout();
 		button_1 = new Button();
 		button_1.setStyleName("BearbeitenButton");
 		button_1.setCaption("Profildaten bearbeiten");
@@ -318,7 +319,8 @@ public class Profile extends CustomHorizontalLayout implements View {
 		button_1.setHeight("-1px");
 		button_1.setVisible(true);
 		button_1.setIcon(FontAwesome.PENCIL);
-		content.addComponent(button_1);
+		buttons.addComponent(button_1);
+		
 		// Bearbeitung aktivieren
 		button_1.addClickListener(new Button.ClickListener() {
 			public void buttonClick(ClickEvent event) {
@@ -340,6 +342,7 @@ public class Profile extends CustomHorizontalLayout implements View {
 		});
 
 		// button_2
+		HorizontalLayout buttons1 = new HorizontalLayout();
 		button_2 = new Button();
 		button_2.setStyleName("BearbeitenButton");
 		button_2.setCaption("Abbrechen");
@@ -349,7 +352,7 @@ public class Profile extends CustomHorizontalLayout implements View {
 		button_2.setWidth("-1px");
 		button_2.setHeight("-1px");
 		button_2.setVisible(false);
-		content.addComponent(button_2);
+		buttons1.addComponent(button_2);
 		button_2.addClickListener(new Button.ClickListener() {
 			public void buttonClick(ClickEvent event) {
 				// ursprüngliche Daten wieder laden
@@ -382,7 +385,8 @@ public class Profile extends CustomHorizontalLayout implements View {
 		button_3.setDescription("Speichern der Änderungen.");
 		button_3.setWidth("-1px");
 		button_3.setHeight("-1px");
-		content.addComponent(button_3);
+		buttons1.addComponent(button_3);
+		content.addComponent(buttons1);
 		button_3.addClickListener(new Button.ClickListener() {
 			public void buttonClick(ClickEvent event) {
 				// Validierung der Felder
@@ -473,7 +477,8 @@ public class Profile extends CustomHorizontalLayout implements View {
 		button_4.setWidth("-1px");
 		button_4.setHeight("-1px");
 		button_4.setIcon(FontAwesome.TRASH_O);
-		content.addComponent(button_4);
+		buttons.addComponent(button_4);
+		content.addComponent(buttons);
 		button_4.addClickListener(new Button.ClickListener() {
 			public void buttonClick(ClickEvent event) {
 				CheckWindow w = new CheckWindow();// Wollen Sie Ihr Profil
