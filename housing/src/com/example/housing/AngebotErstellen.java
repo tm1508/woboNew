@@ -215,7 +215,7 @@ public class AngebotErstellen extends HorizontalLayout implements View, Receiver
 			v.addComponent(navPublic);
 			
 			//falls der Benutzer eingelogt ist verändert sich die Navigation
-			if(VaadinSession.getCurrent().getSession().getAttribute("login").equals(true)){
+			if(VaadinSession.getCurrent().getAttribute("login").equals(true)){
 				nav.setVisible(true);
 				navPublic.setVisible(false);
 			}else{
