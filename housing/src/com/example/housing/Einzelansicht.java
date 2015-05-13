@@ -284,36 +284,41 @@ public class Einzelansicht extends CustomHorizontalLayout implements View {
         gridInfos.addComponent(new Label(Integer.toString(number)), 1, 5);
         
         //Internet 
-        CheckBox hasInternet = new CheckBox("");       
-        gridInfos.addComponent(new Label("Internetanschluss vorhanden:"), 0, 6);
+        CheckBox hasInternet = new CheckBox("");  
+        hasInternet.setCaption("Internetanschluss vorhanden");
+        gridInfos.addComponent(new Label("Ausstattung/Sonstiges:"), 0, 6);
         gridInfos.addComponent(hasInternet, 1,6);
         hasInternet.setEnabled(false);
         hasInternet.setValue( angebot.isInternet());
         
         //furnished       
-        CheckBox isFurnished = new CheckBox("");       
-        gridInfos.addComponent(new Label("Möblierte Wohnung:"), 0, 7);
+        CheckBox isFurnished = new CheckBox(""); 
+        isFurnished.setCaption("Möblierte Wohnung");
+        gridInfos.addComponent(new Label(""), 0, 7);
         gridInfos.addComponent(isFurnished, 1,7);
         isFurnished.setEnabled(false);
         isFurnished.setValue( angebot.isFurnished());
         
         //kitchen       
-        CheckBox useKitchen = new CheckBox("");       
-        gridInfos.addComponent(new Label("Küche vorhanden:"), 0, 8);
+        CheckBox useKitchen = new CheckBox(""); 
+        useKitchen.setCaption("Küche vorhanden");
+        gridInfos.addComponent(new Label(""), 0, 8);
         gridInfos.addComponent(useKitchen, 1,8);
         useKitchen.setEnabled(false);
         useKitchen.setValue( angebot.isKitchen());
        
         //smoker
-        CheckBox smokingAllowed = new CheckBox("");       
-        gridInfos.addComponent(new Label("Raucher-Wohnung:"), 0, 9);
+        CheckBox smokingAllowed = new CheckBox("");   
+        smokingAllowed.setCaption("Raucher-Wohnung");
+        gridInfos.addComponent(new Label(""), 0, 9);
         gridInfos.addComponent(smokingAllowed, 1,9);
         smokingAllowed.setEnabled(false);
         smokingAllowed.setValue(angebot.isSmoker());
         
         //pets       
-        CheckBox petsAllowed = new CheckBox("");       
-        gridInfos.addComponent(new Label("Haustiere erlaubt:"), 0, 10);
+        CheckBox petsAllowed = new CheckBox(""); 
+        petsAllowed.setCaption("Haustiere erlaubt");
+        gridInfos.addComponent(new Label(""), 0, 10);
         gridInfos.addComponent(petsAllowed, 1,10);
         petsAllowed.setEnabled(false);
         petsAllowed.setValue(angebot.isPets());
