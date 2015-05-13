@@ -1,13 +1,20 @@
 package com.example.housing.data.provider;
 
 
+import java.io.Serializable;
+
 import com.example.housing.data.model.Photo;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class PhotoProvider.
  */
-public class PhotoProvider extends BaseProvider<Photo> {
+public class PhotoProvider extends BaseProvider<Photo> implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
 	/* (non-Javadoc)
 	 * @see com.example.housing.data.provider.BaseProvider#getEntityClass()

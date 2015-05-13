@@ -1,7 +1,10 @@
 package com.example.housing.data.provider;
 
+import java.io.Serializable;
 import java.util.List;
+
 import javax.persistence.Query;
+
 import com.example.housing.data.model.Favorit;
 import com.example.housing.data.model.Offer;
 import com.example.housing.data.model.Request;
@@ -11,8 +14,13 @@ import com.example.housing.data.model.User;
 /**
  * The Class UserProvider.
  */
-public class UserProvider extends BaseProvider<User>{
+public class UserProvider extends BaseProvider<User> implements Serializable {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	/* (non-Javadoc)
 	 * @see com.example.housing.data.provider.BaseProvider#getEntityClass()
 	 */

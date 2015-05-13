@@ -1,5 +1,6 @@
 package com.example.housing.data.provider;
 
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -18,7 +19,13 @@ import com.example.housing.data.model.User;
 /**
  * The Class OfferProvider.
  */
-public class OfferProvider extends BaseProvider<Offer> {
+public class OfferProvider extends BaseProvider<Offer> implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 
 	/*
 	 * (non-Javadoc)
