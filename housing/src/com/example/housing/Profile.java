@@ -309,7 +309,6 @@ public class Profile extends CustomHorizontalLayout implements View {
 		content.addComponent(passwordmoodle);
 
 		// button_1
-		HorizontalLayout buttons = new HorizontalLayout();
 		button_1 = new Button();
 		button_1.setStyleName("BearbeitenButton");
 		button_1.setCaption("Profildaten bearbeiten");
@@ -319,7 +318,7 @@ public class Profile extends CustomHorizontalLayout implements View {
 		button_1.setHeight("-1px");
 		button_1.setVisible(true);
 		button_1.setIcon(FontAwesome.PENCIL);
-		buttons.addComponent(button_1);
+		content.addComponent(button_1);
 		
 		// Bearbeitung aktivieren
 		button_1.addClickListener(new Button.ClickListener() {
@@ -478,7 +477,7 @@ public class Profile extends CustomHorizontalLayout implements View {
 		button_4.setWidth("-1px");
 		button_4.setHeight("-1px");
 		button_4.setIcon(FontAwesome.TRASH_O);
-		buttons.addComponent(button_4);
+		buttons1.addComponent(button_4);
 		content.addComponent(buttons1);
 		button_4.addClickListener(new Button.ClickListener() {
 			public void buttonClick(ClickEvent event) {

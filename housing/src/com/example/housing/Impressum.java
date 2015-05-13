@@ -41,9 +41,6 @@ public class Impressum extends CustomHorizontalLayout implements View {
 	 * Sets the content.
 	 */
 	public void setContent() {
-
-		content = new VerticalLayout();
-		content.setMargin(true);
 		
 		// title
 		Label title = new Label();

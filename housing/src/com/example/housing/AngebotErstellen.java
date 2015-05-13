@@ -36,7 +36,6 @@ import com.vaadin.ui.DateField;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Notification;
-import com.vaadin.ui.Panel;
 import com.vaadin.ui.RichTextArea;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.Upload;
@@ -133,8 +132,6 @@ public class AngebotErstellen extends CustomHorizontalLayout implements View, Re
 	// Inhalt der Seite für neues Angebot
 	public void setContent() {
 
-		content = new VerticalLayout();
-		content.setMargin(true);
 
 		title = new Label();
 		title.setImmediate(false);
@@ -612,10 +609,6 @@ public class AngebotErstellen extends CustomHorizontalLayout implements View, Re
 	}
 
 	public void setContent(final Offer offer) {
-
-		content = new VerticalLayout();
-		content.setMargin(true);
-		
 		title = new Label();
 		title.setImmediate(false);
 		title.setWidth("-1px");
@@ -1128,6 +1121,8 @@ public class AngebotErstellen extends CustomHorizontalLayout implements View, Re
 		abbrechen.setImmediate(true);
 		abbrechen.setDescription("Abbrechen der Bearbeitung. Ihre Änderungen werden nicht gespeichert.");
 		abbrechen.addClickListener(new Button.ClickListener() {
+			private static final long serialVersionUID = 1L;
+
 			public void buttonClick(ClickEvent event) {
 
 				PhotoProvider photoProv = new PhotoProvider();
