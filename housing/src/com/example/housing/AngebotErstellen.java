@@ -649,8 +649,14 @@ public class AngebotErstellen extends HorizontalLayout implements View, Receiver
 						currentOffer.setLatitude(BigDecimal.valueOf(lat));
 						currentOffer.setLongitude(BigDecimal.valueOf(lon));
 					}
-
-					VaadinSession.getCurrent().setAttribute("buttonClicked", true);
+					
+					try {
+						VaadinSession.getCurrent().getLockInstance().lock();
+						VaadinSession.getCurrent().getSession().setAttribute("buttonClicked", true);
+					} finally {
+						VaadinSession.getCurrent().getLockInstance().unlock();
+					}
+					
 					
 					if (new OfferProvider().alterOffer(currentOffer)) { //neues Angebot in die DB schreiben
 						
@@ -705,7 +711,12 @@ public class AngebotErstellen extends HorizontalLayout implements View, Receiver
 				success.setDelayMsec(300);
 				success.show(Page.getCurrent());
 				
-				VaadinSession.getCurrent().setAttribute("buttonClicked", true);
+				try {
+					VaadinSession.getCurrent().getLockInstance().lock();
+					VaadinSession.getCurrent().getSession().setAttribute("buttonClicked", true);
+				} finally {
+					VaadinSession.getCurrent().getLockInstance().unlock();
+				}
 
 				String name = "Startseite";
 				getUI().getNavigator().addView(name, new Startseite());
@@ -1186,7 +1197,12 @@ public class AngebotErstellen extends HorizontalLayout implements View, Receiver
 						currentOffer.setLongitude(BigDecimal.valueOf(lon));
 					}
 					
-					VaadinSession.getCurrent().setAttribute("buttonClicked", true);
+					try {
+						VaadinSession.getCurrent().getLockInstance().lock();
+						VaadinSession.getCurrent().getSession().setAttribute("buttonClicked", true);
+					} finally {
+						VaadinSession.getCurrent().getLockInstance().unlock();
+					}
 					
 					if (new OfferProvider().alterOffer(currentOffer)) { //neues Angebot in die DB schreiben
 						
@@ -1237,7 +1253,12 @@ public class AngebotErstellen extends HorizontalLayout implements View, Receiver
 					photoProv.removePhoto(p);
 				}
 				
-				VaadinSession.getCurrent().setAttribute("buttonClicked", true);
+				try {
+					VaadinSession.getCurrent().getLockInstance().lock();
+					VaadinSession.getCurrent().getSession().setAttribute("buttonClicked", true);
+				} finally {
+					VaadinSession.getCurrent().getLockInstance().unlock();
+				}
 				
 				Notification success = new Notification("Ihre Änderungen an diesem Angebot wurden nicht gespeichert.", Type.HUMANIZED_MESSAGE);
 				success.setStyleName("success");

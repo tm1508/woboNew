@@ -90,8 +90,13 @@ public class NavigationAdmin extends CustomComponent {
 		MenuBar.Command logout = new MenuBar.Command() {
 			public void menuSelected(MenuItem selectedItem) {
  
-				VaadinSession.getCurrent().getSession().setAttribute("login", false);
-				VaadinSession.getCurrent().getSession().setAttribute("user", null);
+				try {
+					VaadinSession.getCurrent().getLockInstance().lock();
+					VaadinSession.getCurrent().getSession().setAttribute("login", false);
+					VaadinSession.getCurrent().getSession().setAttribute("user", null);
+				} finally {
+					VaadinSession.getCurrent().getLockInstance().unlock();
+				}
 				
 				String name = "Startseite";
 				getUI().getNavigator().addView(name, new Startseite());

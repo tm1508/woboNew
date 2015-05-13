@@ -82,10 +82,17 @@ public class HousingUI extends UI {
 		 */
 		@Override
 		public void sessionInit(SessionInitEvent event) throws ServiceException {
-			event.getSession().getSession().setAttribute("login", false);//Ist ein Nutzer eingeloggt? true=ja, false=nein
-			event.getSession().getSession().setAttribute("activated", "");//speichern des Requestparameters für die Aktivierung
-			event.getSession().getSession().setAttribute("user", null);//evtl. speichern des eingeloggten Users	
-			event.getSession().getSession().setAttribute("buttonClicked", false);
+
+			try {
+				event.getSession().getLockInstance().lock();
+				
+				event.getSession().getSession().setAttribute("login", false);//Ist ein Nutzer eingeloggt? true=ja, false=nein
+				event.getSession().getSession().setAttribute("activated", "");//speichern des Requestparameters für die Aktivierung
+				event.getSession().getSession().setAttribute("user", null);//evtl. speichern des eingeloggten Users	
+				event.getSession().getSession().setAttribute("buttonClicked", false);
+			} finally {
+				event.getSession().getLockInstance().unlock();
+			}
 			
 		}
 		
@@ -129,7 +136,14 @@ public class HousingUI extends UI {
 			System.out.println(msgs[i]);
 			param =msgs[i];
 		}
-		VaadinSession.getCurrent().getSession().setAttribute("activated", param);
+		
+		try {
+			VaadinSession.getCurrent().getLockInstance().lock();
+			VaadinSession.getCurrent().getSession().setAttribute("activated", param);
+		} finally {
+			VaadinSession.getCurrent().getLockInstance().unlock();
+		}
+		
 		
 		//Navigation zur Startseite
 		navigator = new Navigator(this, this);

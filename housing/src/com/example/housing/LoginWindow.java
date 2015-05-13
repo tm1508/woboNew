@@ -138,8 +138,14 @@ public class LoginWindow extends Window{
 								notif.setDelayMsec(300);
 								notif.setStyleName("success");
 								notif.show(Page.getCurrent());
-								VaadinSession.getCurrent().getSession().setAttribute("user", u);//User-Objekt in der Session speichern
-								VaadinSession.getCurrent().getSession().setAttribute("login", true);//Login-Attribut auf true setzen (wird auf jeder Seite abgefragt, um zu prüfen welche Navigationsleiste angezeigt werden soll)
+								
+								try {
+									VaadinSession.getCurrent().getLockInstance().lock();
+									VaadinSession.getCurrent().getSession().setAttribute("user", u);//User-Objekt in der Session speichern
+									VaadinSession.getCurrent().getSession().setAttribute("login", true);//Login-Attribut auf true setzen (wird auf jeder Seite abgefragt, um zu prüfen welche Navigationsleiste angezeigt werden soll)
+								} finally {
+									VaadinSession.getCurrent().getLockInstance().unlock();
+								}
 								
 								String name = "Startseite";
 								getUI().getNavigator().addView(name, new Startseite());
@@ -157,8 +163,13 @@ public class LoginWindow extends Window{
 	
 					}catch(Exception e){
 						
-						VaadinSession.getCurrent().getSession().setAttribute("login", false);
-						VaadinSession.getCurrent().getSession().setAttribute("user", null);
+						try {
+							VaadinSession.getCurrent().getLockInstance().lock();
+							VaadinSession.getCurrent().getSession().setAttribute("login", false);
+							VaadinSession.getCurrent().getSession().setAttribute("user", null);
+						} finally {
+							VaadinSession.getCurrent().getLockInstance().unlock();
+						}
 						
 						//Fehlermeldung bei Datenbankproblemen
 						Notification notif = new Notification("Login fehlgeschlagen!","Bitte registrieren Sie sich zuerst.", Type.HUMANIZED_MESSAGE);
