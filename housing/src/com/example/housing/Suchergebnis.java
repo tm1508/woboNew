@@ -1,10 +1,12 @@
 package com.example.housing;
 
 
+import java.math.BigDecimal;
 import java.util.Collections;
 import java.util.List;
 
 import com.example.housing.data.model.Offer;
+import com.example.housing.data.model.User;
 import com.example.housing.utility.SortByMonatsmiete;
 import com.example.housing.utility.SortByOfferTime;
 import com.example.housing.utility.SortByTitle;
@@ -12,9 +14,14 @@ import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
+import com.vaadin.server.FontAwesome;
+import com.vaadin.server.VaadinSession;
+import com.vaadin.ui.Button;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.NativeSelect;
+import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
+import com.vaadin.ui.Button.ClickEvent;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -109,6 +116,28 @@ public class Suchergebnis extends CustomHorizontalLayout implements View {
 			});
 
 		}
+		
+	    //Map-Button
+        Button map = new Button("Karte anzeigen");
+        map.setIcon(FontAwesome.MAP_MARKER);
+        map.addStyleName("AnfrageButton");
+        map.addClickListener(new Button.ClickListener() {
+			public void buttonClick(ClickEvent event) {
+				MapWindowSuchergebnisse w = new MapWindowSuchergebnisse(angebote);//neues Fenster mit Karte wird geöffnet
+				UI.getCurrent().addWindow(w);
+			}
+        });
+        content.addComponent(map);
+        
+        //Button wird deaktiviert, wenn der Nutzer kein DH Stud. ist
+		if(VaadinSession.getCurrent().getSession().getAttribute("login").equals(true) && ((User) VaadinSession.getCurrent().getSession().getAttribute("user")).getAccessLevel() != 0) {
+			//tue nichts
+		}else{
+			map.setEnabled(false);
+			Label l = new Label("Die Kartenansicht ist nur für verifizierte DH-Studenten verfügbar.");
+			content.addComponent(l);
+		}
+		
 		
 		content.addComponent(new Label());
 		for(Offer o : angebote) {
