@@ -398,6 +398,9 @@ public class Einzelansicht extends CustomHorizontalLayout implements View {
 			Button deacitvate = new Button("Deaktivieren");
 			deacitvate.setIcon(FontAwesome.SQUARE_O);
 			deacitvate.addStyleName("BearbeitenButton");
+			if(angebot.isInactive()) {
+				deacitvate.setEnabled(false);
+			}
 			deacitvate.addClickListener(new Button.ClickListener() {
 				public void buttonClick(ClickEvent event) {
 					
