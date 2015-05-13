@@ -62,6 +62,11 @@ public class Footer extends CustomComponent {
 		mainLayout.setMargin(true);
 		mainLayout.setSpacing(true);
 		
+		HorizontalLayout foot = new HorizontalLayout();
+		foot.setImmediate(false);
+		foot.setMargin(true);
+		foot.setSpacing(true);
+		
 		copyrightLabel = new Label();
 		copyrightLabel.setImmediate(false);
 		copyrightLabel.setWidth("-1px");
@@ -69,7 +74,7 @@ public class Footer extends CustomComponent {
 		copyrightLabel.setValue("© DHBW Karlsruhe");
 		copyrightLabel.setStyleName("footer");
 		copyrightLabel.setSizeFull();
-		mainLayout.addComponent(copyrightLabel);
+		foot.addComponent(copyrightLabel);
 		
 		dhbwHomepageLink = new Link("DHBW Karlsruhe", new ExternalResource("https://www.dhbw-karlsruhe.de"));
 		dhbwHomepageLink.setDescription("Internetseite der DHBW Karlsruhe");
@@ -77,8 +82,8 @@ public class Footer extends CustomComponent {
 		dhbwHomepageLink.setWidth("-1px");
 		dhbwHomepageLink.setHeight("15px");
 		dhbwHomepageLink.setStyleName("footer");
-		mainLayout.addComponent(dhbwHomepageLink);
-		mainLayout.setComponentAlignment(dhbwHomepageLink, Alignment.MIDDLE_CENTER);
+		foot.addComponent(dhbwHomepageLink);
+		//mainLayout.setComponentAlignment(dhbwHomepageLink, Alignment.MIDDLE_CENTER);
 		
 		impressumLink = new Button();
 		impressumLink.setCaption("Impressum");
@@ -94,8 +99,8 @@ public class Footer extends CustomComponent {
 				getUI().getNavigator().navigateTo(name);
 			}
 		});
-		mainLayout.addComponent(impressumLink);
-		mainLayout.setComponentAlignment(impressumLink, Alignment.MIDDLE_CENTER);
+		foot.addComponent(impressumLink);
+		//mainLayout.setComponentAlignment(impressumLink, Alignment.MIDDLE_CENTER);
 		
 		kontaktformularLink = new Button();
 		kontaktformularLink.setStyleName("link");
@@ -111,8 +116,9 @@ public class Footer extends CustomComponent {
 				getUI().getNavigator().navigateTo(name);
 			}
 		});
-		mainLayout.addComponent(kontaktformularLink);
-		mainLayout.setComponentAlignment(kontaktformularLink, Alignment.MIDDLE_CENTER);
+		foot.addComponent(kontaktformularLink);
+		mainLayout.addComponent(foot);
+		mainLayout.setComponentAlignment(foot, Alignment.MIDDLE_CENTER);
 
 		return mainLayout;
 	}
