@@ -6,6 +6,8 @@ import java.io.InputStream;
 import java.math.BigDecimal;
 import java.util.List;
 
+import org.jsoup.Jsoup;
+
 import com.example.housing.data.model.Favorit;
 import com.example.housing.data.model.Offer;
 import com.example.housing.data.model.User;
@@ -350,7 +352,6 @@ public class Einzelansicht extends CustomHorizontalLayout implements View {
         //text
         TextArea t = new TextArea();
         String text = angebot.getText();
-       
         t.setValue(text);
         t.setEnabled(false);
         t.setWidth("338px");

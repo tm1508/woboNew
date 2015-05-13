@@ -14,6 +14,8 @@ import java.util.List;
 
 import javax.imageio.ImageIO;
 
+import org.jsoup.Jsoup;
+
 import com.example.housing.data.model.Offer;
 import com.example.housing.data.model.Photo;
 import com.example.housing.data.model.User;
@@ -140,7 +142,7 @@ public class AngebotErstellen extends HorizontalLayout implements View, Receiver
 			v.addComponent(navAdmin);
 			
 			//falls der Benutzer eingelogt ist verändert sich die Navigation
-			if(VaadinSession.getCurrent().getAttribute("login").equals(true)){
+			if(VaadinSession.getCurrent().getSession().getAttribute("login").equals(true)){
 				if(((User) VaadinSession.getCurrent().getSession().getAttribute("user")).getAccessLevel()==2){//falls der User ein Admin ist
 					nav.setVisible(false);
 					navPublic.setVisible(false);
@@ -642,7 +644,10 @@ public class AngebotErstellen extends HorizontalLayout implements View, Receiver
 					currentOffer.setSmoker(smoker.getValue());
 					currentOffer.setPets(pets.getValue());
 					currentOffer.setGender(gender);
-					currentOffer.setText(text.getValue());
+					String te = text.getValue();
+			        String tex = te.replace("<br>", "\n");
+			        String text1 = Jsoup.parse(tex).text();
+					currentOffer.setText(text1);
 					currentOffer.setInactive(inactive.getValue());
 					
 					if(lat != null){
@@ -1189,7 +1194,10 @@ public class AngebotErstellen extends HorizontalLayout implements View, Receiver
 					currentOffer.setSmoker(smoker.getValue());
 					currentOffer.setPets(pets.getValue());
 					currentOffer.setGender(gender);
-					currentOffer.setText(text.getValue());
+					String te = text.getValue();
+			        String tex = te.replace("<br>", "\n");
+			        String text1 = Jsoup.parse(tex).text();
+					currentOffer.setText(text1);
 					currentOffer.setInactive(inactive.getValue());
 
 					if(lat != null){
