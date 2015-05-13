@@ -78,7 +78,7 @@ public class Footer extends CustomComponent {
 		dhbwHomepageLink.setHeight("15px");
 		dhbwHomepageLink.setStyleName("footer");
 		mainLayout.addComponent(dhbwHomepageLink);
-		mainLayout.setComponentAlignment(dhbwHomepageLink, Alignment.MIDDLE_LEFT);
+		mainLayout.setComponentAlignment(dhbwHomepageLink, Alignment.MIDDLE_CENTER);
 		
 		impressumLink = new Button();
 		impressumLink.setCaption("Impressum");
@@ -112,7 +112,7 @@ public class Footer extends CustomComponent {
 			}
 		});
 		mainLayout.addComponent(kontaktformularLink);
-		mainLayout.setComponentAlignment(kontaktformularLink, Alignment.MIDDLE_RIGHT);
+		mainLayout.setComponentAlignment(kontaktformularLink, Alignment.MIDDLE_CENTER);
 
 		return mainLayout;
 	}
