@@ -25,10 +25,10 @@ import com.vaadin.ui.Notification.Type;
  * @version 1.0
  * @see com.example.housing.Registrierung
  */
-@SuppressWarnings("serial")
 @Theme("housing")
 public class LoginWindow extends Window{
-	
+	private static final long serialVersionUID = 1L;
+
 	/** The title. */
 	public static Label title;
 	
@@ -105,6 +105,8 @@ public class LoginWindow extends Window{
 			loginButton.setHeight("-1px");
 			content.addComponent(loginButton);
 			loginButton.addClickListener(new Button.ClickListener() {
+				private static final long serialVersionUID = 1L;
+
 				public void buttonClick(ClickEvent event) {
 					try{
 					
@@ -136,8 +138,7 @@ public class LoginWindow extends Window{
 								notif.setDelayMsec(300);
 								notif.setStyleName("success");
 								notif.show(Page.getCurrent());
-								
-								VaadinSession.getCurrent().setAttribute(User.class, u);//User-Objekt in der Session speichern
+								VaadinSession.getCurrent().setAttribute("user", u);//User-Objekt in der Session speichern
 								VaadinSession.getCurrent().setAttribute("login", true);//Login-Attribut auf true setzen (wird auf jeder Seite abgefragt, um zu prüfen welche Navigationsleiste angezeigt werden soll)
 								
 								String name = "Startseite";
@@ -156,8 +157,8 @@ public class LoginWindow extends Window{
 	
 					}catch(Exception e){
 						
-						VaadinSession.getCurrent().setAttribute("login", false);
-						VaadinSession.getCurrent().setAttribute(User.class, null);
+						VaadinSession.getCurrent().getSession().setAttribute("login", false);
+						VaadinSession.getCurrent().getSession().setAttribute("user", null);
 						
 						//Fehlermeldung bei Datenbankproblemen
 						Notification notif = new Notification("Login fehlgeschlagen!","Bitte registrieren Sie sich zuerst.", Type.HUMANIZED_MESSAGE);
@@ -177,6 +178,8 @@ public class LoginWindow extends Window{
 			link.setHeight("-1px");
 			link.setIcon(FontAwesome.EXTERNAL_LINK);
 			link.addClickListener(new Button.ClickListener(){
+				private static final long serialVersionUID = 1L;
+
 				public void buttonClick(ClickEvent event) {
 					ForgotPasswordWindow w = new ForgotPasswordWindow();//Intantiiert ein neues Fenster
 					UI.getCurrent().removeWindow(LoginWindow.this);//schließt das Loginfenster

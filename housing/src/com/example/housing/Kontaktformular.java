@@ -19,7 +19,6 @@ import com.vaadin.ui.Notification.Type;
 public class Kontaktformular extends CustomHorizontalLayout implements View{
 	private static final long serialVersionUID = 1L;
 
-	private Offer requestedOffer;
 	
 	private RichTextArea text;
 	

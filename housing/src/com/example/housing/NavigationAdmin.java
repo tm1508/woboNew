@@ -65,10 +65,10 @@ public class NavigationAdmin extends CustomComponent {
 		h.addComponent(image);
 	
 		
-		if((boolean) VaadinSession.getCurrent().getAttribute("login")){
+		if((boolean) VaadinSession.getCurrent().getSession().getAttribute("login")){
 			Label l = new Label();
 			l.setContentMode(ContentMode.HTML);
-			l.setValue(""+FontAwesome.USER.getHtml()+"  Sie sind angemeldet als:    "+VaadinSession.getCurrent().getAttribute(User.class).getEmail()+"    (ADMINISTRATOR)");
+			l.setValue(""+FontAwesome.USER.getHtml()+"  Sie sind angemeldet als:    "+((User) (VaadinSession.getCurrent().getSession().getAttribute("user"))).getEmail()+"    (ADMINISTRATOR)");
 			h.addComponent(l);
 			h.setComponentAlignment(l, Alignment.BOTTOM_LEFT);
 			
@@ -90,8 +90,8 @@ public class NavigationAdmin extends CustomComponent {
 		MenuBar.Command logout = new MenuBar.Command() {
 			public void menuSelected(MenuItem selectedItem) {
  
-				VaadinSession.getCurrent().setAttribute("login", false);
-				VaadinSession.getCurrent().setAttribute(User.class, null);
+				VaadinSession.getCurrent().getSession().setAttribute("login", false);
+				VaadinSession.getCurrent().getSession().setAttribute("user", null);
 				
 				String name = "Startseite";
 				getUI().getNavigator().addView(name, new Startseite());

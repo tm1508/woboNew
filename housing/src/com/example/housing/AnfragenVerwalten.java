@@ -46,7 +46,7 @@ public class AnfragenVerwalten extends CustomHorizontalLayout implements View{
 		RequestProvider requestProv = new RequestProvider();
 		List<Request> reqs;
 		
-		reqs = requestProv.findReq(VaadinSession.getCurrent().getAttribute(User.class));
+		reqs = requestProv.findReq((User) VaadinSession.getCurrent().getSession().getAttribute("user"));
 		
 		int anzahl = reqs.size();
 		

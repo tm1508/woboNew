@@ -82,10 +82,10 @@ public class HousingUI extends UI {
 		 */
 		@Override
 		public void sessionInit(SessionInitEvent event) throws ServiceException {
-			event.getSession().setAttribute("login", false);//Ist ein Nutzer eingeloggt? true=ja, false=nein
-			event.getSession().setAttribute("activated", "");//speichern des Requestparameters für die Aktivierung
-			event.getSession().setAttribute(User.class, null);//evtl. speichern des eingeloggten Users	
-			event.getSession().setAttribute("buttonClicked", false);
+			event.getSession().getSession().setAttribute("login", false);//Ist ein Nutzer eingeloggt? true=ja, false=nein
+			event.getSession().getSession().setAttribute("activated", "");//speichern des Requestparameters für die Aktivierung
+			event.getSession().getSession().setAttribute("user", null);//evtl. speichern des eingeloggten Users	
+			event.getSession().getSession().setAttribute("buttonClicked", false);
 			
 		}
 		
@@ -95,10 +95,10 @@ public class HousingUI extends UI {
 		@Override
 		public void sessionDestroy(SessionDestroyEvent event) {
 			
-			if((boolean) event.getSession().getAttribute("login")) {
+			if((boolean) event.getSession().getSession().getAttribute("login")) {
 				
 				//inaktive, "leere" Angebote des Users löschen
-				User u = event.getSession().getAttribute(User.class);
+				User u = (User) event.getSession().getSession().getAttribute("user");
 				
 				OfferProvider offerProv = new OfferProvider();
 				List<Offer> failedOffers = offerProv.findFailedOffersByUser(u);
@@ -129,7 +129,7 @@ public class HousingUI extends UI {
 			System.out.println(msgs[i]);
 			param =msgs[i];
 		}
-		VaadinSession.getCurrent().setAttribute("activated", param);
+		VaadinSession.getCurrent().getSession().setAttribute("activated", param);
 		
 		//Navigation zur Startseite
 		navigator = new Navigator(this, this);
@@ -145,7 +145,7 @@ public class HousingUI extends UI {
 				
 				//AngebotErstellen ohne Button verlassen
 				//TODO: Button als Auslöser ausschließen!!!
-				if(event.getOldView().getClass().toString().equals("class com.example.housing.AngebotErstellen") && !((boolean) VaadinSession.getCurrent().getAttribute("buttonClicked"))) {		
+				if(event.getOldView().getClass().toString().equals("class com.example.housing.AngebotErstellen") && !((boolean) VaadinSession.getCurrent().getSession().getAttribute("buttonClicked"))) {		
 					if(((AngebotErstellen) event.getOldView()).getNewPhotos() != null) {
 						//TODO alle Fotos wieder löschen
 						PhotoProvider photoProv = new PhotoProvider();
@@ -168,7 +168,7 @@ public class HousingUI extends UI {
 			@Override
 			public void afterViewChange(ViewChangeEvent event) {
 				
-				VaadinSession.getCurrent().setAttribute("buttonClicked", false);
+				VaadinSession.getCurrent().getSession().setAttribute("buttonClicked", false);
 				
 			}
 		});

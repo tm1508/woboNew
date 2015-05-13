@@ -15,6 +15,8 @@ import javax.persistence.*;
 @Table(name="Offer")
 public class Offer implements Serializable {
 	
+	private static final long serialVersionUID = 1L;
+
 	/** The id offer. */
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
