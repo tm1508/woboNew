@@ -38,7 +38,7 @@ public class ConfirmDeleteWindow extends Window {
 		text.setImmediate(false);
 		//text.setWidth("-1px");
 		//text.setHeight("-1px");
-		text.setValue("Wollen Sie Ihr Angebot " + currentOffer.getTitle() + " wirklich unwiderruflich löschen? Alternativ können Sie es auch vorübergehend deaktivieren, indem Sie das Angebot bearbeiten und dort den Haken bei \"deaktivieren\" setzen. Auf diese Weise können Sie das Angebot gegebenenfalls später wieder reaktivieren.");
+		text.setValue("Wollen Sie Ihr Angebot " + currentOffer.getTitle() + " wirklich unwiderruflich löschen? Alternativ können Sie es lediglich vorübergehend deaktivieren. Auf diese Weise können Sie das Angebot gegebenenfalls später wieder reaktivieren.");
 		content.addComponent(text);
 		
 		HorizontalLayout buttons = new HorizontalLayout();
@@ -63,6 +63,52 @@ public class ConfirmDeleteWindow extends Window {
 				not.setDelayMsec(300);
 				not.show(Page.getCurrent());
 				ConfirmDeleteWindow.this.close();
+				
+			}
+		});
+		
+		//deaktivieren-Button
+		Button deactivate = new Button();
+		deactivate.setIcon(FontAwesome.MAIL_REPLY);
+		deactivate.setStyleName("BearbeitenButton");
+		deactivate.setCaption("Deaktivieren");
+		deactivate.setImmediate(true);
+		deactivate.setDescription("Angebot vorübergehend deaktivieren");
+		deactivate.setWidth("-1px");
+		deactivate.setHeight("-1px");
+		deactivate.addClickListener(new Button.ClickListener() {
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public void buttonClick(ClickEvent event) {
+				
+				currentOffer.setInactive(true);
+				
+				if(new OfferProvider().alterOffer(currentOffer)) {
+					
+					Notification not = new Notification("Das Angebot wurde deaktiviert.",Type.HUMANIZED_MESSAGE);//Meldung an den Nutzer
+					not.setStyleName("success");
+					not.setDelayMsec(300);
+					not.show(Page.getCurrent());
+					
+					Offer o = new OfferProvider().findById(currentOffer.getIdOffer());
+					
+					String name = "Einzelansicht";
+					getUI().getNavigator().addView(name, new Einzelansicht(o));
+					getUI().getNavigator().navigateTo(name);
+					
+					ConfirmDeleteWindow.this.close();
+					
+				} else {
+					
+					Notification failDB = new Notification("Das Angebot konnte nicht deaktiviert werden.", Type.HUMANIZED_MESSAGE);
+					failDB.setStyleName("failure");
+					failDB.setDelayMsec(300);
+					failDB.show(Page.getCurrent());
+					
+					ConfirmDeleteWindow.this.close();
+					
+				}
 				
 			}
 		});
@@ -110,6 +156,7 @@ public class ConfirmDeleteWindow extends Window {
 		});
 		
 		buttons.addComponent(delete);
+		buttons.addComponent(deactivate);
 		buttons.addComponent(cancel);
 		content.addComponent(buttons);
 		

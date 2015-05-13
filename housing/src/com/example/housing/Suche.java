@@ -171,7 +171,7 @@ public class Suche extends CustomHorizontalLayout implements View {
 
 		// Checkbox: Mit Karte Suchen
 		final CheckBox mitKarteSuchen = new CheckBox(
-				"Statdessen auf der Karte suchen", false);
+				"Alternativ auf der Karte suchen", false);
 		
 		//Umkreis
 		final NativeSelect selectUmkreis = new NativeSelect("Umkreis in km");
