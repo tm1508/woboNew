@@ -86,7 +86,7 @@ public class Einzelansicht extends CustomHorizontalLayout implements View {
 		content.addComponent(lTitel);
 		
 		//Adresse wird nur verifizierten Studenten bzw. Admin angezeigt
-		if(VaadinSession.getCurrent().getAttribute("login").equals(true) && VaadinSession.getCurrent().getAttribute(User.class).getAccessLevel() != 0) { 
+		if(VaadinSession.getCurrent().getSession().getAttribute("login").equals(true) && ((User) VaadinSession.getCurrent().getSession().getAttribute("user")).getAccessLevel() != 0) { 
 				 
 			//adresse
 			String street = angebot.getStreet();
@@ -120,7 +120,7 @@ public class Einzelansicht extends CustomHorizontalLayout implements View {
         content.addComponent(map);
         
         //Button wird deaktiviert, wenn der Nutzer kein DH Stud. ist
-		if(VaadinSession.getCurrent().getAttribute("login").equals(true) && VaadinSession.getCurrent().getAttribute(User.class).getAccessLevel() != 0) {
+		if(VaadinSession.getCurrent().getSession().getAttribute("login").equals(true) && ((User) VaadinSession.getCurrent().getSession().getAttribute("user")).getAccessLevel() != 0) {
 			//tue nichts
 		}else{
 			map.setEnabled(false);
@@ -359,7 +359,7 @@ public class Einzelansicht extends CustomHorizontalLayout implements View {
     
         
         //Bearbeiten- und Löschen-Button für User
-        if((boolean) VaadinSession.getCurrent().getAttribute("login") && VaadinSession.getCurrent().getAttribute(User.class).getEmail().equals(angebot.getOffer_idUser().getEmail())){
+        if((boolean) VaadinSession.getCurrent().getSession().getAttribute("login") && ((User) VaadinSession.getCurrent().getSession().getAttribute("user")).getEmail().equals(angebot.getOffer_idUser().getEmail())){
         	HorizontalLayout userButtons = new HorizontalLayout();
         		
 			Button change = new Button("Bearbeiten");
@@ -391,7 +391,7 @@ public class Einzelansicht extends CustomHorizontalLayout implements View {
         }
         
         //Deaktivieren- und Löschen-Button für Admin
-        if((boolean) VaadinSession.getCurrent().getAttribute("login") && VaadinSession.getCurrent().getAttribute(User.class).getAccessLevel() == 2){
+        if((boolean) VaadinSession.getCurrent().getSession().getAttribute("login") && ((User) VaadinSession.getCurrent().getSession().getAttribute("user")).getAccessLevel() == 2){
     		
     		HorizontalLayout adminButtons = new HorizontalLayout();
     		
@@ -504,7 +504,7 @@ public class Einzelansicht extends CustomHorizontalLayout implements View {
         anbieter.setIcon(FontAwesome.MAIL_FORWARD);
         
         //Anfrage-Button (für User) oder Anbieter kontaktieren-Button (für Admin)
-        if(VaadinSession.getCurrent().getAttribute("login").equals(false) || VaadinSession.getCurrent().getAttribute(User.class).getAccessLevel()!=2){
+        if(VaadinSession.getCurrent().getSession().getAttribute("login").equals(false) || ((User) VaadinSession.getCurrent().getSession().getAttribute("user")).getAccessLevel()!=2){
         
         	buttons.addComponent(anfrage);
        
@@ -530,16 +530,16 @@ public class Einzelansicht extends CustomHorizontalLayout implements View {
 					not.setDelayMsec(300);
 					not.show(Page.getCurrent());
 					
-				} else if(VaadinSession.getCurrent().getAttribute(User.class).getAccessLevel() != 1) { //nicht als DH-Student verifiziert
+				} else if(((User) VaadinSession.getCurrent().getSession().getAttribute("user")).getAccessLevel() != 1) { //nicht als DH-Student verifiziert
 					
 					Notification not = new Notification("Sie müssen sich als DH-Student verifizieren, um eine Anfrage zu einem Wohnungsangebot stellen zu können!",Type.HUMANIZED_MESSAGE);//Meldung an den Nutzer
 					not.setDelayMsec(300);
 					not.setStyleName("failure");
 					not.show(Page.getCurrent());
 					
-				} else if(VaadinSession.getCurrent().getAttribute("login").equals(true)) { //eingeloggt als DH-Student
+				} else if(VaadinSession.getCurrent().getSession().getAttribute("login").equals(true)) { //eingeloggt als DH-Student
 		        	 
-		        	  if(new RequestProvider().requestExists(VaadinSession.getCurrent().getAttribute(User.class), angebot)) { //Anfrage bereits gesendet
+		        	  if(new RequestProvider().requestExists((User) VaadinSession.getCurrent().getSession().getAttribute("user"), angebot)) { //Anfrage bereits gesendet
 		        		  
 		        		  Notification not = new Notification("Sie haben den Anbieter bereits kontaktiert",Type.HUMANIZED_MESSAGE);
 		        		  not.setDelayMsec(300);
@@ -573,7 +573,7 @@ public class Einzelansicht extends CustomHorizontalLayout implements View {
 		final FavoritProvider fp = new FavoritProvider();
 	    
         //Favoriten-Button
-        if(VaadinSession.getCurrent().getAttribute("login").equals(true) && !fp.favoritExists(VaadinSession.getCurrent().getAttribute(User.class), angebot) && VaadinSession.getCurrent().getAttribute(User.class).getAccessLevel()!=2) { //Favorit hinzufügen
+        if(VaadinSession.getCurrent().getSession().getAttribute("login").equals(true) && !fp.favoritExists((User) VaadinSession.getCurrent().getSession().getAttribute("user"), angebot) && ((User) VaadinSession.getCurrent().getSession().getAttribute("user")).getAccessLevel()!=2) { //Favorit hinzufügen
         
         	Button favorit = new Button("Favorit hinzufügen");
         	favorit.setIcon(FontAwesome.PLUS_SQUARE_O);
@@ -585,7 +585,7 @@ public class Einzelansicht extends CustomHorizontalLayout implements View {
         			
         			Favorit newFavorit = new Favorit();
         			newFavorit.setFavorit_idOffer(angebot);
-        			newFavorit.setFavorit_idUser(VaadinSession.getCurrent().getAttribute(User.class));
+        			newFavorit.setFavorit_idUser((User) VaadinSession.getCurrent().getSession().getAttribute("user"));
         			
         			new FavoritProvider().addFavorit(newFavorit);
         			
@@ -602,7 +602,7 @@ public class Einzelansicht extends CustomHorizontalLayout implements View {
         		}
         	}); 
     	
-        } else if(VaadinSession.getCurrent().getAttribute("login").equals(true) && fp.favoritExists(VaadinSession.getCurrent().getAttribute(User.class), angebot)&& VaadinSession.getCurrent().getAttribute(User.class).getAccessLevel()!=2) { //Favorit entfernen
+        } else if(VaadinSession.getCurrent().getSession().getAttribute("login").equals(true) && fp.favoritExists((User) VaadinSession.getCurrent().getSession().getAttribute("user"), angebot)&& ((User) VaadinSession.getCurrent().getSession().getAttribute("user")).getAccessLevel()!=2) { //Favorit entfernen
         	
         	Button removeFavorit = new Button("Favorit entfernen");
         	removeFavorit.setIcon(FontAwesome.TRASH_O);
@@ -613,7 +613,7 @@ public class Einzelansicht extends CustomHorizontalLayout implements View {
         		public void buttonClick(ClickEvent event) {
         			
         		    Favorit fav;
-        			fav = fp.findByUserOffer(VaadinSession.getCurrent().getAttribute(User.class), angebot);
+        			fav = fp.findByUserOffer((User) VaadinSession.getCurrent().getSession().getAttribute("user"), angebot);
         	        new FavoritProvider().removeFavorit(fav);
         	        
         	        String name = "Meine Favoriten";
@@ -645,9 +645,9 @@ public class Einzelansicht extends CustomHorizontalLayout implements View {
         
           
 
-        if(VaadinSession.getCurrent().getAttribute("login").equals(true)&& VaadinSession.getCurrent().getAttribute(User.class).getAccessLevel()!=2) {
+        if(VaadinSession.getCurrent().getSession().getAttribute("login").equals(true)&& ((User) VaadinSession.getCurrent().getSession().getAttribute("user")).getAccessLevel()!=2) {
         	
-        	User u = VaadinSession.getCurrent().getAttribute(User.class);
+        	User u = (User) VaadinSession.getCurrent().getSession().getAttribute("user");
             List<Request> requests;
             requests = u.getRequests(); 
 
