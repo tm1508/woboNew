@@ -61,10 +61,12 @@ public class Einzelansicht extends CustomHorizontalLayout implements View {
 	 * @param einzelAngebot the einzel angebot
 	 */
 	public Einzelansicht(Offer einzelAngebot){
+		
 		this.angebot = einzelAngebot;
 		
 		content = super.initCustomHorizontalLayout();
 		setContent();
+	
 	}
 
 
@@ -563,7 +565,6 @@ public class Einzelansicht extends CustomHorizontalLayout implements View {
 			public void buttonClick(ClickEvent event) {
 				
 				String name = "AdminanfrageWohnung";
-				
 				getUI().getNavigator().addView(name, new AdminanfrageWohnung(angebot));
 				getUI().getNavigator().navigateTo(name);
 			
@@ -637,15 +638,7 @@ public class Einzelansicht extends CustomHorizontalLayout implements View {
         gridInfos.addComponent(buttons, 1, 14);
         
         
-        //Anzeigen, wenn man Anbieter bereits kontaktiert hat       
-
-        
-  
-        //Anzeigen, wenn man Anbieter bereits kontaktiert hat       
-
-        
-          
-
+        //Anzeigen, wenn man Anbieter bereits kontaktiert hat
         if(VaadinSession.getCurrent().getSession().getAttribute("login").equals(true)&& ((User) VaadinSession.getCurrent().getSession().getAttribute("user")).getAccessLevel()!=2) {
         	
         	User u = (User) VaadinSession.getCurrent().getSession().getAttribute("user");

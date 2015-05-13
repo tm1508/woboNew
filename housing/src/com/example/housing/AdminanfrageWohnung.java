@@ -58,7 +58,7 @@ public class AdminanfrageWohnung extends HorizontalLayout implements View {
 		v.addComponent(navPublic);
 		
 		//falls der Benutzer eingelogt ist verändert sich die Navigation
-		if(VaadinSession.getCurrent().getAttribute("login").equals(true)){
+		if((boolean) VaadinSession.getCurrent().getSession().getAttribute("login")){
 			nav.setVisible(true);
 			navPublic.setVisible(false);
 		}else{
