@@ -1,19 +1,11 @@
 package com.example.housing.data.provider;
 
 import java.util.List;
-
-import javax.persistence.EntityManager;
-import javax.persistence.Persistence;
-import javax.persistence.PersistenceContext;
-import javax.persistence.PersistenceUnit;
 import javax.persistence.Query;
-
-import com.example.housing.HousingUI;
 import com.example.housing.data.model.Favorit;
 import com.example.housing.data.model.Offer;
 import com.example.housing.data.model.Request;
 import com.example.housing.data.model.User;
-import com.vaadin.ui.UI;
 
 // TODO: Auto-generated Javadoc
 /**

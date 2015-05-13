@@ -6,7 +6,6 @@ import javax.persistence.Query;
 
 import com.example.housing.data.model.Favorit;
 import com.example.housing.data.model.Offer;
-import com.example.housing.data.model.Request;
 import com.example.housing.data.model.User;
 
 // TODO: Auto-generated Javadoc

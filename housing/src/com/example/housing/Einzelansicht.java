@@ -5,9 +5,6 @@ import java.io.File;
 import java.io.InputStream;
 import java.math.BigDecimal;
 import java.util.List;
-
-import org.jsoup.Jsoup;
-
 import com.example.housing.data.model.Favorit;
 import com.example.housing.data.model.Offer;
 import com.example.housing.data.model.User;

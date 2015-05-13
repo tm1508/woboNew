@@ -1,9 +1,7 @@
 package com.example.housing;
 
 import com.example.housing.data.model.Offer;
-import com.example.housing.data.model.Request;
-import com.example.housing.data.model.User;
-import com.example.housing.data.provider.RequestProvider;
+
 import com.example.housing.utility.SendEMail;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
