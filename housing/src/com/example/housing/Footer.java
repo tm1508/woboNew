@@ -118,7 +118,7 @@ public class Footer extends CustomComponent {
 		});
 		foot.addComponent(kontaktformularLink);
 		mainLayout.addComponent(foot);
-		mainLayout.setComponentAlignment(foot, Alignment.MIDDLE_CENTER);
+		mainLayout.setComponentAlignment(foot, Alignment.BOTTOM_CENTER);
 
 		return mainLayout;
 	}

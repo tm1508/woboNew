@@ -70,12 +70,12 @@ public class ForgotPasswordWindow extends Window{
 	    final VerticalLayout content = new VerticalLayout();
 	    content.setMargin(true);
 			// title
-			title = new Label();
-			title.setImmediate(false);
-			title.setWidth("-1px");
-			title.setHeight("-1px");
-			title.setValue("Passwort vergessen");
-			content.addComponent(title);
+	    //	title = new Label();
+	    //	title.setImmediate(false);
+	    //	title.setWidth("-1px");
+	    //	title.setHeight("-1px");
+	    //	title.setValue("Passwort vergessen");
+	    //	content.addComponent(title);
 				
 			// email_1
 			email_1 = new TextField();
