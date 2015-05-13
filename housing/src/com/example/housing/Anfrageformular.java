@@ -96,7 +96,6 @@ public class Anfrageformular extends CustomHorizontalLayout implements View{
 					Notification not = new Notification("Die Anfrage war erfolgreich. Der Anbieter kann Sie nun kontaktieren.",Type.HUMANIZED_MESSAGE);//Meldung an den Nutzer
 					not.setStyleName("success");
 					not.setDelayMsec(300);
-					not.setIcon(FontAwesome.CHECK_SQUARE_O);
 					not.show(Page.getCurrent());
 					
 				} else { //eine Anfrage von diesem User für dieses Angebot existiert bereits

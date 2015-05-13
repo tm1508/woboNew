@@ -69,7 +69,7 @@ public class ConfirmDeleteWindow extends Window {
 		
 		//deaktivieren-Button
 		Button deactivate = new Button();
-		deactivate.setIcon(FontAwesome.MAIL_REPLY);
+		deactivate.setIcon(FontAwesome.SQUARE_O);
 		deactivate.setStyleName("BearbeitenButton");
 		deactivate.setCaption("Deaktivieren");
 		deactivate.setImmediate(true);

@@ -386,7 +386,7 @@ public class Einzelansicht extends CustomHorizontalLayout implements View {
 			userButtons.addComponent(change);
 			userButtons.addComponent(delete);
 			
-			gridInfos.addComponent(userButtons, 0 , 14);
+			gridInfos.addComponent(userButtons, 0, 14);
 		
         }
         
@@ -396,7 +396,7 @@ public class Einzelansicht extends CustomHorizontalLayout implements View {
     		HorizontalLayout adminButtons = new HorizontalLayout();
     		
 			Button deacitvate = new Button("Deaktivieren");
-			deacitvate.setIcon(FontAwesome.PENCIL); 			//TODO Icon
+			deacitvate.setIcon(FontAwesome.SQUARE_O);
 			deacitvate.addStyleName("BearbeitenButton");
 			deacitvate.addClickListener(new Button.ClickListener() {
 				public void buttonClick(ClickEvent event) {
@@ -405,13 +405,12 @@ public class Einzelansicht extends CustomHorizontalLayout implements View {
 					
 					if(new OfferProvider().alterOffer(angebot)) {	
 						
-						String deactivationMessage = "<span style='color: #000000' 'font-family: Arial, sans-serif''font-size: 16pt' >Sehr geehrte Nutzerin, sehr geehrter Nutzer,"
+						String deactivationMessage = "<meta charset='utf-8'/><img src='http://193.196.7.216:8080/housing/APP/connector/0/12/source/dh.PNG'/><br/><br/><span style='color: #000000' 'font-family: Arial, sans-serif''font-size: 16pt' >Sehr geehrte Nutzerin, sehr geehrter Nutzer,"
 								+"<br/><br/>Ihr Angebot \"" + angebot.getTitle() + "\" in der Wohnungsbörse der DHBW wurde von einem Portal-Administrator deaktiviert."
-								+"<br/><br/>"
 								+"<br/><br/>Dies kann verschiedene Gründe haben:"
-								+"<br/><br/>-Es liegen Bedenken über die Aktualität des Angebotes vor."
-								+"<br/><br/>-Es wurde Ihnen eine Aufforderung zur Anpassung des Angebotes geschickt, die Sie noch bearbeiten müssen."
-								+"<br/><br/>-Sie reagieren nicht auf Anfragen oder Benachrichtigungen durch die Portal-Administratoren und Sie scheinen das betreffende Angebot aktuell nicht mehr zu pflegen."
+								+"<br/>-Es liegen Bedenken über die Aktualität des Angebotes vor."
+								+"<br/>-Es wurde Ihnen eine Aufforderung zur Anpassung des Angebotes geschickt, die Sie noch bearbeiten müssen."
+								+"<br/>-Sie reagieren nicht auf Anfragen oder Benachrichtigungen durch die Portal-Administratoren und Sie scheinen das betreffende Angebot aktuell nicht mehr zu pflegen."
 								+"<br/></span>"
 								+"<br/><span style='color: #e2001a' 'font-family: Arial, sans-serif''font-size: 20pt' >"
 								+ "</span><br/><br/>Mit freundlichen Grüßen<br/>Ihr DHBW Wohungsbörsen-Team<p/><span style='color: #e2001a' 'font-family: Arial, sans-serif''font-size: 8pt' >Anschrift:<br/>DHBW Karlsruhe<br/>Baden-Wuerttemberg Cooperative State University Karlsruhe<br />Erzbergerstraße 121 . 76133 Karlsruhe <br />Postfach 10 01 36 . 76231 Karlsruhe   <br />Telefon +49.721.9735-5 <br />Telefax +49.721.9735-600 <br />E-Mail: dreischer@dhbw-karlsruhe.de<br /><br/><br/>Ansprechpartner:<br/> <br />Dr. Anita Dreischer<br /><br/><b>Copyright DHBW Karlsruhe. Alle Rechte vorbehalten.</b></span>";
@@ -448,13 +447,12 @@ public class Einzelansicht extends CustomHorizontalLayout implements View {
 					
 					if(new OfferProvider().removeOffer(angebot)) {
 						
-						String deleteMessage = "<span style='color: #000000' 'font-family: Arial, sans-serif''font-size: 16pt' >Sehr geehrte Nutzerin, sehr geehrter Nutzer,"
+						String deleteMessage = "<meta charset='utf-8'/><img src='http://193.196.7.216:8080/housing/APP/connector/0/12/source/dh.PNG'/><br/><br/><span style='color: #000000' 'font-family: Arial, sans-serif''font-size: 16pt' >Sehr geehrte Nutzerin, sehr geehrter Nutzer,"
 								+"<br/><br/>Ihr Angebot \"" + angebot.getTitle() + "\" in der Wohnungsbörse der DHBW wurde von einem Portal-Administrator gelöscht."
-								+"<br/><br/>"
 								+"<br/><br/>Dies kann verschiedene Gründe haben:"
-								+"<br/><br/>-Es liegen Bedenken über die Korrektheit oder Legalität des Angebotes vor."
-								+"<br/><br/>-Geforderte inhaltliche Anpassungen des Wohnungsangebotes sind nach mehrmaliger Aufforderung nicht erfolgt."
-								+"<br/><br/>-Sie reagieren nicht auf Anfragen oder Benachrichtigungen vonseiten der Portal-Administratoren und Sie scheinen Ihr Profil sowie Ihre Angebote in der DHBW-Wohnungsbörse nicht mehr zu pflegen."
+								+"<br/>-Es liegen Bedenken über die Korrektheit oder Legalität des Angebotes vor."
+								+"<br/>-Geforderte inhaltliche Anpassungen des Wohnungsangebotes sind nach mehrmaliger Aufforderung nicht erfolgt."
+								+"<br/>-Sie reagieren nicht auf Anfragen oder Benachrichtigungen vonseiten der Portal-Administratoren und Sie scheinen Ihr Profil sowie Ihre Angebote in der DHBW-Wohnungsbörse nicht mehr zu pflegen."
 								+"<br/></span>"
 								+"<br/><span style='color: #e2001a' 'font-family: Arial, sans-serif''font-size: 20pt' >"
 								+ "</span><br/><br/>Mit freundlichen Grüßen<br/>Ihr DHBW Wohungsbörsen-Team<p/><span style='color: #e2001a' 'font-family: Arial, sans-serif''font-size: 8pt' >Anschrift:<br/>DHBW Karlsruhe<br/>Baden-Wuerttemberg Cooperative State University Karlsruhe<br />Erzbergerstraße 121 . 76133 Karlsruhe <br />Postfach 10 01 36 . 76231 Karlsruhe   <br />Telefon +49.721.9735-5 <br />Telefax +49.721.9735-600 <br />E-Mail: dreischer@dhbw-karlsruhe.de<br /><br/><br/>Ansprechpartner:<br/> <br />Dr. Anita Dreischer<br /><br/><b>Copyright DHBW Karlsruhe. Alle Rechte vorbehalten.</b></span>";
