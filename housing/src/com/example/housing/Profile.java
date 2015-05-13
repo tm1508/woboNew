@@ -568,11 +568,11 @@ public class Profile extends CustomHorizontalLayout implements View {
 		prename.setValue(((User) VaadinSession.getCurrent().getSession().getAttribute("user")).getFirstname());
 		lastname.setValue(((User) VaadinSession.getCurrent().getSession().getAttribute("user")).getLastname());
 		email_1.setValue(((User) VaadinSession.getCurrent().getSession().getAttribute("user")).getEmail());
-		email_2.setValue(((User) VaadinSession.getCurrent().getAttribute("user")).getEmail());
-		password_1.setValue(((User) VaadinSession.getCurrent().getAttribute("user")).getPassword());
-		password_2.setValue(((User) VaadinSession.getCurrent().getAttribute("user")).getPassword());
-		handy.setValue(((User) VaadinSession.getCurrent().getAttribute("user")).getMobile());
-		if (((User) VaadinSession.getCurrent().getAttribute("user")).getAccessLevel() == 0) {
+		email_2.setValue(((User) VaadinSession.getCurrent().getSession().getAttribute("user")).getEmail());
+		password_1.setValue(((User) VaadinSession.getCurrent().getSession().getAttribute("user")).getPassword());
+		password_2.setValue(((User) VaadinSession.getCurrent().getSession().getAttribute("user")).getPassword());
+		handy.setValue(((User) VaadinSession.getCurrent().getSession().getAttribute("user")).getMobile());
+		if (((User) VaadinSession.getCurrent().getSession().getAttribute("user")).getAccessLevel() == 0) {
 			dh_2.setVisible(true);
 			dh_1.setVisible(false);
 		} else {

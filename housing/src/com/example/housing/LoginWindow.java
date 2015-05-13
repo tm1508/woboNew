@@ -138,8 +138,8 @@ public class LoginWindow extends Window{
 								notif.setDelayMsec(300);
 								notif.setStyleName("success");
 								notif.show(Page.getCurrent());
-								VaadinSession.getCurrent().setAttribute("user", u);//User-Objekt in der Session speichern
-								VaadinSession.getCurrent().setAttribute("login", true);//Login-Attribut auf true setzen (wird auf jeder Seite abgefragt, um zu prüfen welche Navigationsleiste angezeigt werden soll)
+								VaadinSession.getCurrent().getSession().setAttribute("user", u);//User-Objekt in der Session speichern
+								VaadinSession.getCurrent().getSession().setAttribute("login", true);//Login-Attribut auf true setzen (wird auf jeder Seite abgefragt, um zu prüfen welche Navigationsleiste angezeigt werden soll)
 								
 								String name = "Startseite";
 								getUI().getNavigator().addView(name, new Startseite());
