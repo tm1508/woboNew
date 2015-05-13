@@ -11,11 +11,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
-
 import javax.imageio.ImageIO;
-
 import org.jsoup.Jsoup;
-
 import com.example.housing.data.model.Offer;
 import com.example.housing.data.model.Photo;
 import com.example.housing.data.model.User;
@@ -218,7 +215,7 @@ public class AngebotErstellen extends HorizontalLayout implements View, Receiver
 			v.addComponent(navPublic);
 			
 			//falls der Benutzer eingelogt ist verändert sich die Navigation
-			if(VaadinSession.getCurrent().getAttribute("login").equals(true)){
+			if(VaadinSession.getCurrent().getSession().getAttribute("login").equals(true)){
 				nav.setVisible(true);
 				navPublic.setVisible(false);
 			}else{
