@@ -96,7 +96,7 @@ public class Offer implements Serializable {
 	private BigDecimal longitude;
 	
 	/** The photos. */
-	@OneToMany(mappedBy="photo_idOffer")
+	@OneToMany(mappedBy="photo_idOffer", fetch=FetchType.LAZY)
 	private List<Photo> photos;
 	
 	/** The favorits. */
