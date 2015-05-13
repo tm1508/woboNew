@@ -85,7 +85,6 @@ public class HousingUI extends UI {
 
 			try {
 				event.getSession().getLockInstance().lock();
-				
 				event.getSession().getSession().setAttribute("login", false);//Ist ein Nutzer eingeloggt? true=ja, false=nein
 				event.getSession().getSession().setAttribute("activated", "");//speichern des Requestparameters für die Aktivierung
 				event.getSession().getSession().setAttribute("user", null);//evtl. speichern des eingeloggten Users	
