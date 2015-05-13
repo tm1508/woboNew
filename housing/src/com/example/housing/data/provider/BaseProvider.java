@@ -2,7 +2,7 @@ package com.example.housing.data.provider;
 
 import javax.persistence.*;
 
-import com.example.housing.data.model.User;
+
 
 // TODO: Auto-generated Javadoc
 /**

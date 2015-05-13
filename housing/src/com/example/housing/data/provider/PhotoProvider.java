@@ -1,6 +1,6 @@
 package com.example.housing.data.provider;
 
-import com.example.housing.data.model.Offer;
+
 import com.example.housing.data.model.Photo;
 
 // TODO: Auto-generated Javadoc

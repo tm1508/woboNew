@@ -1,14 +1,7 @@
 package com.example.housing.utility;
-import java.awt.image.BufferedImage;
-import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
 import java.io.OutputStream;
-
-import javax.imageio.ImageIO;
-
 import com.vaadin.ui.Upload.Receiver;
 
 

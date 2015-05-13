@@ -80,14 +80,14 @@ public class Anfrageformular extends CustomHorizontalLayout implements View{
 			private static final long serialVersionUID = 1L;
 
 			public void buttonClick(ClickEvent event) {
-				if(new RequestProvider().requestExists(VaadinSession.getCurrent().getAttribute(User.class), requestedOffer) == false){//Anfrage existiert noch nicht
+				
+				if(new RequestProvider().requestExists((User) (VaadinSession.getCurrent().getSession().getAttribute("user")), requestedOffer) == false){//Anfrage existiert noch nicht
 					//Werte in der DB speichern
 					safeToDB();
 					
 					//E-Mail an den Nutzer senden
 					sendEMail();
 					
-					//TODO: Navigation
 					//Navigation zur Startseite
 					String name = "AngebotAnzeigen";
 					getUI().getNavigator().addView(name, new Einzelansicht(requestedOffer));
@@ -98,11 +98,14 @@ public class Anfrageformular extends CustomHorizontalLayout implements View{
 					not.setDelayMsec(300);
 					not.setIcon(FontAwesome.CHECK_SQUARE_O);
 					not.show(Page.getCurrent());
-				}else{//eine Anfrage von diesem User für dieses Angebot existiert bereits
+					
+				} else { //eine Anfrage von diesem User für dieses Angebot existiert bereits
+					
 					Notification not = new Notification("Sie hatten bereits eine Anfrage für dieses Angebot abgegeben.",Type.HUMANIZED_MESSAGE);//Meldung an den Nutzer
 					not.setDelayMsec(300);
 					not.setStyleName("failure");
 					not.show(Page.getCurrent());
+				
 				}
 			}
 
@@ -113,7 +116,7 @@ public class Anfrageformular extends CustomHorizontalLayout implements View{
 		
 		Request request = new Request();
 		request.setMessage(text.getValue());
-		request.setRequest_idUser(VaadinSession.getCurrent().getAttribute(User.class));
+		request.setRequest_idUser((User) VaadinSession.getCurrent().getSession().getAttribute("user"));
 		request.setRequest_idOffer(requestedOffer);
 		
 		new RequestProvider().addRequest(request);
@@ -125,9 +128,9 @@ public class Anfrageformular extends CustomHorizontalLayout implements View{
 				+"<br/><br/>Sie haben eine Anfrage zu Ihrem Angebot: \"" + requestedOffer.getTitle() + "\" in der Wohnungsbörse der DHBW erhalten:"
 				+"<br/><br/>" + text.getValue() 
 				+"<br/>" + "Kontaktdaten des Anfragers: "
-				+"<br/>" + VaadinSession.getCurrent().getAttribute(User.class).getFirstname()+ " " + VaadinSession.getCurrent().getAttribute(User.class).getLastname() 
-				+"<br/>" + "Email: " + VaadinSession.getCurrent().getAttribute(User.class).getEmail() 
-				+"<br/>" + "Handy: " + VaadinSession.getCurrent().getAttribute(User.class).getMobile() + "</span>"
+				+"<br/>" + ((User) VaadinSession.getCurrent().getSession().getAttribute("user")).getFirstname()+ " " + ((User) VaadinSession.getCurrent().getSession().getAttribute("user")).getLastname() 
+				+"<br/>" + "Email: " + ((User) VaadinSession.getCurrent().getSession().getAttribute("user")).getEmail() 
+				+"<br/>" + "Handy: " + ((User) VaadinSession.getCurrent().getSession().getAttribute("user")).getMobile() + "</span>"
 				+"<br/><span style='color: #e2001a' 'font-family: Arial, sans-serif''font-size: 20pt' >"
 				+ "</span><br/><br/>Mit freundlichen Grüßen<br/>Ihr DHBW Wohungsbörsen-Team<p/><span style='color: #e2001a' 'font-family: Arial, sans-serif''font-size: 8pt' >Anschrift:<br/>DHBW Karlsruhe<br/>Baden-Wuerttemberg Cooperative State University Karlsruhe<br />Erzbergerstraße 121 . 76133 Karlsruhe <br />Postfach 10 01 36 . 76231 Karlsruhe   <br />Telefon +49.721.9735-5 <br />Telefax +49.721.9735-600 <br />E-Mail: dreischer@dhbw-karlsruhe.de<br /><br/><br/>Ansprechpartner:<br/> <br />Dr. Anita Dreischer<br /><br/><b>Copyright DHBW Karlsruhe. Alle Rechte vorbehalten.</b></span>";
 		
@@ -135,15 +138,15 @@ public class Anfrageformular extends CustomHorizontalLayout implements View{
 				+"<br/><br/>Sie haben eine Anfrage zum Angebot: \"" + requestedOffer.getTitle() + "\" in der DHBW-Wohnungsbörse versendet:"
 				+"<br/><br/>" + text.getValue() 
 				+"<br/>" + "Ihre Kontaktdaten: "
-				+"<br/>" + VaadinSession.getCurrent().getAttribute(User.class).getFirstname()+ " " + VaadinSession.getCurrent().getAttribute(User.class).getLastname() 
-				+"<br/>" + "Email: " + VaadinSession.getCurrent().getAttribute(User.class).getEmail() 
-				+"<br/>" + "Handy: " + VaadinSession.getCurrent().getAttribute(User.class).getMobile() 
+				+"<br/>" + ((User) VaadinSession.getCurrent().getSession().getAttribute("user")).getFirstname()+ " " + ((User) VaadinSession.getCurrent().getSession().getAttribute("user")).getLastname() 
+				+"<br/>" + "Email: " + ((User) VaadinSession.getCurrent().getSession().getAttribute("user")).getEmail() 
+				+"<br/>" + "Handy: " + ((User) VaadinSession.getCurrent().getSession().getAttribute("user")).getMobile() 
 				+"<br/><br/>" + "Der Anbieter der Wohnung kann Sie nun kontaktieren." + "</span>"
 				+"<br/><span style='color: #e2001a' 'font-family: Arial, sans-serif''font-size: 20pt' >"
 				+ "</span><br/><br/>Mit freundlichen Grüßen<br/>Ihr DHBW Wohungsbörsen-Team<p/><span style='color: #e2001a' 'font-family: Arial, sans-serif''font-size: 8pt' >Anschrift:<br/>DHBW Karlsruhe<br/>Baden-Wuerttemberg Cooperative State University Karlsruhe<br />Erzbergerstraße 121 . 76133 Karlsruhe <br />Postfach 10 01 36 . 76231 Karlsruhe   <br />Telefon +49.721.9735-5 <br />Telefax +49.721.9735-600 <br />E-Mail: dreischer@dhbw-karlsruhe.de<br /><br/><br/>Ansprechpartner:<br/> <br />Dr. Anita Dreischer<br /><br/><b>Copyright DHBW Karlsruhe. Alle Rechte vorbehalten.</b></span>";
 		
 		//Email an Anfrager senden
-		SendEMail.send(VaadinSession.getCurrent().getAttribute(User.class).getEmail(), "wohnungsboerse_dh@web.de", "Ihre Anfrage in der DHBW-Wohnungsbörse", bodyAnfrager);
+		SendEMail.send(((User) VaadinSession.getCurrent().getSession().getAttribute("user")).getEmail(), "wohnungsboerse_dh@web.de", "Ihre Anfrage in der DHBW-Wohnungsbörse", bodyAnfrager);
 		//Email an Anbieter senden
 		SendEMail.send(requestedOffer.getOffer_idUser().getEmail(), "wohnungsboerse_dh@web.de", "Neue Anfrage zu Ihrem Angebot in der DHBW-Wohnungsbörse", bodyAnbieter);
 	

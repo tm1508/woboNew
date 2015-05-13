@@ -3,8 +3,6 @@ package com.example.housing.data.provider;
 import java.util.List;
 
 import javax.persistence.Query;
-
-import com.example.housing.data.model.Favorit;
 import com.example.housing.data.model.Offer;
 import com.example.housing.data.model.Request;
 import com.example.housing.data.model.User;

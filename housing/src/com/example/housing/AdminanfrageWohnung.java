@@ -1,9 +1,7 @@
 package com.example.housing;
 
 import com.example.housing.data.model.Offer;
-import com.example.housing.data.model.Request;
-import com.example.housing.data.model.User;
-import com.example.housing.data.provider.RequestProvider;
+
 import com.example.housing.utility.SendEMail;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
@@ -58,7 +56,7 @@ public class AdminanfrageWohnung extends HorizontalLayout implements View {
 		v.addComponent(navPublic);
 		
 		//falls der Benutzer eingelogt ist verändert sich die Navigation
-		if(VaadinSession.getCurrent().getAttribute("login").equals(true)){
+		if((boolean) VaadinSession.getCurrent().getSession().getAttribute("login")){
 			nav.setVisible(true);
 			navPublic.setVisible(false);
 		}else{
