@@ -11,6 +11,7 @@ import javax.persistence.*;
 @Entity
 @Table(name="Photo")
 public class Photo implements Serializable {
+	private static final long serialVersionUID = 1L;
 
 	/** The id photo. */
 	@Id

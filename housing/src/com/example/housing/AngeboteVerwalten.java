@@ -25,7 +25,7 @@ public class AngeboteVerwalten extends CustomHorizontalLayout implements View {
 	 */
 
 	OfferProvider op = new OfferProvider();
-	List<Offer> angebote = op.findOwnOffers(VaadinSession.getCurrent().getAttribute(User.class));
+	List<Offer> angebote = op.findOwnOffers((User) VaadinSession.getCurrent().getSession().getAttribute("user"));
 	// Übergabe der Ergebnis aus der Suche
 	public AngeboteVerwalten() {
 		content = super.initCustomHorizontalLayout();

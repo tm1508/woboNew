@@ -333,7 +333,7 @@ public class Profile extends CustomHorizontalLayout implements View {
 				email_2.setEnabled(true);
 				passwordLayout.setVisible(true);
 				handy.setEnabled(true);
-				if (VaadinSession.getCurrent().getAttribute(User.class).getAccessLevel() == 0) {
+				if (((User) VaadinSession.getCurrent().getSession().getAttribute("user")).getAccessLevel() == 0) {
 					dhstud.setVisible(true);
 				}
 			}
@@ -389,9 +389,9 @@ public class Profile extends CustomHorizontalLayout implements View {
 				boolean validate = validate();
 				if (validate) {// falls alle Felder richtig ausgefüllt wurden
 
-					User u = VaadinSession.getCurrent().getAttribute(User.class);
-					User prüf = VaadinSession.getCurrent().getAttribute(User.class);
-					u.setIdUser(VaadinSession.getCurrent().getAttribute(User.class).getIdUser());
+					User u = (User) VaadinSession.getCurrent().getSession().getAttribute("user");
+					User prüf = (User) VaadinSession.getCurrent().getSession().getAttribute("user");
+					u.setIdUser(((User) VaadinSession.getCurrent().getSession().getAttribute("user")).getIdUser());
 					u.setFirstname(prename.getValue());
 					u.setLastname(lastname.getValue());
 					u.setEmail(email_1.getValue());
@@ -409,7 +409,7 @@ public class Profile extends CustomHorizontalLayout implements View {
 								// Werte in der DB speichern
 								new UserProvider().alterUser(u);
 								// neues User-Objekt in der Session speichern
-								VaadinSession.getCurrent().setAttribute(User.class, u);
+								VaadinSession.getCurrent().getSession().setAttribute("user", u);
 
 							} else {
 
@@ -423,7 +423,7 @@ public class Profile extends CustomHorizontalLayout implements View {
 							// Werte in der DB speichern
 							new UserProvider().alterUser(u);
 							// neues User-Objekt in der Session speichern
-							VaadinSession.getCurrent().setAttribute(User.class, u);
+							VaadinSession.getCurrent().getSession().setAttribute("user", u);
 							// Navigation zur Profilseite
 							String name = "Profile";
 							getUI().getNavigator().addView(name, new Profile());
@@ -438,7 +438,7 @@ public class Profile extends CustomHorizontalLayout implements View {
 					} else {
 						new UserProvider().alterUser(u);
 						// neues User-Objekt in der Session speichern
-						VaadinSession.getCurrent().setAttribute(User.class, u);
+						VaadinSession.getCurrent().getSession().setAttribute("user", u);
 						// User-Objekt in der Session speichern
 						// Navigation zur Profilseite
 						String name = "Profile";
@@ -510,14 +510,13 @@ public class Profile extends CustomHorizontalLayout implements View {
 					content.addComponent(yes);
 					yes.addClickListener(new Button.ClickListener() {
 						public void buttonClick(ClickEvent event) {
-							User u = new UserProvider().findByEmail(VaadinSession.getCurrent().getAttribute(User.class)
-									.getEmail());// User in der DB suchen
+							User u = new UserProvider().findByEmail(((User) VaadinSession.getCurrent().getSession().getAttribute("user")).getEmail());// User in der DB suchen
 							new UserProvider().removeUser(u);// User in der DB
 																// löschen
 
 							// Logout
-							VaadinSession.getCurrent().setAttribute("login", false);
-							VaadinSession.getCurrent().setAttribute(User.class, null);
+							VaadinSession.getCurrent().getSession().setAttribute("login", false);
+							VaadinSession.getCurrent().getSession().setAttribute("user", null);
 
 							// Navigation zur Startseite
 							String name = "Startseite";
@@ -566,14 +565,14 @@ public class Profile extends CustomHorizontalLayout implements View {
 	 * @see com.vaadin.server.VaadinSession
 	 */
 	private void daten() {
-		prename.setValue(VaadinSession.getCurrent().getAttribute(User.class).getFirstname());
-		lastname.setValue(VaadinSession.getCurrent().getAttribute(User.class).getLastname());
-		email_1.setValue(VaadinSession.getCurrent().getAttribute(User.class).getEmail());
-		email_2.setValue(VaadinSession.getCurrent().getAttribute(User.class).getEmail());
-		password_1.setValue(VaadinSession.getCurrent().getAttribute(User.class).getPassword());
-		password_2.setValue(VaadinSession.getCurrent().getAttribute(User.class).getPassword());
-		handy.setValue(VaadinSession.getCurrent().getAttribute(User.class).getMobile());
-		if (VaadinSession.getCurrent().getAttribute(User.class).getAccessLevel() == 0) {
+		prename.setValue(((User) VaadinSession.getCurrent().getSession().getAttribute("user")).getFirstname());
+		lastname.setValue(((User) VaadinSession.getCurrent().getSession().getAttribute("user")).getLastname());
+		email_1.setValue(((User) VaadinSession.getCurrent().getSession().getAttribute("user")).getEmail());
+		email_2.setValue(((User) VaadinSession.getCurrent().getSession().getAttribute("user")).getEmail());
+		password_1.setValue(((User) VaadinSession.getCurrent().getSession().getAttribute("user")).getPassword());
+		password_2.setValue(((User) VaadinSession.getCurrent().getSession().getAttribute("user")).getPassword());
+		handy.setValue(((User) VaadinSession.getCurrent().getSession().getAttribute("user")).getMobile());
+		if (((User) VaadinSession.getCurrent().getSession().getAttribute("user")).getAccessLevel() == 0) {
 			dh_2.setVisible(true);
 			dh_1.setVisible(false);
 		} else {

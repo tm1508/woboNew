@@ -111,7 +111,7 @@ public class AngebotErstellen extends HorizontalLayout implements View, Receiver
 		currentOffer.setStreet(" ");
 		currentOffer.setZip(" ");
 		currentOffer.setInactive(true);
-		currentOffer.setOffer_idUser(VaadinSession.getCurrent().getAttribute(User.class));
+		currentOffer.setOffer_idUser((User) VaadinSession.getCurrent().getSession().getAttribute("user"));
 		new OfferProvider().addOffer(currentOffer);
 
 		this.setWidth("100%");
@@ -141,7 +141,7 @@ public class AngebotErstellen extends HorizontalLayout implements View, Receiver
 			
 			//falls der Benutzer eingelogt ist verändert sich die Navigation
 			if(VaadinSession.getCurrent().getAttribute("login").equals(true)){
-				if(VaadinSession.getCurrent().getAttribute(User.class).getAccessLevel()==2){//falls der User ein Admin ist
+				if(((User) VaadinSession.getCurrent().getSession().getAttribute("user")).getAccessLevel()==2){//falls der User ein Admin ist
 					nav.setVisible(false);
 					navPublic.setVisible(false);
 					navAdmin.setVisible(true);//Admin-Navigation
@@ -621,7 +621,7 @@ public class AngebotErstellen extends HorizontalLayout implements View, Receiver
 						
 					}
 					
-					currentOffer.setOffer_idUser(VaadinSession.getCurrent().getAttribute(User.class));
+					currentOffer.setOffer_idUser((User) VaadinSession.getCurrent().getSession().getAttribute("user"));
 					currentOffer.setTitle(titel.getValue());
 					currentOffer.setStreet(street.getValue());
 					currentOffer.setZip(zip.getValue());
@@ -1129,7 +1129,7 @@ public class AngebotErstellen extends HorizontalLayout implements View, Receiver
 
 				if (valid) {// sind alle Mussfelder gefüllt, wird ein neues
 							// Angebot erstellt
-					// currentOffer.setOffer_idUser(VaadinSession.getCurrent().getAttribute(User.class));
+					// currentOffer.setOffer_idUser((User) VaadinSession.getCurrent().getSession().getAttribute("user"));
 					// //hat sich nicht geändert
 					// currentOffer.setIdOffer(offer.getIdOffer()); //hat sich
 					// nicht geändert

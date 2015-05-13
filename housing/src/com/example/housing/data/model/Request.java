@@ -13,6 +13,8 @@ import javax.persistence.*;
 @Table(name="Request")
 public class Request implements Serializable {
 	
+	private static final long serialVersionUID = 1L;
+
 	/** The id request. */
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)

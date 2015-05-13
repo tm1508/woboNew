@@ -54,7 +54,7 @@ public class Favoriten extends CustomHorizontalLayout implements View{
 		content.addComponent(title);
 				
 		FavoritProvider fp = new FavoritProvider();
-		List<Favorit> favs = fp.findFav(VaadinSession.getCurrent().getAttribute(User.class));
+		List<Favorit> favs = fp.findFav((User) VaadinSession.getCurrent().getSession().getAttribute("user"));
 		int anzahl = favs.size();
 		
 		Label favoritenString = new Label("Sie haben " + anzahl + " Wohnungsangebote in Ihrer Favoriten-Liste gespeichert.");

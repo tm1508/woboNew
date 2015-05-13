@@ -37,8 +37,8 @@ public abstract class CustomHorizontalLayout extends HorizontalLayout{
 			v.addComponent(navAdmin);
 			
 			//falls der Benutzer eingelogt ist verändert sich die Navigation
-			if(VaadinSession.getCurrent().getAttribute("login").equals(true)){
-				if(VaadinSession.getCurrent().getAttribute(User.class).getAccessLevel()==2){//falls der User ein Admin ist
+			if(VaadinSession.getCurrent().getSession().getAttribute("login").equals(true)){
+				if(((User) VaadinSession.getCurrent().getSession().getAttribute("user")).getAccessLevel()==2){//falls der User ein Admin ist
 					nav.setVisible(false);
 					navPublic.setVisible(false);
 					navAdmin.setVisible(true);//Admin-Navigation
