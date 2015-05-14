@@ -1,5 +1,7 @@
 package com.example.housing;
 
+import org.jsoup.Jsoup;
+
 import com.example.housing.data.model.Offer;
 import com.example.housing.data.model.Request;
 import com.example.housing.data.model.User;
@@ -114,7 +116,9 @@ public class Anfrageformular extends CustomHorizontalLayout implements View{
 	protected void safeToDB() {
 		
 		Request request = new Request();
-		request.setMessage(text.getValue());
+        String t = text.getValue().replace("<br>", "\n");
+        String tx = Jsoup.parse(t).text();
+		request.setMessage(tx);
 		request.setRequest_idUser((User) VaadinSession.getCurrent().getSession().getAttribute("user"));
 		request.setRequest_idOffer(requestedOffer);
 		
@@ -124,9 +128,9 @@ public class Anfrageformular extends CustomHorizontalLayout implements View{
 	
 	protected void sendEMail() {
 		String bodyAnbieter = "<meta charset='utf-8'/><img src='http://193.196.7.216:8080/housing/APP/connector/0/12/source/dh.PNG'/><br/><br/><span style='color: #000000' 'font-family: Arial, sans-serif''font-size: 16pt' >Sehr geehrte Nutzerin, sehr geehrter Nutzer,"
-				+"<br/><br/>Sie haben eine Anfrage zu Ihrem Angebot: \"" + requestedOffer.getTitle() + "\" in der Wohnungsbörse der DHBW erhalten:"
+				+"<br/><br/>Sie haben eine Anfrage zu Ihrem Angebot \"" + requestedOffer.getTitle() + "\" in der Wohnungsbörse der DHBW erhalten:"
 				+"<br/><br/>" + text.getValue() 
-				+"<br/>" + "Kontaktdaten des Anfragers: "
+				+"<br/>" + "Kontaktdaten des Anfragenden: "
 				+"<br/>" + ((User) VaadinSession.getCurrent().getSession().getAttribute("user")).getFirstname()+ " " + ((User) VaadinSession.getCurrent().getSession().getAttribute("user")).getLastname() 
 				+"<br/>" + "Email: " + ((User) VaadinSession.getCurrent().getSession().getAttribute("user")).getEmail() 
 				+"<br/>" + "Handy: " + ((User) VaadinSession.getCurrent().getSession().getAttribute("user")).getMobile() + "</span>"
@@ -134,7 +138,7 @@ public class Anfrageformular extends CustomHorizontalLayout implements View{
 				+ "</span><br/><br/>Mit freundlichen Grüßen<br/>Ihr DHBW Wohungsbörsen-Team<p/><span style='color: #e2001a' 'font-family: Arial, sans-serif''font-size: 8pt' >Anschrift:<br/>DHBW Karlsruhe<br/>Baden-Wuerttemberg Cooperative State University Karlsruhe<br />Erzbergerstraße 121 . 76133 Karlsruhe <br />Postfach 10 01 36 . 76231 Karlsruhe   <br />Telefon +49.721.9735-5 <br />Telefax +49.721.9735-600 <br />E-Mail: dreischer@dhbw-karlsruhe.de<br /><br/><br/>Ansprechpartner:<br/> <br />Dr. Anita Dreischer<br /><br/><b>Copyright DHBW Karlsruhe. Alle Rechte vorbehalten.</b></span>";
 		
 		String bodyAnfrager = "<meta charset='utf-8'/><img src='http://193.196.7.216:8080/housing/APP/connector/0/12/source/dh.PNG'/><br/><br/><span style='color: #000000' 'font-family: Arial, sans-serif''font-size: 16pt' >Sehr geehrte Nutzerin, sehr geehrter Nutzer,"
-				+"<br/><br/>Sie haben eine Anfrage zum Angebot: \"" + requestedOffer.getTitle() + "\" in der DHBW-Wohnungsbörse versendet:"
+				+"<br/><br/>Sie haben eine Anfrage zum Angebot \"" + requestedOffer.getTitle() + "\" in der DHBW-Wohnungsbörse versendet:"
 				+"<br/><br/>" + text.getValue() 
 				+"<br/>" + "Ihre Kontaktdaten: "
 				+"<br/>" + ((User) VaadinSession.getCurrent().getSession().getAttribute("user")).getFirstname()+ " " + ((User) VaadinSession.getCurrent().getSession().getAttribute("user")).getLastname() 

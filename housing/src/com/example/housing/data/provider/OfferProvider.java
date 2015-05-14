@@ -96,15 +96,15 @@ public class OfferProvider extends BaseProvider<Offer> implements Serializable {
 		try {
 		
 			for (Request r : requests) {
-				success = reqProv.removeRequest(r);
+				success = new RequestProvider().removeRequest(r);
 			}
 		
 			for (Favorit f : favorits) {
-				success = favProv.removeFavorit(f);
+				success = new FavoritProvider().removeFavorit(f);
 			}
 		
 			for (Photo p : photos) {
-				success = photoProv.removePhoto(p);
+				success = new PhotoProvider().removePhoto(p);
 			}
 		} catch (NullPointerException npe) { //falls keine Requests etc vorhanden
 		}

@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.InputStream;
 import java.math.BigDecimal;
 import java.util.List;
+
 import com.example.housing.data.model.Favorit;
 import com.example.housing.data.model.Offer;
 import com.example.housing.data.model.User;
@@ -12,6 +13,7 @@ import com.example.housing.data.model.Request;
 import com.example.housing.data.provider.FavoritProvider;
 import com.example.housing.data.provider.OfferProvider;
 import com.example.housing.data.provider.RequestProvider;
+import com.example.housing.data.provider.UserProvider;
 import com.example.housing.utility.Format;
 import com.example.housing.utility.SendEMail;
 import com.vaadin.navigator.View;
@@ -638,8 +640,9 @@ public class Einzelansicht extends CustomHorizontalLayout implements View {
         if((boolean) VaadinSession.getCurrent().getSession().getAttribute("login") && ((User) VaadinSession.getCurrent().getSession().getAttribute("user")).getAccessLevel()!=2) {
         	
         	User u = (User) VaadinSession.getCurrent().getSession().getAttribute("user");
+        	User updatedU = new UserProvider().findById(u.getIdUser()); //der in der Session hinterlegte User hat u.U. noch nicht die aktuellen Liste von Requests
             List<Request> requests;
-            requests = u.getRequests(); 
+            requests = updatedU.getRequests(); 
 
         	  boolean b = false;
         	  int in = 0;
