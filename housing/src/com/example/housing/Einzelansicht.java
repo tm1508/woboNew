@@ -524,7 +524,7 @@ public class Einzelansicht extends CustomHorizontalLayout implements View {
         
         anfrage.addClickListener(new Button.ClickListener() {
 			public void buttonClick(ClickEvent event) {
-				if(VaadinSession.getCurrent().getAttribute("login").equals(false)) { //nicht eingeloggt
+				if(!(boolean) VaadinSession.getCurrent().getSession().getAttribute("login")) { //nicht eingeloggt
 					
 					Notification not = new Notification("Sie müssen sich als verifizierter DH-Student einloggen, um eine Anfrage zu einem Wohnungsangebot stellen zu können!",Type.HUMANIZED_MESSAGE);//Meldung an den Nutzer
 					not.setStyleName("failure");
@@ -538,7 +538,7 @@ public class Einzelansicht extends CustomHorizontalLayout implements View {
 					not.setStyleName("failure");
 					not.show(Page.getCurrent());
 					
-				} else if(VaadinSession.getCurrent().getSession().getAttribute("login").equals(true)) { //eingeloggt als DH-Student
+				} else if((boolean) VaadinSession.getCurrent().getSession().getAttribute("login")) { //eingeloggt als DH-Student
 		        	 
 		        	  if(new RequestProvider().requestExists((User) VaadinSession.getCurrent().getSession().getAttribute("user"), angebot)) { //Anfrage bereits gesendet
 		        		  
