@@ -120,8 +120,8 @@ public class Einzelansicht extends CustomHorizontalLayout implements View {
         });
         content.addComponent(map);
         
-        //Button wird deaktiviert, wenn der Nutzer kein DH Stud. ist
-		if(VaadinSession.getCurrent().getSession().getAttribute("login").equals(true) && ((User) VaadinSession.getCurrent().getSession().getAttribute("user")).getAccessLevel() != 0) {
+        //Button wird deaktiviert, wenn der Nutzer kein DH Stud. oder Admin ist
+		if((boolean) VaadinSession.getCurrent().getSession().getAttribute("login") && ((User) VaadinSession.getCurrent().getSession().getAttribute("user")).getAccessLevel() != 0) {
 			//tue nichts
 		}else{
 			map.setEnabled(false);
@@ -595,7 +595,6 @@ public class Einzelansicht extends CustomHorizontalLayout implements View {
 					
         			Notification not = new Notification("Das Angebot wurde zu Ihren Favoriten hinzugefügt.");
         			not.setStyleName("success");
-					not.setIcon(FontAwesome.CHECK_SQUARE_O);
         			not.setDelayMsec(300);
         			not.show(Page.getCurrent());
         			
@@ -622,7 +621,6 @@ public class Einzelansicht extends CustomHorizontalLayout implements View {
         			
         			Notification not = new Notification("Das Angebot wurde aus Ihren Favoriten entfernt.");
         			not.setStyleName("success");
-        			not.setIcon(FontAwesome.CHECK_SQUARE_O);
         			not.setDelayMsec(300);
         			not.show(Page.getCurrent());
         			
@@ -637,7 +635,7 @@ public class Einzelansicht extends CustomHorizontalLayout implements View {
         
         
         //Anzeigen, wenn man Anbieter bereits kontaktiert hat
-        if(VaadinSession.getCurrent().getSession().getAttribute("login").equals(true)&& ((User) VaadinSession.getCurrent().getSession().getAttribute("user")).getAccessLevel()!=2) {
+        if((boolean) VaadinSession.getCurrent().getSession().getAttribute("login") && ((User) VaadinSession.getCurrent().getSession().getAttribute("user")).getAccessLevel()!=2) {
         	
         	User u = (User) VaadinSession.getCurrent().getSession().getAttribute("user");
             List<Request> requests;
