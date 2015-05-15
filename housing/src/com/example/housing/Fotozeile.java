@@ -74,11 +74,7 @@ public class Fotozeile extends CustomComponent {
 				success.setStyleName("success");
 				success.setDelayMsec(300);
 				success.show(Page.getCurrent());
-				
-				String name = "AngebotErstellen";
-				getUI().getNavigator().addView(name,
-						new AngebotErstellen(newOffer));
-				getUI().getNavigator().navigateTo(name);
+
 			}
 		});
 		

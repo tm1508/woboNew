@@ -66,6 +66,7 @@ public class AngebotErstellen extends CustomHorizontalLayout implements View, Re
 	private Double lat = null;
     private Double lon = null;
     private Label title;
+    Fotos f;
 
 	private Offer currentOffer;
 
@@ -385,7 +386,7 @@ public class AngebotErstellen extends CustomHorizontalLayout implements View, Re
 		content.addComponent(text);
 		content.addComponent(new Label());
 		
-		Label bilder = new Label("Bilder");
+		/*Label bilder = new Label("Bilder");
 		bilder.addStyleName("AbschnittLabel");
 		
 		Upload bilderup = new Upload("Fotos hochladen (max. 5 Fotos pro Angebot):", this);
@@ -394,8 +395,9 @@ public class AngebotErstellen extends CustomHorizontalLayout implements View, Re
 		content.addComponent(bilder);
 		//content.addComponent(new Label());
 		content.addComponent(bilderup);
-		content.addComponent(new Label());
-			
+		content.addComponent(new Label());*/
+		
+
 
 		// Button speichern/aktivieren/deaktivieren
 		final CheckBox inactive = new CheckBox("deaktivieren");
@@ -686,6 +688,10 @@ public class AngebotErstellen extends CustomHorizontalLayout implements View, Re
 		buttons.addComponent(save);
 		buttons.addComponent(abbrechen);
 		content.addComponent(buttons);
+		
+		f = new Fotos(currentOffer, this);
+		content.addComponent(f);
+			
 
 	}
 
@@ -959,7 +965,7 @@ public class AngebotErstellen extends CustomHorizontalLayout implements View, Re
 		content.addComponent(text);
 		content.addComponent(new Label());
 		
-		//Bilder
+	/*	//Bilder
 		Label bilder = new Label("Bilder hinzufügen");
 		bilder.addStyleName("AbschnittLabel");
 
@@ -984,7 +990,7 @@ public class AngebotErstellen extends CustomHorizontalLayout implements View, Re
 				Fotozeile f = new Fotozeile(it.next(), offer);
 				content.addComponent(f);
 			}
-		}
+		}*/
 		content.addComponent(new Label());	
 
 		// Button speichern/aktivieren/deaktivieren
@@ -1268,6 +1274,11 @@ public class AngebotErstellen extends CustomHorizontalLayout implements View, Re
 		buttons.addComponent(abbrechen);
 		content.addComponent(buttons);
 
+		
+		f = new Fotos(currentOffer, this);
+		f.setImmediate(true);
+		content.addComponent(f);
+			
 	}
 
 	public String decodeType(Offer offer) {
@@ -1360,16 +1371,13 @@ public class AngebotErstellen extends CustomHorizontalLayout implements View, Re
 				not.setDelayMsec(300);
 				not.show(Page.getCurrent());
 				
-				if(!title.getValue().equals("Wohnungsangebot erstellen")){
-					int id = currentOffer.getIdOffer();//Angebot muss neu aus der DB geladen werden
-					OfferProvider offerProvider = new OfferProvider();
-					Offer newOffer = offerProvider.find(id);
-					
-					String name = "AngebotErstellen";
-					getUI().getNavigator().addView(name,
-							new AngebotErstellen(newOffer));
-					getUI().getNavigator().navigateTo(name);
-				}
+				OfferProvider op = new OfferProvider();
+				currentOffer = op.find(currentOffer.getIdOffer());
+				
+				Fotos newFotos = new Fotos(currentOffer, this);
+				//this.replaceComponent(f, newFotos);
+				this.removeComponent(f);
+				this.addComponent(newFotos);
 
 		    }
 			
