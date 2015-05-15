@@ -308,7 +308,7 @@ public class AngebotErstellen extends CustomHorizontalLayout implements View, Re
 		pets.addStyleName("AngeboteTextField");
 		final ComboBox genders = new ComboBox("Bevorzugtes Geschlecht:");
 		genders.setRequired(true);
-		genders.setRequiredError("Bitte geben Sie ein ob es ein bevorzugtes Geschlecht gibt.");
+		genders.setRequiredError("Bitte geben Sie gegebenenfalls ein bevorzugtes Geschlecht an.");
 		genders.addItem("egal");
 		genders.addItem("männlich");
 		genders.addItem("weiblich");
@@ -390,11 +390,6 @@ public class AngebotErstellen extends CustomHorizontalLayout implements View, Re
 					valid = false;
 				}
 				try {
-					startDate.validate();
-				} catch (InvalidValueException e) {
-					valid = false;
-				}
-				try {
 					genders.validate();
 				} catch (InvalidValueException e) {
 					valid = false;
@@ -472,7 +467,7 @@ public class AngebotErstellen extends CustomHorizontalLayout implements View, Re
 						
 					} catch (NumberFormatException nfe) {
 						
-						Notification failNumberFormat = new Notification("Bitte überprüfen Sie Ihre Eingaben.");
+						Notification failNumberFormat = new Notification("Bitte überprüfen Sie Ihre Eingaben und benutzen Sie gültige Zahlenformate.");
 						failNumberFormat.setDelayMsec(300);
 						failNumberFormat.setStyleName("failure");
 						failNumberFormat.show(Page.getCurrent());
@@ -494,19 +489,51 @@ public class AngebotErstellen extends CustomHorizontalLayout implements View, Re
 						
 					}
 					
+					try { //Start-Datum validieren
+						
+						Format.dateFormat(startDate.getValue());
+						currentOffer.setStartDate(startDate.getValue());
+						
+					} catch (Exception e) {
+						if(e.getClass().equals(NullPointerException.class)) {
+							
+							Notification failNotFilled = new Notification("Bitte füllen Sie alle Mussfelder*", Type.HUMANIZED_MESSAGE);
+							failNotFilled.setStyleName("failure");
+							failNotFilled.setDelayMsec(300);
+							failNotFilled.show(Page.getCurrent());
+						
+						} else {
+							
+							Notification failNotFilled = new Notification("Bitte geben Sie ein gültiges Datum an!", Type.HUMANIZED_MESSAGE);
+							failNotFilled.setStyleName("failure");
+							failNotFilled.setDelayMsec(300);
+							failNotFilled.show(Page.getCurrent());
+							
+						}	
+					}
+					try { //End-Datum validieren
+						
+						Format.dateFormat(endDate.getValue());
+						currentOffer.setEndDate(endDate.getValue());
+						
+					} catch (Exception e) {
+						if(e.getClass().equals(NullPointerException.class)) {
+							//nix, da End-Datum optional ist
+						} else {
+							
+							Notification failNotFilled = new Notification("Bitte geben Sie ein gültiges Datum an!", Type.HUMANIZED_MESSAGE);
+							failNotFilled.setStyleName("failure");
+							failNotFilled.setDelayMsec(300);
+							failNotFilled.show(Page.getCurrent());
+							
+						}	
+					}
+					
 					currentOffer.setOffer_idUser((User) VaadinSession.getCurrent().getSession().getAttribute("user"));
 					currentOffer.setTitle(titel.getValue());
 					currentOffer.setStreet(street.getValue());
 					currentOffer.setZip(zip.getValue());
 					currentOffer.setCity(city.getValue());
-					currentOffer.setStartDate(startDate.getValue());
-					
-					try { // überprüft ob ein Enddatum angegeben ist, da die
-							// Angabe optional ist
-						currentOffer.setEndDate(endDate.getValue());
-						
-					} catch (NullPointerException e) {
-					}
 					
 					currentOffer.setType(type);
 					currentOffer.setInternet(internet.getValue());
@@ -515,10 +542,12 @@ public class AngebotErstellen extends CustomHorizontalLayout implements View, Re
 					currentOffer.setSmoker(smoker.getValue());
 					currentOffer.setPets(pets.getValue());
 					currentOffer.setGender(gender);
+					
 					//Beschreibungstext aufbereiten
 			        String t = text.getValue().replace("<br>", "\n");
 			        String tx = Jsoup.parse(t).text();
 					currentOffer.setText(tx);
+					
 					currentOffer.setInactive(inactive.getValue());
 					
 					if(lat != null){
@@ -635,6 +664,7 @@ public class AngebotErstellen extends CustomHorizontalLayout implements View, Re
 		street.setRequired(true);
 		street.setRequiredError("Bitte geben Sie Straße und Hausnummer an.");
 		street.addStyleName("AngeboteTextField");
+		street.setEnabled(false); //nicht mehr zu ändern
 		HorizontalLayout hl0 = new HorizontalLayout();
 		hl0.setWidth("50%");
 		final TextField zip = new TextField("PLZ");
@@ -643,12 +673,14 @@ public class AngebotErstellen extends CustomHorizontalLayout implements View, Re
 		zip.setRequiredError("Bitte geben Sie die Postleitzahl an.");
 		zip.setWidth("50%");
 		zip.addStyleName("AngeboteTextField");
+		zip.setEnabled(false); //nicht mehr zu ändern
 		final TextField city = new TextField("Ort");
 		city.setValue(offer.getCity());
 		city.setRequired(true);
 		city.setRequiredError("Bitte geben Sie den Ort an.");
 		city.addStyleName("AngeboteTextField");
 		city.setWidth("50%");
+		city.setEnabled(false); //nicht mehr zu ändern
 		hl0.addComponent(zip);
 		hl0.addComponent(city);
 
@@ -656,7 +688,6 @@ public class AngebotErstellen extends CustomHorizontalLayout implements View, Re
 		content.addComponent(titel);
 		content.addComponent(new Label());
 		content.addComponent(adress);
-		//content.addComponent(new Label());
 		content.addComponent(street);
 		content.addComponent(hl0);
 		content.addComponent(new Label());
@@ -701,7 +732,7 @@ public class AngebotErstellen extends CustomHorizontalLayout implements View, Re
 			 /** The kakola marker. */
 		    GoogleMapMarker kakolaMarker = new GoogleMapMarker(
 		            "Standort ändern", new LatLon(49.00705, 8.40287),
-		            true, null);
+		            false, null);
 		    
 
 	        
@@ -843,7 +874,7 @@ public class AngebotErstellen extends CustomHorizontalLayout implements View, Re
 		pets.addStyleName("AngeboteTextField");
 		final ComboBox genders = new ComboBox("Bevorzugtes Geschlecht:");
 		genders.setRequired(true);
-		genders.setRequiredError("Bitte geben Sie ein ob es ein bevorzugtes Geschlecht gibt.");
+		genders.setRequiredError("Bitte geben Sie gegebenenfalls ein bevorzugtes Geschlecht an.");
 		genders.addItem("egal");
 		genders.addItem("männlich");
 		genders.addItem("weiblich");
@@ -1012,25 +1043,23 @@ public class AngebotErstellen extends CustomHorizontalLayout implements View, Re
 
 				if (valid) {// sind alle Mussfelder gefüllt, wird ein neues
 							// Angebot erstellt
-					// currentOffer.setOffer_idUser((User) VaadinSession.getCurrent().getSession().getAttribute("user"));
-					// //hat sich nicht geändert
-					// currentOffer.setIdOffer(offer.getIdOffer()); //hat sich
-					// nicht geändert
-					try { //falls in Zahlenfeder keine Zahlen eingetragen wurden
+					
+					try { //Zahlen formatieren
 						
 						currentOffer.setSquareMetre(Format.floatFormat(squareMetre.getValue()));
 						currentOffer.setPrice(Format.floatFormat(price.getValue()));
 						currentOffer.setBond(Format.floatFormat(bond.getValue()));
 						
-					} catch (NumberFormatException nfe) {
+					} catch (NumberFormatException nfe) { //falls in Zahlenfelder keine Zahlen eingetragen wurden
 						
-						Notification not = new Notification("Bitte überprüfen Sie Ihre Eingaben.");
+						Notification not = new Notification("Bitte überprüfen Sie Ihre Eingaben und benutzen Sie gültige Zahlenformate.");
 						not.setDelayMsec(300);
 						not.setStyleName("failure");
 						not.show(Page.getCurrent());
 						return;
 						
 					}
+					
 					try {
 						
 						currentOffer.setNumberOfRoommate(Integer.parseInt(roomMates.getValue()));
@@ -1043,17 +1072,49 @@ public class AngebotErstellen extends CustomHorizontalLayout implements View, Re
 						not.show(Page.getCurrent());
 						return;
 					}
-					currentOffer.setTitle(titel.getValue());
-					//Adresse sollte sich nicht ändern -> neues Angebot
-					//currentOffer.setStreet(street.getValue());
-					//currentOffer.setZip(zip.getValue());
-					//currentOffer.setCity(city.getValue());
-					currentOffer.setStartDate(startDate.getValue());
-					try { // überprüft ob ein Enddatum angegeben ist, da die
-							// Angabe optional ist
-						currentOffer.setEndDate(endDate.getValue());
-					} catch (NullPointerException e) {
+					
+					try { //Start-Datum validieren
+						
+						Format.dateFormat(startDate.getValue());
+						currentOffer.setStartDate(startDate.getValue());
+						
+					} catch (Exception e) {
+						if(e.getClass().equals(NullPointerException.class)) {
+							
+							Notification failNotFilled = new Notification("Bitte füllen Sie alle Mussfelder*", Type.HUMANIZED_MESSAGE);
+							failNotFilled.setStyleName("failure");
+							failNotFilled.setDelayMsec(300);
+							failNotFilled.show(Page.getCurrent());
+						
+						} else {
+							
+							Notification failNotFilled = new Notification("Bitte geben Sie ein gültiges Datum an!", Type.HUMANIZED_MESSAGE);
+							failNotFilled.setStyleName("failure");
+							failNotFilled.setDelayMsec(300);
+							failNotFilled.show(Page.getCurrent());
+							
+						}	
 					}
+					try { //End-Datum validieren
+						
+						Format.dateFormat(endDate.getValue());
+						currentOffer.setEndDate(endDate.getValue());
+						
+					} catch (Exception e) {
+						if(e.getClass().equals(NullPointerException.class)) {
+							//nix, da End-Datum optional ist
+						} else {
+							
+							Notification failNotFilled = new Notification("Bitte geben Sie ein gültiges Datum an!", Type.HUMANIZED_MESSAGE);
+							failNotFilled.setStyleName("failure");
+							failNotFilled.setDelayMsec(300);
+							failNotFilled.show(Page.getCurrent());
+							
+						}	
+					}
+					
+					currentOffer.setTitle(titel.getValue());
+					
 					currentOffer.setType(type);
 					currentOffer.setInternet(internet.getValue());
 					currentOffer.setFurnished(furnished.getValue());
