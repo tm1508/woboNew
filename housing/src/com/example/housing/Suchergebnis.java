@@ -39,6 +39,9 @@ public class Suchergebnis extends CustomHorizontalLayout implements View {
 	VerticalLayout content;
 	String sort= null;//Auswahlbox für Sortierung der Liste
 	List<Offer> angebote;
+	final GoogleMap googleMap = new GoogleMap(null, null, null);
+	final Button karteEinblenden = new Button("Karte einblenden");
+	final Button karteausblenden = new Button("Karte ausblenden");
 
 	
 	//Übergabe der Ergebnis aus der Suche
@@ -89,6 +92,12 @@ public class Suchergebnis extends CustomHorizontalLayout implements View {
 			sortBy.setItemCaption(2, "Datum des Angebots (neustes zuerst)");
 			sortBy.addItem(3);
 			sortBy.setItemCaption(3, "Monatsmiete (billigste zuerst)");
+			sortBy.addItem(4);
+			sortBy.setItemCaption(4, "Titel (alphabetisch, invers)");
+			sortBy.addItem(5);
+			sortBy.setItemCaption(5, "Datum des Angebots (ältestes zuerst)");
+			sortBy.addItem(6);
+			sortBy.setItemCaption(6, "Monatsmiete (teuerstes zuerst)");
 			sortBy.setValue(2);
 			content.addComponent(sortBy);
 			sortBy.addValueChangeListener(new ValueChangeListener() {
@@ -103,10 +112,26 @@ public class Suchergebnis extends CustomHorizontalLayout implements View {
 						}
 						if(sortBy.getValue().equals(2)){
 							Collections.sort(angebote, new SortByOfferTime());
+							Collections.reverse(angebote);
 							reloadPage();
 						}
 						if(sortBy.getValue().equals(3)){
 							Collections.sort(angebote, new SortByMonatsmiete());
+							reloadPage();
+						}
+						if(sortBy.getValue().equals(4)){
+							Collections.sort(angebote, new SortByTitle());
+							Collections.reverse(angebote);
+							reloadPage();
+						}
+						if(sortBy.getValue().equals(5)){
+							Collections.sort(angebote, new SortByOfferTime());
+							
+							reloadPage();
+						}
+						if(sortBy.getValue().equals(6)){
+							Collections.sort(angebote, new SortByMonatsmiete());
+							Collections.reverse(angebote);
 							reloadPage();
 						}
 					}
@@ -117,6 +142,23 @@ public class Suchergebnis extends CustomHorizontalLayout implements View {
 					content.addComponent(ergebnisString);
 					content.addComponent(sortBy);
 					content.addComponent(new Label());
+					googleMap.setVisible(false);
+					content.addComponent(karteEinblenden);
+					karteEinblenden.setVisible(true);
+					karteausblenden.setVisible(false);
+					content.addComponent(karteausblenden);
+					content.addComponent(new Label());
+					content.addComponent(googleMap);
+					content.addComponent(new Label());
+
+		        	//Button wird deaktiviert, wenn der Nutzer kein DH Stud. ist
+		    		if((boolean) VaadinSession.getCurrent().getSession().getAttribute("login") && ((User) VaadinSession.getCurrent().getSession().getAttribute("user")).getAccessLevel() != 0) {
+		    			//tue nichts
+		    		}else{
+		    			googleMap.setVisible(false);
+		    			Label l = new Label("Die Kartenansicht ist nur für verifizierte DH-Studenten verfügbar.");
+		    			content.addComponent(l);
+		    		}
 					for(Offer o : angebote) {
 						content.addComponent(new Listenzeile(o));
 					}
@@ -130,19 +172,17 @@ public class Suchergebnis extends CustomHorizontalLayout implements View {
         	
         	//content.addComponent(new Label());
             
-     		final GoogleMap googleMap = new GoogleMap(null, null, null);
+     		
              googleMap.setCenter(new LatLon(49.00705, 8.40287));
              googleMap.setZoom(10);
              
              content.addComponent(new Label());
-         	final Button karteEinblenden = new Button(
-    				"Karte einblenden");
+         	
          	karteEinblenden.setIcon(FontAwesome.MAP_MARKER);
          	content.addComponent(karteEinblenden);
          	karteEinblenden.setVisible(false);
              
-    		final Button karteausblenden = new Button(
-    				"Karte ausblenden");
+    		
     		karteausblenden.setIcon(FontAwesome.MAP_MARKER);
     		content.addComponent(karteausblenden);
     		karteausblenden.addClickListener(new Button.ClickListener() {
