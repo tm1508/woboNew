@@ -83,6 +83,21 @@ public class UserProvider extends BaseProvider<User> implements Serializable {
 		
 	}
 	
+	public List<User> getAllUsers() {
+		
+		if (!em.isOpen()) {
+
+			em = getEmf().createEntityManager();
+
+		}
+		
+		Query allAbfrage = em.createQuery("SELECT u FROM User u ORDER BY u.idUser ASC");
+		@SuppressWarnings("unchecked")
+		List<User> allUsers = (List<User>) allAbfrage.getResultList();
+		return (List<User>) allUsers;
+		
+	}
+	
 	/**
 	 * Removes the user.
 	 *

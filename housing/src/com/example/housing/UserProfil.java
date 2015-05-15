@@ -121,7 +121,7 @@ public class UserProfil extends CustomHorizontalLayout implements View {
 			public void buttonClick(ClickEvent event) {
 				
 				String name = "AnfrageUser";
-				getUI().getNavigator().addView(name, new AdminAnfrageUser());
+				getUI().getNavigator().addView(name, new AdminAnfrageUser(u));
 				getUI().getNavigator().navigateTo(name);
 				
 			}
