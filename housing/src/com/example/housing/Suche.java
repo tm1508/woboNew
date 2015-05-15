@@ -5,9 +5,11 @@ import com.example.housing.data.provider.OfferProvider;
 import com.example.housing.utility.Format;
 import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;
+import com.vaadin.data.Validator.InvalidValueException;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.server.FontAwesome;
+import com.vaadin.server.Page;
 import com.vaadin.tapio.googlemaps.GoogleMap;
 import com.vaadin.tapio.googlemaps.client.LatLon;
 import com.vaadin.tapio.googlemaps.client.events.MarkerDragListener;
@@ -18,6 +20,7 @@ import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.GridLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.NativeSelect;
+import com.vaadin.ui.Notification;
 import com.vaadin.ui.PopupDateField;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
@@ -235,6 +238,47 @@ public class Suche extends CustomHorizontalLayout implements View {
 
 			@SuppressWarnings("deprecation")
 			public void buttonClick(ClickEvent event) {
+				
+				boolean valid;
+				
+				try {
+					sucheVon.validate();
+				} catch (InvalidValueException e) {
+					valid = false;
+				}
+				try {
+					sucheBis.validate();
+				} catch (InvalidValueException e) {
+					valid = false;
+				}
+				try {
+					preisVon.validate();
+				} catch (InvalidValueException e) {
+					valid = false;
+				}
+				try {
+					preisBis.validate();
+				} catch (InvalidValueException e) {
+					valid = false;
+				}
+				
+				try { //falls in Zahlenfeder keine Zahlen eingetragen wurden
+					
+					Format.floatFormat(sucheVon.getValue());
+					Format.floatFormat(sucheBis.getValue());
+					Format.floatFormat(preisVon.getValue());
+					Format.floatFormat(preisBis.getValue());
+					
+				} catch (NumberFormatException nfe) {
+					
+					Notification failNumberFormat = new Notification("Bitte überprüfen Sie Ihre Eingaben und benutzen Sie gültige Zahlenformate.");
+					failNumberFormat.setDelayMsec(300);
+					failNumberFormat.setStyleName("failure");
+					failNumberFormat.show(Page.getCurrent());
+					return;
+					
+				}
+				
 				int a = 7;
 				if (wohnung.getValue() && zimmer.getValue() && wg.getValue()) {
 					a = 7;

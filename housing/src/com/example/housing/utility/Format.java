@@ -25,7 +25,10 @@ public class Format {
 	 * @param start the d
 	 * @return the string
 	 */
-	public static String dateFormat(Date start) {
+	public static String dateFormat(Date start) throws NullPointerException {
+		if(start == null) {
+			throw new NullPointerException("Keine Eingabe in Datumsfeld");
+		}
 		SimpleDateFormat sd = new SimpleDateFormat("dd.MM.yyyy");
 		String dateS = sd.format(start);
 		return dateS;

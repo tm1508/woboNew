@@ -9,7 +9,6 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
 
 import javax.imageio.ImageIO;
@@ -546,6 +545,7 @@ public class AngebotErstellen extends CustomHorizontalLayout implements View, Re
 							failNotFilled.setStyleName("failure");
 							failNotFilled.setDelayMsec(300);
 							failNotFilled.show(Page.getCurrent());
+							return;
 						
 						} else {
 							
@@ -553,6 +553,7 @@ public class AngebotErstellen extends CustomHorizontalLayout implements View, Re
 							failNotFilled.setStyleName("failure");
 							failNotFilled.setDelayMsec(300);
 							failNotFilled.show(Page.getCurrent());
+							return;
 							
 						}	
 					}
@@ -570,6 +571,7 @@ public class AngebotErstellen extends CustomHorizontalLayout implements View, Re
 							failNotFilled.setStyleName("failure");
 							failNotFilled.setDelayMsec(300);
 							failNotFilled.show(Page.getCurrent());
+							return;
 							
 						}	
 					}
@@ -1143,6 +1145,7 @@ public class AngebotErstellen extends CustomHorizontalLayout implements View, Re
 							failNotFilled.setStyleName("failure");
 							failNotFilled.setDelayMsec(300);
 							failNotFilled.show(Page.getCurrent());
+							return;
 						
 						} else {
 							
@@ -1150,6 +1153,7 @@ public class AngebotErstellen extends CustomHorizontalLayout implements View, Re
 							failNotFilled.setStyleName("failure");
 							failNotFilled.setDelayMsec(300);
 							failNotFilled.show(Page.getCurrent());
+							return;
 							
 						}	
 					}
@@ -1167,6 +1171,7 @@ public class AngebotErstellen extends CustomHorizontalLayout implements View, Re
 							failNotFilled.setStyleName("failure");
 							failNotFilled.setDelayMsec(300);
 							failNotFilled.show(Page.getCurrent());
+							return;
 							
 						}	
 					}
