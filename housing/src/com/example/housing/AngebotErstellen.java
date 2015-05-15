@@ -11,14 +11,20 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
+
 import javax.imageio.ImageIO;
+
 import org.jsoup.Jsoup;
+
 import com.example.housing.data.model.Offer;
 import com.example.housing.data.model.Photo;
 import com.example.housing.data.model.User;
 import com.example.housing.data.provider.OfferProvider;
 import com.example.housing.data.provider.PhotoProvider;
 import com.example.housing.utility.Format;
+import com.example.housing.utility.MapAddressConverter;
+import com.vaadin.data.Property.ValueChangeEvent;
+import com.vaadin.data.Property.ValueChangeListener;
 import com.vaadin.data.Validator.InvalidValueException;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
@@ -189,14 +195,19 @@ public class AngebotErstellen extends CustomHorizontalLayout implements View, Re
 		content.addComponent(hl0);
 		content.addComponent(new Label());
 		
+		final CheckBox mitKarteSuchen = new CheckBox(
+				"Alternativ auf der Karte suchen", false);
+		content.addComponent(mitKarteSuchen);
+		
 	   //Google Maps
 	    GoogleMapMarker mapMarker = new GoogleMapMarker(
 	            "Karlsruhe", new LatLon(49.00705, 8.40287),
 	            true, null);
 	    
-		GoogleMap googleMap = new GoogleMap(null, null, null);
+		final GoogleMap googleMap = new GoogleMap(null, null, null);
         googleMap.setCenter(new LatLon(49.00705, 8.40287));
         googleMap.setZoom(10);
+        googleMap.setVisible(false);
         googleMap.setSizeFull();
         mapMarker.setAnimationEnabled(false);
         googleMap.addMarker(mapMarker);
@@ -212,9 +223,41 @@ public class AngebotErstellen extends CustomHorizontalLayout implements View, Re
 			public void markerDragged(GoogleMapMarker draggedMarker,
 					LatLon oldPosition) {
 				lat = draggedMarker.getPosition().getLat();
-				lon = draggedMarker.getPosition().getLon();			
+				lon = draggedMarker.getPosition().getLon();		
+				
+				List<String> l = MapAddressConverter.getAddressFromLatLon(lat, lon);
+				street.setValue(l.get(0));
+				zip.setValue(l.get(1));
+				city.setValue(l.get(2));
 			}
         });
+        
+    	mitKarteSuchen.addValueChangeListener(new ValueChangeListener() {
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public void valueChange(final ValueChangeEvent event) {
+				final boolean value = (boolean) event.getProperty().getValue();
+				if (value == true) {// Anzeigen der Moodle Felder sobald das
+									// Kontrollkästchen angekreuzt wird
+					city.setEnabled(false);
+					city.setValue("");
+					
+					street.setValue("");
+					street.setEnabled(false);
+					zip.setValue("");
+					zip.setEnabled(false);
+					
+					googleMap.setVisible(true);
+				} else {// ausblednen der Felder wenn das Kästchen nicht
+						// angekreuzt ist
+					city.setEnabled(true);
+					street.setEnabled(true);
+					zip.setEnabled(true);
+					googleMap.setVisible(false);
+				}
+			}
+		});
         
 		// Allgemeine Informationen
 		HorizontalLayout label = new HorizontalLayout();
@@ -553,7 +596,16 @@ public class AngebotErstellen extends CustomHorizontalLayout implements View, Re
 					if(lat != null){
 						currentOffer.setLatitude(BigDecimal.valueOf(lat));
 						currentOffer.setLongitude(BigDecimal.valueOf(lon));
+					}else{
+						String adresse = street.getValue()+","+zip.getValue()+","+city.getValue();
+						System.out.println(adresse);
+						adresse = adresse.replaceAll(" ", "");
+						System.out.println(adresse);
+						LatLon l = MapAddressConverter.getLatLonFromAddress(adresse);
+						currentOffer.setLatitude(BigDecimal.valueOf(l.getLat()));
+						currentOffer.setLongitude(BigDecimal.valueOf(l.getLon()));
 					}
+					
 					
 					try {
 						VaadinSession.getCurrent().getLockInstance().lock();

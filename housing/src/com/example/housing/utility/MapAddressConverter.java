@@ -36,33 +36,45 @@ import com.vaadin.tapio.googlemaps.client.LatLon;
 public class MapAddressConverter {
 
 	// TODO nur zum Testen!!! löschen
-	/*
-	 * public static void main(String[] args) { try { URL url = new URL(
-	 * "http://maps.googleapis.com/maps/api/geocode/xml?address=Erzbergerstr+121+Karlsruhe"
-	 * ); URLConnection urlConnection = url.openConnection(); HttpURLConnection
-	 * connection = null; if (urlConnection instanceof HttpURLConnection) {
-	 * connection = (HttpURLConnection) urlConnection; }
-	 * 
-	 * BufferedReader in = new BufferedReader(new
-	 * InputStreamReader(connection.getInputStream())); String urlString = "";
-	 * String current; while ((current = in.readLine()) != null) { urlString +=
-	 * current; } System.out.println(urlString); String[] array1 =
-	 * urlString.split( Pattern.quote( "<lat>" ) );
-	 * System.out.println(array1[1]); String[] array2 = array1[1].split(
-	 * Pattern.quote( "</lat>" ) ); System.out.println(array2[0]); String lat =
-	 * array2[0];
-	 * 
-	 * String[] array3 = urlString.split( Pattern.quote( "<lng>" ) );
-	 * System.out.println(array3[1]); String[] array4 = array3[1].split(
-	 * Pattern.quote( "</lng>" ) ); System.out.println(array4[0]); String lon =
-	 * array4[0];
-	 * 
-	 * new LatLon(Double.parseDouble(lat), Double.parseDouble(lon));
-	 * 
-	 * } catch (IOException e) { e.printStackTrace(); } }
-	 */
 
-	public static void main(String args[]) {
+	public static void main(String[] args) {
+		try {
+			URL url = new URL(
+					"http://maps.googleapis.com/maps/api/geocode/xml?address=Erzbergerstr.121,76133,Karlsruhe");
+			URLConnection urlConnection = url.openConnection();
+			HttpURLConnection connection = null;
+			if (urlConnection instanceof HttpURLConnection) {
+				connection = (HttpURLConnection) urlConnection;
+			}
+
+			BufferedReader in = new BufferedReader(new InputStreamReader(
+					connection.getInputStream()));
+			String urlString = "";
+			String current;
+			while ((current = in.readLine()) != null) {
+				urlString += current;
+			}
+			System.out.println(urlString);
+			String[] array1 = urlString.split(Pattern.quote("<lat>"));
+			System.out.println(array1[1]);
+			String[] array2 = array1[1].split(Pattern.quote("</lat>"));
+			System.out.println(array2[0]);
+			String lat = array2[0];
+
+			String[] array3 = urlString.split(Pattern.quote("<lng>"));
+			System.out.println(array3[1]);
+			String[] array4 = array3[1].split(Pattern.quote("</lng>"));
+			System.out.println(array4[0]);
+			String lon = array4[0];
+
+			new LatLon(Double.parseDouble(lat), Double.parseDouble(lon));
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	/*public static void main(String args[]) {
 		try {
 			URL url = new URL(
 					"http://maps.googleapis.com/maps/api/geocode/xml?latlng=49.0263200,8.3854400");
@@ -71,10 +83,11 @@ public class MapAddressConverter {
 			if (urlConnection instanceof HttpURLConnection) {
 				connection = (HttpURLConnection) urlConnection;
 			}
-			String output="";
+			String output = "";
 
 			try {
-				DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+				DocumentBuilderFactory dbf = DocumentBuilderFactory
+						.newInstance();
 				DocumentBuilder db;
 				db = dbf.newDocumentBuilder();
 				InputSource is = new InputSource();
@@ -83,18 +96,21 @@ public class MapAddressConverter {
 
 				TransformerFactory tf = TransformerFactory.newInstance();
 				Transformer transformer = tf.newTransformer();
-				transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "yes");
+				transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION,
+						"yes");
 				StringWriter writer = new StringWriter();
-				transformer.transform(new DOMSource(doc), new StreamResult(writer));
+				transformer.transform(new DOMSource(doc), new StreamResult(
+						writer));
 				output = writer.getBuffer().toString().replaceAll("\n|\r", "");
-		
+
 				System.out.println(output);
-			} catch (SAXException | ParserConfigurationException | TransformerException e) {
+			} catch (SAXException | ParserConfigurationException
+					| TransformerException e) {
 				e.printStackTrace();
 			}
 
-			String[] array1 = output.split(Pattern
-					.quote("<formatted_address>"));
+			String[] array1 = output
+					.split(Pattern.quote("<formatted_address>"));
 			String[] array2 = array1[1].split(Pattern
 					.quote("</formatted_address>"));
 			String address = array2[0];
@@ -112,7 +128,7 @@ public class MapAddressConverter {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-	}
+	}*/
 
 	public static LatLon getLatLonFromAddress(String address) {
 		try {
@@ -158,10 +174,11 @@ public class MapAddressConverter {
 				connection = (HttpURLConnection) urlConnection;
 			}
 
-			String output="";
+			String output = "";
 
 			try {
-				DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+				DocumentBuilderFactory dbf = DocumentBuilderFactory
+						.newInstance();
 				DocumentBuilder db;
 				db = dbf.newDocumentBuilder();
 				InputSource is = new InputSource();
@@ -170,18 +187,21 @@ public class MapAddressConverter {
 
 				TransformerFactory tf = TransformerFactory.newInstance();
 				Transformer transformer = tf.newTransformer();
-				transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "yes");
+				transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION,
+						"yes");
 				StringWriter writer = new StringWriter();
-				transformer.transform(new DOMSource(doc), new StreamResult(writer));
+				transformer.transform(new DOMSource(doc), new StreamResult(
+						writer));
 				output = writer.getBuffer().toString().replaceAll("\n|\r", "");
-		
+
 				System.out.println(output);
-			} catch (SAXException | ParserConfigurationException | TransformerException e) {
+			} catch (SAXException | ParserConfigurationException
+					| TransformerException e) {
 				e.printStackTrace();
 			}
 
-			String[] array1 = output.split(Pattern
-					.quote("<formatted_address>"));
+			String[] array1 = output
+					.split(Pattern.quote("<formatted_address>"));
 			String[] array2 = array1[1].split(Pattern
 					.quote("</formatted_address>"));
 			String address = array2[0];
