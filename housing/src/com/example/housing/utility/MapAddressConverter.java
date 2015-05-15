@@ -88,7 +88,7 @@ public class MapAddressConverter {
 	}
 	
 
-	public LatLon getLatLonFromAddress(String address) {
+	public static LatLon getLatLonFromAddress(String address) {
 		try {
 			URL url = new URL("http://maps.googleapis.com/maps/api/geocode/xml?address="+ address);
 			URLConnection urlConnection = url.openConnection();
@@ -118,7 +118,7 @@ public class MapAddressConverter {
 		}
 	}
 	
-	public List<String> getAddressFromLatLon(Double lat, Double lon) {
+	public static List<String> getAddressFromLatLon(Double lat, Double lon) {
 		try {
 			URL url = new URL("http://maps.googleapis.com/maps/api/geocode/xml?latlng="+ lat+","+lon);
 			URLConnection urlConnection = url.openConnection();
