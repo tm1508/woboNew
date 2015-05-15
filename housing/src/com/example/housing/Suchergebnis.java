@@ -1,10 +1,13 @@
 package com.example.housing;
 
+import java.math.BigDecimal;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 
 import com.example.housing.data.model.Offer;
 import com.example.housing.data.model.User;
+import com.example.housing.data.provider.OfferProvider;
 import com.example.housing.utility.SortByMonatsmiete;
 import com.example.housing.utility.SortByOfferTime;
 import com.example.housing.utility.SortByTitle;
@@ -14,7 +17,12 @@ import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.server.VaadinSession;
+import com.vaadin.tapio.googlemaps.GoogleMap;
+import com.vaadin.tapio.googlemaps.client.LatLon;
+import com.vaadin.tapio.googlemaps.client.events.MarkerClickListener;
+import com.vaadin.tapio.googlemaps.client.overlays.GoogleMapMarker;
 import com.vaadin.ui.Button;
+import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.NativeSelect;
 import com.vaadin.ui.UI;
@@ -32,7 +40,6 @@ public class Suchergebnis extends CustomHorizontalLayout implements View {
 	String sort= null;//Auswahlbox für Sortierung der Liste
 	List<Offer> angebote;
 
-	private Button map; 
 	
 	//Übergabe der Ergebnis aus der Suche
 	/**
@@ -118,24 +125,109 @@ public class Suchergebnis extends CustomHorizontalLayout implements View {
 
 		}
 		
-	    map = new Button("Karte anzeigen");
-        map.setIcon(FontAwesome.MAP_MARKER);
-        map.addStyleName("AnfrageButton");
-        map.addClickListener(new Button.ClickListener() {
-			public void buttonClick(ClickEvent event) {
-				MapWindowSuchergebnisse w = new MapWindowSuchergebnisse(angebote);//neues Fenster mit Karte wird geöffnet
-				UI.getCurrent().addWindow(w);
-			}
-        });
+
         if(!angebote.isEmpty()) {
         	
-        	content.addComponent(map);
+        	//content.addComponent(new Label());
+            
+     		final GoogleMap googleMap = new GoogleMap(null, null, null);
+             googleMap.setCenter(new LatLon(49.00705, 8.40287));
+             googleMap.setZoom(10);
+             
+             content.addComponent(new Label());
+         	final Button karteEinblenden = new Button(
+    				"Karte einblenden");
+         	karteEinblenden.setIcon(FontAwesome.MAP_MARKER);
+         	content.addComponent(karteEinblenden);
+         	karteEinblenden.setVisible(false);
+             
+    		final Button karteausblenden = new Button(
+    				"Karte ausblenden");
+    		karteausblenden.setIcon(FontAwesome.MAP_MARKER);
+    		content.addComponent(karteausblenden);
+    		karteausblenden.addClickListener(new Button.ClickListener() {
+    			private static final long serialVersionUID = 1L;
+
+    			@Override
+    			public void buttonClick(ClickEvent event) {
+    				
+    				
+    					googleMap.setVisible(false);
+    					karteausblenden.setVisible(false);
+    			
+    					karteEinblenden.setVisible(true);
+  
+    				
+    			}
+    		});
+    		
+    		
+    		karteEinblenden.addClickListener(new Button.ClickListener() {
+    			private static final long serialVersionUID = 1L;
+
+
+    			@Override
+    			public void buttonClick(ClickEvent event) {
+    					googleMap.setVisible(true);
+    					karteausblenden.setVisible(true);
+    					karteEinblenden.setVisible(false);
+    			}
+    		});
+    		
+    		content.addComponent(new Label());
+        	
+        	//Karte
+           
+
+    		
+    		Iterator<Offer> it = angebote.iterator();
+    		while(it.hasNext()){
+    			final Offer o = it.next();
+    			//Map-Marker
+    			//Button wird deaktiviert, wenn keine Standortangaben in der DB sind
+    			if(o.getLatitude()!=null && o.getLatitude()!=BigDecimal.valueOf(0.0)){
+    				GoogleMapMarker mapMarker = new GoogleMapMarker(
+    			            "ID: "+ String.valueOf(o.getIdOffer())+ " Titel: "+o.getTitle(), new LatLon(o.getLatitude().doubleValue(), o.getLongitude().doubleValue()),
+    			            false, null);
+    				mapMarker.setId(o.getIdOffer());
+    		        mapMarker.setAnimationEnabled(false);
+    		        
+    		        googleMap.addMarker(mapMarker);
+    			}
+    		}
+    	    
+    		
+
+            googleMap.addMarkerClickListener(new MarkerClickListener() {
+    			private static final long serialVersionUID = 1L;
+
+    			@Override
+    			public void markerClicked(GoogleMapMarker clickedMarker) {
+    				// TODO Auto-generated method stub
+    				long id = clickedMarker.getId();
+    				OfferProvider op = new OfferProvider();
+    				Offer currentOffer = op.find((int) id);
+    				String name = "Einzelansicht";
+    				getUI().getNavigator().addView(name, new Einzelansicht(currentOffer));
+    				getUI().getNavigator().navigateTo(name);
+    			
+    			}
+            });
+    	   
+            
+            googleMap.setMinZoom(4);
+            googleMap.setMaxZoom(16);
+
+            googleMap.setHeight("473px");
+            googleMap.setWidth("700px");
+            content.addComponent(googleMap);
+        	
         	
         	//Button wird deaktiviert, wenn der Nutzer kein DH Stud. ist
     		if((boolean) VaadinSession.getCurrent().getSession().getAttribute("login") && ((User) VaadinSession.getCurrent().getSession().getAttribute("user")).getAccessLevel() != 0) {
     			//tue nichts
     		}else{
-    			map.setEnabled(false);
+    			googleMap.setVisible(false);
     			Label l = new Label("Die Kartenansicht ist nur für verifizierte DH-Studenten verfügbar.");
     			content.addComponent(l);
     		}
