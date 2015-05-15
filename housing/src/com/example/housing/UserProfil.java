@@ -4,7 +4,6 @@ import java.util.List;
 
 import com.example.housing.data.model.User;
 import com.example.housing.data.provider.UserProvider;
-import com.vaadin.data.validator.EmailValidator;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.server.FontAwesome;
@@ -94,21 +93,67 @@ public class UserProfil extends CustomHorizontalLayout implements View {
 		
 		Button dhStud = new Button();
 		dhStud.setStyleName("BearbeitenButton");
-		dhStud.setCaption("Als DH-Student freischalten.");
 		dhStud.setImmediate(true);
 		dhStud.setDescription("Das Berechtigungslevel dieses Users auf DH-Student setzen.");
 		dhStud.setWidth("-1px");
 		dhStud.setHeight("-1px");
 		dhStud.setVisible(true);
-		dhStud.setIcon(FontAwesome.PENCIL);
-		if(u.getAccessLevel() != 0) {
+		dhStud.setIcon(FontAwesome.COGS);
+		if(u.getAccessLevel() == 0) {
+			dhStud.setCaption("Als DH-Student freischalten");
+			dhStud.addClickListener(new Button.ClickListener() {
+				
+				@Override
+				public void buttonClick(ClickEvent event) {
+					
+					u.setAccessLevel(1);
+					new UserProvider().alterUser(u);
+					
+					Notification notif = new Notification("Der User ist nun als DH-Student freigeschaltet!", Type.HUMANIZED_MESSAGE);
+					notif.setDelayMsec(300);
+					notif.setStyleName("success");
+					notif.show(Page.getCurrent());
+					
+					User uNew = new UserProvider().findById(u.getIdUser());
+					
+					String name = "UserProfil";
+					getUI().getNavigator().addView(name, new UserProfil(uNew));
+					getUI().getNavigator().navigateTo(name);
+					
+				}
+			});
+		} else if (u.getAccessLevel() == 1) {
+			dhStud.setCaption("DH-Studenten-Level widerrufen");
+			dhStud.addClickListener(new Button.ClickListener() {
+				
+				@Override
+				public void buttonClick(ClickEvent event) {
+					
+					u.setAccessLevel(0);
+					new UserProvider().alterUser(u);
+					
+					Notification notif = new Notification("Der User ist nicht mehr als DH-Student freigeschaltet!", Type.HUMANIZED_MESSAGE);
+					notif.setDelayMsec(300);
+					notif.setStyleName("success");
+					notif.show(Page.getCurrent());
+					
+					User uNew = new UserProvider().findById(u.getIdUser());
+					
+					String name = "UserProfil";
+					getUI().getNavigator().addView(name, new UserProfil(uNew));
+					getUI().getNavigator().navigateTo(name);
+					
+				}
+			});
+		} else {
+			dhStud.setCaption("Als DH-Student freischalten");
 			dhStud.setEnabled(false);
 		}
 		buttonSpalten.addComponent(dhStud);
 		
 		Button contact = new Button();
 		contact.setStyleName("BearbeitenButton");
-		contact.setCaption("User kontaktieren.");
+		contact.setCaption("User kontaktieren");
 		contact.setImmediate(true);
 		contact.setDescription("Diesen User über ein Formular kontaktieren.");
 		contact.setWidth("-1px");
