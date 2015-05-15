@@ -129,6 +129,16 @@ public class NavigationAdmin extends CustomComponent {
 				
 			}  
 		};
+		
+		//Suche nach ID
+		MenuBar.Command sucheId = new MenuBar.Command() {
+			public void menuSelected(MenuItem selectedItem) {
+				String name = "SucheNachId";
+				getUI().getNavigator().addView(name, new SucheNachId());
+				getUI().getNavigator().navigateTo(name);
+				
+			}  
+		};
 			
 		//FAQ
 		MenuBar.Command faq = new MenuBar.Command() {
@@ -156,7 +166,8 @@ public class NavigationAdmin extends CustomComponent {
 		MenuItem nav0 = menuBar.addItem("Startseite", FontAwesome.HOME, startseite); //Startesite
 		//MenuItem nav1 = menuBar_1.addItem("Suche", FontAwesome.SEARCH, mycommand2); //Suche
 		MenuItem nav1 = menuBar.addItem("Wohnung suchen", FontAwesome.SEARCH, null); //Suche
-			nav1.addItem("Suche nach Kriterien", FontAwesome.SEARCH, suche);
+			nav1.addItem("Suche nach Kriterien", FontAwesome.SEARCH_PLUS, suche);
+			nav1.addItem("Suche nach ID", FontAwesome.SEARCH, sucheId);
 			nav1.addItem("Alle Wohnungsangebote", FontAwesome.TH_LIST, alleAngebote);
 		//MenuItem nav8 = menuBar_1.addItem("Benutzer verwalten", FontAwesome.WRENCH, mycommand8);//Navigation
 		MenuItem nav6 = menuBar.addItem("Logout", FontAwesome.UNLOCK_ALT, logout);//Navigation

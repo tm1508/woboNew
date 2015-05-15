@@ -67,7 +67,7 @@ public class Suche extends CustomHorizontalLayout implements View {
 		title.setImmediate(false);
 		title.setWidth("-1px");
 		title.setHeight("-1px");
-		title.setValue("Suche");
+		title.setValue("Suche nach Kriterien");
 		title.addStyleName("title");
 		content.addComponent(title);
 

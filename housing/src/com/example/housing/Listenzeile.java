@@ -3,7 +3,6 @@ package com.example.housing;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.InputStream;
-import java.sql.Date;
 import java.util.List;
 
 import com.example.housing.data.model.Offer;
@@ -145,12 +144,12 @@ public class Listenzeile extends CustomComponent {
 		ergebnisLayout.addComponent(ls, 5, 1);
 
 	
-		Date start = (Date) o.getStartDate();
+		java.util.Date start = (java.util.Date) o.getStartDate();
 		String dateS = Format.dateFormat(start);
 		ergebnisLayout.addComponent(new Label("Startdatum: " +  dateS ), 3, 2);
 
 		try {
-			Date end = (Date) o.getEndDate();
+			java.util.Date end = (java.util.Date) o.getEndDate();
 			String dateSs = Format.dateFormat(end);
 			ergebnisLayout.addComponent(new Label("Enddatum: " + dateSs), 5, 2);
 		} catch (Exception e) {//tut nichts, da Enddatum keine Muss-Angabe ist

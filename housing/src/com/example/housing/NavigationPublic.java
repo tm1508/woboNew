@@ -133,7 +133,7 @@ public class NavigationPublic extends CustomComponent {
 		//Navigationsschaltflächen
 		MenuItem nav0 = menuBar.addItem("Startseite", FontAwesome.HOME, startseite);
 		MenuItem nav1 = menuBar.addItem("Wohnung suchen", FontAwesome.SEARCH, null); //Suche
-			nav1.addItem("Suche nach Kriterien", FontAwesome.SEARCH, suche);
+			nav1.addItem("Suche nach Kriterien", FontAwesome.SEARCH_PLUS, suche);
 			nav1.addItem("Alle Wohnungsangebote", FontAwesome.TH_LIST, alleAngebote);
 		MenuItem nav2 = menuBar.addItem("Registrierung", FontAwesome.UNLOCK_ALT, registrierung);//Navigation
 		MenuItem nav3 = menuBar.addItem("Login", FontAwesome.UNLOCK_ALT, login);//Navigation

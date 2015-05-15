@@ -1,6 +1,6 @@
 package com.example.housing.utility;
 
-import java.sql.Date;
+import java.util.Date;
 import java.text.SimpleDateFormat;
 import java.util.regex.Pattern;
 
@@ -22,12 +22,12 @@ public class Format {
 	/**
 	 * Date format.
 	 *
-	 * @param d the d
+	 * @param start the d
 	 * @return the string
 	 */
-	public static String dateFormat(Date d) {
+	public static String dateFormat(Date start) {
 		SimpleDateFormat sd = new SimpleDateFormat("dd.MM.yyyy");
-		String dateS = sd.format(d);
+		String dateS = sd.format(start);
 		return dateS;
 	}
 
