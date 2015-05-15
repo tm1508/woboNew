@@ -85,16 +85,16 @@ public class Profile extends CustomHorizontalLayout implements View {
 	private HorizontalLayout passwordLayout;
 
 	/** The button_1. */
-	private Button button_1;// Profil bearbeiten
+	private Button bearbeiten;// Profil bearbeiten
 
 	/** The button_2. */
-	private Button button_2;// abbrechen
+	private Button abbrechen;// abbrechen
 
 	/** The button_3. */
-	private Button button_3;// Änderungen speichern
+	private Button speichern;// Änderungen speichern
 
 	/** The button_4. */
-	private Button button_4;// Profil löschen
+	private Button loeschen;// Profil löschen
 
 	/*
 	 * (non-Javadoc)
@@ -309,25 +309,25 @@ public class Profile extends CustomHorizontalLayout implements View {
 		content.addComponent(passwordmoodle);
 
 		// button_1
-		button_1 = new Button();
-		button_1.setStyleName("BearbeitenButton");
-		button_1.setCaption("Profildaten bearbeiten");
-		button_1.setImmediate(true);
-		button_1.setDescription("Bearbeiten Ihrer Profildaten.");
-		button_1.setWidth("-1px");
-		button_1.setHeight("-1px");
-		button_1.setVisible(true);
-		button_1.setIcon(FontAwesome.PENCIL);
-		content.addComponent(button_1);
+		bearbeiten = new Button();
+		bearbeiten.setStyleName("BearbeitenButton");
+		bearbeiten.setCaption("Profildaten bearbeiten");
+		bearbeiten.setImmediate(true);
+		bearbeiten.setDescription("Bearbeiten Ihrer Profildaten.");
+		bearbeiten.setWidth("-1px");
+		bearbeiten.setHeight("-1px");
+		bearbeiten.setVisible(true);
+		bearbeiten.setIcon(FontAwesome.PENCIL);
+		content.addComponent(bearbeiten);
 		
 		// Bearbeitung aktivieren
-		button_1.addClickListener(new Button.ClickListener() {
+		bearbeiten.addClickListener(new Button.ClickListener() {
 			public void buttonClick(ClickEvent event) {
 				// Felder anzeigen und bearbeitbar machen
-				button_1.setVisible(false);
-				button_2.setVisible(true);
-				button_3.setVisible(true);
-				button_4.setVisible(true);
+				bearbeiten.setVisible(false);
+				abbrechen.setVisible(true);
+				speichern.setVisible(true);
+				loeschen.setVisible(true);
 				prename.setEnabled(true);
 				lastname.setEnabled(true);
 				email_1.setEnabled(true);
@@ -343,24 +343,25 @@ public class Profile extends CustomHorizontalLayout implements View {
 
 		// button_2
 		HorizontalLayout buttons1 = new HorizontalLayout();
-		button_2 = new Button();
-		button_2.setStyleName("BearbeitenButton");
-		button_2.setCaption("Abbrechen");
-		button_2.setIcon(FontAwesome.MAIL_REPLY);
-		button_2.setImmediate(true);
-		button_2.setDescription("Abbrechen der Bearbeitung. Ihre Änderungen werden nicht gespeichert.");
-		button_2.setWidth("-1px");
-		button_2.setHeight("-1px");
-		button_2.setVisible(false);
-		buttons1.addComponent(button_2);
-		button_2.addClickListener(new Button.ClickListener() {
+		abbrechen = new Button();
+		abbrechen.setStyleName("BearbeitenButton");
+		abbrechen.setCaption("Abbrechen");
+		abbrechen.setIcon(FontAwesome.MAIL_REPLY);
+		abbrechen.setImmediate(true);
+		abbrechen.setDescription("Abbrechen der Bearbeitung. Ihre Änderungen werden nicht gespeichert.");
+		abbrechen.setWidth("-1px");
+		abbrechen.setHeight("-1px");
+		abbrechen.setVisible(false);
+		buttons1.addComponent(abbrechen);
+		abbrechen.addClickListener(new Button.ClickListener() {
 			public void buttonClick(ClickEvent event) {
 				// ursprüngliche Daten wieder laden
 				daten();
 				// Felder ausbelden und nicht bearbeitbar machen
-				button_1.setVisible(true);
-				button_2.setVisible(false);
-				button_3.setVisible(false);
+				bearbeiten.setVisible(true);
+				abbrechen.setVisible(false);
+				speichern.setVisible(false);
+				loeschen.setVisible(false);
 				prename.setEnabled(false);
 				lastname.setEnabled(false);
 				email_1.setEnabled(false);
@@ -376,18 +377,18 @@ public class Profile extends CustomHorizontalLayout implements View {
 		});
 
 		// button_3
-		button_3 = new Button();
-		button_3.setStyleName("BearbeitenButton");
-		button_3.setVisible(false);
-		button_3.setCaption("Änderungen speichern");
-		button_3.setIcon(FontAwesome.SAVE);
-		button_3.setImmediate(true);
-		button_3.setDescription("Speichern der Änderungen.");
-		button_3.setWidth("-1px");
-		button_3.setHeight("-1px");
-		buttons1.addComponent(button_3);
+		speichern = new Button();
+		speichern.setStyleName("BearbeitenButton");
+		speichern.setVisible(false);
+		speichern.setCaption("Änderungen speichern");
+		speichern.setIcon(FontAwesome.SAVE);
+		speichern.setImmediate(true);
+		speichern.setDescription("Speichern der Änderungen.");
+		speichern.setWidth("-1px");
+		speichern.setHeight("-1px");
+		buttons1.addComponent(speichern);
 		content.addComponent(buttons1);
-		button_3.addClickListener(new Button.ClickListener() {
+		speichern.addClickListener(new Button.ClickListener() {
 			public void buttonClick(ClickEvent event) {
 				// Validierung der Felder
 				boolean validate = validate();
@@ -468,18 +469,18 @@ public class Profile extends CustomHorizontalLayout implements View {
 		});
 
 		// button_4
-		button_4 = new Button();
-		button_4.setStyleName("loeschen");
-		button_4.setVisible(false);
-		button_4.setCaption("Profil löschen");
-		button_4.setImmediate(true);
-		button_4.setDescription("Löschen des Profils.");
-		button_4.setWidth("-1px");
-		button_4.setHeight("-1px");
-		button_4.setIcon(FontAwesome.TRASH_O);
-		buttons1.addComponent(button_4);
+		loeschen = new Button();
+		loeschen.setStyleName("loeschen");
+		loeschen.setVisible(false);
+		loeschen.setCaption("Profil löschen");
+		loeschen.setImmediate(true);
+		loeschen.setDescription("Löschen des Profils.");
+		loeschen.setWidth("-1px");
+		loeschen.setHeight("-1px");
+		loeschen.setIcon(FontAwesome.TRASH_O);
+		buttons1.addComponent(loeschen);
 		content.addComponent(buttons1);
-		button_4.addClickListener(new Button.ClickListener() {
+		loeschen.addClickListener(new Button.ClickListener() {
 			public void buttonClick(ClickEvent event) {
 				CheckWindow w = new CheckWindow();// Wollen Sie Ihr Profil
 													// wirklich löschen?

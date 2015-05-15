@@ -90,7 +90,7 @@ public class Anfrageformular extends CustomHorizontalLayout implements View{
 					//E-Mail an den Nutzer senden
 					sendEMail();
 					
-					//Navigation zur Startseite
+					//Navigation zurück zum Angebot
 					String name = "AngebotAnzeigen";
 					getUI().getNavigator().addView(name, new Einzelansicht(requestedOffer));
 					getUI().getNavigator().navigateTo(name);

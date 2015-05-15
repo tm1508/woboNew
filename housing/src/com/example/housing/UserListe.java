@@ -2,6 +2,7 @@ package com.example.housing;
 
 import java.util.List;
 
+import com.example.housing.data.model.Offer;
 import com.example.housing.data.model.User;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
@@ -18,7 +19,7 @@ public class UserListe extends CustomHorizontalLayout implements View {
 	VerticalLayout content;
 	List<User> users;
 	
-	public void UserListe(List<User> users) {
+	public UserListe(List<User> users) {
 		
 		this.users = users;
 		
@@ -37,6 +38,26 @@ public class UserListe extends CustomHorizontalLayout implements View {
 		title.setValue("Liste aller User");
 		title.addStyleName("title");
 		content.addComponent(title);
+		
+		if(users.isEmpty()) {
+			
+			Label ergebnisString = new Label("Ihre Suche ergab leider keine Treffer.");
+			ergebnisString.addStyleName("AbschnittLabel");
+			content.addComponent(ergebnisString);
+			
+		} else {
+			
+			//Anzahl der Treffer
+			final Label ergebnisString = new Label("Ihre Suche ergab " + users.size()+" Treffer:");
+			ergebnisString.addStyleName("AbschnittLabel");	
+			content.addComponent(ergebnisString);
+			
+			content.addComponent(new Label());
+			for(User u : users) {
+				content.addComponent(new UserZeile(u));
+			}
+			
+		}
 		
 	}
 	

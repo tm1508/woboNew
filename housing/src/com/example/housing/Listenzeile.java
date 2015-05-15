@@ -3,6 +3,7 @@ package com.example.housing;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.InputStream;
+import java.util.Date;
 import java.util.List;
 
 import com.example.housing.data.model.Offer;
@@ -74,22 +75,8 @@ public class Listenzeile extends CustomComponent {
 			image.setHeight("100%"); //100% der Listenzeilen-Höhe
 			image.setWidth("30%");
 			image.markAsDirty();
-	
-		
 			ergebnisLayout.addComponent(image, 0, 0, 2, 2);
-			/*Float dynamicWidthImageCalc = (float) (image.getHeight() * 1.45);
-			System.out.println(Math.round(dynamicWidthImageCalc));
-			Integer dynamicWidthImage = Integer.valueOf(Math.round(dynamicWidthImageCalc));
-			System.out.println(dynamicWidthImage);
-			image.setWidth(dynamicWidthImage.toString() + "px");
-			System.out.println("Bild-Breite: " + dynamicWidthImage.toString()); // Test
-			ergebnisLayout.addComponent(image, 0, 0, 2, 2);
-			Float dynamicWidthRestCalc = ergebnisLayout.getWidth() - image.getWidth();
-			Integer dynamicWidthRest = Integer.valueOf(Math.round(dynamicWidthRestCalc));
-			Component c = ergebnisLayout.getComponent(0, 2);
-			c.setWidth(dynamicWidthRest.toString() + "px");
-			System.out.println("Rest-Breite: " + dynamicWidthRest.toString()); // Test
-			*/			
+			
 			Component c = ergebnisLayout.getComponent(0, 2);
 			c.setHeight("100%");
 			c.setWidth("70%");
@@ -144,12 +131,12 @@ public class Listenzeile extends CustomComponent {
 		ergebnisLayout.addComponent(ls, 5, 1);
 
 	
-		java.util.Date start = (java.util.Date) o.getStartDate();
+		Date start = (java.util.Date) o.getStartDate();
 		String dateS = Format.dateFormat(start);
 		ergebnisLayout.addComponent(new Label("Startdatum: " +  dateS ), 3, 2);
 
 		try {
-			java.util.Date end = (java.util.Date) o.getEndDate();
+			Date end = (java.util.Date) o.getEndDate();
 			String dateSs = Format.dateFormat(end);
 			ergebnisLayout.addComponent(new Label("Enddatum: " + dateSs), 5, 2);
 		} catch (Exception e) {//tut nichts, da Enddatum keine Muss-Angabe ist
