@@ -60,7 +60,7 @@ public class Suchergebnis extends CustomHorizontalLayout implements View {
 		title.addStyleName("title");
 		content.addComponent(title);
 		
-		if(angebote.size()==0) {
+		if(angebote.isEmpty()) {
 			
 			Label ergebnisString = new Label("Ihre Suche ergab leider keine Treffer.");
 			ergebnisString.addStyleName("AbschnittLabel");
@@ -127,17 +127,19 @@ public class Suchergebnis extends CustomHorizontalLayout implements View {
 				UI.getCurrent().addWindow(w);
 			}
         });
-        content.addComponent(map);
-        
-        //Button wird deaktiviert, wenn der Nutzer kein DH Stud. ist
-		if(VaadinSession.getCurrent().getSession().getAttribute("login").equals(true) && ((User) VaadinSession.getCurrent().getSession().getAttribute("user")).getAccessLevel() != 0) {
-			//tue nichts
-		}else{
-			map.setEnabled(false);
-			Label l = new Label("Die Kartenansicht ist nur für verifizierte DH-Studenten verfügbar.");
-			content.addComponent(l);
-		}
-		
+        if(!angebote.isEmpty()) {
+        	
+        	content.addComponent(map);
+        	
+        	//Button wird deaktiviert, wenn der Nutzer kein DH Stud. ist
+    		if((boolean) VaadinSession.getCurrent().getSession().getAttribute("login") && ((User) VaadinSession.getCurrent().getSession().getAttribute("user")).getAccessLevel() != 0) {
+    			//tue nichts
+    		}else{
+    			map.setEnabled(false);
+    			Label l = new Label("Die Kartenansicht ist nur für verifizierte DH-Studenten verfügbar.");
+    			content.addComponent(l);
+    		}
+        }
 		
 		content.addComponent(new Label());
 		for(Offer o : angebote) {
