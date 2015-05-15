@@ -74,6 +74,26 @@ public class Einzelansicht extends CustomHorizontalLayout implements View {
 	 */
 	public void setContent(){
 		
+		if(angebot.isInactive()){
+			Label inactive = new Label("Bitte beachten Sie: Dieses Angebot ist gerade deaktiviert und kann von anderen Nutzeren nicht angesehen werden!");
+			inactive.setImmediate(false);
+			inactive.setWidth("1000px");
+			inactive.setHeight("-1px");
+			//inactive.addStyleName("title");
+			inactive.setIcon(FontAwesome.WARNING);
+			content.addComponent(inactive);
+		}
+		
+		content.addComponent(new Label());
+		
+		Label id = new Label("ID: "+ angebot.getIdOffer());
+		id.setImmediate(false);
+		id.setWidth("-1px");
+		id.setHeight("-1px");
+		content.addComponent(id);
+		
+
+		
 		//titel	
 		Label title = new Label();
 		title.setImmediate(false);
@@ -677,6 +697,39 @@ public class Einzelansicht extends CustomHorizontalLayout implements View {
                 
               }
 
+        }
+        content.addComponent(new Label());
+        
+        if((boolean) VaadinSession.getCurrent().getSession().getAttribute("login") && ((User) VaadinSession.getCurrent().getSession().getAttribute("user")).getAccessLevel() == 2) {
+			
+        	HorizontalLayout vl = new HorizontalLayout();
+        	
+        	Label titel = new Label("Dieses Angebot wurde von folgendem Nutzer eingestellt: ");
+  	        vl.addComponent(titel);
+  	        titel.setStyleName("footer");
+  	        
+	        Label UserID = new Label(" User-ID: "+ angebot.getOffer_idUser().getIdUser());
+	        vl.addComponent(UserID);
+	        UserID.setStyleName("footer");
+	        
+			Button kontaktformularLink = new Button();
+			kontaktformularLink.setStyleName("link");
+			kontaktformularLink.setCaption("User-Profil anzeigen");
+			kontaktformularLink.setImmediate(false);
+			kontaktformularLink.setWidth("-1px");
+			kontaktformularLink.setHeight("-1px");
+			kontaktformularLink.addClickListener(new Button.ClickListener(){
+				private static final long serialVersionUID = 1L;
+				public void buttonClick(ClickEvent event) {
+					UserProvider up = new UserProvider();
+					String name = "UserProfil";
+					getUI().getNavigator().addView(name, new UserProfil(angebot.getOffer_idUser()));
+					getUI().getNavigator().navigateTo(name);
+				}
+			});
+			vl.addComponent(kontaktformularLink);
+			
+			content.addComponent(vl);
         }
 
 	}
