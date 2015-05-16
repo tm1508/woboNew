@@ -82,17 +82,14 @@ public class Einzelansicht extends CustomHorizontalLayout implements View {
 			//inactive.addStyleName("title");
 			inactive.setIcon(FontAwesome.WARNING);
 			content.addComponent(inactive);
+			content.addComponent(new Label());
 		}
-		
-		content.addComponent(new Label());
 		
 		Label id = new Label("ID: "+ angebot.getIdOffer());
 		id.setImmediate(false);
 		id.setWidth("-1px");
 		id.setHeight("-1px");
 		content.addComponent(id);
-		
-
 		
 		//titel	
 		Label title = new Label();

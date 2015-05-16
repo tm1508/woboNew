@@ -99,7 +99,7 @@ public class Listenzeile extends CustomComponent {
 		}
 
 		String title = o.getTitle();
-		Label l = new Label(title + " in " + o.getCity());
+		Label l = new Label("ID " + o.getIdOffer() + ": " + title + " in " + o.getCity());
 		l.addStyleName("ImportantTitle");
 		l.setWidth("100%");
 		l.setHeight("20%");

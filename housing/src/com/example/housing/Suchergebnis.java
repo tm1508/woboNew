@@ -227,7 +227,7 @@ public class Suchergebnis extends CustomHorizontalLayout implements View {
     			//Button wird deaktiviert, wenn keine Standortangaben in der DB sind
     			if(o.getLatitude()!=null && o.getLatitude()!=BigDecimal.valueOf(0.0)){
     				GoogleMapMarker mapMarker = new GoogleMapMarker(
-    			            "ID: "+ String.valueOf(o.getIdOffer())+ " Titel: "+o.getTitle(), new LatLon(o.getLatitude().doubleValue(), o.getLongitude().doubleValue()),
+    			            "ID "+ String.valueOf(o.getIdOffer())+ ": "+o.getTitle(), new LatLon(o.getLatitude().doubleValue(), o.getLongitude().doubleValue()),
     			            false, null);
     				mapMarker.setId(o.getIdOffer());
     		        mapMarker.setAnimationEnabled(false);
