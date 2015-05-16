@@ -65,7 +65,7 @@ public class AngebotErstellen extends CustomHorizontalLayout implements View, Re
 	private Double lat = null;
     private Double lon = null;
     private Label title;
-    Fotos f;
+    Fotos fotoKomponente;
 
 	private Offer currentOffer;
 
@@ -147,7 +147,6 @@ public class AngebotErstellen extends CustomHorizontalLayout implements View, Re
 		title.addStyleName("title");
 		
 		content.addComponent(title);
-		
 
         
 		// Titel, Map, Adresse
@@ -162,7 +161,6 @@ public class AngebotErstellen extends CustomHorizontalLayout implements View, Re
 		content.addComponent(ltitel);
 		content.addComponent(titel);
 		content.addComponent(new Label());
-		
 	
 		
 		Label adress = new Label("Adresse");
@@ -690,10 +688,11 @@ public class AngebotErstellen extends CustomHorizontalLayout implements View, Re
 		buttons.addComponent(save);
 		buttons.addComponent(abbrechen);
 		content.addComponent(buttons);
+		content.addComponent(new Label());
 		
-		f = new Fotos(currentOffer, this);
-		content.addComponent(f);
-			
+		//Foto-Komponente
+		fotoKomponente = new Fotos(currentOffer, this);
+		content.addComponent(fotoKomponente);
 
 	}
 
@@ -822,6 +821,7 @@ public class AngebotErstellen extends CustomHorizontalLayout implements View, Re
 				}
 	        });
 		}
+		content.addComponent(new Label());
         
 
 		// Allgemeine Informationen
@@ -1278,11 +1278,12 @@ public class AngebotErstellen extends CustomHorizontalLayout implements View, Re
 		buttons.addComponent(save);
 		buttons.addComponent(abbrechen);
 		content.addComponent(buttons);
+		content.addComponent(new Label());
 
-		
-		f = new Fotos(currentOffer, this);
-		f.setImmediate(true);
-		content.addComponent(f);
+		//Foto-Komponente
+		fotoKomponente = new Fotos(currentOffer, this);
+		fotoKomponente.setImmediate(true);
+		content.addComponent(fotoKomponente);
 			
 	}
 
@@ -1381,7 +1382,7 @@ public class AngebotErstellen extends CustomHorizontalLayout implements View, Re
 				
 				Fotos newFotos = new Fotos(currentOffer, this);
 				//this.replaceComponent(f, newFotos);
-				this.removeComponent(f);
+				this.removeComponent(fotoKomponente);
 				this.addComponent(newFotos);
 
 		    }

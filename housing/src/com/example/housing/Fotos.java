@@ -38,9 +38,8 @@ import com.vaadin.ui.Upload.Receiver;
 import com.vaadin.ui.Upload.SucceededEvent;
 import com.vaadin.ui.Upload.SucceededListener;
 
-// TODO: Auto-generated Javadoc
 /**
- * The Class Listenzeile.
+ * The Class Fotos.
  */
 public class Fotos extends CustomComponent {
 	private static final long serialVersionUID = 1L;

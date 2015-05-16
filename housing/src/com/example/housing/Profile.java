@@ -308,7 +308,7 @@ public class Profile extends CustomHorizontalLayout implements View {
 		passwordmoodle.setEnabled(true);
 		content.addComponent(passwordmoodle);
 
-		// button_1
+		// Bearbeiten-Button
 		bearbeiten = new Button();
 		bearbeiten.setStyleName("BearbeitenButton");
 		bearbeiten.setCaption("Profildaten bearbeiten");
@@ -340,43 +340,10 @@ public class Profile extends CustomHorizontalLayout implements View {
 				}
 			}
 		});
-
-		// button_2
+		
 		HorizontalLayout buttons1 = new HorizontalLayout();
-		abbrechen = new Button();
-		abbrechen.setStyleName("BearbeitenButton");
-		abbrechen.setCaption("Abbrechen");
-		abbrechen.setIcon(FontAwesome.MAIL_REPLY);
-		abbrechen.setImmediate(true);
-		abbrechen.setDescription("Abbrechen der Bearbeitung. Ihre Änderungen werden nicht gespeichert.");
-		abbrechen.setWidth("-1px");
-		abbrechen.setHeight("-1px");
-		abbrechen.setVisible(false);
-		buttons1.addComponent(abbrechen);
-		abbrechen.addClickListener(new Button.ClickListener() {
-			public void buttonClick(ClickEvent event) {
-				// ursprüngliche Daten wieder laden
-				daten();
-				// Felder ausbelden und nicht bearbeitbar machen
-				bearbeiten.setVisible(true);
-				abbrechen.setVisible(false);
-				speichern.setVisible(false);
-				loeschen.setVisible(false);
-				prename.setEnabled(false);
-				lastname.setEnabled(false);
-				email_1.setEnabled(false);
-				email_2.setVisible(false);
-				email_2.setEnabled(false);
-				passwordLayout.setVisible(false);
-				handy.setVisible(true);
-				handy.setEnabled(false);
-				dhstud.setVisible(false);
-				moodlename.setVisible(false);
-				passwordmoodle.setVisible(false);
-			}
-		});
-
-		// button_3
+		
+		//Speichern-Button
 		speichern = new Button();
 		speichern.setStyleName("BearbeitenButton");
 		speichern.setVisible(false);
@@ -468,7 +435,41 @@ public class Profile extends CustomHorizontalLayout implements View {
 			}
 		});
 
-		// button_4
+		// Abbrechen-Button
+		abbrechen = new Button();
+		abbrechen.setStyleName("BearbeitenButton");
+		abbrechen.setCaption("Abbrechen");
+		abbrechen.setIcon(FontAwesome.MAIL_REPLY);
+		abbrechen.setImmediate(true);
+		abbrechen.setDescription("Abbrechen der Bearbeitung. Ihre Änderungen werden nicht gespeichert.");
+		abbrechen.setWidth("-1px");
+		abbrechen.setHeight("-1px");
+		abbrechen.setVisible(false);
+		buttons1.addComponent(abbrechen);
+		abbrechen.addClickListener(new Button.ClickListener() {
+			public void buttonClick(ClickEvent event) {
+				// ursprüngliche Daten wieder laden
+				daten();
+				// Felder ausbelden und nicht bearbeitbar machen
+				bearbeiten.setVisible(true);
+				abbrechen.setVisible(false);
+				speichern.setVisible(false);
+				loeschen.setVisible(false);
+				prename.setEnabled(false);
+				lastname.setEnabled(false);
+				email_1.setEnabled(false);
+				email_2.setVisible(false);
+				email_2.setEnabled(false);
+				passwordLayout.setVisible(false);
+				handy.setVisible(true);
+				handy.setEnabled(false);
+				dhstud.setVisible(false);
+				moodlename.setVisible(false);
+				passwordmoodle.setVisible(false);
+			}
+		});
+
+		// Löschen-Button
 		loeschen = new Button();
 		loeschen.setStyleName("loeschen");
 		loeschen.setVisible(false);

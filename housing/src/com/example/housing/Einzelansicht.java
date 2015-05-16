@@ -252,7 +252,10 @@ public class Einzelansicht extends CustomHorizontalLayout implements View {
 				UI.getCurrent().addWindow(w);
 			}
         });
-        content.addComponent(plus);
+        if(!angebot.getPhotos().isEmpty()) {
+        	content.addComponent(plus);
+        }
+        content.addComponent(new Label());
         
 		final GridLayout gridInfos = new GridLayout(2,17); 
 	//	gridInfos.setWidth("60%");
