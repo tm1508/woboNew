@@ -106,10 +106,21 @@ public class Einzelansicht extends CustomHorizontalLayout implements View {
 		title.addStyleName("title");
 		content.addComponent(title);
 		
-		//Adresse wird nur verifizierten Studenten bzw. Admin angezeigt
+		//Map-Button
+        Button map = new Button("Karte anzeigen");
+        map.setIcon(FontAwesome.MAP_MARKER);
+        map.addStyleName("AnfrageButton");
+        map.addClickListener(new Button.ClickListener() {
+			public void buttonClick(ClickEvent event) {
+				MapWindow w = new MapWindow(angebot);//neues Fenster mit Karte wird geöffnet
+				UI.getCurrent().addWindow(w);
+			}
+        });
+		
+		//Adresse und Karte werden nur verifizierten Studenten bzw. Admin angezeigt
 		if((boolean) VaadinSession.getCurrent().getSession().getAttribute("login") && ((User) VaadinSession.getCurrent().getSession().getAttribute("user")).getAccessLevel() != 0) { 
 			
-			//adresse
+			//Vollständige Adresse
 			Label lAdresse = new Label("Adresse");
 			lAdresse.addStyleName("AbschnittLabel");
 			content.addComponent(lAdresse);
@@ -126,38 +137,26 @@ public class Einzelansicht extends CustomHorizontalLayout implements View {
 			gridAdress.addComponent(new Label(zip + " " + city), 1, 1);
 			
 			content.addComponent(gridAdress);
+			content.addComponent(map);
 			
 		} else {
 			
+			//Kurze Adresse
+//			HorizontalLayout adressShort = new HorizontalLayout();
+			
 			Label lTitel= new Label("in " + angebot.getCity());
 			lTitel.addStyleName("AbschnittLabel");
-			content.addComponent(lTitel);
-			 
-		 }
-		
-
-	    //Map-Button
-        Button map = new Button("Karte anzeigen");
-        map.setIcon(FontAwesome.MAP_MARKER);
-        map.addStyleName("AnfrageButton");
-        map.addClickListener(new Button.ClickListener() {
-			public void buttonClick(ClickEvent event) {
-				MapWindow w = new MapWindow(angebot);//neues Fenster mit Karte wird geöffnet
-				UI.getCurrent().addWindow(w);
-			}
-        });
-        content.addComponent(map);
-        
-        //Button wird deaktiviert, wenn der Nutzer kein DH Stud. oder Admin ist
-		if((boolean) VaadinSession.getCurrent().getSession().getAttribute("login") && ((User) VaadinSession.getCurrent().getSession().getAttribute("user")).getAccessLevel() != 0) {
-			//tue nichts
-		}else{
+			
 			map.setEnabled(false);
-//			Label l = new Label("Die Kartenansicht ist nur für verifizierte DH-Studenten verfügbar.");
-//			content.addComponent(l);
+			
+//			adressShort.addComponent(lTitel);
+//			adressShort.addComponent(map);
+			content.addComponent(lTitel);
+			content.addComponent(map);
 			
 			content.addComponent(new Label());
 			
+			//Info
 			Label warn = new Label(FontAwesome.WARNING.getHtml() + "&nbsp;", ContentMode.HTML);
 			
 			Label detailsAdresse = new Label(" Bitte beachten Sie: Die vollständige Adresse und die Kartenansicht sind nur für verifizierte DH-Studenten sichtbar!");
@@ -165,13 +164,13 @@ public class Einzelansicht extends CustomHorizontalLayout implements View {
 			detailsAdresse.setWidth("1000px");
 			detailsAdresse.setHeight("-1px");
 			//inactive.addStyleName("title");
-//			detailsAdresse.setIcon(FontAwesome.WARNING);
 			
 			HorizontalLayout warnAdresse = new HorizontalLayout();
 			warnAdresse.addComponent(warn);
 			warnAdresse.addComponent(detailsAdresse);
 			content.addComponent(warnAdresse);
-		}
+			 
+		 }
 		
 		//Button wird deaktiviert, wenn keine Standortangaben in der DB sind
 		if(angebot.getLatitude()!=null && angebot.getLatitude()!=BigDecimal.valueOf(0.0)){
