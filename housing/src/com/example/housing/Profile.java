@@ -27,100 +27,42 @@ import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
 
-// TODO: Auto-generated Javadoc
-/**
- * The Class Profile.
- * 
- * @author MWI Wohungsbörse 2014
- * @version 1.0
- * @see com.example.housing.HousingUI
- */
-@SuppressWarnings("serial")
 public class Profile extends CustomHorizontalLayout implements View {
+	private static final long serialVersionUID = 1L;
 
-	/** The content. */
 	private VerticalLayout content;// Layout fuer den Inhalt
 
 	// Felder des Registrierungsformulars
-	/** The title. */
 	private Label title;
-
-	/** The lastname. */
 	private TextField lastname;
-
-	/** The prename. */
 	private TextField prename;
-
-	/** The email_1. */
 	private TextField email_1;
-
-	/** The email_2. */
 	private TextField email_2;
-
-	/** The password_1. */
 	private PasswordField password_1;
-
-	/** The password_2. */
 	private PasswordField password_2;
-
-	/** The handy. */
 	private TextField handy;
-
-	/** The dhstud. */
 	private CheckBox dhstud;
-
-	/** The dh_1. */
 	private Label dh_1;
-
-	/** The dh_2. */
 	private Label dh_2;
-
-	/** The moodlename. */
 	private TextField moodlename;
-
-	/** The passwordmoodle. */
 	private PasswordField passwordmoodle;
-
-	/** The passwordLayout. */
 	private HorizontalLayout passwordLayout;
+	private Button bearbeiten;
+	private Button abbrechen;
+	private Button speichern;
+	private Button loeschen;
 
-	/** The button_1. */
-	private Button bearbeiten;// Profil bearbeiten
-
-	/** The button_2. */
-	private Button abbrechen;// abbrechen
-
-	/** The button_3. */
-	private Button speichern;// Änderungen speichern
-
-	/** The button_4. */
-	private Button loeschen;// Profil löschen
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * com.vaadin.navigator.View#enter(com.vaadin.navigator.ViewChangeListener
-	 * .ViewChangeEvent)
-	 */
 	@Override
 	public void enter(ViewChangeEvent event) {
 
 	}
 
-	/**
-	 * Instantiates a new Registrierung.
-	 */
 	public Profile() {
 		content = super.initCustomHorizontalLayout();
 		setContent();
 	}
 
-	/**
-	 * Sets the Content of the page.
-	 */
 	public void setContent() {
-
 		// title
 		title = new Label();
 		title.setImmediate(false);
@@ -159,7 +101,6 @@ public class Profile extends CustomHorizontalLayout implements View {
 
 		// E-Mail mit eigenem Layout
 		HorizontalLayout emailLayout = new HorizontalLayout();
-		// email_1
 		email_1 = new TextField();
 		email_1.setCaption("E-Mail");
 		email_1.setImmediate(false);
@@ -174,7 +115,6 @@ public class Profile extends CustomHorizontalLayout implements View {
 		email_1.setEnabled(false);
 		emailLayout.addComponent(email_1);
 
-		// email_2
 		email_2 = new TextField();
 		email_2.setCaption("E-Mail (Kontrolle)");
 		email_2.setImmediate(false);
@@ -203,8 +143,7 @@ public class Profile extends CustomHorizontalLayout implements View {
 		password_1.setHeight("-1px");
 		password_1.setRequired(true);
 		password_1.setRequiredError("Das Feld darf nicht leer sein.");
-		password_1.addValidator(new StringLengthValidator(
-				"Das Passwort ist zu kurz. Es muss mindestens 5 Zeichen lang sein.", 5, null, false));
+		password_1.addValidator(new StringLengthValidator("Das Passwort ist zu kurz. Es muss mindestens 5 Zeichen lang sein.", 5, null, false));
 		password_1.setIcon(FontAwesome.KEY);
 		passwordLayout.addComponent(password_1);
 
@@ -264,6 +203,8 @@ public class Profile extends CustomHorizontalLayout implements View {
 		// wenn dhstud angekreuzt wird, werden die Felder fuer die
 		// Moodle-Anmeldedaten sichtbar
 		dhstud.addValueChangeListener(new ValueChangeListener() {
+			private static final long serialVersionUID = 1L;
+
 			@Override
 			public void valueChange(final ValueChangeEvent event) {
 				final boolean value = (boolean) event.getProperty().getValue();
@@ -322,6 +263,8 @@ public class Profile extends CustomHorizontalLayout implements View {
 		
 		// Bearbeitung aktivieren
 		bearbeiten.addClickListener(new Button.ClickListener() {
+			private static final long serialVersionUID = 1L;
+
 			public void buttonClick(ClickEvent event) {
 				// Felder anzeigen und bearbeitbar machen
 				bearbeiten.setVisible(false);
@@ -341,7 +284,7 @@ public class Profile extends CustomHorizontalLayout implements View {
 			}
 		});
 		
-		HorizontalLayout buttons1 = new HorizontalLayout();
+		HorizontalLayout buttonLayout = new HorizontalLayout();
 		
 		//Speichern-Button
 		speichern = new Button();
@@ -353,9 +296,11 @@ public class Profile extends CustomHorizontalLayout implements View {
 		speichern.setDescription("Speichern der Änderungen.");
 		speichern.setWidth("-1px");
 		speichern.setHeight("-1px");
-		buttons1.addComponent(speichern);
-		content.addComponent(buttons1);
+		buttonLayout.addComponent(speichern);
+		content.addComponent(buttonLayout);
 		speichern.addClickListener(new Button.ClickListener() {
+			private static final long serialVersionUID = 1L;
+
 			public void buttonClick(ClickEvent event) {
 				// Validierung der Felder
 				boolean validate = validate();
@@ -371,25 +316,24 @@ public class Profile extends CustomHorizontalLayout implements View {
 					u.setMobile(handy.getValue());
 					if (DHStudValidator.validate(moodlename.getValue(), passwordmoodle.getValue())) {
 						u.setAccessLevel(1);
-						//TODO Fehlermeldung ausgeben, falls false!!!
+					}else{
+						Notification not = new Notification("Dies Moodle Anmeldedaten konnten nicht verifiziert werden.", Type.HUMANIZED_MESSAGE);
+						not.setDelayMsec(300);
+						not.setStyleName("failure");
+						not.show(Page.getCurrent());
 					}
 					if (!prüf.getEmail().equals(u.getEmail())) {
-
 						if (new UserProvider().userExists(email_1.getValue())) {
-
 							if (!new UserProvider().userExists(email_1.getValue())) {
 								// Werte in der DB speichern
 								new UserProvider().alterUser(u);
 								// neues User-Objekt in der Session speichern
 								VaadinSession.getCurrent().getSession().setAttribute("user", u);
-
 							} else {
-
 								Notification not = new Notification("Ein Nutzer mit dieser E-Mail-Adresse existiert bereits.", Type.HUMANIZED_MESSAGE);
 								not.setDelayMsec(300);
 								not.setStyleName("failure");
 								not.show(Page.getCurrent());
-
 							}
 						} else {
 							// Werte in der DB speichern
@@ -405,7 +349,6 @@ public class Profile extends CustomHorizontalLayout implements View {
 							not.setDelayMsec(300);
 							not.setStyleName("success");
 							not.show(Page.getCurrent());
-
 						}
 					} else {
 						new UserProvider().alterUser(u);
@@ -425,12 +368,10 @@ public class Profile extends CustomHorizontalLayout implements View {
 
 					// Meldung an den Nutzer
 				} else {// Registrierung nicht erfolgreich
-					
 					Notification not = new Notification("Die Speicherung Ihrer Änderungen war nicht erfolgreich. Bitte überprüfen Sie Ihre Eingaben.", Type.HUMANIZED_MESSAGE);
 					not.setDelayMsec(300);
 					not.setStyleName("failure");
 					not.show(Page.getCurrent());
-					// Meldung an den Nutzer
 				}
 			}
 		});
@@ -445,8 +386,10 @@ public class Profile extends CustomHorizontalLayout implements View {
 		abbrechen.setWidth("-1px");
 		abbrechen.setHeight("-1px");
 		abbrechen.setVisible(false);
-		buttons1.addComponent(abbrechen);
+		buttonLayout.addComponent(abbrechen);
 		abbrechen.addClickListener(new Button.ClickListener() {
+			private static final long serialVersionUID = 1L;
+
 			public void buttonClick(ClickEvent event) {
 				// ursprüngliche Daten wieder laden
 				daten();
@@ -479,17 +422,19 @@ public class Profile extends CustomHorizontalLayout implements View {
 		loeschen.setWidth("-1px");
 		loeschen.setHeight("-1px");
 		loeschen.setIcon(FontAwesome.TRASH_O);
-		buttons1.addComponent(loeschen);
-		content.addComponent(buttons1);
+		buttonLayout.addComponent(loeschen);
+		content.addComponent(buttonLayout);
 		loeschen.addClickListener(new Button.ClickListener() {
+			private static final long serialVersionUID = 1L;
+
 			public void buttonClick(ClickEvent event) {
-				CheckWindow w = new CheckWindow();// Wollen Sie Ihr Profil
-													// wirklich löschen?
+				CheckWindow w = new CheckWindow();// Wollen Sie Ihr Profil wirklich löschen?
 				UI.getCurrent().addWindow(w);// neues Fenster hinzufügen
 			}
 
 			// Check Window
 			class CheckWindow extends Window {
+				private static final long serialVersionUID = 1L;
 
 				public CheckWindow() {
 					super("Wollen Sie Ihr Profil wirklich löschen?");
@@ -516,6 +461,8 @@ public class Profile extends CustomHorizontalLayout implements View {
 					yes.setHeight("-1px");
 					content.addComponent(yes);
 					yes.addClickListener(new Button.ClickListener() {
+						private static final long serialVersionUID = 1L;
+
 						public void buttonClick(ClickEvent event) {
 							User u = new UserProvider().findByEmail(((User) VaadinSession.getCurrent().getSession().getAttribute("user")).getEmail());// User in der DB suchen
 							new UserProvider().removeUser(u);// User in der DB
@@ -552,25 +499,19 @@ public class Profile extends CustomHorizontalLayout implements View {
 					no.setHeight("-1px");
 					content.addComponent(no);
 					no.addClickListener(new Button.ClickListener() {
+						private static final long serialVersionUID = 1L;
+
 						public void buttonClick(ClickEvent event) {
 							CheckWindow.this.close();// Fenster schließen
 						}
 					});
-
 					this.setContent(content);
 				}
-
 			}
 		});
-
 		daten();// Felder mit Daten befüllen
 	}
 
-	/**
-	 * Sets the data from the User-Session-Object.
-	 * 
-	 * @see com.vaadin.server.VaadinSession
-	 */
 	private void daten() {
 		prename.setValue(((User) VaadinSession.getCurrent().getSession().getAttribute("user")).getFirstname());
 		lastname.setValue(((User) VaadinSession.getCurrent().getSession().getAttribute("user")).getLastname());
@@ -588,17 +529,8 @@ public class Profile extends CustomHorizontalLayout implements View {
 		}
 	}
 
-	/**
-	 * Validates the user input.
-	 *
-	 * @return boolean
-	 * @see com.vaadin.data.validator.EmailValidator
-	 * @see com.vaadin.data.validator.StringLengthValidator;
-	 * @see com.example.housing.utility.DHStudValidator;
-	 */
 	public boolean validate() {
-		boolean erfolgreich = true;// wird auf false gesetzt, falls ein Wert
-									// nicht richtig ist
+		boolean erfolgreich = true;// wird auf false gesetzt, falls ein Wert nicht richtig ist
 		try {
 			prename.validate();
 		} catch (InvalidValueException e) {

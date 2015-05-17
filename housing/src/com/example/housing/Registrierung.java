@@ -1,7 +1,5 @@
 package com.example.housing;
-/**
- * Registrierung der Nutzer, enthaelt ein Registrierungsformular
- */
+
 import com.example.housing.data.model.User;
 import com.example.housing.data.provider.UserProvider;
 import com.example.housing.utility.DHStudValidator;
@@ -28,85 +26,37 @@ import com.vaadin.ui.PasswordField;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 
-// TODO: Auto-generated Javadoc
-/**
- * The Class Registrierung.
- * 
- * @author MWI Wohungsbörse 2014
- * @version 1.0
- * @see com.example.housing.HousingUI
- */
-@SuppressWarnings("serial")
 public class Registrierung extends CustomHorizontalLayout implements View{
-	
-	/** The content. */
+	private static final long serialVersionUID = 1L;
+
 	private VerticalLayout content;//Layout fuer den Inhalt
 	
 	//Felder des Registrierungsformulars
-	/** The title. */
 	private Label title;
-	
-	/** The lastname. */
 	private TextField lastname;
-	
-	/** The prename. */
 	private TextField prename;
-	
-	/** The email_1. */
 	private TextField email_1;
-	
-	/** The email_2. */
 	private TextField email_2;
-	
-	/** The password_1. */
 	private PasswordField password_1;
-	
-	/** The password_2. */
 	private PasswordField password_2;
-	
-	/** The handy. */
 	private TextField handy;
-	
-	/** The dhstud. */
 	private CheckBox dhstud;
-	
-	/** The moodlename. */
 	private TextField moodlename;
-	
-	/** The passwordmoodle. */
 	private PasswordField passwordmoodle;
-	
-	/** The agbs. */
 	private CheckBox agbs;
-	
-	/** The link_1. */
 	private Button haftungsausschlussLink;
-	
-	/** The button. */
 	private Button registrierungAbschliessen;
 
-
-	/* (non-Javadoc)
-	 * @see com.vaadin.navigator.View#enter(com.vaadin.navigator.ViewChangeListener.ViewChangeEvent)
-	 */
 	@Override
 	public void enter(ViewChangeEvent event) {
-	
 	}
 	
-	/**
-	 * Instantiates a new Registrierung.
-	 */
 	public Registrierung(){
 		content = super.initCustomHorizontalLayout();
 		setContent();
 	}
 	
-	/**
-	 * Sets the Content of the page.
-	 */
 	public void setContent(){
-		
 		// title
 		title = new Label();
 		title.setImmediate(false);
@@ -227,7 +177,9 @@ public class Registrierung extends CustomHorizontalLayout implements View{
 		content.addComponent(dhstud);
 		//wenn dhstud angekreuzt wird, werden die Felder fuer die Moodle-Anmeldedaten sichtbar
 		dhstud.addValueChangeListener(new ValueChangeListener() {
-	            @Override
+			private static final long serialVersionUID = 1L;
+
+				@Override
 	            public void valueChange(final ValueChangeEvent event) {
 	                final boolean value = (boolean) event.getProperty().getValue();
 	                
@@ -317,8 +269,9 @@ public class Registrierung extends CustomHorizontalLayout implements View{
 		
 		//Abschließen der Registrierung
 		registrierungAbschliessen.addClickListener(new Button.ClickListener() {
+			private static final long serialVersionUID = 1L;
+
 			public void buttonClick(ClickEvent event) {
-				
 				//Validierung der Felder
 				boolean validate = validate();
 				if(validate){//falls alle Felder richtig ausgefüllt wurden
@@ -344,7 +297,6 @@ public class Registrierung extends CustomHorizontalLayout implements View{
 						not.setDelayMsec(300);
 						not.show(Page.getCurrent());
 					}
-					
 				}else{//Registrierung nicht erfolgreich
 					Notification not = new Notification("Die Registrierung war nicht erfolgreich. Bitte überprüfen Sie Ihre Eingaben.",Type.HUMANIZED_MESSAGE);//Meldung an den Nutzer
 					not.setStyleName("failure");
@@ -353,12 +305,8 @@ public class Registrierung extends CustomHorizontalLayout implements View{
 				}
 			}
 		});
-		
 	}
 	
-	/**
-	 * Stores a new User to Database.
-	 */
 	protected void safeToDB() {
 		User u = new User();
 		u.setFirstname(prename.getValue());
@@ -376,14 +324,6 @@ public class Registrierung extends CustomHorizontalLayout implements View{
 		new UserProvider().addUser(u);
 	}
 
-	/**
-	 * Validates the user input.
-	 *
-	 * @return boolean
-	 * @see com.vaadin.data.validator.EmailValidator
-	 * @see com.vaadin.data.validator.StringLengthValidator;
-	 * @see com.example.housing.utility.DHStudValidator;
-	 */
 	public boolean validate(){
 		boolean erfolgreich=true;//wird auf false gesetzt, falls ein Wert nicht richtig ist
 		try {
@@ -416,16 +356,12 @@ public class Registrierung extends CustomHorizontalLayout implements View{
 			erfolgreich=false;
 		}
 		
-		System.out.println(password_1.getValue());
-		System.out.println(password_1.getValue().length());
 		if(password_1.getValue().length()< 5){
 			password_1.setComponentError(new UserError("Das Passwort ist zu kurz. Es muss mindestens 5 Zeichen beinhalten."));
 			erfolgreich=false;
 		}
 			
 		if(!password_1.getValue().equals(password_2.getValue())){
-			System.out.println(password_1.getValue());
-			System.out.println(password_2.getValue());
 			password_1.setComponentError(new UserError("Die beiden Passwörter stimmen nicht überein."));
 			password_2.setComponentError(new UserError("Die beiden Passwörter stimmen nicht überein."));
 			erfolgreich=false;
@@ -446,13 +382,8 @@ public class Registrierung extends CustomHorizontalLayout implements View{
 		}
 
 		return erfolgreich;
-		
 	}
 	
-	/**
-	 * Sends an EMail to the User.
-	 * @see com.example.housing.utility.SendEMail
-	 */
 	public void sendEMail(){
 		
 		String path = UI.getCurrent().getPage().getLocation().getHost() +":"+UI.getCurrent().getPage().getLocation().getPort()+UI.getCurrent().getPage().getLocation().getPath()+"#!Startseite/";
