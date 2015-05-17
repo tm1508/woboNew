@@ -19,50 +19,31 @@ import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
 import com.vaadin.ui.Button.ClickEvent;
 
-// TODO: Auto-generated Javadoc
-/**
- * The Class LoginWindow.
- * 
- * @author MWI Wohungsbörse 2014
- * @version 1.0
- * @see com.example.housing.Registrierung
- */
-/*
- * StyleNames (CSS) v-panel-box
- */
-@SuppressWarnings("serial")
 public class ImageWindow extends Window {
-
+	private static final long serialVersionUID = 1L;
+	
 	// Großansicht der Bilder
-	Image image00;
-	Image image22;
-	Image image33;
-	Image image44;
-	Image image55;
+	Image imageBig1;
+	Image imageBig2;
+	Image imageBig3;
+	Image imageBig4;
+	Image imageBig5;
 
 	// kleine Ansicht der Bilder
-	Image image;
-	Image image2;
-	Image image3;
-	Image image4;
-	Image image5;
+	Image imageSmall1;
+	Image imageSmall2;
+	Image imageSmall3;
+	Image imageSmall4;
+	Image imageSmall5;
 
 	// welches Bild wird gerade groß angezeigt?
-	int active = 1;
+	int activePicture = 1;
 
-	/**
-	 * Instantiates a new login window.
-	 */
 	public ImageWindow(Offer angebot) {
 		super(" Bilder zu diesem Wohnungsangebot");
 		initialisieren(angebot);
 	}
 
-	/**
-	 * Initialisieren.
-	 * 
-	 * @see com.vaadin.ui.Window
-	 */
 	public void initialisieren(final Offer angebot) {
 		// Window
 		this.center();
@@ -75,310 +56,302 @@ public class ImageWindow extends Window {
 		content.setMargin(true);
 		content.setStyleName("box");
 
-		// Basepath
-		String basepath = VaadinService.getCurrent().getBaseDirectory()
-				.getAbsolutePath();
+		String basepath = VaadinService.getCurrent().getBaseDirectory().getAbsolutePath();// Basepath
 
-		// Layout für das große Bild
-		final VerticalLayout hl = new VerticalLayout();
+		final VerticalLayout layoutBigPicture = new VerticalLayout();// Layout für das große Bild
 
 		// für jedes Bild den Pfad zum DefaultBild
-		Resource resource00 = new FileResource(new File(basepath
-				+ "/WEB-INF/image/DefaultBild.jpg"));
-		Resource resource22 = new FileResource(new File(basepath
-				+ "/WEB-INF/image/DefaultBild.jpg"));
-		Resource resource33 = new FileResource(new File(basepath
-				+ "/WEB-INF/image/DefaultBild.jpg"));
-		Resource resource44 = new FileResource(new File(basepath
-				+ "/WEB-INF/image/DefaultBild.jpg"));
-		Resource resource55 = new FileResource(new File(basepath
-				+ "/WEB-INF/image/DefaultBild.jpg"));
+		Resource resourceBig1 = new FileResource(new File(basepath+ "/WEB-INF/image/DefaultBild.jpg"));
+		Resource resourceBig2 = new FileResource(new File(basepath+ "/WEB-INF/image/DefaultBild.jpg"));
+		Resource resourceBig3 = new FileResource(new File(basepath+ "/WEB-INF/image/DefaultBild.jpg"));
+		Resource resourceBig4 = new FileResource(new File(basepath+ "/WEB-INF/image/DefaultBild.jpg"));
+		Resource resourceBig5 = new FileResource(new File(basepath+ "/WEB-INF/image/DefaultBild.jpg"));
 
 		// Bilddateien aus dem Angebots-Objekt auslesen
 		switch (angebot.getPhotos().size()) {
 		case 5:
-			resource55 = new StreamResource(new StreamResource.StreamSource() {
+			resourceBig5 = new StreamResource(new StreamResource.StreamSource() {
+				private static final long serialVersionUID = 1L;
 				@Override
 				public InputStream getStream() {
-					return new ByteArrayInputStream(angebot.getPhotos().get(4)
-							.getPicture());
+					return new ByteArrayInputStream(angebot.getPhotos().get(4).getPicture());
 				}
 			}, "Bild_5");
 
 		case 4:
-			resource44 = new StreamResource(new StreamResource.StreamSource() {
+			resourceBig4 = new StreamResource(new StreamResource.StreamSource() {
+				private static final long serialVersionUID = 1L;
 				@Override
 				public InputStream getStream() {
-					return new ByteArrayInputStream(angebot.getPhotos().get(3)
-							.getPicture());
+					return new ByteArrayInputStream(angebot.getPhotos().get(3).getPicture());
 				}
 			}, "Bild_4");
 
 		case 3:
-			resource33 = new StreamResource(new StreamResource.StreamSource() {
+			resourceBig3 = new StreamResource(new StreamResource.StreamSource() {
+				private static final long serialVersionUID = 1L;
 				@Override
 				public InputStream getStream() {
-					return new ByteArrayInputStream(angebot.getPhotos().get(2)
-							.getPicture());
+					return new ByteArrayInputStream(angebot.getPhotos().get(2).getPicture());
 				}
 			}, "Bild_3");
 
 		case 2:
-			resource22 = new StreamResource(new StreamResource.StreamSource() {
+			resourceBig2 = new StreamResource(new StreamResource.StreamSource() {
+				private static final long serialVersionUID = 1L;
 				@Override
 				public InputStream getStream() {
-					return new ByteArrayInputStream(angebot.getPhotos().get(1)
-							.getPicture());
+					return new ByteArrayInputStream(angebot.getPhotos().get(1).getPicture());
 				}
 			}, "Bild_2");
 
 		case 1:
-			resource00 = new StreamResource(new StreamResource.StreamSource() {
+			resourceBig1 = new StreamResource(new StreamResource.StreamSource() {
+				private static final long serialVersionUID = 1L;
 				@Override
 				public InputStream getStream() {
-					return new ByteArrayInputStream(angebot.getPhotos().get(0)
-							.getPicture());
+					return new ByteArrayInputStream(angebot.getPhotos().get(0).getPicture());
 				}
 			}, "Bild_1");
 		}
 
 		// Bilder erzeugen
-		image00 = new Image("", resource00);
-		image00.setWidth("700px");// Größe festlegen
-		image00.setHeight("438px");
-		image00.setCaption(null);// keine Überschrift
+		imageBig1 = new Image("", resourceBig1);
+		imageBig1.setWidth("700px");// Größe festlegen
+		imageBig1.setHeight("438px");
+		imageBig1.setCaption(null);// keine Überschrift
 
-		image22 = new Image("", resource22);
-		image22.setWidth("700px");
-		image22.setHeight("438px");
-		image22.setCaption(null);
+		imageBig2 = new Image("", resourceBig2);
+		imageBig2.setWidth("700px");
+		imageBig2.setHeight("438px");
+		imageBig2.setCaption(null);
 
-		image33 = new Image("", resource33);
-		image33.setWidth("700px");
-		image33.setHeight("438px");
-		image33.setCaption(null);
+		imageBig3 = new Image("", resourceBig3);
+		imageBig3.setWidth("700px");
+		imageBig3.setHeight("438px");
+		imageBig3.setCaption(null);
 
-		image44 = new Image("", resource44);
-		image44.setWidth("700px");
-		image44.setHeight("438px");
-		image44.setCaption(null);
+		imageBig4 = new Image("", resourceBig4);
+		imageBig4.setWidth("700px");
+		imageBig4.setHeight("438px");
+		imageBig4.setCaption(null);
 
-		image55 = new Image("", resource55);
-		image55.setWidth("700px");
-		image55.setHeight("438px");
-		image55.setCaption(null);
+		imageBig5 = new Image("", resourceBig5);
+		imageBig5.setWidth("700px");
+		imageBig5.setHeight("438px");
+		imageBig5.setCaption(null);
 
 		// Bilder zum Layout hinzufügen
-		hl.addComponent(image00);
-		hl.addComponent(image22);
-		hl.addComponent(image33);
-		hl.addComponent(image44);
-		hl.addComponent(image55);
+		layoutBigPicture.addComponent(imageBig1);
+		layoutBigPicture.addComponent(imageBig2);
+		layoutBigPicture.addComponent(imageBig3);
+		layoutBigPicture.addComponent(imageBig4);
+		layoutBigPicture.addComponent(imageBig5);
 
 		// alle Bilder (bis auf das erste) unsichtbar machen
-		image22.setVisible(false);
-		image33.setVisible(false);
-		image44.setVisible(false);
-		image55.setVisible(false);
+		imageBig2.setVisible(false);
+		imageBig3.setVisible(false);
+		imageBig4.setVisible(false);
+		imageBig5.setVisible(false);
 
 		// Bilder mittig platzieren
-		hl.setComponentAlignment(image00, Alignment.MIDDLE_CENTER);
-		hl.setComponentAlignment(image22, Alignment.MIDDLE_CENTER);
-		hl.setComponentAlignment(image33, Alignment.MIDDLE_CENTER);
-		hl.setComponentAlignment(image44, Alignment.MIDDLE_CENTER);
-		hl.setComponentAlignment(image55, Alignment.MIDDLE_CENTER);
+		layoutBigPicture.setComponentAlignment(imageBig1, Alignment.MIDDLE_CENTER);
+		layoutBigPicture.setComponentAlignment(imageBig2, Alignment.MIDDLE_CENTER);
+		layoutBigPicture.setComponentAlignment(imageBig3, Alignment.MIDDLE_CENTER);
+		layoutBigPicture.setComponentAlignment(imageBig4, Alignment.MIDDLE_CENTER);
+		layoutBigPicture.setComponentAlignment(imageBig5, Alignment.MIDDLE_CENTER);
 
 		// Layout für das große Bild hinzufügen
-		hl.setStyleName("picture");
-		content.addComponent(hl);
+		layoutBigPicture.setStyleName("picture");
+		content.addComponent(layoutBigPicture);
 
-		// kleine Bilder
-		final HorizontalLayout hl1 = new HorizontalLayout();
+		final HorizontalLayout layoutSmallPicture = new HorizontalLayout();// kleine Bilder
 
 		// Pfad zum default-Bild
-		Resource resource = new FileResource(new File(basepath
-				+ "/WEB-INF/image/DefaultBild.jpg"));
-		Resource resource2 = new FileResource(new File(basepath
-				+ "/WEB-INF/image/DefaultBild.jpg"));
-		Resource resource3 = new FileResource(new File(basepath
-				+ "/WEB-INF/image/DefaultBild.jpg"));
-		Resource resource4 = new FileResource(new File(basepath
-				+ "/WEB-INF/image/DefaultBild.jpg"));
-		Resource resource5 = new FileResource(new File(basepath
-				+ "/WEB-INF/image/DefaultBild.jpg"));
+		Resource resourceSmall1 = new FileResource(new File(basepath + "/WEB-INF/image/DefaultBild.jpg"));
+		Resource resourceSmall2 = new FileResource(new File(basepath + "/WEB-INF/image/DefaultBild.jpg"));
+		Resource resourceSmall3 = new FileResource(new File(basepath + "/WEB-INF/image/DefaultBild.jpg"));
+		Resource resourceSmall4 = new FileResource(new File(basepath + "/WEB-INF/image/DefaultBild.jpg"));
+		Resource resourceSmall5 = new FileResource(new File(basepath + "/WEB-INF/image/DefaultBild.jpg"));
 
 		// Bilddaten aus dem Angebot-Objekt auslesen
 		switch (angebot.getPhotos().size()) {
 		case 5:
-			resource5 = new StreamResource(new StreamResource.StreamSource() {
+			resourceSmall5 = new StreamResource(new StreamResource.StreamSource() {
+				private static final long serialVersionUID = 1L;
 				@Override
 				public InputStream getStream() {
-					return new ByteArrayInputStream(angebot.getPhotos().get(4)
-							.getPicture());
+					return new ByteArrayInputStream(angebot.getPhotos().get(4).getPicture());
 				}
 			}, "Bild_5");
 
 		case 4:
-			resource4 = new StreamResource(new StreamResource.StreamSource() {
+			resourceSmall4 = new StreamResource(new StreamResource.StreamSource() {
+				private static final long serialVersionUID = 1L;
 				@Override
 				public InputStream getStream() {
-					return new ByteArrayInputStream(angebot.getPhotos().get(3)
-							.getPicture());
+					return new ByteArrayInputStream(angebot.getPhotos().get(3).getPicture());
 				}
 			}, "Bild_4");
 
 		case 3:
-			resource3 = new StreamResource(new StreamResource.StreamSource() {
+			resourceSmall3 = new StreamResource(new StreamResource.StreamSource() {
+				private static final long serialVersionUID = 1L;
 				@Override
 				public InputStream getStream() {
-					return new ByteArrayInputStream(angebot.getPhotos().get(2)
-							.getPicture());
+					return new ByteArrayInputStream(angebot.getPhotos().get(2).getPicture());
 				}
 			}, "Bild_3");
 
 		case 2:
-			resource2 = new StreamResource(new StreamResource.StreamSource() {
+			resourceSmall2 = new StreamResource(new StreamResource.StreamSource() {
+				private static final long serialVersionUID = 1L;
 				@Override
 				public InputStream getStream() {
-					return new ByteArrayInputStream(angebot.getPhotos().get(1)
-							.getPicture());
+					return new ByteArrayInputStream(angebot.getPhotos().get(1).getPicture());
 				}
 			}, "Bild_2");
 
 		case 1:
-			resource = new StreamResource(new StreamResource.StreamSource() {
+			resourceSmall1 = new StreamResource(new StreamResource.StreamSource() {
+				private static final long serialVersionUID = 1L;
 				@Override
 				public InputStream getStream() {
-					return new ByteArrayInputStream(angebot.getPhotos().get(0)
-							.getPicture());
+					return new ByteArrayInputStream(angebot.getPhotos().get(0).getPicture());
 				}
 			}, "Bild_1");
 		}
 
 		//Bilder erzeugen
-		image = new Image("", resource);
-		image.setWidth("50px");//Größe festlegen
-		image.setHeight("50px");
-		image.setStyleName("active");//Style festlegen (das erste Bild ist zu Beginn ausgewählt =active)
-		image.addClickListener(new ClickListener() {//beim Click auf das Bild
+		imageSmall1 = new Image("", resourceSmall1);
+		imageSmall1.setWidth("50px");//Größe festlegen
+		imageSmall1.setHeight("50px");
+		imageSmall1.setStyleName("active");//Style festlegen (das erste Bild ist zu Beginn ausgewählt =active)
+		imageSmall1.addClickListener(new ClickListener() {//beim Click auf das Bild
+			private static final long serialVersionUID = 1L;
 			@Override
 			public void click(com.vaadin.event.MouseEvents.ClickEvent event) {
-				image00.setVisible(true);//Bild 1 sichtbar machen
-				image00.addStyleName("animate");
-				image22.setVisible(false);//alle anderen Bilder unsichtbar machen
-				image33.setVisible(false);
-				image44.setVisible(false);
-				image55.setVisible(false);
-				active = 1;//Bild 1 als aktiv Kennzeichnen
-				image.setStyleName("active");//Style festlegen (das erste Bild ist ausgewählt =active)
-				image2.setStyleName("im");//alle anderen Bilder: "normaler Style
-				image3.setStyleName("im");
-				image4.setStyleName("im");
-				image5.setStyleName("im");
+				imageBig1.setVisible(true);//Bild 1 sichtbar machen
+				imageBig1.addStyleName("animate");
+				imageBig2.setVisible(false);//alle anderen Bilder unsichtbar machen
+				imageBig3.setVisible(false);
+				imageBig4.setVisible(false);
+				imageBig5.setVisible(false);
+				activePicture = 1;//Bild 1 als aktiv Kennzeichnen
+				imageSmall1.setStyleName("active");//Style festlegen (das erste Bild ist ausgewählt =active)
+				imageSmall2.setStyleName("im");//alle anderen Bilder: "normaler Style
+				imageSmall3.setStyleName("im");
+				imageSmall4.setStyleName("im");
+				imageSmall5.setStyleName("im");
 
 			}
 		});
 
-		image2 = new Image("", resource2);//für alle Bilder wiederholen
-		image2.setWidth("50px");
-		image2.setHeight("50px");
-		image2.setStyleName("im");
-		image2.addClickListener(new ClickListener() {
+		imageSmall2 = new Image("", resourceSmall2);//für alle Bilder wiederholen
+		imageSmall2.setWidth("50px");
+		imageSmall2.setHeight("50px");
+		imageSmall2.setStyleName("im");
+		imageSmall2.addClickListener(new ClickListener() {
+			private static final long serialVersionUID = 1L;
 			@Override
 			public void click(com.vaadin.event.MouseEvents.ClickEvent event) {
-				image00.setVisible(false);
-				image22.setVisible(true);
-				image22.addStyleName("animate");
-				image33.setVisible(false);
-				image44.setVisible(false);
-				image55.setVisible(false);
-				active = 2;
-				image.setStyleName("im");
-				image2.setStyleName("active");
-				image3.setStyleName("im");
-				image4.setStyleName("im");
-				image5.setStyleName("im");
+				imageBig1.setVisible(false);
+				imageBig2.setVisible(true);
+				imageBig2.addStyleName("animate");
+				imageBig3.setVisible(false);
+				imageBig4.setVisible(false);
+				imageBig5.setVisible(false);
+				activePicture = 2;
+				imageSmall1.setStyleName("im");
+				imageSmall2.setStyleName("active");
+				imageSmall3.setStyleName("im");
+				imageSmall4.setStyleName("im");
+				imageSmall5.setStyleName("im");
 			}
 		});
 
-		image3 = new Image("", resource3);
-		image3.setWidth("50px");
-		image3.setHeight("50px");
-		image3.setStyleName("im");
-		image3.addClickListener(new ClickListener() {
+		imageSmall3 = new Image("", resourceSmall3);
+		imageSmall3.setWidth("50px");
+		imageSmall3.setHeight("50px");
+		imageSmall3.setStyleName("im");
+		imageSmall3.addClickListener(new ClickListener() {
+			private static final long serialVersionUID = 1L;
+
 			@Override
 			public void click(com.vaadin.event.MouseEvents.ClickEvent event) {
-				image00.setVisible(false);
-				image22.setVisible(false);
-				image33.setVisible(true);
-				image33.addStyleName("animate");
-				image44.setVisible(false);
-				image55.setVisible(false);
-				active = 3;
-				image.setStyleName("im");
-				image2.setStyleName("im");
-				image3.setStyleName("active");
-				image4.setStyleName("im");
-				image5.setStyleName("im");
+				imageBig1.setVisible(false);
+				imageBig2.setVisible(false);
+				imageBig3.setVisible(true);
+				imageBig3.addStyleName("animate");
+				imageBig4.setVisible(false);
+				imageBig5.setVisible(false);
+				activePicture = 3;
+				imageSmall1.setStyleName("im");
+				imageSmall2.setStyleName("im");
+				imageSmall3.setStyleName("active");
+				imageSmall4.setStyleName("im");
+				imageSmall5.setStyleName("im");
 			}
 		});
 
-		image4 = new Image("", resource4);
-		image4.setWidth("50px");
-		image4.setHeight("50px");
-		image4.setStyleName("im");
-		image4.addClickListener(new ClickListener() {
+		imageSmall4 = new Image("", resourceSmall4);
+		imageSmall4.setWidth("50px");
+		imageSmall4.setHeight("50px");
+		imageSmall4.setStyleName("im");
+		imageSmall4.addClickListener(new ClickListener() {
+			private static final long serialVersionUID = 1L;
 			@Override
 			public void click(com.vaadin.event.MouseEvents.ClickEvent event) {
-				image00.setVisible(false);
-				image22.setVisible(false);
-				image33.setVisible(false);
-				image44.setVisible(true);
-				image44.addStyleName("animate");
-				image55.setVisible(false);
-				active = 4;
-				image.setStyleName("im");
-				image2.setStyleName("im");
-				image3.setStyleName("im");
-				image4.setStyleName("active");
-				image5.setStyleName("im");
+				imageBig1.setVisible(false);
+				imageBig2.setVisible(false);
+				imageBig3.setVisible(false);
+				imageBig4.setVisible(true);
+				imageBig4.addStyleName("animate");
+				imageBig5.setVisible(false);
+				activePicture = 4;
+				imageSmall1.setStyleName("im");
+				imageSmall2.setStyleName("im");
+				imageSmall3.setStyleName("im");
+				imageSmall4.setStyleName("active");
+				imageSmall5.setStyleName("im");
 			}
 		});
 
-		image5 = new Image("", resource5);
-		image5.setWidth("50px");
-		image5.setHeight("50px");
-		image5.setStyleName("im");
-		image5.addClickListener(new ClickListener() {
+		imageSmall5 = new Image("", resourceSmall5);
+		imageSmall5.setWidth("50px");
+		imageSmall5.setHeight("50px");
+		imageSmall5.setStyleName("im");
+		imageSmall5.addClickListener(new ClickListener() {
+			private static final long serialVersionUID = 1L;
 			@Override
 			public void click(com.vaadin.event.MouseEvents.ClickEvent event) {
-				image00.setVisible(false);
-				image22.setVisible(false);
-				image33.setVisible(false);
-				image44.setVisible(false);
-				image55.setVisible(true);
-				image55.addStyleName("animate");
-				active = 5;
-				image.setStyleName("im");
-				image2.setStyleName("im");
-				image3.setStyleName("im");
-				image4.setStyleName("im");
-				image5.setStyleName("active");
+				imageBig1.setVisible(false);
+				imageBig2.setVisible(false);
+				imageBig3.setVisible(false);
+				imageBig4.setVisible(false);
+				imageBig5.setVisible(true);
+				imageBig5.addStyleName("animate");
+				activePicture = 5;
+				imageSmall1.setStyleName("im");
+				imageSmall2.setStyleName("im");
+				imageSmall3.setStyleName("im");
+				imageSmall4.setStyleName("im");
+				imageSmall5.setStyleName("active");
 			}
 		});
 
 		//Bilder hinzufügen
-		hl1.addComponent(image);
-		hl1.addComponent(image2);
-		hl1.addComponent(image3);
-		hl1.addComponent(image4);
-		hl1.addComponent(image5);
+		layoutSmallPicture.addComponent(imageSmall1);
+		layoutSmallPicture.addComponent(imageSmall2);
+		layoutSmallPicture.addComponent(imageSmall3);
+		layoutSmallPicture.addComponent(imageSmall4);
+		layoutSmallPicture.addComponent(imageSmall5);
 
 		//Panel als Platzhalter einfügen
 		Panel p = new Panel();
 		p.setWidth("285px");
 		p.setCaption(null);
-		hl1.addComponent(p);
+		layoutSmallPicture.addComponent(p);
 		p.setStyleName("im");
 
 		//Button zur Bildernavigation (zurück)
@@ -387,81 +360,83 @@ public class ImageWindow extends Window {
 		left.setIcon(FontAwesome.CHEVRON_LEFT);
 		left.addStyleName("im");
 		left.addClickListener(new Button.ClickListener() {
+			private static final long serialVersionUID = 1L;
+
 			public void buttonClick(ClickEvent event) {
-				switch (active) {//je nachdem welches Bild aktiv ist wird das vorherige aktiviert
+				switch (activePicture) {//je nachdem welches Bild aktiv ist wird das vorherige aktiviert
 					case 1: {
 						// nichts machen!!!
 						break;
 					}
 	
 					case 2: {//gleiche Aktionen wie beim Click auf das Bild
-						active = 1;
-						image00.setVisible(true);
-						image00.addStyleName("animate");
-						image22.setVisible(false);
-						image33.setVisible(false);
-						image44.setVisible(false);
-						image55.setVisible(false);
-						image.setStyleName("active");
-						image2.setStyleName("im");
-						image3.setStyleName("im");
-						image4.setStyleName("im");
-						image5.setStyleName("im");
+						activePicture = 1;
+						imageBig1.setVisible(true);
+						imageBig1.addStyleName("animate");
+						imageBig2.setVisible(false);
+						imageBig3.setVisible(false);
+						imageBig4.setVisible(false);
+						imageBig5.setVisible(false);
+						imageSmall1.setStyleName("active");
+						imageSmall2.setStyleName("im");
+						imageSmall3.setStyleName("im");
+						imageSmall4.setStyleName("im");
+						imageSmall5.setStyleName("im");
 						break;
 					}
 	
 					case 3: {
-						active = 2;
-						image00.setVisible(false);
-						image22.setVisible(true);
-						image22.addStyleName("animate");
-						image33.setVisible(false);
-						image44.setVisible(false);
-						image55.setVisible(false);
-						image.setStyleName("im");
-						image2.setStyleName("active");
-						image3.setStyleName("im");
-						image4.setStyleName("im");
-						image5.setStyleName("im");
+						activePicture = 2;
+						imageBig1.setVisible(false);
+						imageBig2.setVisible(true);
+						imageBig2.addStyleName("animate");
+						imageBig3.setVisible(false);
+						imageBig4.setVisible(false);
+						imageBig5.setVisible(false);
+						imageSmall1.setStyleName("im");
+						imageSmall2.setStyleName("active");
+						imageSmall3.setStyleName("im");
+						imageSmall4.setStyleName("im");
+						imageSmall5.setStyleName("im");
 						break;
 					}
 	
 					case 4: {
-						image00.setVisible(false);
-						image22.setVisible(false);
-						image33.setVisible(true);
-						image33.addStyleName("animate");
-						image44.setVisible(false);
-						image55.setVisible(false);
-						active = 3;
-						image.setStyleName("im");
-						image2.setStyleName("im");
-						image3.setStyleName("active");
-						image4.setStyleName("im");
-						image5.setStyleName("im");
+						imageBig1.setVisible(false);
+						imageBig2.setVisible(false);
+						imageBig3.setVisible(true);
+						imageBig3.addStyleName("animate");
+						imageBig4.setVisible(false);
+						imageBig5.setVisible(false);
+						activePicture = 3;
+						imageSmall1.setStyleName("im");
+						imageSmall2.setStyleName("im");
+						imageSmall3.setStyleName("active");
+						imageSmall4.setStyleName("im");
+						imageSmall5.setStyleName("im");
 						break;
 					}
 	
 					case 5: {
-						image00.setVisible(false);
-						image22.setVisible(false);
-						image33.setVisible(false);
-						image44.setVisible(true);
-						image44.addStyleName("animate");
-						image55.setVisible(false);
-						active = 4;
-						image.setStyleName("im");
-						image2.setStyleName("im");
-						image3.setStyleName("im");
-						image4.setStyleName("active");
-						image5.setStyleName("im");
+						imageBig1.setVisible(false);
+						imageBig2.setVisible(false);
+						imageBig3.setVisible(false);
+						imageBig4.setVisible(true);
+						imageBig4.addStyleName("animate");
+						imageBig5.setVisible(false);
+						activePicture = 4;
+						imageSmall1.setStyleName("im");
+						imageSmall2.setStyleName("im");
+						imageSmall3.setStyleName("im");
+						imageSmall4.setStyleName("active");
+						imageSmall5.setStyleName("im");
 						break;
 					}
 				}
 			}
 		});
-		hl1.addComponent(left);//Button hinzufügen
-		hl1.setComponentAlignment(left, Alignment.BOTTOM_RIGHT);//Button positionieren
+		layoutSmallPicture.addComponent(left);//Button hinzufügen
+		layoutSmallPicture.setComponentAlignment(left, Alignment.BOTTOM_RIGHT);//Button positionieren
 
 		//Button zur Bildernavigation (vorwärts)
 		Button right = new Button("");
@@ -469,70 +444,74 @@ public class ImageWindow extends Window {
 		right.setIcon(FontAwesome.CHEVRON_RIGHT);
 		right.addStyleName("im");
 		right.addClickListener(new Button.ClickListener() {
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 1L;
+
 			public void buttonClick(ClickEvent event) {
-				switch (active) {
+				switch (activePicture) {
 					case 1: {//siehe oben
-						active = 2;
-						image00.setVisible(false);
-						image22.setVisible(true);
-						image22.addStyleName("animate");
-						image33.setVisible(false);
-						image44.setVisible(false);
-						image55.setVisible(false);
-						image.setStyleName("im");
-						image2.setStyleName("active");
-						image3.setStyleName("im");
-						image4.setStyleName("im");
-						image5.setStyleName("im");
+						activePicture = 2;
+						imageBig1.setVisible(false);
+						imageBig2.setVisible(true);
+						imageBig2.addStyleName("animate");
+						imageBig3.setVisible(false);
+						imageBig4.setVisible(false);
+						imageBig5.setVisible(false);
+						imageSmall1.setStyleName("im");
+						imageSmall2.setStyleName("active");
+						imageSmall3.setStyleName("im");
+						imageSmall4.setStyleName("im");
+						imageSmall5.setStyleName("im");
 						break;
 					}
 	
 					case 2: {
-						image00.setVisible(false);
-						image22.setVisible(false);
-						image33.setVisible(true);
-						image33.addStyleName("animate");
-						image44.setVisible(false);
-						image55.setVisible(false);
-						active = 3;
-						image.setStyleName("im");
-						image2.setStyleName("im");
-						image3.setStyleName("active");
-						image4.setStyleName("im");
-						image5.setStyleName("im");
+						imageBig1.setVisible(false);
+						imageBig2.setVisible(false);
+						imageBig3.setVisible(true);
+						imageBig3.addStyleName("animate");
+						imageBig4.setVisible(false);
+						imageBig5.setVisible(false);
+						activePicture = 3;
+						imageSmall1.setStyleName("im");
+						imageSmall2.setStyleName("im");
+						imageSmall3.setStyleName("active");
+						imageSmall4.setStyleName("im");
+						imageSmall5.setStyleName("im");
 						break;
 					}
 	
 					case 3: {
-						image00.setVisible(false);
-						image22.setVisible(false);
-						image33.setVisible(false);
-						image44.setVisible(true);
-						image44.addStyleName("animate");
-						image55.setVisible(false);
-						active = 4;
-						image.setStyleName("im");
-						image2.setStyleName("im");
-						image3.setStyleName("im");
-						image4.setStyleName("active");
-						image5.setStyleName("im");
+						imageBig1.setVisible(false);
+						imageBig2.setVisible(false);
+						imageBig3.setVisible(false);
+						imageBig4.setVisible(true);
+						imageBig4.addStyleName("animate");
+						imageBig5.setVisible(false);
+						activePicture = 4;
+						imageSmall1.setStyleName("im");
+						imageSmall2.setStyleName("im");
+						imageSmall3.setStyleName("im");
+						imageSmall4.setStyleName("active");
+						imageSmall5.setStyleName("im");
 						break;
-	
 					}
 	
 					case 4: {
-						image00.setVisible(false);
-						image22.setVisible(false);
-						image33.setVisible(false);
-						image44.setVisible(false);
-						image55.setVisible(true);
-						image55.addStyleName("animate");
-						active = 5;
-						image.setStyleName("im");
-						image2.setStyleName("im");
-						image3.setStyleName("im");
-						image4.setStyleName("im");
-						image5.setStyleName("active");
+						imageBig1.setVisible(false);
+						imageBig2.setVisible(false);
+						imageBig3.setVisible(false);
+						imageBig4.setVisible(false);
+						imageBig5.setVisible(true);
+						imageBig5.addStyleName("animate");
+						activePicture = 5;
+						imageSmall1.setStyleName("im");
+						imageSmall2.setStyleName("im");
+						imageSmall3.setStyleName("im");
+						imageSmall4.setStyleName("im");
+						imageSmall5.setStyleName("active");
 						break;
 					}
 	
@@ -543,30 +522,29 @@ public class ImageWindow extends Window {
 				}
 			}
 		});
+		
 		//Button hinzufügen
-		hl1.addComponent(right);
-		hl1.setComponentAlignment(right, Alignment.BOTTOM_RIGHT);//Button positionieren
+		layoutSmallPicture.addComponent(right);
+		layoutSmallPicture.setComponentAlignment(right, Alignment.BOTTOM_RIGHT);//Button positionieren
 
 		//Layout für kleine Bilder hinzufügen
-		hl1.setStyleName("picture");
-		content.addComponent(hl1);
-
+		layoutSmallPicture.setStyleName("picture");
+		content.addComponent(layoutSmallPicture);
 		this.setContent(content);
 
-		content.setExpandRatio(hl1, 1);//große Bilder bekommen mehr Platz
-		content.setExpandRatio(hl, 4);
+		content.setExpandRatio(layoutSmallPicture, 1);//große Bilder bekommen mehr Platz
+		content.setExpandRatio(layoutBigPicture, 4);
 		
-		image.markAsDirty();
-		image2.markAsDirty();
-		image3.markAsDirty();
-		image4.markAsDirty();
-		image5.markAsDirty();
+		imageSmall1.markAsDirty();
+		imageSmall2.markAsDirty();
+		imageSmall3.markAsDirty();
+		imageSmall4.markAsDirty();
+		imageSmall5.markAsDirty();
 		
-		image00.markAsDirty();
-		image22.markAsDirty();
-		image33.markAsDirty();
-		image44.markAsDirty();
-		image55.markAsDirty();
-
+		imageBig1.markAsDirty();
+		imageBig2.markAsDirty();
+		imageBig3.markAsDirty();
+		imageBig4.markAsDirty();
+		imageBig5.markAsDirty();
 	}
 }
