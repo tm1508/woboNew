@@ -154,14 +154,13 @@ public class Kontaktformular extends CustomHorizontalLayout implements View{
 			erfolgreich=false;
 		}
 		
-		
-		
 		try {
 			email_1.validate();
 		} catch (Exception e) {
 			erfolgreich=false;
 		}
 		
+		//TODO Text validieren?
 		
 		return erfolgreich;
 		
