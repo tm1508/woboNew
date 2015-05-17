@@ -58,7 +58,7 @@ public class ForgotPasswordWindow extends Window {
 		// speichern
 		save = new Button();
 		save.setStyleName("speichern");
-		save.setCaption("neues Passwort anfordern");
+		save.setCaption("Neues Passwort anfordern");
 		save.setIcon(FontAwesome.CHECK);
 		save.setImmediate(true);
 		save.setDescription("Neues Passwort speichern");
@@ -105,7 +105,7 @@ public class ForgotPasswordWindow extends Window {
 		// abbrechen
 		cancel = new Button();
 		cancel.setStyleName("speichern");
-		cancel.setCaption("abbrechen");
+		cancel.setCaption("Abbrechen");
 		cancel.setIcon(FontAwesome.MAIL_REPLY);
 		cancel.setImmediate(true);
 		cancel.setDescription("Diese Aktion abbrechen");
@@ -120,8 +120,8 @@ public class ForgotPasswordWindow extends Window {
 			}
 		});
 
-		layoutButtons.addComponent(cancel);
 		layoutButtons.addComponent(save);
+		layoutButtons.addComponent(cancel);
 		content.addComponent(layoutButtons);
 
 		text = new Label("Wenn Sie Ihr Passwort vergessen haben, können Sie hier Ihr Passwort zurücksetzten und ein neues anfordern. Um Sich erneut einloggen zu können folgen Sie bitte dem Link in der E-Mail.");
@@ -180,17 +180,20 @@ public class ForgotPasswordWindow extends Window {
 				+ UI.getCurrent().getPage().getLocation().getPath()
 				+ "#!Startseite/";
 		String code = GenerateCode.generateCode(email_1.getValue());
+		
 		// Text der E-Mail mit Style-Informationen
 		String body = "<meta charset='utf-8'/><img src='http://193.196.7.216:8080/housing/APP/connector/0/12/source/dh.PNG'/><br/><br/><span style='color: #000000' 'font-family: Arial, sans-serif''font-size: 16pt' >Sehr geehrte Nutzerin, sehr geehrter Nutzer,"
-				+ "<br/><br/>Ihr Passwort wurde zurückgesetzt. Ihr neues Passwort lautet:"
+				+ "<br/><br/>Ihr Passwort wurde zurückgesetzt. Ihr neues Passwort lautet: "
 				+ password
-				+ ". Bitte folgen sie dem Link unten, dann können Sie sich wieder wie gewohnt einloggen. Dadurch wird sichergestellt, dass keine Unbefungten Ihre E-Mail-Adresse und Ihr Benutzerkonto verwenden können. <br/><br/> Unter \"Persönlichen Einstellungen\" können Sie ihr Passwort ändern.</span>"
-				+ "<br/><span style='color: #e2001a' 'font-family: Arial, sans-serif''font-size: 20pt' >"
+				+ ". Bitte folgen sie dem Link unten, damit Sie sich wieder wie gewohnt einloggen können. Dadurch wird sichergestellt, dass keine Unbefungten Ihre E-Mail-Adresse und Ihr Benutzerkonto verwenden können."
+				+ "<br/><br/> Unter \"Persönlichen Einstellungen\" können Sie ihr Passwort ändern.</span>"
+				+ "<br/><br/><span style='color: #e2001a' 'font-family: Arial, sans-serif''font-size: 20pt' >"
 				+ "<a href='http://"
 				+ path
 				+ code
-				+ "'>weiter zum Login</a>"
-				+ "</span><br/><br/>Mit freundlichen Grüßen<br/>Ihr DHBW Wohungsbörsen-Team<p/><span style='color: #e2001a' 'font-family: Arial, sans-serif''font-size: 8pt' >Anschrift:<br/>DHBW Karlsruhe<br/>Baden-Wuerttemberg Cooperative State University Karlsruhe<br />Erzbergerstraße 121 . 76133 Karlsruhe <br />Postfach 10 01 36 . 76231 Karlsruhe   <br />Telefon +49.721.9735-5 <br />Telefax +49.721.9735-600 <br />E-Mail: dreischer@dhbw-karlsruhe.de<br /><br/><br/>Ansprechpartner:<br/> <br />Dr. Anita Dreischer<br /><br/><b>Copyright DHBW Karlsruhe. Alle Rechte vorbehalten.</b></span>";
+				+ "'>Weiter zum Login</a></span>"
+				+ "<br/><br/>Mit freundlichen Grüßen<br/>Ihr DHBW Wohnungsbörsen-Team<p/><span style='color: #e2001a' 'font-family: Arial, sans-serif''font-size: 8pt' >Anschrift:<br/>DHBW Karlsruhe<br/>Baden-Wuerttemberg Cooperative State University Karlsruhe<br />Erzbergerstraße 121 . 76133 Karlsruhe <br />Postfach 10 01 36 . 76231 Karlsruhe   <br />Telefon +49.721.9735-5 <br />Telefax +49.721.9735-600 <br />E-Mail: dreischer@dhbw-karlsruhe.de<br /><br/><br/>Ansprechpartner:<br/> <br />Dr. Anita Dreischer<br /><br/><b>Copyright DHBW Karlsruhe. Alle Rechte vorbehalten.</b></span>";
+		
 		// E-Mail senden
 		SendEMail.send(email_1.getValue(), "wohnungsboerse_dh@web.de",
 				"Passwort vergessen", body);

@@ -125,15 +125,17 @@ public class Kontaktformular extends CustomHorizontalLayout implements View{
 	}
 	
 	protected void sendEMail() {
-		String bodyAnfrager = "<meta charset='utf-8'/><img src='http://193.196.7.216:8080/housing/APP/connector/0/12/source/dh.PNG'/><br/><br/><span style='color: #000000' 'font-family: Arial, sans-serif''font-size: 16pt' >Sehr geehrter Administrator,"
-				+"<br/><br/>Sie haben eine Frage zu der DHBW-Wohungsbörse erhalten:"
-				+"<br/><br/>" + text.getValue() 
-				+"<br/>" + "Kontaktdaten des Absenders: "
-				+"<br/> Name:" + prename.getValue()
-				+"<br/>" + "Email: " + email_1.getValue() ;
+		String bodyAnfrager = "<meta charset='utf-8'/><img src='http://193.196.7.216:8080/housing/APP/connector/0/12/source/dh.PNG'/><br/><br/><span style='color: #000000' 'font-family: Arial, sans-serif''font-size: 16pt' >Hallo,"
+				+"<br/><br/>Sie haben eine Nachricht eines Nutzers der DHBW-Wohungsbörse erhalten:"
+				+"<br/><br/> <span style='color: #e2001a' 'font-family: Arial, sans-serif''font-size: 16pt''font-weight: bold'> &raquo; </span>"
+				+"<br/>" + text.getValue() 
+				+"<br/><span style='color: #e2001a' 'font-family: Arial, sans-serif''font-size: 16pt''font-weight: bold'> &laquo; </span>" 
+				+"<br/><br/>" + "Kontaktdaten des Absenders: "
+				+"<br/>Name:" + prename.getValue()
+				+"<br/>Email: " + email_1.getValue() + "</span>";
 			
 		//Email an Anfrager senden
-		SendEMail.sendEmailAlias("wohnungsboerse_dh@web.de", "Wohnungsboerse_DHBW", email_1.getValue(), "Kontaktfomular", bodyAnfrager);
+		SendEMail.sendEmailAlias("wohnungsboerse_dh@web.de", "Wohnungsboerse_DHBW", email_1.getValue(), "Nachricht über Kontaktfomular", bodyAnfrager);
 	}
 	
 	public boolean validate(){
