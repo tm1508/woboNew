@@ -7,26 +7,23 @@ import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.server.Page;
-import com.vaadin.server.VaadinSession;
 import com.vaadin.ui.Button;
-import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Notification;
-import com.vaadin.ui.Panel;
 import com.vaadin.ui.RichTextArea;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Notification.Type;
 
 public class AdminanfrageWohnung extends CustomHorizontalLayout implements View {
-	
-	VerticalLayout content;
-	Offer angebot;
+	private static final long serialVersionUID = 1L;
+
+	private VerticalLayout content;
+	private Offer angebot;
 	private RichTextArea text;
 	
 	public AdminanfrageWohnung(Offer o){
 		this.angebot = o;
-		
 		content = super.initCustomHorizontalLayout();
 		setContent();
 	}
@@ -68,8 +65,9 @@ public class AdminanfrageWohnung extends CustomHorizontalLayout implements View 
 		sendButton.setHeight("-1px");
 		content.addComponent(sendButton);
 		sendButton.addClickListener(new Button.ClickListener() {
+			private static final long serialVersionUID = 1L;
+
 			public void buttonClick(ClickEvent event) {
-				
 					
 					//E-Mail an den Nutzer senden
 					sendEMail();
@@ -83,9 +81,7 @@ public class AdminanfrageWohnung extends CustomHorizontalLayout implements View 
 					not.setStyleName("success");
 					not.setDelayMsec(300);
 					not.show(Page.getCurrent());
-				
 			}
-
 		});
 	}
 	
@@ -107,8 +103,5 @@ public class AdminanfrageWohnung extends CustomHorizontalLayout implements View 
 
 	@Override
 	public void enter(ViewChangeEvent event) {
-		// TODO Auto-generated method stub
-
 	}
-
 }

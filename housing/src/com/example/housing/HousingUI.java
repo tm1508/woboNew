@@ -28,28 +28,18 @@ import com.vaadin.server.VaadinSession;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 
-// TODO: Auto-generated Javadoc
-/**
- * The Class HousingUI.
- */
-
 @Theme("housing")
 @PreserveOnRefresh
 public class HousingUI extends UI {
+	private static final long serialVersionUID = 1L;
 
-	/** The navigator. */
-	Navigator navigator;
+	private Navigator navigator;
 
-	/**
-	 * The Class Servlet.
-	 */
 	@WebServlet(value = "/*", asyncSupported = true)
 	@VaadinServletConfiguration(productionMode = false, ui = HousingUI.class, widgetset = "com.example.housing.HousingWidgetset", resourceCacheTime = 10)
 	public static class Servlet extends VaadinServlet implements SessionInitListener, SessionDestroyListener{
+		private static final long serialVersionUID = 1L;
 
-		/* (non-Javadoc)
-		 * @see com.vaadin.server.VaadinServlet#servletInitialized()
-		 */
 		@Override
 		protected void servletInitialized() throws ServletException {
 			//Initialisieren der Session
@@ -60,7 +50,9 @@ public class HousingUI extends UI {
 			//Verändern der Fehlermeldungen (z.B. für eine abgelaufene Session")
 			getService().setSystemMessagesProvider(
 				    new SystemMessagesProvider() {
-				    @Override 
+					private static final long serialVersionUID = 1L;
+
+					@Override 
 				    public SystemMessages getSystemMessages(
 				        SystemMessagesInfo systemMessagesInfo) {
 				        CustomizedSystemMessages messages =
@@ -77,12 +69,8 @@ public class HousingUI extends UI {
 				});	
 		}
 		
-		/* (non-Javadoc)
-		 * @see com.vaadin.server.SessionInitListener#sessionInit(com.vaadin.server.SessionInitEvent)
-		 */
 		@Override
 		public void sessionInit(SessionInitEvent event) throws ServiceException {
-
 			try {
 				event.getSession().getLockInstance().lock();
 				event.getSession().getSession().setAttribute("login", false);//Ist ein Nutzer eingeloggt? true=ja, false=nein
@@ -92,15 +80,10 @@ public class HousingUI extends UI {
 			} finally {
 				event.getSession().getLockInstance().unlock();
 			}
-			
 		}
 		
-		/* (non-Javadoc)
-		 * @see com.vaadin.server.SessionDestroyListener#sessionDestroy(com.vaadin.server.SessionDestroyEvent)
-		 */
 		@Override
 		public void sessionDestroy(SessionDestroyEvent event) {
-			
 			if((boolean) event.getSession().getSession().getAttribute("login")) {
 				
 				//inaktive, "leere" Angebote des Users löschen
@@ -111,26 +94,17 @@ public class HousingUI extends UI {
 				for (Offer o : failedOffers) {
 					offerProv.removeOffer(o);
 				}
-				
 				//TODO hochgeladene Bilder löschen bei Angebot bearbeiten
-				
 			}
-			
-			
 		}
 	}
 
-	/* (non-Javadoc)
-	 * @see com.vaadin.ui.UI#init(com.vaadin.server.VaadinRequest)
-	 */
 	@Override
 	protected void init(VaadinRequest request) {
-		System.out.println("*************************************Session"+ VaadinSession.getCurrent().getSession().getId());
 		final VerticalLayout layout = new VerticalLayout();
 		layout.setMargin(true);
 		setContent(layout);
 			
-		System.out.println(request.getParameter("v-loc"));
 		String[] msgs = request.getParameter("v-loc").split("#!Startseite/");//Request Parameter auslesen (wurde bei der Registrierung verschickt)
 		String param="";
 		for(int i=0; i<msgs.length; i++){
@@ -145,16 +119,15 @@ public class HousingUI extends UI {
 			VaadinSession.getCurrent().getLockInstance().unlock();
 		}
 		
-		
 		//Navigation zur Startseite
 		navigator = new Navigator(this, this);
 		String name = "Startseite";
 		navigator.addView(name, new Startseite());
 		navigator.navigateTo(name);
 		
-		//navigator.setErrorView(new ErrorPage(null));//Navigation zur Fehlerseite
 		navigator.addViewChangeListener(new ViewChangeListener() {
-			
+			private static final long serialVersionUID = 1L;
+
 			@Override
 			public boolean beforeViewChange(ViewChangeEvent event) {
 				
@@ -169,12 +142,9 @@ public class HousingUI extends UI {
 							photoProv.removePhoto(p);
 						}
 						((AngebotErstellen) event.getOldView()).setNewPhotos(null);
-						
 					} else {
-						
 						Offer o = new OfferProvider().findById(((AngebotErstellen) event.getOldView()).getCurrentOffer().getIdOffer());
 						new OfferProvider().removeOffer(o);
-						
 					}
 				}
 				return true;
@@ -182,26 +152,23 @@ public class HousingUI extends UI {
 			
 			@Override
 			public void afterViewChange(ViewChangeEvent event) {
-				
 				VaadinSession.getCurrent().getSession().setAttribute("buttonClicked", false);
-				
 			}
 		});
 		
 		// Error Handler
 		UI.getCurrent().setErrorHandler(new DefaultErrorHandler() {
-		    @Override
+			private static final long serialVersionUID = 1L;
+			@Override
 		    public void error(com.vaadin.server.ErrorEvent event) {
 		    	//Navigation zur Fehlerseite
 				navigator.addView("Error", new ErrorPage(event));
 				navigator.navigateTo("Error");
 				
-				//TODO auskommentieren, damit der User die Fehlermeldungen nicht bekommt
-		        doDefault(event);//falls rotes Ausrufezeichen im Browser angezeigt werden soll
+				//auskommentieren, damit der User die Fehlermeldungen nicht angezeigt bekommt
+				//doDefault(event);//falls rotes Ausrufezeichen im Browser angezeigt werden soll
 		    } 
 		});   
-		
 	}
-	
 }
 

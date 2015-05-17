@@ -1,8 +1,6 @@
 package com.example.housing;
 
 import java.util.ArrayList;
-import java.util.List;
-
 import com.example.housing.data.model.Offer;
 import com.example.housing.data.provider.OfferProvider;
 import com.vaadin.data.Validator.InvalidValueException;
@@ -19,17 +17,10 @@ import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Button.ClickEvent;
 
 public class SucheNachId extends CustomHorizontalLayout implements View {
-	
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	
 	VerticalLayout content;
 	
-	/**
-	 * Instantiates a new sucheNachId.
-	 */
 	public SucheNachId() {
 		content = super.initCustomHorizontalLayout();
 		setContent();
@@ -62,7 +53,8 @@ public class SucheNachId extends CustomHorizontalLayout implements View {
 		suchButton.addStyleName("SuchButton");
 		tabelle.addComponent(suchButton, 0, 1);
 		suchButton.addClickListener(new Button.ClickListener() {
-			
+			private static final long serialVersionUID = 1L;
+
 			@Override
 			public void buttonClick(ClickEvent event) {
 				
@@ -124,8 +116,5 @@ public class SucheNachId extends CustomHorizontalLayout implements View {
 	
 	@Override
 	public void enter(ViewChangeEvent event) {
-		// TODO Auto-generated method stub
-		
 	}
-
 }

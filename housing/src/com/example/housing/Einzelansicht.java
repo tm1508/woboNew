@@ -40,40 +40,20 @@ import com.vaadin.ui.TextArea;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Button.ClickEvent;
 
-/**
- * The Class Einzelansicht.
- */
 public class Einzelansicht extends CustomHorizontalLayout implements View {
 	private static final long serialVersionUID = 1L;
 	
-	/** The content. */
-	VerticalLayout content;
-	 static Double lat = 0.0;
-     static Double lon = 0.0;
+	private VerticalLayout content;
 	
-	/** The angebot. */
 	Offer angebot;
-	
-	/**
-	 * Instantiates a new einzelansicht.
-	 *
-	 * @param einzelAngebot the einzel angebot
-	 */
+
 	public Einzelansicht(Offer einzelAngebot){
-		
 		this.angebot = einzelAngebot;
-		
 		content = super.initCustomHorizontalLayout();
 		setContent();
-	
 	}
 
-
-	/**
-	 * Sets the content.
-	 */
 	public void setContent(){
-		
 		if(angebot.isInactive()){
 			Label warn = new Label(FontAwesome.WARNING.getHtml() + "&nbsp;", ContentMode.HTML);
 			
@@ -81,14 +61,11 @@ public class Einzelansicht extends CustomHorizontalLayout implements View {
 			inactive.setImmediate(false);
 			inactive.setWidth("1000px");
 			inactive.setHeight("-1px");
-			//inactive.addStyleName("title");
-//			inactive.setIcon(FontAwesome.WARNING);
 			
 			HorizontalLayout warnInactive = new HorizontalLayout();
 			warnInactive.addComponent(warn);
 			warnInactive.addComponent(inactive);
 			content.addComponent(warnInactive);
-//			content.addComponent(new Label());
 		}
 		
 		Label id = new Label("ID: "+ angebot.getIdOffer());
@@ -111,6 +88,8 @@ public class Einzelansicht extends CustomHorizontalLayout implements View {
         map.setIcon(FontAwesome.MAP_MARKER);
         map.addStyleName("AnfrageButton");
         map.addClickListener(new Button.ClickListener() {
+			private static final long serialVersionUID = 1L;
+
 			public void buttonClick(ClickEvent event) {
 				MapWindow w = new MapWindow(angebot);//neues Fenster mit Karte wird geöffnet
 				UI.getCurrent().addWindow(w);
@@ -140,20 +119,12 @@ public class Einzelansicht extends CustomHorizontalLayout implements View {
 			content.addComponent(map);
 			
 		} else {
-			
 			//Kurze Adresse
-//			HorizontalLayout adressShort = new HorizontalLayout();
-			
 			Label lTitel= new Label("in " + angebot.getCity());
 			lTitel.addStyleName("AbschnittLabel");
-			
 			map.setEnabled(false);
-			
-//			adressShort.addComponent(lTitel);
-//			adressShort.addComponent(map);
 			content.addComponent(lTitel);
 			content.addComponent(map);
-			
 			content.addComponent(new Label());
 			
 			//Info
@@ -163,13 +134,11 @@ public class Einzelansicht extends CustomHorizontalLayout implements View {
 			detailsAdresse.setImmediate(false);
 			detailsAdresse.setWidth("1000px");
 			detailsAdresse.setHeight("-1px");
-			//inactive.addStyleName("title");
 			
 			HorizontalLayout warnAdresse = new HorizontalLayout();
 			warnAdresse.addComponent(warn);
 			warnAdresse.addComponent(detailsAdresse);
 			content.addComponent(warnAdresse);
-			 
 		 }
 		
 		//Button wird deaktiviert, wenn keine Standortangaben in der DB sind
@@ -193,8 +162,9 @@ public class Einzelansicht extends CustomHorizontalLayout implements View {
 		
 		switch(angebot.getPhotos().size()) {
 			case 5:
-				
 				resource5 = new StreamResource(new StreamResource.StreamSource() {
+					private static final long serialVersionUID = 1L;
+
 					@Override
 					public InputStream getStream(){
 						return new ByteArrayInputStream(angebot.getPhotos().get(4).getPicture());
@@ -202,8 +172,9 @@ public class Einzelansicht extends CustomHorizontalLayout implements View {
 				}, "Bild_5");
 				
 			case 4:
-				
 				resource4 = new StreamResource(new StreamResource.StreamSource() {
+					private static final long serialVersionUID = 1L;
+
 					@Override
 					public InputStream getStream(){
 						return new ByteArrayInputStream(angebot.getPhotos().get(3).getPicture());
@@ -211,8 +182,9 @@ public class Einzelansicht extends CustomHorizontalLayout implements View {
 				}, "Bild_4");
 				
 			case 3:
-				
 				resource3 = new StreamResource(new StreamResource.StreamSource() {
+					private static final long serialVersionUID = 1L;
+
 					@Override
 					public InputStream getStream(){
 						return new ByteArrayInputStream(angebot.getPhotos().get(2).getPicture());
@@ -220,8 +192,9 @@ public class Einzelansicht extends CustomHorizontalLayout implements View {
 				}, "Bild_3");
 				
 			case 2:
-				
 				resource2 = new StreamResource(new StreamResource.StreamSource() {
+					private static final long serialVersionUID = 1L;
+
 					@Override
 					public InputStream getStream(){
 						return new ByteArrayInputStream(angebot.getPhotos().get(1).getPicture());
@@ -229,14 +202,14 @@ public class Einzelansicht extends CustomHorizontalLayout implements View {
 				}, "Bild_2");
 				
 			case 1:
-				
 				resource = new StreamResource(new StreamResource.StreamSource() {
+					private static final long serialVersionUID = 1L;
+
 					@Override
 					public InputStream getStream(){
 						return new ByteArrayInputStream(angebot.getPhotos().get(0).getPicture());
 					}
 				}, "Bild_1");
-				
 		}
 		
 		Image image = new Image("",resource);
@@ -268,6 +241,8 @@ public class Einzelansicht extends CustomHorizontalLayout implements View {
         plus.setIcon(FontAwesome.SEARCH_PLUS);
         plus.addStyleName("AnfrageButton");
         plus.addClickListener(new Button.ClickListener() {
+			private static final long serialVersionUID = 1L;
+
 			public void buttonClick(ClickEvent event) {
 				ImageWindow w = new ImageWindow(angebot);
 				UI.getCurrent().addWindow(w);
@@ -279,7 +254,6 @@ public class Einzelansicht extends CustomHorizontalLayout implements View {
         content.addComponent(new Label());
         
 		final GridLayout gridInfos = new GridLayout(2,17); 
-	//	gridInfos.setWidth("60%");
 		content.addComponent(gridInfos);
 		
 		//Date	
@@ -291,7 +265,6 @@ public class Einzelansicht extends CustomHorizontalLayout implements View {
 	    gridInfos.addComponent(start, 0, 0);
 	    gridInfos.addComponent(startDate, 1,0);
 
-		    
 	    DateField endDate = new DateField();
 	    endDate.setValue(angebot.getEndDate());
 	    endDate.setEnabled(false);
@@ -301,7 +274,6 @@ public class Einzelansicht extends CustomHorizontalLayout implements View {
 	    //Size
 		float sm = angebot.getSquareMetre();
 		String sSm = Format.stringFormat(sm);
-		
         gridInfos.addComponent(new Label("Größe:"),0,2);
         gridInfos.addComponent(new Label(sSm + " m²"),1 , 2);
         
@@ -318,8 +290,6 @@ public class Einzelansicht extends CustomHorizontalLayout implements View {
         Label lBond = new Label("Kaution:");
         gridInfos.addComponent(lBond,0,4);
         gridInfos.addComponent(new Label(sBond),1 , 4);
-        
-        
         
         //IsShared       
     	int a = angebot.getType();
@@ -411,6 +381,8 @@ public class Einzelansicht extends CustomHorizontalLayout implements View {
 			change.setIcon(FontAwesome.PENCIL);
 			change.addStyleName("BearbeitenButton");
 			change.addClickListener(new Button.ClickListener() {
+				private static final long serialVersionUID = 1L;
+
 				public void buttonClick(ClickEvent event) {
 					String name = "AngebotErstellen";
 					getUI().getNavigator().addView(name, new AngebotErstellen(angebot)); // momentan angezeigtes Angebot soll übergeben werden...
@@ -422,6 +394,8 @@ public class Einzelansicht extends CustomHorizontalLayout implements View {
 			delete.setStyleName("loeschen");
 			delete.setIcon(FontAwesome.TRASH_O);
 			delete.addClickListener(new Button.ClickListener() {
+				private static final long serialVersionUID = 1L;
+
 				public void buttonClick(ClickEvent event) {
 					ConfirmDeleteWindow cdw = new ConfirmDeleteWindow(angebot);
 					UI.getCurrent().addWindow(cdw);	
@@ -430,26 +404,21 @@ public class Einzelansicht extends CustomHorizontalLayout implements View {
 				
 			userButtons.addComponent(change);
 			userButtons.addComponent(delete);
-			
 			gridInfos.addComponent(userButtons, 0, 14);
-		
         }
         
         //Deaktivieren- und Löschen-Button für Admin
         if((boolean) VaadinSession.getCurrent().getSession().getAttribute("login") && ((User) VaadinSession.getCurrent().getSession().getAttribute("user")).getAccessLevel() == 2){
-    		
     		HorizontalLayout adminButtons = new HorizontalLayout();
-    		
 			Button deacitvate = new Button("Deaktivieren");
 			deacitvate.setIcon(FontAwesome.SQUARE_O);
 			deacitvate.addStyleName("BearbeitenButton");
 			deacitvate.addClickListener(new Button.ClickListener() {
+				private static final long serialVersionUID = 1L;
+
 				public void buttonClick(ClickEvent event) {
-					
 					angebot.setInactive(true);
-					
 					if(new OfferProvider().alterOffer(angebot)) {	
-						
 						String deactivationMessage = "<meta charset='utf-8'/><img src='http://193.196.7.216:8080/housing/APP/connector/0/12/source/dh.PNG'/><br/><br/><span style='color: #000000' 'font-family: Arial, sans-serif''font-size: 16pt' >Sehr geehrte Nutzerin, sehr geehrter Nutzer,"
 								+"<br/><br/>Ihr Angebot \"" + angebot.getTitle() + "\" in der Wohnungsbörse der DHBW wurde von einem Portal-Administrator deaktiviert."
 								+"<br/><br/>Dies kann verschiedene Gründe haben:"
@@ -474,12 +443,10 @@ public class Einzelansicht extends CustomHorizontalLayout implements View {
 						getUI().getNavigator().navigateTo(name);
 						
 					} else {
-						
 						Notification failDB = new Notification("Das Angebot konnte nicht deaktiviert werden.", Type.HUMANIZED_MESSAGE);
 						failDB.setStyleName("failure");
 						failDB.setDelayMsec(300);
 						failDB.show(Page.getCurrent());
-						
 					}
 				}
 			});
@@ -488,10 +455,10 @@ public class Einzelansicht extends CustomHorizontalLayout implements View {
 			reactivate.setIcon(FontAwesome.CHECK_SQUARE_O);
 			reactivate.addStyleName("BearbeitenButton");
 			reactivate.addClickListener(new Button.ClickListener() {
+				private static final long serialVersionUID = 1L;
+
 				public void buttonClick(ClickEvent event) {
-					
 					angebot.setInactive(false);
-					
 					if(new OfferProvider().alterOffer(angebot)) {	
 						
 						String reactivationMessage = "<meta charset='utf-8'/><img src='http://193.196.7.216:8080/housing/APP/connector/0/12/source/dh.PNG'/><br/><br/><span style='color: #000000' 'font-family: Arial, sans-serif''font-size: 16pt' >Sehr geehrte Nutzerin, sehr geehrter Nutzer,"
@@ -514,12 +481,10 @@ public class Einzelansicht extends CustomHorizontalLayout implements View {
 						getUI().getNavigator().navigateTo(name);
 						
 					} else {
-						
 						Notification failDB = new Notification("Das Angebot konnte nicht reaktiviert werden.", Type.HUMANIZED_MESSAGE);
 						failDB.setStyleName("failure");
 						failDB.setDelayMsec(300);
 						failDB.show(Page.getCurrent());
-						
 					}
 				}
 			});
@@ -528,8 +493,9 @@ public class Einzelansicht extends CustomHorizontalLayout implements View {
 			delete.setIcon(FontAwesome.TRASH_O);
 			delete.addStyleName("loeschen");
 			delete.addClickListener(new Button.ClickListener() {
+				private static final long serialVersionUID = 1L;
+
 				public void buttonClick(ClickEvent event) {
-					
 					if(new OfferProvider().removeOffer(angebot)) {
 						
 						String deleteMessage = "<meta charset='utf-8'/><img src='http://193.196.7.216:8080/housing/APP/connector/0/12/source/dh.PNG'/><br/><br/><span style='color: #000000' 'font-family: Arial, sans-serif''font-size: 16pt' >Sehr geehrte Nutzerin, sehr geehrter Nutzer,"
@@ -556,14 +522,11 @@ public class Einzelansicht extends CustomHorizontalLayout implements View {
 						getUI().getNavigator().navigateTo(name);
 						
 					} else {
-						
 						Notification failDB = new Notification("Das Angebot konnte nicht gelöscht werden.", Type.HUMANIZED_MESSAGE);
 						failDB.setStyleName("failure");
 						failDB.setDelayMsec(300);
 						failDB.show(Page.getCurrent());
-						
 					}
-					
 				}
 			});
 			
@@ -591,68 +554,53 @@ public class Einzelansicht extends CustomHorizontalLayout implements View {
         
         //Anfrage-Button (für User) oder Anbieter kontaktieren-Button (für Admin)
         if(VaadinSession.getCurrent().getSession().getAttribute("login").equals(false) || ((User) VaadinSession.getCurrent().getSession().getAttribute("user")).getAccessLevel()!=2){
-        
         	buttons.addComponent(anfrage);
-       
         } else {
-        	
         	buttons.addComponent(anbieter);	
-        
         }
         
         //Anfrage-Button deaktivieren bei deaktivierten Angeboten
         if(angebot.isInactive()){
-        	
         	anfrage.setEnabled(false);
-        	
         }
         
         anfrage.addClickListener(new Button.ClickListener() {
+			private static final long serialVersionUID = 1L;
+
 			public void buttonClick(ClickEvent event) {
 				if(!(boolean) VaadinSession.getCurrent().getSession().getAttribute("login")) { //nicht eingeloggt
-					
 					Notification not = new Notification("Sie müssen sich als verifizierter DH-Student einloggen, um eine Anfrage zu einem Wohnungsangebot stellen zu können!",Type.HUMANIZED_MESSAGE);//Meldung an den Nutzer
 					not.setStyleName("failure");
 					not.setDelayMsec(300);
 					not.show(Page.getCurrent());
-					
 				} else if(((User) VaadinSession.getCurrent().getSession().getAttribute("user")).getAccessLevel() != 1) { //nicht als DH-Student verifiziert
-					
 					Notification not = new Notification("Sie müssen sich als DH-Student verifizieren, um eine Anfrage zu einem Wohnungsangebot stellen zu können!",Type.HUMANIZED_MESSAGE);//Meldung an den Nutzer
 					not.setDelayMsec(300);
 					not.setStyleName("failure");
 					not.show(Page.getCurrent());
-					
 				} else if((boolean) VaadinSession.getCurrent().getSession().getAttribute("login")) { //eingeloggt als DH-Student
-		        	 
 		        	  if(new RequestProvider().requestExists((User) VaadinSession.getCurrent().getSession().getAttribute("user"), angebot)) { //Anfrage bereits gesendet
-		        		  
 		        		  Notification not = new Notification("Sie haben den Anbieter bereits kontaktiert",Type.HUMANIZED_MESSAGE);
 		        		  not.setDelayMsec(300);
 		        		  not.setStyleName("failure");
 		        		  not.show(Page.getCurrent());
-		              	
 		              } else { //Anfrage senden
-		            	  
 		            	  String name = "Anfrageformular";
 		            	  getUI().getNavigator().addView(name, new Anfrageformular(angebot));
 		            	  getUI().getNavigator().navigateTo(name);
-		              
 		              }
 				}
 			}
         });
         
         anbieter.addClickListener(new Button.ClickListener() {
-        	
+			private static final long serialVersionUID = 1L;
+
 			public void buttonClick(ClickEvent event) {
-				
 				String name = "AdminanfrageWohnung";
 				getUI().getNavigator().addView(name, new AdminanfrageWohnung(angebot));
 				getUI().getNavigator().navigateTo(name);
-			
 			}
-		
         });
         
 		final FavoritProvider fp = new FavoritProvider();
@@ -666,7 +614,9 @@ public class Einzelansicht extends CustomHorizontalLayout implements View {
         	buttons.addComponent(favorit);
         	
         	favorit.addClickListener(new Button.ClickListener() {
-        		public void buttonClick(ClickEvent event) {
+				private static final long serialVersionUID = 1L;
+
+				public void buttonClick(ClickEvent event) {
         			
         			Favorit newFavorit = new Favorit();
         			newFavorit.setFavorit_idOffer(angebot);
@@ -682,19 +632,19 @@ public class Einzelansicht extends CustomHorizontalLayout implements View {
         			not.setStyleName("success");
         			not.setDelayMsec(300);
         			not.show(Page.getCurrent());
-        			
         		}
         	}); 
     	
         } else if(VaadinSession.getCurrent().getSession().getAttribute("login").equals(true) && fp.favoritExists((User) VaadinSession.getCurrent().getSession().getAttribute("user"), angebot)&& ((User) VaadinSession.getCurrent().getSession().getAttribute("user")).getAccessLevel()!=2) { //Favorit entfernen
-        	
         	Button removeFavorit = new Button("Favorit entfernen");
         	removeFavorit.setIcon(FontAwesome.TRASH_O);
         	removeFavorit.addStyleName("AnfrageButton");
         	buttons.addComponent(removeFavorit);
         	
         	removeFavorit.addClickListener(new Button.ClickListener() {
-        		public void buttonClick(ClickEvent event) {
+				private static final long serialVersionUID = 1L;
+
+				public void buttonClick(ClickEvent event) {
         			
         		    Favorit fav;
         			fav = fp.findByUserOffer((User) VaadinSession.getCurrent().getSession().getAttribute("user"), angebot);
@@ -708,16 +658,11 @@ public class Einzelansicht extends CustomHorizontalLayout implements View {
         			not.setStyleName("success");
         			not.setDelayMsec(300);
         			not.show(Page.getCurrent());
-        			
         		}	
         	}); 
-        	
         }
         
-
-        
         gridInfos.addComponent(buttons, 1, 14);
-        
         
         //Anzeigen, wenn man Anbieter bereits kontaktiert hat
         if((boolean) VaadinSession.getCurrent().getSession().getAttribute("login") && ((User) VaadinSession.getCurrent().getSession().getAttribute("user")).getAccessLevel()!=2) {
@@ -729,14 +674,10 @@ public class Einzelansicht extends CustomHorizontalLayout implements View {
 
         	  boolean b = false;
         	  int in = 0;
-              
               for(int i = 0; i<requests.size();i++) {
-            	  
             	  if(requests.get(i).getRequest_idOffer().getIdOffer()==angebot.getIdOffer()) {
-            		  
             		  b = true;
             		  in = i;
-            		  
             	  }
               }
               
@@ -759,7 +700,6 @@ public class Einzelansicht extends CustomHorizontalLayout implements View {
                 gridInfos.addComponent(anfrageMessage,1,16);
                 
               }
-
         }
         content.addComponent(new Label());
         
@@ -784,26 +724,17 @@ public class Einzelansicht extends CustomHorizontalLayout implements View {
 			kontaktformularLink.addClickListener(new Button.ClickListener(){
 				private static final long serialVersionUID = 1L;
 				public void buttonClick(ClickEvent event) {
-					UserProvider up = new UserProvider();
 					String name = "UserProfil";
 					getUI().getNavigator().addView(name, new UserProfil(angebot.getOffer_idUser()));
 					getUI().getNavigator().navigateTo(name);
 				}
 			});
 			vl.addComponent(kontaktformularLink);
-			
 			content.addComponent(vl);
         }
-
 	}
 
-	/* (non-Javadoc)
-	 * @see com.vaadin.navigator.View#enter(com.vaadin.navigator.ViewChangeListener.ViewChangeEvent)
-	 */
 	@Override
 	public void enter(ViewChangeEvent event) {
-		
 	}
-
 }
-

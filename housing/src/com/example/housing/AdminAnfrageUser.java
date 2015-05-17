@@ -71,8 +71,9 @@ public class AdminAnfrageUser extends CustomHorizontalLayout implements View {
 		sendButton.setHeight("-1px");
 		content.addComponent(sendButton);
 		sendButton.addClickListener(new Button.ClickListener() {
+			private static final long serialVersionUID = 1L;
+
 			public void buttonClick(ClickEvent event) {
-				
 					
 					//E-Mail an den Nutzer senden
 					sendEMail();
@@ -107,8 +108,6 @@ public class AdminAnfrageUser extends CustomHorizontalLayout implements View {
 	
 	@Override
 	public void enter(ViewChangeEvent event) {
-		// TODO Auto-generated method stub
-		
 	}
 
 }
