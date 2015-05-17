@@ -70,12 +70,14 @@ public class Listenzeile extends CustomComponent {
 												
 			}, "Bild_1");
 			resource.setCacheTime(0);
-						
+			VerticalLayout imageLayout = new VerticalLayout();
+			
 			Image image = new Image(null, resource);
-			image.setHeight("100%"); //100% der Listenzeilen-Höhe
-			image.setWidth("30%");
+			image.setHeight("146px"); //100% der Listenzeilen-Höhe
+			image.setWidth("146px");
 			image.markAsDirty();
-			ergebnisLayout.addComponent(image, 0, 0, 2, 2);
+			imageLayout.addComponent(image);
+			ergebnisLayout.addComponent(imageLayout, 0, 0, 2, 2);
 			
 			Component c = ergebnisLayout.getComponent(0, 2);
 			c.setHeight("100%");
@@ -84,17 +86,17 @@ public class Listenzeile extends CustomComponent {
 		} else {
 			
 			// TODO Standardbild
+			VerticalLayout imageLayout = new VerticalLayout();
 			String basepath = VaadinService.getCurrent().getBaseDirectory().getAbsolutePath();
 			FileResource resource = new FileResource(new File(basepath + "/WEB-INF/image/DefaultBild.jpg"));
-			Image image = new Image("", resource);
-			//image.setWidth("100px");
-			//image.setHeight("85px");
-			ergebnisLayout.addComponent(image, 0, 0, 2, 2);
+			Image image = new Image(null, resource);
+			image.setWidth("146px");
+			image.setHeight("146px");
+			imageLayout.addComponent(image);
+			ergebnisLayout.addComponent(imageLayout, 0, 0, 2, 2);
 			Component c = ergebnisLayout.getComponent(0, 2);
-			c.setWidth("70%");
-			c.setHeight("100%");
-			// String im = "Kein Bild vorhanden";
-			// ergebnisLayout.addComponent(new Label(im),0,0,2,2);
+			c.setWidth("100%");
+			c.setHeight("70%");
 			
 		}
 

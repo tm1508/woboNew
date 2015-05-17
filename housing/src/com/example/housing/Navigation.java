@@ -60,7 +60,7 @@ public class Navigation extends CustomComponent {
 		HorizontalLayout h = new HorizontalLayout();
 		String basepath = VaadinService.getCurrent().getBaseDirectory().getAbsolutePath();
 		FileResource resource = new FileResource(new File(basepath + "/WEB-INF/image/dh.PNG"));
-		Image image = new Image("",resource);
+		Image image = new Image(null,resource);
 		h.addComponent(image);
 		
 		if((boolean) VaadinSession.getCurrent().getSession().getAttribute("login")){
@@ -209,7 +209,7 @@ public class Navigation extends CustomComponent {
 			nav2.addItem("Meine Wohnungsangebote verwalten", FontAwesome.WRENCH, meineAngebote); //AngebotAnzeigen
 		MenuItem nav5 = menuBar.addItem("Persönliche Daten", FontAwesome.CHILD, null); 
 			nav5.addItem("Meine Favoriten", FontAwesome.STAR_O, meineFavoriten);
-			nav5.addItem("Meine Anfragen", FontAwesome.STAR_O, meineAnfragen);
+			nav5.addItem("Meine Anfragen", FontAwesome.ENVELOPE_O, meineAnfragen);
 			nav5.addItem("Meine Profildaten", FontAwesome.USER, profil); 
 		MenuItem nav6 = menuBar.addItem("Logout", FontAwesome.UNLOCK_ALT, logout);//Navigation
 		//MenuItem nav8 = menuBar_1.addItem("Maps", FontAwesome.MAP_MARKER, mycommand8);//Navigation
