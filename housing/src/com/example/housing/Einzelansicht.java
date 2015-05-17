@@ -25,6 +25,7 @@ import com.vaadin.server.Resource;
 import com.vaadin.server.StreamResource;
 import com.vaadin.server.VaadinService;
 import com.vaadin.server.VaadinSession;
+import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.DateField;
@@ -39,7 +40,6 @@ import com.vaadin.ui.TextArea;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Button.ClickEvent;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class Einzelansicht.
  */
@@ -75,14 +75,20 @@ public class Einzelansicht extends CustomHorizontalLayout implements View {
 	public void setContent(){
 		
 		if(angebot.isInactive()){
-			Label inactive = new Label("Bitte beachten Sie: Dieses Angebot ist gerade deaktiviert und kann von anderen Nutzeren nicht angesehen werden!");
+			Label warn = new Label(FontAwesome.WARNING.getHtml() + " ", ContentMode.HTML);
+			
+			Label inactive = new Label(" Bitte beachten Sie: Dieses Angebot ist gerade deaktiviert und kann von anderen Nutzeren nicht angesehen werden!");
 			inactive.setImmediate(false);
 			inactive.setWidth("1000px");
 			inactive.setHeight("-1px");
 			//inactive.addStyleName("title");
-			inactive.setIcon(FontAwesome.WARNING);
-			content.addComponent(inactive);
-			content.addComponent(new Label());
+//			inactive.setIcon(FontAwesome.WARNING);
+			
+			HorizontalLayout warnInactive = new HorizontalLayout();
+			warnInactive.addComponent(warn);
+			warnInactive.addComponent(inactive);
+			content.addComponent(warnInactive);
+//			content.addComponent(new Label());
 		}
 		
 		Label id = new Label("ID: "+ angebot.getIdOffer());
@@ -99,30 +105,33 @@ public class Einzelansicht extends CustomHorizontalLayout implements View {
 		title.setValue(angebot.getTitle());
 		title.addStyleName("title");
 		content.addComponent(title);
-				
-		Label lTitel= new Label(" Ort: " +angebot.getCity());
-		lTitel.addStyleName("ImportantTitle");
-		content.addComponent(title );
-		content.addComponent(lTitel);
 		
 		//Adresse wird nur verifizierten Studenten bzw. Admin angezeigt
-		if(VaadinSession.getCurrent().getSession().getAttribute("login").equals(true) && ((User) VaadinSession.getCurrent().getSession().getAttribute("user")).getAccessLevel() != 0) { 
-				 
+		if((boolean) VaadinSession.getCurrent().getSession().getAttribute("login") && ((User) VaadinSession.getCurrent().getSession().getAttribute("user")).getAccessLevel() != 0) { 
+			
 			//adresse
+			Label lAdresse = new Label("Adresse");
+			lAdresse.addStyleName("AbschnittLabel");
+			content.addComponent(lAdresse);
+			
 			String street = angebot.getStreet();
 			String zip = angebot.getZip();
 			String city = angebot.getCity();
-			Label lAdress = new Label("Straße: " + street + "  PLZ: " + zip + "  Ort: " + city);
 			
-			content.addComponent(lAdress);
+			GridLayout gridAdress = new GridLayout(2, 2);
+			gridAdress.setWidth("33%");
+			gridAdress.addComponent(new Label("Straße: "), 0, 0);
+			gridAdress.addComponent(new Label(street), 1, 0);
+			gridAdress.addComponent(new Label("Ort: "), 0, 1);
+			gridAdress.addComponent(new Label(zip + " " + city), 1, 1);
+			
+			content.addComponent(gridAdress);
 			
 		} else {
-		
-			String zip = angebot.getZip();
-			 
-			Label lAdress = new Label("PLZ: " + zip + "          Die volle Adresse ist nur für verifizierte Studenten sichtbar.");
-			 
-			content.addComponent(lAdress);
+			
+			Label lTitel= new Label("in " + angebot.getCity());
+			lTitel.addStyleName("AbschnittLabel");
+			content.addComponent(lTitel);
 			 
 		 }
 		
@@ -144,8 +153,22 @@ public class Einzelansicht extends CustomHorizontalLayout implements View {
 			//tue nichts
 		}else{
 			map.setEnabled(false);
-			Label l = new Label("Die Kartenansicht ist nur für verifizierte DH-Studenten verfügbar.");
-			content.addComponent(l);
+//			Label l = new Label("Die Kartenansicht ist nur für verifizierte DH-Studenten verfügbar.");
+//			content.addComponent(l);
+			
+			Label warn = new Label(FontAwesome.WARNING.getHtml() + " ", ContentMode.HTML);
+			
+			Label detailsAdresse = new Label(" Bitte beachten Sie: Die vollständige Adresse und die Kartenansicht ist nur für verifizierte DH-Studenten sichtbar!");
+			detailsAdresse.setImmediate(false);
+			detailsAdresse.setWidth("1000px");
+			detailsAdresse.setHeight("-1px");
+			//inactive.addStyleName("title");
+//			detailsAdresse.setIcon(FontAwesome.WARNING);
+			
+			HorizontalLayout warnAdresse = new HorizontalLayout();
+			warnAdresse.addComponent(warn);
+			warnAdresse.addComponent(detailsAdresse);
+			content.addComponent(warnAdresse);
 		}
 		
 		//Button wird deaktiviert, wenn keine Standortangaben in der DB sind
@@ -286,7 +309,16 @@ public class Einzelansicht extends CustomHorizontalLayout implements View {
 		String sPrice = Format.euroFormat(price);
 		
         gridInfos.addComponent(new Label("Warmmiete:"),0,3);
-        gridInfos.addComponent(new Label(sPrice + " €"),1 , 3);
+        gridInfos.addComponent(new Label(sPrice + " €"),1 , 3);//bond
+        float bond =  angebot.getBond();
+		String sBond = Format.euroFormat(bond) + " €";
+		
+		//Kaution
+        Label lBond = new Label("Kaution:");
+        gridInfos.addComponent(lBond,0,4);
+        gridInfos.addComponent(new Label(sBond),1 , 4);
+        
+        
         
         //IsShared       
     	int a = angebot.getType();
@@ -298,53 +330,13 @@ public class Einzelansicht extends CustomHorizontalLayout implements View {
 		}else if(a == 3){
 			s="WG-Zimmer";
 		}
-        gridInfos.addComponent(new Label("Art der Unterkunft:"), 0, 4);
-        gridInfos.addComponent(new Label(s), 1, 4);
+        gridInfos.addComponent(new Label("Art der Unterkunft:"), 0, 5);
+        gridInfos.addComponent(new Label(s), 1, 5);
      
         //Number of Roomates 
         int number = angebot.getNumberOfRoommate();
-        gridInfos.addComponent(new Label("Anzahl Mitbewohner:"), 0, 5);
-        gridInfos.addComponent(new Label(Integer.toString(number)), 1, 5);
-        
-        //Internet 
-        CheckBox hasInternet = new CheckBox("");  
-        hasInternet.setCaption("Internetanschluss vorhanden");
-        gridInfos.addComponent(new Label("Ausstattung/Sonstiges:"), 0, 6);
-        gridInfos.addComponent(hasInternet, 1,6);
-        hasInternet.setEnabled(false);
-        hasInternet.setValue( angebot.isInternet());
-        
-        //furnished       
-        CheckBox isFurnished = new CheckBox(""); 
-        isFurnished.setCaption("Möblierte Wohnung");
-        gridInfos.addComponent(new Label(""), 0, 7);
-        gridInfos.addComponent(isFurnished, 1,7);
-        isFurnished.setEnabled(false);
-        isFurnished.setValue( angebot.isFurnished());
-        
-        //kitchen       
-        CheckBox useKitchen = new CheckBox(""); 
-        useKitchen.setCaption("Küche vorhanden");
-        gridInfos.addComponent(new Label(""), 0, 8);
-        gridInfos.addComponent(useKitchen, 1,8);
-        useKitchen.setEnabled(false);
-        useKitchen.setValue( angebot.isKitchen());
-       
-        //smoker
-        CheckBox smokingAllowed = new CheckBox("");   
-        smokingAllowed.setCaption("Raucher-Wohnung");
-        gridInfos.addComponent(new Label(""), 0, 9);
-        gridInfos.addComponent(smokingAllowed, 1,9);
-        smokingAllowed.setEnabled(false);
-        smokingAllowed.setValue(angebot.isSmoker());
-        
-        //pets       
-        CheckBox petsAllowed = new CheckBox(""); 
-        petsAllowed.setCaption("Haustiere erlaubt");
-        gridInfos.addComponent(new Label(""), 0, 10);
-        gridInfos.addComponent(petsAllowed, 1,10);
-        petsAllowed.setEnabled(false);
-        petsAllowed.setValue(angebot.isPets());
+        gridInfos.addComponent(new Label("Anzahl Mitbewohner:"), 0, 6);
+        gridInfos.addComponent(new Label(Integer.toString(number)), 1, 6);
         
         //male / female   
         Label maleFemale = new Label(""); 
@@ -357,18 +349,48 @@ public class Einzelansicht extends CustomHorizontalLayout implements View {
         }
         else if (g == 3)
         	maleFemale.setValue("weiblich");
-        gridInfos.addComponent(new Label("Bevorzugtes Geschlecht:"), 0, 11);
-        gridInfos.addComponent(maleFemale, 1,11);
-
+        gridInfos.addComponent(new Label("Bevorzugtes Geschlecht:"), 0, 7);
+        gridInfos.addComponent(maleFemale, 1,7);
         
-        //bond
-        float bond =  angebot.getBond();
-		String sBond = Format.euroFormat(bond) + " €";
-		
-        Label lBond = new Label("Kaution:");
-        gridInfos.addComponent(lBond,0,12);
-        gridInfos.addComponent(new Label(sBond),1 , 12);
+        //Internet 
+        CheckBox hasInternet = new CheckBox("");  
+        hasInternet.setCaption("Internetanschluss vorhanden");
+        gridInfos.addComponent(new Label("Ausstattung/Sonstiges:"), 0, 8);
+        gridInfos.addComponent(hasInternet, 1,8);
+        hasInternet.setEnabled(false);
+        hasInternet.setValue( angebot.isInternet());
         
+        //furnished       
+        CheckBox isFurnished = new CheckBox(""); 
+        isFurnished.setCaption("Möblierte Wohnung");
+        gridInfos.addComponent(new Label(""), 0, 9);
+        gridInfos.addComponent(isFurnished, 1,9);
+        isFurnished.setEnabled(false);
+        isFurnished.setValue( angebot.isFurnished());
+        
+        //kitchen       
+        CheckBox useKitchen = new CheckBox(""); 
+        useKitchen.setCaption("Küche vorhanden");
+        gridInfos.addComponent(new Label(""), 0, 10);
+        gridInfos.addComponent(useKitchen, 1, 10);
+        useKitchen.setEnabled(false);
+        useKitchen.setValue( angebot.isKitchen());
+       
+        //smoker
+        CheckBox smokingAllowed = new CheckBox("");   
+        smokingAllowed.setCaption("Raucher-Wohnung");
+        gridInfos.addComponent(new Label(""), 0, 11);
+        gridInfos.addComponent(smokingAllowed, 1,11);
+        smokingAllowed.setEnabled(false);
+        smokingAllowed.setValue(angebot.isSmoker());
+        
+        //pets       
+        CheckBox petsAllowed = new CheckBox(""); 
+        petsAllowed.setCaption("Haustiere erlaubt");
+        gridInfos.addComponent(new Label(""), 0, 12);
+        gridInfos.addComponent(petsAllowed, 1,12);
+        petsAllowed.setEnabled(false);
+        petsAllowed.setValue(angebot.isPets());        
         
         //text
         TextArea t = new TextArea();
@@ -396,8 +418,8 @@ public class Einzelansicht extends CustomHorizontalLayout implements View {
 			});
 			
 			Button delete = new Button("Angebot löschen");
+			delete.setStyleName("loeschen");
 			delete.setIcon(FontAwesome.TRASH_O);
-			delete.addStyleName("BearbeitenButton");
 			delete.addClickListener(new Button.ClickListener() {
 				public void buttonClick(ClickEvent event) {
 					ConfirmDeleteWindow cdw = new ConfirmDeleteWindow(angebot);
@@ -466,7 +488,7 @@ public class Einzelansicht extends CustomHorizontalLayout implements View {
 			
 			Button delete = new Button("Angebot löschen");
 			delete.setIcon(FontAwesome.TRASH_O);
-			delete.addStyleName("BearbeitenButton");
+			delete.addStyleName("loeschen");
 			delete.addClickListener(new Button.ClickListener() {
 				public void buttonClick(ClickEvent event) {
 					
