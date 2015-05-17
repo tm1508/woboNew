@@ -42,6 +42,7 @@ public class Suchergebnis extends CustomHorizontalLayout implements View {
 	final GoogleMap googleMap = new GoogleMap(null, null, null);
 	final Button karteEinblenden = new Button("Karte einblenden");
 	final Button karteausblenden = new Button("Karte ausblenden");
+	final CheckBox karteAnzeigen = new CheckBox("Ergebnisse auf der Karte anzeigen", false);
 
 	
 	//Übergabe der Ergebnis aus der Suche
@@ -75,13 +76,91 @@ public class Suchergebnis extends CustomHorizontalLayout implements View {
 			Label ergebnisString = new Label("Ihre Suche ergab leider keine Treffer.");
 			ergebnisString.addStyleName("AbschnittLabel");
 			content.addComponent(ergebnisString);
+			content.addComponent(new Label());
 		
+			Button back = new Button("Zurück zur Suche");
+			back.setIcon(FontAwesome.BACKWARD);
+			back.addStyleName("SuchButton");
+			back.addClickListener(new Button.ClickListener() {
+				
+				@Override
+				public void buttonClick(ClickEvent event) {
+					
+					String name = "Suche";
+					getUI().getNavigator().addView(name, new Suche());
+					getUI().getNavigator().navigateTo(name);
+					
+				}
+			});
+			content.addComponent(back);
 			
 		} else {
 			//Anzahl der Treffer
-			final Label ergebnisString = new Label("Ihre Suche ergab " + angebote.size()+" Treffer:");
+			final Label ergebnisString = new Label("Ihre Suche ergab " + angebote.size()+" Treffer.");
 			ergebnisString.addStyleName("AbschnittLabel");	
 			content.addComponent(ergebnisString);
+//			content.addComponent(new Label());
+			
+			//Checkbox Karte
+			karteAnzeigen.addValueChangeListener(new ValueChangeListener() {
+				private static final long serialVersionUID = 1L;
+
+				@Override
+				public void valueChange(final ValueChangeEvent event) {
+					final boolean value = (boolean) event.getProperty().getValue();
+					if(value) {
+						googleMap.setVisible(true);
+					} else {
+						googleMap.setVisible(false);
+					}
+				}
+			});
+			content.addComponent(karteAnzeigen);
+			
+			//Karte
+    		Iterator<Offer> it = angebote.iterator();
+    		while(it.hasNext()){
+    			final Offer o = it.next();
+    			//Map-Marker
+    			//Button wird deaktiviert, wenn keine Standortangaben in der DB sind
+    			if(o.getLatitude()!=null && o.getLatitude()!=BigDecimal.valueOf(0.0)){
+    				GoogleMapMarker mapMarker = new GoogleMapMarker(
+    			            "ID "+ String.valueOf(o.getIdOffer())+ ": "+o.getTitle(), new LatLon(o.getLatitude().doubleValue(), o.getLongitude().doubleValue()),
+    			            false, null);
+    				mapMarker.setId(o.getIdOffer());
+    		        mapMarker.setAnimationEnabled(false);
+    		        
+    		        googleMap.addMarker(mapMarker);
+    			}
+    		}
+
+            googleMap.addMarkerClickListener(new MarkerClickListener() {
+    			private static final long serialVersionUID = 1L;
+
+    			@Override
+    			public void markerClicked(GoogleMapMarker clickedMarker) {
+    				long id = clickedMarker.getId();
+    				OfferProvider op = new OfferProvider();
+    				Offer currentOffer = op.find((int) id);
+    				String name = "Einzelansicht";
+    				getUI().getNavigator().addView(name, new Einzelansicht(currentOffer));
+    				getUI().getNavigator().navigateTo(name);
+    			
+    			}
+            });
+    	   
+     		googleMap.setCenter(new LatLon(49.00705, 8.40287));
+            googleMap.setZoom(10);
+            googleMap.setMinZoom(4);
+            googleMap.setMaxZoom(16);
+
+            googleMap.setHeight("473px");
+            googleMap.setWidth("700px");
+            
+            googleMap.setVisible(false);
+            
+            content.addComponent(googleMap);
+            content.addComponent(new Label());
 			
 			//Sortieren der Liste
 			final NativeSelect sortBy = new NativeSelect("Sortieren der Ergebnisse nach");
@@ -138,144 +217,93 @@ public class Suchergebnis extends CustomHorizontalLayout implements View {
 				}
 				
 				public void reloadPage(){//alle Komponenten der Seite müssen neu geladen werden
+					boolean showMap = karteAnzeigen.getValue();
 					content.removeAllComponents();
 					content.addComponent(ergebnisString);
-					content.addComponent(sortBy);
-					content.addComponent(new Label());
-					googleMap.setVisible(false);
-					content.addComponent(karteEinblenden);
-					karteEinblenden.setVisible(true);
-					karteausblenden.setVisible(false);
-					content.addComponent(karteausblenden);
-					content.addComponent(new Label());
+//					content.addComponent(new Label());
+					karteAnzeigen.setValue(showMap);
+					content.addComponent(karteAnzeigen);
+					googleMap.setVisible(showMap);
 					content.addComponent(googleMap);
 					content.addComponent(new Label());
+					content.addComponent(sortBy);
+					content.addComponent(new Label());
+//					content.addComponent(karteEinblenden);
+//					karteEinblenden.setVisible(true);
+//					karteausblenden.setVisible(false);
+//					content.addComponent(karteausblenden);
+//					content.addComponent(new Label());
 
 		        	//Button wird deaktiviert, wenn der Nutzer kein DH Stud. ist
 		    		if((boolean) VaadinSession.getCurrent().getSession().getAttribute("login") && ((User) VaadinSession.getCurrent().getSession().getAttribute("user")).getAccessLevel() != 0) {
 		    			//tue nichts
 		    		}else{
+		    			karteAnzeigen.setEnabled(false);
+		    			karteAnzeigen.setDescription("Die Kartenansicht ist nur für verifizierte DH-Studenten verfügbar.");
 		    			googleMap.setVisible(false);
-		    			Label l = new Label("Die Kartenansicht ist nur für verifizierte DH-Studenten verfügbar.");
-		    			content.addComponent(l);
+//		    			Label l = new Label("Die Kartenansicht ist nur für verifizierte DH-Studenten verfügbar.");
+//		    			content.addComponent(l);
 		    		}
+		    		
 					for(Offer o : angebote) {
 						content.addComponent(new Listenzeile(o));
 					}
 				}
 			});
-
-		}
-		
-
-        if(!angebote.isEmpty()) {
-        	
-        	//content.addComponent(new Label());
-            
-     		
-             googleMap.setCenter(new LatLon(49.00705, 8.40287));
-             googleMap.setZoom(10);
-             
-             content.addComponent(new Label());
          	
-         	karteEinblenden.setIcon(FontAwesome.MAP_MARKER);
-         	content.addComponent(karteEinblenden);
-         	karteEinblenden.setVisible(false);
-             
-    		
-    		karteausblenden.setIcon(FontAwesome.MAP_MARKER);
-    		content.addComponent(karteausblenden);
-    		karteausblenden.addClickListener(new Button.ClickListener() {
-    			private static final long serialVersionUID = 1L;
-
-    			@Override
-    			public void buttonClick(ClickEvent event) {
-    				
-    				
-    					googleMap.setVisible(false);
-    					karteausblenden.setVisible(false);
-    			
-    					karteEinblenden.setVisible(true);
-  
-    				
-    			}
-    		});
-    		
-    		
-    		karteEinblenden.addClickListener(new Button.ClickListener() {
-    			private static final long serialVersionUID = 1L;
-
-
-    			@Override
-    			public void buttonClick(ClickEvent event) {
-    					googleMap.setVisible(true);
-    					karteausblenden.setVisible(true);
-    					karteEinblenden.setVisible(false);
-    			}
-    		});
-    		
-    		content.addComponent(new Label());
-        	
-        	//Karte
-           
-
-    		
-    		Iterator<Offer> it = angebote.iterator();
-    		while(it.hasNext()){
-    			final Offer o = it.next();
-    			//Map-Marker
-    			//Button wird deaktiviert, wenn keine Standortangaben in der DB sind
-    			if(o.getLatitude()!=null && o.getLatitude()!=BigDecimal.valueOf(0.0)){
-    				GoogleMapMarker mapMarker = new GoogleMapMarker(
-    			            "ID "+ String.valueOf(o.getIdOffer())+ ": "+o.getTitle(), new LatLon(o.getLatitude().doubleValue(), o.getLongitude().doubleValue()),
-    			            false, null);
-    				mapMarker.setId(o.getIdOffer());
-    		        mapMarker.setAnimationEnabled(false);
-    		        
-    		        googleMap.addMarker(mapMarker);
-    			}
-    		}
-    	    
-    		
-
-            googleMap.addMarkerClickListener(new MarkerClickListener() {
-    			private static final long serialVersionUID = 1L;
-
-    			@Override
-    			public void markerClicked(GoogleMapMarker clickedMarker) {
-    				// TODO Auto-generated method stub
-    				long id = clickedMarker.getId();
-    				OfferProvider op = new OfferProvider();
-    				Offer currentOffer = op.find((int) id);
-    				String name = "Einzelansicht";
-    				getUI().getNavigator().addView(name, new Einzelansicht(currentOffer));
-    				getUI().getNavigator().navigateTo(name);
-    			
-    			}
-            });
-    	   
-            
-            googleMap.setMinZoom(4);
-            googleMap.setMaxZoom(16);
-
-            googleMap.setHeight("473px");
-            googleMap.setWidth("700px");
-            content.addComponent(googleMap);
-        	
+//         	karteEinblenden.setIcon(FontAwesome.MAP_MARKER);
+//         	content.addComponent(karteEinblenden);
+//         	karteEinblenden.setVisible(false);
+//             
+//    		
+//    		karteausblenden.setIcon(FontAwesome.MAP_MARKER);
+//    		content.addComponent(karteausblenden);
+//    		karteausblenden.addClickListener(new Button.ClickListener() {
+//    			private static final long serialVersionUID = 1L;
+//
+//    			@Override
+//    			public void buttonClick(ClickEvent event) {
+//    				
+//    				
+//    					googleMap.setVisible(false);
+//    					karteausblenden.setVisible(false);
+//    			
+//    					karteEinblenden.setVisible(true);
+//  
+//    				
+//    			}
+//    		});
+//    		
+//    		
+//    		karteEinblenden.addClickListener(new Button.ClickListener() {
+//    			private static final long serialVersionUID = 1L;
+//
+//
+//    			@Override
+//    			public void buttonClick(ClickEvent event) {
+//    					googleMap.setVisible(true);
+//    					karteausblenden.setVisible(true);
+//    					karteEinblenden.setVisible(false);
+//    			}
+//    		});
         	
         	//Button wird deaktiviert, wenn der Nutzer kein DH Stud. ist
     		if((boolean) VaadinSession.getCurrent().getSession().getAttribute("login") && ((User) VaadinSession.getCurrent().getSession().getAttribute("user")).getAccessLevel() != 0) {
     			//tue nichts
     		}else{
+    			karteAnzeigen.setEnabled(false);
+    			karteAnzeigen.setDescription("Die Kartenansicht ist nur für verifizierte DH-Studenten verfügbar.");
     			googleMap.setVisible(false);
-    			Label l = new Label("Die Kartenansicht ist nur für verifizierte DH-Studenten verfügbar.");
-    			content.addComponent(l);
+//    			Label l = new Label("Die Kartenansicht ist nur für verifizierte DH-Studenten verfügbar.");
+//    			content.addComponent(l);
     		}
-        }
 		
-		content.addComponent(new Label());
-		for(Offer o : angebote) {
-			content.addComponent(new Listenzeile(o));
+			content.addComponent(new Label());
+			
+			for(Offer o : angebote) {
+				content.addComponent(new Listenzeile(o));
+			}
+		
 		}
 	}
 

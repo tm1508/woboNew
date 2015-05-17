@@ -171,10 +171,6 @@ public class Suche extends CustomHorizontalLayout implements View {
 				lon = draggedMarker.getPosition().getLon();
 			}
 		});
-
-		// Checkbox: Mit Karte Suchen
-		final CheckBox mitKarteSuchen = new CheckBox(
-				"Alternativ auf der Karte suchen", false);
 		
 		//Umkreis
 		final NativeSelect selectUmkreis = new NativeSelect("Umkreis in km");
@@ -202,20 +198,21 @@ public class Suche extends CustomHorizontalLayout implements View {
 			}
 		});
 
+		// Checkbox: Mit Karte suchen
+		final CheckBox mitKarteSuchen = new CheckBox(
+						"Alternativ auf der Karte suchen", false);
 		mitKarteSuchen.addValueChangeListener(new ValueChangeListener() {
 			private static final long serialVersionUID = 1L;
 
 			@Override
 			public void valueChange(final ValueChangeEvent event) {
 				final boolean value = (boolean) event.getProperty().getValue();
-				if (value == true) {// Anzeigen der Moodle Felder sobald das
-									// Kontrollkästchen angekreuzt wird
+				if (value == true) {// Anzeigen der Map und Leeren des "Ort"-Feldes
 					stadt.setEnabled(false);
 					stadt.setValue("");
 					googleMap.setVisible(true);
 					selectUmkreis.setVisible(true);
-				} else {// ausblednen der Felder wenn das Kästchen nicht
-						// angekreuzt ist
+				} else {// Ausblednen der Map
 					stadt.setEnabled(true);
 					googleMap.setVisible(false);
 					selectUmkreis.setVisible(false);
@@ -238,29 +235,6 @@ public class Suche extends CustomHorizontalLayout implements View {
 
 			@SuppressWarnings("deprecation")
 			public void buttonClick(ClickEvent event) {
-				
-				boolean valid;
-				
-				try {
-					sucheVon.validate();
-				} catch (InvalidValueException e) {
-					valid = false;
-				}
-				try {
-					sucheBis.validate();
-				} catch (InvalidValueException e) {
-					valid = false;
-				}
-				try {
-					preisVon.validate();
-				} catch (InvalidValueException e) {
-					valid = false;
-				}
-				try {
-					preisBis.validate();
-				} catch (InvalidValueException e) {
-					valid = false;
-				}
 				
 				try { //falls in Zahlenfeder keine Zahlen eingetragen wurden
 					
