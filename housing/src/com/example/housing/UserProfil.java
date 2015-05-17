@@ -10,6 +10,7 @@ import com.vaadin.server.FontAwesome;
 import com.vaadin.server.Page;
 import com.vaadin.server.VaadinSession;
 import com.vaadin.ui.Button;
+import com.vaadin.ui.GridLayout;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Notification;
@@ -30,9 +31,11 @@ public class UserProfil extends CustomHorizontalLayout implements View {
 	private VerticalLayout content;
 	private User u;
 	
-	private TextField prename;
-	private TextField lastname;
-	private TextField email;
+	private Label id;
+	private Label prename;
+	private Label lastname;
+	private Label email;
+	private Label accessLevel;
 
 	public UserProfil(User u) {
 		this.u = u;
@@ -52,40 +55,52 @@ public class UserProfil extends CustomHorizontalLayout implements View {
 		title.setValue("User-Profil, ID: " + u.getIdUser());
 		title.addStyleName("title");
 		content.addComponent(title);
+		
+		GridLayout gridProfile = new GridLayout(2,5);
+		
+		HorizontalLayout name = new HorizontalLayout();
 
+		//id
+		id = new Label();
+		id.setValue(u.getIdUser().toString());
+		gridProfile.addComponent(new Label("User-ID: "), 0, 0);
+		gridProfile.addComponent(id, 1, 0);
+		
 		// prename
-		prename = new TextField();
-		prename.setCaption("Vorname");
-		prename.setWidth("220px");
-		prename.setHeight("-1px");
-		prename.setIcon(FontAwesome.USER);
-		prename.addStyleName("textfield");
-		prename.setImmediate(false);
-		prename.setEnabled(false);
+		prename = new Label();
 		prename.setValue(u.getFirstname());
-		content.addComponent(prename);
+		gridProfile.addComponent(new Label("Vorname: "), 0, 1);
+		gridProfile.addComponent(prename, 1, 1);
 
 		// lastname
-		lastname = new TextField();
-		lastname.setCaption("Nachname");
-		lastname.setImmediate(false);
-		lastname.setWidth("221px");
-		lastname.setHeight("-1px");
-		lastname.setIcon(FontAwesome.USER);
-		lastname.setEnabled(false);
+		lastname = new Label();
 		lastname.setValue(u.getLastname());
-		content.addComponent(lastname);
+		gridProfile.addComponent(new Label("Nachname: "), 0, 2);
+		gridProfile.addComponent(lastname, 1, 2);
 		
 		// email
-		email = new TextField();
-		email.setCaption("E-Mail");
-		email.setImmediate(false);
-		email.setWidth("221px");
-		email.setHeight("-1px");
-		email.setIcon(FontAwesome.ENVELOPE);
-		email.setEnabled(false);
+		email = new Label();
 		email.setValue(u.getEmail());
-		content.addComponent(email);
+		gridProfile.addComponent(new Label("E-Mail: "), 0, 3);
+		gridProfile.addComponent(email, 1, 3);
+		
+		//accessLevel
+		accessLevel = new Label();
+		String level = "";
+		switch(u.getAccessLevel()) {
+			case 0:
+				level = "Normaler User";
+				break;
+			case 1:
+				level = "DH-Student";
+				break;
+			case 2:
+				level = "Administrator";
+				break;
+		}
+		accessLevel.setValue(level);
+		gridProfile.addComponent(new Label("Berechtigungslevel: "), 0, 4);
+		gridProfile.addComponent(accessLevel, 1, 4);
 		
 		VerticalLayout buttonZeilen = new VerticalLayout();
 		
@@ -149,7 +164,7 @@ public class UserProfil extends CustomHorizontalLayout implements View {
 			dhStud.setCaption("Als DH-Student freischalten");
 			dhStud.setEnabled(false);
 		}
-		buttonSpalten.addComponent(dhStud);
+		buttonZeilen.addComponent(dhStud);
 		
 		Button contact = new Button();
 		contact.setStyleName("BearbeitenButton");
@@ -173,11 +188,9 @@ public class UserProfil extends CustomHorizontalLayout implements View {
 		});
 		buttonSpalten.addComponent(contact);
 		
-		buttonZeilen.addComponent(buttonSpalten);
-		
 		Button delete = new Button();
 		delete.setStyleName("loeschen");
-		delete.setCaption("Diesen User löschen");
+		delete.setCaption("User löschen");
 		delete.setImmediate(true);
 		delete.setDescription("Der User sowie alle seine Angebote und anderen Daten werden aus der Datenbank gelöscht.");
 		delete.setWidth("-1px");
@@ -262,8 +275,9 @@ public class UserProfil extends CustomHorizontalLayout implements View {
 			}
 		});
 		
-		buttonZeilen.addComponent(delete);
+		buttonSpalten.addComponent(delete);
 		
+		buttonZeilen.addComponent(buttonSpalten);
 		content.addComponent(buttonZeilen);
 	}
 	
