@@ -444,9 +444,6 @@ public class Einzelansicht extends CustomHorizontalLayout implements View {
 			Button deacitvate = new Button("Deaktivieren");
 			deacitvate.setIcon(FontAwesome.SQUARE_O);
 			deacitvate.addStyleName("BearbeitenButton");
-			if(angebot.isInactive()) {
-				deacitvate.setEnabled(false);
-			}
 			deacitvate.addClickListener(new Button.ClickListener() {
 				public void buttonClick(ClickEvent event) {
 					
@@ -480,6 +477,46 @@ public class Einzelansicht extends CustomHorizontalLayout implements View {
 					} else {
 						
 						Notification failDB = new Notification("Das Angebot konnte nicht deaktiviert werden.", Type.HUMANIZED_MESSAGE);
+						failDB.setStyleName("failure");
+						failDB.setDelayMsec(300);
+						failDB.show(Page.getCurrent());
+						
+					}
+				}
+			});
+			
+			Button reactivate = new Button("Reaktivieren");
+			reactivate.setIcon(FontAwesome.CHECK_SQUARE_O);
+			reactivate.addStyleName("BearbeitenButton");
+			reactivate.addClickListener(new Button.ClickListener() {
+				public void buttonClick(ClickEvent event) {
+					
+					angebot.setInactive(false);
+					
+					if(new OfferProvider().alterOffer(angebot)) {	
+						
+						String reactivationMessage = "<meta charset='utf-8'/><img src='http://193.196.7.216:8080/housing/APP/connector/0/12/source/dh.PNG'/><br/><br/><span style='color: #000000' 'font-family: Arial, sans-serif''font-size: 16pt' >Sehr geehrte Nutzerin, sehr geehrter Nutzer,"
+								+"<br/><br/>Ihr Angebot \"" + angebot.getTitle() + "\" in der Wohnungsbörse der DHBW wurde von einem Portal-Administrator reaktiviert und kann nun wieder von allen Nutzern gesehen werden."
+								+"<br/></span>"
+								+"<br/><span style='color: #e2001a' 'font-family: Arial, sans-serif''font-size: 20pt' >"
+								+ "</span><br/><br/>Mit freundlichen Grüßen<br/>Ihr DHBW Wohungsbörsen-Team<p/><span style='color: #e2001a' 'font-family: Arial, sans-serif''font-size: 8pt' >Anschrift:<br/>DHBW Karlsruhe<br/>Baden-Wuerttemberg Cooperative State University Karlsruhe<br />Erzbergerstraße 121 . 76133 Karlsruhe <br />Postfach 10 01 36 . 76231 Karlsruhe   <br />Telefon +49.721.9735-5 <br />Telefax +49.721.9735-600 <br />E-Mail: dreischer@dhbw-karlsruhe.de<br /><br/><br/>Ansprechpartner:<br/> <br />Dr. Anita Dreischer<br /><br/><b>Copyright DHBW Karlsruhe. Alle Rechte vorbehalten.</b></span>";
+						
+						SendEMail.send(angebot.getOffer_idUser().getEmail(), "wohnungsboerse_dh@web.de", "Reaktivierung Ihres Angebots in der DHBW-Wohnungsbörse", reactivationMessage);
+						
+						Notification success = new Notification("Das Angebot wurde wieder aktiviert.", Type.HUMANIZED_MESSAGE);
+						success.setStyleName("success");
+						success.setDelayMsec(300);
+						success.show(Page.getCurrent());
+						
+						Offer o = new OfferProvider().findById(angebot.getIdOffer());
+						
+						String name = "Einzelansicht";
+						getUI().getNavigator().addView(name, new Einzelansicht(o)); // momentan angezeigtes Angebot soll übergeben werden...
+						getUI().getNavigator().navigateTo(name);
+						
+					} else {
+						
+						Notification failDB = new Notification("Das Angebot konnte nicht reaktiviert werden.", Type.HUMANIZED_MESSAGE);
 						failDB.setStyleName("failure");
 						failDB.setDelayMsec(300);
 						failDB.show(Page.getCurrent());
@@ -531,9 +568,12 @@ public class Einzelansicht extends CustomHorizontalLayout implements View {
 				}
 			});
 			
-			adminButtons.addComponent(deacitvate);
+			if(angebot.isInactive()) {
+				adminButtons.addComponent(reactivate);
+			} else {
+				adminButtons.addComponent(deacitvate);
+			}
 			adminButtons.addComponent(delete);
-			
 			gridInfos.addComponent(adminButtons, 0 , 14);
 		
     	}
