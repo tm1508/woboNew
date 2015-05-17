@@ -75,7 +75,7 @@ public class Einzelansicht extends CustomHorizontalLayout implements View {
 	public void setContent(){
 		
 		if(angebot.isInactive()){
-			Label warn = new Label(FontAwesome.WARNING.getHtml() + " ", ContentMode.HTML);
+			Label warn = new Label(FontAwesome.WARNING.getHtml() + "&nbsp;", ContentMode.HTML);
 			
 			Label inactive = new Label(" Bitte beachten Sie: Dieses Angebot ist gerade deaktiviert und kann von anderen Nutzeren nicht angesehen werden!");
 			inactive.setImmediate(false);
@@ -156,9 +156,11 @@ public class Einzelansicht extends CustomHorizontalLayout implements View {
 //			Label l = new Label("Die Kartenansicht ist nur für verifizierte DH-Studenten verfügbar.");
 //			content.addComponent(l);
 			
-			Label warn = new Label(FontAwesome.WARNING.getHtml() + " ", ContentMode.HTML);
+			content.addComponent(new Label());
 			
-			Label detailsAdresse = new Label(" Bitte beachten Sie: Die vollständige Adresse und die Kartenansicht ist nur für verifizierte DH-Studenten sichtbar!");
+			Label warn = new Label(FontAwesome.WARNING.getHtml() + "&nbsp;", ContentMode.HTML);
+			
+			Label detailsAdresse = new Label(" Bitte beachten Sie: Die vollständige Adresse und die Kartenansicht sind nur für verifizierte DH-Studenten sichtbar!");
 			detailsAdresse.setImmediate(false);
 			detailsAdresse.setWidth("1000px");
 			detailsAdresse.setHeight("-1px");
