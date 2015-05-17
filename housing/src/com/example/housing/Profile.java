@@ -165,9 +165,9 @@ public class Profile extends CustomHorizontalLayout implements View {
 
 		// handy
 		handy = new TextField();
-		handy.setCaption("Handynummer");
+		handy.setCaption("Mobiltelefonnummer");
 		handy.setImmediate(false);
-		handy.setDescription("Bitte Handynummer angeben (optional)");
+		handy.setDescription("Bitte Mobiltelefonnummer angeben (optional)");
 		handy.setWidth("220px");
 		handy.setHeight("-1px");
 		handy.setIcon(FontAwesome.PHONE);

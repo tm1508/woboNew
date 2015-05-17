@@ -25,20 +25,15 @@ import com.vaadin.ui.Button;
 import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.NativeSelect;
-import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Button.ClickEvent;
 
-// TODO: Auto-generated Javadoc
-/**
- * The Class Suchergebnis.
- */
 public class Suchergebnis extends CustomHorizontalLayout implements View {
 	private static final long serialVersionUID = 1L;
 
-	VerticalLayout content;
-	String sort= null;//Auswahlbox für Sortierung der Liste
-	List<Offer> angebote;
+	private VerticalLayout content;
+	private String sort= null;//Auswahlbox für Sortierung der Liste
+	private List<Offer> angebote;
 	final GoogleMap googleMap = new GoogleMap(null, null, null);
 	final Button karteEinblenden = new Button("Karte einblenden");
 	final Button karteausblenden = new Button("Karte ausblenden");
@@ -82,14 +77,13 @@ public class Suchergebnis extends CustomHorizontalLayout implements View {
 			back.setIcon(FontAwesome.BACKWARD);
 			back.addStyleName("SuchButton");
 			back.addClickListener(new Button.ClickListener() {
-				
+				private static final long serialVersionUID = 1L;
+
 				@Override
 				public void buttonClick(ClickEvent event) {
-					
 					String name = "Suche";
 					getUI().getNavigator().addView(name, new Suche());
 					getUI().getNavigator().navigateTo(name);
-					
 				}
 			});
 			content.addComponent(back);
@@ -99,7 +93,6 @@ public class Suchergebnis extends CustomHorizontalLayout implements View {
 			final Label ergebnisString = new Label("Ihre Suche ergab " + angebote.size()+" Treffer.");
 			ergebnisString.addStyleName("AbschnittLabel");	
 			content.addComponent(ergebnisString);
-//			content.addComponent(new Label());
 			
 			//Checkbox Karte
 			karteAnzeigen.addValueChangeListener(new ValueChangeListener() {
