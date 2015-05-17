@@ -12582,11 +12582,20 @@ div.v-layout.v-horizontal.v-widget {
 	text-align: center;
 }
 
+.housing .v-panel-startseite {
+	margin-left: 10px;
+	margin-bottom: 10px;
+}
+
 .housing .v-panel-startseite .v-panel-caption {
 	font-size: 16px;
 }
 
 .housing .v-accordion-startseite .v-accordion-item-caption .v-caption {
+	font-size: 16px;
+}
+
+.housing .v-panel-startseiteUnten .v-panel-caption {
 	font-size: 16px;
 }
 

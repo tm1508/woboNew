@@ -53,6 +53,7 @@ public class Startseite extends CustomHorizontalLayout implements View{
 		
 		//Begrüßungstext
 		Accordion textAccordion = new Accordion();
+		
 		textAccordion.setHeight("400px");
 		textAccordion.setStyleName("startseite");
 	
@@ -141,6 +142,7 @@ public class Startseite extends CustomHorizontalLayout implements View{
 		//Panel für Suchfeld
 		Panel suchePanel = new Panel("Suche");
 		suchePanel.setStyleName("startseite");
+		suchePanel.setWidth("632px");
 		suchePanel.setHeight("400px");
 		suchePanel.setIcon(FontAwesome.SEARCH);
 		VerticalLayout suche = new VerticalLayout();
@@ -195,7 +197,8 @@ public class Startseite extends CustomHorizontalLayout implements View{
 		
 		//Neuste Angebote
 		Panel panelNeusteANgebote = new Panel("Unsere neusten Angebote");
-		panelNeusteANgebote.setStyleName("startseite");
+		panelNeusteANgebote.setStyleName("startseiteUnten");
+		panelNeusteANgebote.setIcon(FontAwesome.HOME);
 		panelNeusteANgebote.setWidth("100%");
 		VerticalLayout layoutNuesteAnngebote = new VerticalLayout();
 		layoutNuesteAnngebote.setMargin(true);
@@ -203,6 +206,7 @@ public class Startseite extends CustomHorizontalLayout implements View{
 		List<Offer> latestOffers = new OfferProvider().getLatestOffers();
 		for( Offer o : latestOffers) {
 			layoutNuesteAnngebote.addComponent(new Listenzeile(o));
+			layoutNuesteAnngebote.addComponent(new Label());
 		}
 		
         panelNeusteANgebote.setContent(layoutNuesteAnngebote);
