@@ -48,6 +48,7 @@ public class AdminAnfrageUser extends CustomHorizontalLayout implements View {
 		//Infolabel
 		Label infoText = new Label("Hier können Sie eine Nachricht an den User verfassen.");
 		content.addComponent(infoText);
+		content.addComponent(new Label());
 		
 		//text
 		Label anfrage = new Label("Nachricht");
@@ -58,6 +59,7 @@ public class AdminAnfrageUser extends CustomHorizontalLayout implements View {
 		text.setWidth("100%");
 		content.addComponent(anfrage);
 		content.addComponent(text);
+		content.addComponent(new Label());
 		
 		// button
 		Button sendButton = new Button();

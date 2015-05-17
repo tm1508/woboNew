@@ -50,8 +50,9 @@ public class Kontaktformular extends CustomHorizontalLayout implements View{
 		content.addComponent(title);
 		
 		//Infolabel
-		Label infoText = new Label("Hier können Sie den Administrator kontaktieren. Bitte geben Sie hierzu Ihren Namen und Ihre E-Mail-Adresse an. Er kann Sie dann gezielt kontaktieren, um mit Ihnen alles Weitere zu besprechen.");
+		Label infoText = new Label("Hier können Sie den Administrator kontaktieren. Bitte geben Sie hierzu Ihren Namen und Ihre E-Mail-Adresse an. Er kann Sie dann gezielt kontaktieren.");
 		content.addComponent(infoText);
+		content.addComponent(new Label());
 		
 		// prename
 		prename = new TextField();

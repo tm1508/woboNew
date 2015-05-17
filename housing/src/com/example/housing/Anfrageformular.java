@@ -58,6 +58,7 @@ public class Anfrageformular extends CustomHorizontalLayout implements View{
 		//Infolabel
 		Label infoText = new Label("Hier können Sie eine Anfrage an den Anbieter verfassen. Dieser Text wird zusammen mit Ihren Kontaktdaten aus Ihrem Profil an den Anbieter weitergeleitet. Er kann Sie dann gezielt kontaktieren, um mit Ihnen alles Weitere zu besprechen.");
 		content.addComponent(infoText);
+		content.addComponent(new Label());
 		
 		//text
 		Label anfrage = new Label("Anfrage");
@@ -68,6 +69,7 @@ public class Anfrageformular extends CustomHorizontalLayout implements View{
 		text.setWidth("100%");
 		content.addComponent(anfrage);
 		content.addComponent(text);
+		content.addComponent(new Label());
 		
 		// button
 		Button sendButton = new Button();
