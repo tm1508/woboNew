@@ -97,8 +97,6 @@ public class Listenzeile extends CustomComponent {
 			Component c = ergebnisLayout.getComponent(0, 2);
 			c.setWidth("100%");
 			c.setHeight("70%");
-			// String im = "Kein Bild vorhanden";
-			// ergebnisLayout.addComponent(new Label(im),0,0,2,2);
 			
 		}
 
