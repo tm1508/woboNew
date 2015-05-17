@@ -7,26 +7,23 @@ import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.server.Page;
-import com.vaadin.server.VaadinSession;
 import com.vaadin.ui.Button;
-import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Notification;
-import com.vaadin.ui.Panel;
 import com.vaadin.ui.RichTextArea;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Notification.Type;
 
 public class AdminanfrageWohnung extends CustomHorizontalLayout implements View {
-	
-	VerticalLayout content;
-	Offer angebot;
+	private static final long serialVersionUID = 1L;
+
+	private VerticalLayout content;
+	private Offer angebot;
 	private RichTextArea text;
 	
 	public AdminanfrageWohnung(Offer o){
 		this.angebot = o;
-		
 		content = super.initCustomHorizontalLayout();
 		setContent();
 	}
@@ -68,8 +65,9 @@ public class AdminanfrageWohnung extends CustomHorizontalLayout implements View 
 		sendButton.setHeight("-1px");
 		content.addComponent(sendButton);
 		sendButton.addClickListener(new Button.ClickListener() {
+			private static final long serialVersionUID = 1L;
+
 			public void buttonClick(ClickEvent event) {
-				
 					
 					//E-Mail an den Nutzer senden
 					sendEMail();
@@ -83,9 +81,7 @@ public class AdminanfrageWohnung extends CustomHorizontalLayout implements View 
 					not.setStyleName("success");
 					not.setDelayMsec(300);
 					not.show(Page.getCurrent());
-				
 			}
-
 		});
 	}
 	
@@ -99,7 +95,7 @@ public class AdminanfrageWohnung extends CustomHorizontalLayout implements View 
 				+ "</span><br/><br/>Mit freundlichen Grüßen<br/>Ihr DHBW Wohungsbörsen-Team<p/><span style='color: #e2001a' 'font-family: Arial, sans-serif''font-size: 8pt' >Anschrift:<br/>DHBW Karlsruhe<br/>Baden-Wuerttemberg Cooperative State University Karlsruhe<br />Erzbergerstraße 121 . 76133 Karlsruhe <br />Postfach 10 01 36 . 76231 Karlsruhe   <br />Telefon +49.721.9735-5 <br />Telefax +49.721.9735-600 <br />E-Mail: dreischer@dhbw-karlsruhe.de<br /><br/><br/>Ansprechpartner:<br/> <br />Dr. Anita Dreischer<br /><br/><b>Copyright DHBW Karlsruhe. Alle Rechte vorbehalten.</b></span>";
 		
 		//Email an Anbieter senden
-		SendEMail.send(angebot.getOffer_idUser().getEmail(), "wohnungsboerse_dh@web.de", "Benachrichtigung zu Ihrem Angebot in der DHBW-Wohnungsbörse", message);
+		SendEMail.send(angebot.getOffer_idUser().getEmail(), "Wohnungsboerse_DHBW", "Benachrichtigung zu Ihrem Angebot in der DHBW-Wohnungsbörse", message);
 	
 		//TODO irgendwo hinterlegen, abspeichern,... damit Admin die Nachricht auch später noch sehen kann
 		
@@ -107,8 +103,5 @@ public class AdminanfrageWohnung extends CustomHorizontalLayout implements View 
 
 	@Override
 	public void enter(ViewChangeEvent event) {
-		// TODO Auto-generated method stub
-
 	}
-
 }

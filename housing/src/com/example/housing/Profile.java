@@ -178,7 +178,7 @@ public class Profile extends CustomHorizontalLayout implements View {
 		dh_1 = new Label();
 		dh_1.setWidth("-1px");
 		dh_1.setHeight("-1px");
-		dh_1.setValue("Sie sind als Dualer Student der DHBW Karlsruhe registriert.");
+		dh_1.setValue("Sie sind als Duale Studentin / Dualer Student der DHBW Karlsruhe registriert.");
 		dh_1.setVisible(false);
 		content.addComponent(dh_1);
 
@@ -186,15 +186,15 @@ public class Profile extends CustomHorizontalLayout implements View {
 		dh_2 = new Label();
 		dh_2.setWidth("-1px");
 		dh_2.setHeight("-1px");
-		dh_2.setValue("Sie sind nicht als Dualer Student der DHBW Karlsruhe registriert.");
+		dh_2.setValue("Sie sind nicht als Duale Studentin / Dualer Student der DHBW Karlsruhe registriert.");
 		dh_2.setVisible(false);
 		content.addComponent(dh_2);
 
 		// dhstud
 		dhstud = new CheckBox();
-		dhstud.setCaption("Ich bin Dualer Student an der DH Karlsruhe.");
+		dhstud.setCaption("Ich bin Duale Studentin / Dualer Student an der DH Karlsruhe.");
 		dhstud.setImmediate(false);
-		dhstud.setDescription("Als Dualer Student können Sie mehr Funktionen nutzen. Moodle Anmeldedaten zur Validierung erforderlich");
+		dhstud.setDescription("Als Duale Studentin / Dualer Student können Sie mehr Funktionen nutzen. Moodle Anmeldedaten zur Validierung erforderlich");
 		dhstud.setWidth("-1px");
 		dhstud.setEnabled(true);
 		dhstud.setHeight("-1px");

@@ -119,7 +119,7 @@ public class UserProfil extends CustomHorizontalLayout implements View {
 				level = "Normaler User";
 				break;
 			case 1:
-				level = "DH-Student";
+				level = "DH-Studentin / DH-Student";
 				break;
 			case 2:
 				level = "Administrator";
@@ -134,13 +134,13 @@ public class UserProfil extends CustomHorizontalLayout implements View {
 		Button dhStud = new Button();
 		dhStud.setStyleName("BearbeitenButton");
 		dhStud.setImmediate(true);
-		dhStud.setDescription("Das Berechtigungslevel dieses Users auf DH-Student setzen.");
+		dhStud.setDescription("Das Berechtigungslevel dieses Users auf DH-Studentin / DH-Student setzen.");
 		dhStud.setWidth("-1px");
 		dhStud.setHeight("-1px");
 		dhStud.setVisible(true);
 		dhStud.setIcon(FontAwesome.COGS);
 		if(u.getAccessLevel() == 0) {
-			dhStud.setCaption("Als DH-Student freischalten");
+			dhStud.setCaption("Als DH-Studentin / DH-Student freischalten");
 			dhStud.addClickListener(new Button.ClickListener() {
 				
 				@Override
@@ -149,7 +149,7 @@ public class UserProfil extends CustomHorizontalLayout implements View {
 					u.setAccessLevel(1);
 					new UserProvider().alterUser(u);
 					
-					Notification notif = new Notification("Der User ist nun als DH-Student freigeschaltet!", Type.HUMANIZED_MESSAGE);
+					Notification notif = new Notification("Der User ist nun als DH-Studentin / DH-Student freigeschaltet!", Type.HUMANIZED_MESSAGE);
 					notif.setDelayMsec(300);
 					notif.setStyleName("success");
 					notif.show(Page.getCurrent());
@@ -163,7 +163,7 @@ public class UserProfil extends CustomHorizontalLayout implements View {
 				}
 			});
 		} else if (u.getAccessLevel() == 1) {
-			dhStud.setCaption("DH-Studenten-Level widerrufen");
+			dhStud.setCaption("DH-Studentin-Level / DH-Studenten-Level widerrufen");
 			dhStud.addClickListener(new Button.ClickListener() {
 				
 				@Override
@@ -172,7 +172,7 @@ public class UserProfil extends CustomHorizontalLayout implements View {
 					u.setAccessLevel(0);
 					new UserProvider().alterUser(u);
 					
-					Notification notif = new Notification("Der User ist nicht mehr als DH-Student freigeschaltet!", Type.HUMANIZED_MESSAGE);
+					Notification notif = new Notification("Der User ist nicht mehr als DH-Studentin / DH-Student freigeschaltet!", Type.HUMANIZED_MESSAGE);
 					notif.setDelayMsec(300);
 					notif.setStyleName("success");
 					notif.show(Page.getCurrent());
@@ -186,7 +186,7 @@ public class UserProfil extends CustomHorizontalLayout implements View {
 				}
 			});
 		} else {
-			dhStud.setCaption("Als DH-Student freischalten");
+			dhStud.setCaption("Als DH-Studentin / DH-Student freischalten");
 			dhStud.setEnabled(false);
 		}
 		content.addComponent(dhStud);

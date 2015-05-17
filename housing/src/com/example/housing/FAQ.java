@@ -121,7 +121,7 @@ public class FAQ extends CustomHorizontalLayout implements View {
 						FontAwesome.QUESTION);
 
 		final Label label_9 = new Label(
-				"Um ein Anfrage senden zu können, müssen Sie sich zunächst als DH-Student verifizieren. \nKlicken Sie anschließend auf das gewünschte Angebot. Am Ende der Seite befindet sich ein Button \"Anfragen\", drücken Sie diesen. \nNun kommen Sie zum Anfrageformular. In dem Textfeld können Sie nun Ihre Anfrage formulieren und mit einem Klick auf den Button \"Anfrage versenden\" wird die Anfrage an den Anbieter weitergeleitet.");
+				"Um ein Anfrage senden zu können, müssen Sie sich zunächst als DH-Studentin / DH-Student verifizieren. \nKlicken Sie anschließend auf das gewünschte Angebot. Am Ende der Seite befindet sich ein Button \"Anfragen\", drücken Sie diesen. \nNun kommen Sie zum Anfrageformular. In dem Textfeld können Sie nun Ihre Anfrage formulieren und mit einem Klick auf den Button \"Anfrage versenden\" wird die Anfrage an den Anbieter weitergeleitet.");
 		sub_accordion_2.addTab(label_9,
 				"Wie kann ich eine Anfrage für ein Wohnungsangebot senden?",
 				FontAwesome.QUESTION);

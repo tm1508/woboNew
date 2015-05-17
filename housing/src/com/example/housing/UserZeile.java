@@ -40,7 +40,7 @@ public class UserZeile extends CustomComponent {
 		String level;
 		switch(u.getAccessLevel()) {
 			case 1:
-				level = "DH-Student";
+				level = "DH-Studentin / DH-Student";
 				break;
 			case 2:
 				level = "Administrator";

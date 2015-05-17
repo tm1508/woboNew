@@ -101,7 +101,11 @@ public class Listenzeile extends CustomComponent {
 		}
 
 		String title = o.getTitle();
-		Label l = new Label("ID " + o.getIdOffer() + ": " + title + " in " + o.getCity());
+		String inactive=" ";
+		if(o.isInactive()){
+			inactive = inactive+"   Achtung: Dieses Angebot ist deaktiviert!";
+		}
+		Label l = new Label("ID " + o.getIdOffer() + ": " + title + " in " + o.getCity()+inactive);
 		l.addStyleName("ImportantTitle");
 		l.setWidth("100%");
 		l.setHeight("20%");

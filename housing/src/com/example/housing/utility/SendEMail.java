@@ -9,32 +9,10 @@ import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import com.sun.mail.smtp.SMTPMessage;
 
-/**
- * The Class SendEMail.
- * 
- * @author MWI Wohungsbörse 2014
- * @version 1.0
- * @see javax.mail.*
- */
 public class SendEMail {
 
-	/** Properties. */
 	static Properties properties = new Properties();
 	
-	public static void main(String args[]){
-		send("julia.agricola@web.de", "test@web.de", "test", "<span>äöüß&%$§</span>");
-	}
-	
-	/**
-	 * Sends an E-Mail.
-	 *
-	 * @param to String, who recives the e-mail?
-	 * @param from String, who sends the e-mail?
-	 * @param subject String, subject of the e-mail
-	 * @param text String, text of the e-mail
-	 * @see javax.mail.*
-	 * @see com.sun.mail.smtp.SMTPMessage
-	 */
 	public static void send(String to, String from, String subject, String text){
 		
 		// Properties setzen
@@ -71,16 +49,6 @@ public class SendEMail {
 		}
 	}
 	
-	
-	/**
-	 * Send E-Mail Alias.
-	 *
-	 * @param to the to
-	 * @param from the from
-	 * @param cc the cc
-	 * @param subject the subject
-	 * @param text the text
-	 */
 	public static void sendEmailAlias(String to, String from, String alias, String subject, String text){
 		
 		// Properties setzen
@@ -115,6 +83,5 @@ public class SendEMail {
 		} catch (Exception e) {
 			System.out.println(e);
 		}
-		
 	}
 }

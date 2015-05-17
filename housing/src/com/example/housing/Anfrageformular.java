@@ -24,22 +24,16 @@ public class Anfrageformular extends CustomHorizontalLayout implements View{
 	private static final long serialVersionUID = 1L;
 
 	private Offer requestedOffer;
-	
 	private RichTextArea text;
-	
-	VerticalLayout content;
+	private VerticalLayout content;
 	
 	@Override
 	public void enter(ViewChangeEvent event) {
-		// TODO Auto-generated method stub
-		
 	}
 	
 	public Anfrageformular(Offer currentOffer){
-		
 		//Bezug zu Angebot
 		requestedOffer = currentOffer;
-		
 		content = super.initCustomHorizontalLayout();
 		setContent();
 	}
@@ -73,10 +67,8 @@ public class Anfrageformular extends CustomHorizontalLayout implements View{
 		
 		// button
 		Button sendButton = new Button();
-		//sendButton.setIcon(FontAwesome.ENVELOPE_SQUARE);
 		sendButton.setIcon(FontAwesome.SEND);
 		sendButton.setCaption("Anfrage abschicken");
-		//button.setImmediate(true);
 		sendButton.setWidth("-1px");
 		sendButton.setHeight("-1px");
 		content.addComponent(sendButton);
@@ -108,7 +100,6 @@ public class Anfrageformular extends CustomHorizontalLayout implements View{
 					not.setDelayMsec(300);
 					not.setStyleName("failure");
 					not.show(Page.getCurrent());
-				
 				}
 			}
 
@@ -116,7 +107,6 @@ public class Anfrageformular extends CustomHorizontalLayout implements View{
 	}
 	
 	protected void safeToDB() {
-		
 		Request request = new Request();
         String t = text.getValue().replace("<br>", "\n");
         String tx = Jsoup.parse(t).text();
@@ -125,7 +115,6 @@ public class Anfrageformular extends CustomHorizontalLayout implements View{
 		request.setRequest_idOffer(requestedOffer);
 		
 		new RequestProvider().addRequest(request);
-		
 	}
 	
 	protected void sendEMail() {
@@ -153,8 +142,7 @@ public class Anfrageformular extends CustomHorizontalLayout implements View{
 		//Email an Anfrager senden
 		SendEMail.send(((User) VaadinSession.getCurrent().getSession().getAttribute("user")).getEmail(), "wohnungsboerse_dh@web.de", "Ihre Anfrage in der DHBW-Wohnungsbörse", bodyAnfrager);
 		//Email an Anbieter senden
-		SendEMail.send(requestedOffer.getOffer_idUser().getEmail(), "wohnungsboerse_dh@web.de", "Neue Anfrage zu Ihrem Angebot in der DHBW-Wohnungsbörse", bodyAnbieter);
+		SendEMail.send(requestedOffer.getOffer_idUser().getEmail(), "Wohnungsboerse_DHBW", "Neue Anfrage zu Ihrem Angebot in der DHBW-Wohnungsbörse", bodyAnbieter);
 	
 	}
-	
 }

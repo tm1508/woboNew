@@ -44,8 +44,6 @@ import com.vaadin.ui.Label;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.RichTextArea;
 import com.vaadin.ui.TextField;
-import com.vaadin.ui.UI;
-import com.vaadin.ui.Upload;
 import com.vaadin.ui.Notification.Type;
 import com.vaadin.ui.Upload.Receiver;
 import com.vaadin.ui.Upload.SucceededEvent;
@@ -53,25 +51,17 @@ import com.vaadin.ui.Upload.SucceededListener;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Button.ClickEvent;
 
-// TODO: Auto-generated Javadoc
-/**
- * The Class AngebotErstellen.
- */
 @PreserveOnRefresh
 public class AngebotErstellen extends CustomHorizontalLayout implements View, Receiver, SucceededListener {
 
 	private static final long serialVersionUID = 1L;
 
-	/** The content. */
 	private VerticalLayout content;
-	
 	private Double lat = null;
     private Double lon = null;
     private Label title;
-    Fotos fotoKomponente;
-
+    private Fotos fotoKomponente;
 	private Offer currentOffer;
-
 	private List<Photo> newPhotos;
 
 	public Offer getCurrentOffer() {
@@ -92,22 +82,10 @@ public class AngebotErstellen extends CustomHorizontalLayout implements View, Re
 
 	private ByteArrayOutputStream tmpImg;
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * com.vaadin.navigator.View#enter(com.vaadin.navigator.ViewChangeListener
-	 * .ViewChangeEvent)
-	 */
 	@Override
 	public void enter(ViewChangeEvent event) {
-		// TODO Auto-generated method stub
-
 	}
 
-	/**
-	 * Instantiates a new angebot erstellen.
-	 */
 	// neues Angebot erstellen
 	public AngebotErstellen() {
 
@@ -125,30 +103,17 @@ public class AngebotErstellen extends CustomHorizontalLayout implements View, Re
 		setContent();
 	}
 	
-	public AngebotErstellen(Offer offer, boolean erstellen){
-		currentOffer = offer;
-		newPhotos = new ArrayList();
-
-		content = super.initCustomHorizontalLayout();
-		setContent();
-	}
-
 	// bereits bestehendes Angebot bearbeiten
 	public AngebotErstellen(Offer offer) {
-
 		currentOffer = offer;
-		newPhotos = new ArrayList();
+		newPhotos = new ArrayList<Photo>();
 
 		content = super.initCustomHorizontalLayout();
 		setContent(offer);
 	}
 
-	/**
-	 * Sets the content.
-	 */
 	// Inhalt der Seite für neues Angebot
 	public void setContent() {
-
 
 		title = new Label();
 		title.setImmediate(false);
@@ -158,7 +123,6 @@ public class AngebotErstellen extends CustomHorizontalLayout implements View, Re
 		title.addStyleName("title");
 		
 		content.addComponent(title);
-
         
 		// Titel, Map, Adresse
 		Label ltitel = new Label("Titel");
@@ -173,7 +137,6 @@ public class AngebotErstellen extends CustomHorizontalLayout implements View, Re
 		content.addComponent(titel);
 		content.addComponent(new Label());
 	
-		
 		Label adress = new Label("Adresse");
 		adress.addStyleName("AbschnittLabel");
 		final TextField street = new TextField("Straße, Hausnummer:");
@@ -199,13 +162,11 @@ public class AngebotErstellen extends CustomHorizontalLayout implements View, Re
 		content.addComponent(titel);
 		content.addComponent(new Label());
 		content.addComponent(adress);
-		//content.addComponent(new Label());
 		content.addComponent(street);
 		content.addComponent(hl0);
 		content.addComponent(new Label());
 		
-		final CheckBox mitKarteSuchen = new CheckBox(
-				"Alternativ auf der Karte suchen", false);
+		final CheckBox mitKarteSuchen = new CheckBox("Alternativ auf der Karte suchen", false);
 		content.addComponent(mitKarteSuchen);
 		
 	   //Google Maps
@@ -228,6 +189,8 @@ public class AngebotErstellen extends CustomHorizontalLayout implements View, Re
         content.addComponent(new Label());
         
         googleMap.addMarkerDragListener(new MarkerDragListener() {
+			private static final long serialVersionUID = 1L;
+
 			@Override
 			public void markerDragged(GoogleMapMarker draggedMarker,
 					LatLon oldPosition) {
@@ -247,19 +210,15 @@ public class AngebotErstellen extends CustomHorizontalLayout implements View, Re
 			@Override
 			public void valueChange(final ValueChangeEvent event) {
 				final boolean value = (boolean) event.getProperty().getValue();
-				if (value == true) {// Anzeigen der Moodle Felder sobald das
-									// Kontrollkästchen angekreuzt wird
+				if (value == true) {// Anzeigen der Moodle Felder sobald das Kontrollkästchen angekreuzt wird
 					city.setEnabled(false);
 					city.setValue("");
-					
 					street.setValue("");
 					street.setEnabled(false);
 					zip.setValue("");
 					zip.setEnabled(false);
-					
 					googleMap.setVisible(true);
-				} else {// ausblednen der Felder wenn das Kästchen nicht
-						// angekreuzt ist
+				} else {// ausblednen der Felder wenn das Kästchen nicht angekreuzt ist
 					city.setEnabled(true);
 					street.setEnabled(true);
 					zip.setEnabled(true);
@@ -296,7 +255,6 @@ public class AngebotErstellen extends CustomHorizontalLayout implements View, Re
 		final TextField roomMates = new TextField("Anzahl Mitbewohner:");
 		roomMates.setRequired(true);
 		roomMates.setRequiredError("Bitte geben Sie die Anzahl an Mitbewohner an.");
-		//roomMates.setValue("0");
 		roomMates.addStyleName("AngeboteTextField");
 		z3.addComponent(roomMates);
 		Label date = new Label("Verfügbarkeit");
@@ -324,12 +282,8 @@ public class AngebotErstellen extends CustomHorizontalLayout implements View, Re
 		final TextField bond = new TextField("Kaution (in €):");
 		bond.addStyleName("AngeboteTextField");
 		z2.addComponent(bond);
-		//TextField cost = new TextField("Sonstige einmalige Kosten (in €):");
-		//cost.addStyleName("AngeboteTextField");
-		//z3.addComponent(cost);
 
 		content.addComponent(label);
-		//content.addComponent(new Label());
 		content.addComponent(z1);
 		content.addComponent(z2);
 		content.addComponent(z3);
@@ -375,7 +329,6 @@ public class AngebotErstellen extends CustomHorizontalLayout implements View, Re
 		hl2.addComponent(pets);
 		
 		content.addComponent(angaben);
-		//content.addComponent(new Label());
 		content.addComponent(hl2);
 		content.addComponent(new Label());
 		content.addComponent(genders);
@@ -390,26 +343,11 @@ public class AngebotErstellen extends CustomHorizontalLayout implements View, Re
 		text.setWidth("100%");
 		
 		content.addComponent(anzeigetext);
-		//content.addComponent(new Label());
 		content.addComponent(text);
 		content.addComponent(new Label());
 		
-		/*Label bilder = new Label("Bilder");
-		bilder.addStyleName("AbschnittLabel");
-		
-		Upload bilderup = new Upload("Fotos hochladen (max. 5 Fotos pro Angebot):", this);
-		bilderup.addSucceededListener(this);
-		
-		content.addComponent(bilder);
-		//content.addComponent(new Label());
-		content.addComponent(bilderup);
-		content.addComponent(new Label());*/
-		
-
-
 		// Button speichern/aktivieren/deaktivieren
 		final CheckBox inactive = new CheckBox("deaktivieren");
-		
 		content.addComponent(inactive);
 		content.addComponent(new Label());
 		
@@ -418,6 +356,8 @@ public class AngebotErstellen extends CustomHorizontalLayout implements View, Re
 		save.setIcon(FontAwesome.SAVE);
 		save.addStyleName("BearbeitenButton");
 		save.addClickListener(new Button.ClickListener() {
+			private static final long serialVersionUID = 1L;
+
 			public void buttonClick(ClickEvent event) {
 				// Überprüfung ob alle Mussfelder gefüllt sind
 				boolean valid = true; // fals ein Mussfeld nicht gefüllt ist
@@ -525,13 +465,10 @@ public class AngebotErstellen extends CustomHorizontalLayout implements View, Re
 						failNumberFormat.setStyleName("failure");
 						failNumberFormat.show(Page.getCurrent());
 						return;
-						
 					}
 					
 					try { //falls in Anzahl Mitbewohner keine richtige Zahl eingetragen wurde
-						
 						currentOffer.setNumberOfRoommate(Integer.parseInt(roomMates.getValue()));
-						
 					} catch (Exception e) {
 						
 						Notification failNumberFormat = new Notification("Bitte überprüfen Sie Ihre Eingaben.");
@@ -539,49 +476,38 @@ public class AngebotErstellen extends CustomHorizontalLayout implements View, Re
 						failNumberFormat.setStyleName("failure");
 						failNumberFormat.show(Page.getCurrent());
 						return;
-						
 					}
 					
 					try { //Start-Datum validieren
-						
 						Format.dateFormat(startDate.getValue());
 						currentOffer.setStartDate(startDate.getValue());
-						
 					} catch (Exception e) {
 						if(e.getClass().equals(NullPointerException.class)) {
-							
 							Notification failNotFilled = new Notification("Bitte füllen Sie alle Mussfelder*", Type.HUMANIZED_MESSAGE);
 							failNotFilled.setStyleName("failure");
 							failNotFilled.setDelayMsec(300);
 							failNotFilled.show(Page.getCurrent());
 							return;
-						
 						} else {
-							
 							Notification failNotFilled = new Notification("Bitte geben Sie ein gültiges Datum an!", Type.HUMANIZED_MESSAGE);
 							failNotFilled.setStyleName("failure");
 							failNotFilled.setDelayMsec(300);
 							failNotFilled.show(Page.getCurrent());
 							return;
-							
 						}	
 					}
 					try { //End-Datum validieren
-						
 						Format.dateFormat(endDate.getValue());
 						currentOffer.setEndDate(endDate.getValue());
-						
 					} catch (Exception e) {
 						if(e.getClass().equals(NullPointerException.class)) {
 							//nix, da End-Datum optional ist
 						} else {
-							
 							Notification failNotFilled = new Notification("Bitte geben Sie ein gültiges Datum an!", Type.HUMANIZED_MESSAGE);
 							failNotFilled.setStyleName("failure");
 							failNotFilled.setDelayMsec(300);
 							failNotFilled.show(Page.getCurrent());
 							return;
-							
 						}	
 					}
 					
@@ -603,7 +529,6 @@ public class AngebotErstellen extends CustomHorizontalLayout implements View, Re
 			        String t = text.getValue().replace("<br>", "\n");
 			        String tx = Jsoup.parse(t).text();
 					currentOffer.setText(tx);
-					
 					currentOffer.setInactive(inactive.getValue());
 					
 					if(lat != null){
@@ -619,7 +544,6 @@ public class AngebotErstellen extends CustomHorizontalLayout implements View, Re
 						currentOffer.setLongitude(BigDecimal.valueOf(l.getLon()));
 					}
 					
-					
 					try {
 						VaadinSession.getCurrent().getLockInstance().lock();
 						VaadinSession.getCurrent().getSession().setAttribute("buttonClicked", true);
@@ -627,9 +551,7 @@ public class AngebotErstellen extends CustomHorizontalLayout implements View, Re
 						VaadinSession.getCurrent().getLockInstance().unlock();
 					}
 					
-					
 					if (new OfferProvider().alterOffer(currentOffer)) { //neues Angebot in die DB schreiben
-						
 						Offer o = new OfferProvider().find(currentOffer.getIdOffer());
 						
 						Notification success = new Notification("Ihr neues Angebot wurde gespeichert.", Type.HUMANIZED_MESSAGE);
@@ -642,16 +564,12 @@ public class AngebotErstellen extends CustomHorizontalLayout implements View, Re
 						getUI().getNavigator().navigateTo(name);
 						
 					} else { //Fehler beim DB-Zugriff
-						
 						Notification failDB = new Notification("Das Angebot konnte nicht gespeichert werden.", Type.HUMANIZED_MESSAGE);
 						failDB.setStyleName("failure");
 						failDB.setDelayMsec(300);
 						failDB.show(Page.getCurrent());
-						
 					}
-
 				} else {
-					
 					// Sind nicht alle Mussfelder gefüllt, wird eine Nachricht
 					// auf dem Bildschirm ausgegeben
 					//Notification.show("");
@@ -659,9 +577,7 @@ public class AngebotErstellen extends CustomHorizontalLayout implements View, Re
 					failNotFilled.setStyleName("failure");
 					failNotFilled.setDelayMsec(300);
 					failNotFilled.show(Page.getCurrent());
-					
 				}
-					
 			}
 		});
 		
@@ -672,6 +588,8 @@ public class AngebotErstellen extends CustomHorizontalLayout implements View, Re
 		abbrechen.setImmediate(true);
 		abbrechen.setDescription("Abbrechen der Bearbeitung. Ihre Änderungen werden nicht gespeichert.");
 		abbrechen.addClickListener(new Button.ClickListener() {
+			private static final long serialVersionUID = 1L;
+
 			public void buttonClick(ClickEvent event) {
 
 				new OfferProvider().removeOffer(currentOffer);
@@ -691,7 +609,6 @@ public class AngebotErstellen extends CustomHorizontalLayout implements View, Re
 				String name = "Startseite";
 				getUI().getNavigator().addView(name, new Startseite());
 				getUI().getNavigator().navigateTo(name);
-
 			}
 		});
 		
@@ -704,7 +621,6 @@ public class AngebotErstellen extends CustomHorizontalLayout implements View, Re
 		//Foto-Komponente
 		fotoKomponente = new Fotos(currentOffer, this);
 		content.addComponent(fotoKomponente);
-
 	}
 
 	public void setContent(final Offer offer) {
@@ -714,7 +630,6 @@ public class AngebotErstellen extends CustomHorizontalLayout implements View, Re
 		title.setHeight("-1px");
 		title.setValue("Wohnungsangebot bearbeiten");
 		title.addStyleName("title");
-		
 		content.addComponent(title);
 		
 		// Titel + Adresse
@@ -764,56 +679,45 @@ public class AngebotErstellen extends CustomHorizontalLayout implements View, Re
 		
 		//GoogleMaps
 		if(offer.getLatitude()!=null && offer.getLatitude()!=BigDecimal.valueOf(0.0)){
-
-		    /** The kakola marker. */
-		    GoogleMapMarker kakolaMarker = new GoogleMapMarker(
+		
+		//Marker
+	    GoogleMapMarker kakolaMarker = new GoogleMapMarker(
 		            "Hier befindet sich die Wohnung", new LatLon(offer.getLatitude().doubleValue(), offer.getLongitude().doubleValue()),
 		            false, null);
-		    
+	        
+        GoogleMap googleMap = new GoogleMap(null, null, null);
+        googleMap.setCenter(new LatLon(offer.getLatitude().doubleValue(), offer.getLongitude().doubleValue()));
+        googleMap.setZoom(10);
+        googleMap.setSizeFull();
+        kakolaMarker.setAnimationEnabled(false);
+        googleMap.addMarker(kakolaMarker);
+        
+        googleMap.setMinZoom(4);
+        googleMap.setMaxZoom(16);
+        googleMap.setHeight("500px");
+        googleMap.setWidth("500px");
+        content.addComponent(googleMap);
+	        
+        googleMap.addMarkerDragListener(new MarkerDragListener() {
+			private static final long serialVersionUID = 1L;
 
-	        
-	        GoogleMap googleMap = new GoogleMap(null, null, null);
-	        googleMap.setCenter(new LatLon(offer.getLatitude().doubleValue(), offer.getLongitude().doubleValue()));
-	        googleMap.setZoom(10);
-	        googleMap.setSizeFull();
-
-	        kakolaMarker.setAnimationEnabled(false);
-	        googleMap.addMarker(kakolaMarker);
-	        
-	        googleMap.setMinZoom(4);
-	        googleMap.setMaxZoom(16);
-	        googleMap.setHeight("500px");
-	        googleMap.setWidth("500px");
-	        content.addComponent(googleMap);
-	        
-	        googleMap.addMarkerDragListener(new MarkerDragListener() {
-				@Override
-				public void markerDragged(GoogleMapMarker draggedMarker,
-						LatLon oldPosition) {
-					lat = draggedMarker.getPosition().getLat();
-					lon = draggedMarker.getPosition().getLon();
-					// TODO Auto-generated method stub
-					System.out.println(draggedMarker.getPosition().getLat()+"---"+draggedMarker.getPosition().getLon());
-					
-				}
-	        });
+			@Override
+			public void markerDragged(GoogleMapMarker draggedMarker, LatLon oldPosition) {
+				lat = draggedMarker.getPosition().getLat();
+				lon = draggedMarker.getPosition().getLon();
+			}
+	     });
 
 		}else{
-			 /** The kakola marker. */
 		    GoogleMapMarker kakolaMarker = new GoogleMapMarker(
 		            "Standort ändern", new LatLon(49.00705, 8.40287),
 		            false, null);
-		    
-
-	        
 	        GoogleMap googleMap = new GoogleMap(null, null, null);
 	        googleMap.setCenter(new LatLon(49.00705, 8.40287));
 	        googleMap.setZoom(10);
 	        googleMap.setSizeFull();
-
 	        kakolaMarker.setAnimationEnabled(false);
 	        googleMap.addMarker(kakolaMarker);
-	        
 	        googleMap.setMinZoom(4);
 	        googleMap.setMaxZoom(16);
 	        googleMap.setHeight("500px");
@@ -821,19 +725,17 @@ public class AngebotErstellen extends CustomHorizontalLayout implements View, Re
 	        content.addComponent(googleMap);
 	        
 	        googleMap.addMarkerDragListener(new MarkerDragListener() {
+				private static final long serialVersionUID = 1L;
+
 				@Override
 				public void markerDragged(GoogleMapMarker draggedMarker,
 						LatLon oldPosition) {
 					lat = draggedMarker.getPosition().getLat();
 					lon = draggedMarker.getPosition().getLon();
-					// TODO Auto-generated method stub
-					System.out.println(draggedMarker.getPosition().getLat()+"---"+draggedMarker.getPosition().getLon());
-					
 				}
 	        });
 		}
 		content.addComponent(new Label());
-        
 
 		// Allgemeine Informationen
 		HorizontalLayout label = new HorizontalLayout();
@@ -903,17 +805,12 @@ public class AngebotErstellen extends CustomHorizontalLayout implements View, Re
 		}
 		bond.addStyleName("AngeboteTextField");
 		z2.addComponent(bond);
-		//TextField cost = new TextField("Sonstige einmalige Kosten (in €):");
-		//cost.addStyleName("AngeboteTextField");
-		//z3.addComponent(cost);
 
 		content.addComponent(label);
-		//content.addComponent(new Label());
 		content.addComponent(z1);
 		content.addComponent(z2);
 		content.addComponent(z3);
 		content.addComponent(new Label());
-
 		content.addComponent(date);
 		content.addComponent(hl1);
 		content.addComponent(new Label());
@@ -958,7 +855,6 @@ public class AngebotErstellen extends CustomHorizontalLayout implements View, Re
 		hl2.addComponent(smoker);
 		hl2.addComponent(pets);
 		content.addComponent(angaben);
-		//content.addComponent(new Label());
 		content.addComponent(hl2);
 		content.addComponent(new Label());
 		content.addComponent(genders);
@@ -974,36 +870,8 @@ public class AngebotErstellen extends CustomHorizontalLayout implements View, Re
 		text.setWidth("100%");
 		
 		content.addComponent(anzeigetext);
-		//content.addComponent(new Label());
 		content.addComponent(text);
 		content.addComponent(new Label());
-		
-	/*	//Bilder
-		Label bilder = new Label("Bilder hinzufügen");
-		bilder.addStyleName("AbschnittLabel");
-
-		Upload bilderup = new Upload("Fotos hochladen (max. 5 Fotos pro Angebot):", this);
-		bilderup.addSucceededListener(this);
-				
-		content.addComponent(bilder);
-		//content.addComponent(new Label());
-		content.addComponent(bilderup);
-		content.addComponent(new Label());		
-		
-		//Bilder Löschen
-		Label bilderLoeschen = new Label("Aktuelle Bilder");
-		bilderLoeschen.addStyleName("AbschnittLabel");
-		content.addComponent(bilderLoeschen);
-		List<Photo> photo = offer.getPhotos();
-		Iterator<Photo> it = photo.iterator();
-		if(!it.hasNext()){
-			content.addComponent(new Label("Es wurden noch keine Bilder zu diesem Angebot hochgeladen."));
-		}else{
-			while(it.hasNext()){
-				Fotozeile f = new Fotozeile(it.next(), offer);
-				content.addComponent(f);
-			}
-		}*/
 		content.addComponent(new Label());	
 
 		// Button speichern/aktivieren/deaktivieren
@@ -1017,6 +885,8 @@ public class AngebotErstellen extends CustomHorizontalLayout implements View, Re
 		save.setIcon(FontAwesome.SAVE);
 		save.addStyleName("BearbeitenButton");
 		save.addClickListener(new Button.ClickListener() {
+			private static final long serialVersionUID = 1L;
+
 			public void buttonClick(ClickEvent event) {
 				// Überprüfung ob alle Mussfelder gefüllt sind
 				boolean valid = true; // fals ein Mussfeld nicht gefüllt ist
@@ -1116,27 +986,20 @@ public class AngebotErstellen extends CustomHorizontalLayout implements View, Re
 							// Angebot erstellt
 					
 					try { //Zahlen formatieren
-						
 						currentOffer.setSquareMetre(Format.floatFormat(squareMetre.getValue()));
 						currentOffer.setPrice(Format.floatFormat(price.getValue()));
 						currentOffer.setBond(Format.floatFormat(bond.getValue()));
-						
 					} catch (NumberFormatException nfe) { //falls in Zahlenfelder keine Zahlen eingetragen wurden
-						
 						Notification not = new Notification("Bitte überprüfen Sie Ihre Eingaben und benutzen Sie gültige Zahlenformate.");
 						not.setDelayMsec(300);
 						not.setStyleName("failure");
 						not.show(Page.getCurrent());
 						return;
-						
 					}
 					
 					try {
-						
 						currentOffer.setNumberOfRoommate(Integer.parseInt(roomMates.getValue()));
-						
 					} catch(Exception e) {
-						
 						Notification not = new Notification("Bitte überprüfen Sie Ihre Eingaben.");
 						not.setDelayMsec(300);
 						not.setStyleName("failure");
@@ -1145,50 +1008,39 @@ public class AngebotErstellen extends CustomHorizontalLayout implements View, Re
 					}
 					
 					try { //Start-Datum validieren
-						
 						Format.dateFormat(startDate.getValue());
 						currentOffer.setStartDate(startDate.getValue());
-						
 					} catch (Exception e) {
 						if(e.getClass().equals(NullPointerException.class)) {
-							
 							Notification failNotFilled = new Notification("Bitte füllen Sie alle Mussfelder*", Type.HUMANIZED_MESSAGE);
 							failNotFilled.setStyleName("failure");
 							failNotFilled.setDelayMsec(300);
 							failNotFilled.show(Page.getCurrent());
 							return;
-						
 						} else {
-							
 							Notification failNotFilled = new Notification("Bitte geben Sie ein gültiges Datum an!", Type.HUMANIZED_MESSAGE);
 							failNotFilled.setStyleName("failure");
 							failNotFilled.setDelayMsec(300);
 							failNotFilled.show(Page.getCurrent());
 							return;
-							
 						}	
 					}
 					try { //End-Datum validieren
-						
 						Format.dateFormat(endDate.getValue());
 						currentOffer.setEndDate(endDate.getValue());
-						
 					} catch (Exception e) {
 						if(e.getClass().equals(NullPointerException.class)) {
 							//nix, da End-Datum optional ist
 						} else {
-							
 							Notification failNotFilled = new Notification("Bitte geben Sie ein gültiges Datum an!", Type.HUMANIZED_MESSAGE);
 							failNotFilled.setStyleName("failure");
 							failNotFilled.setDelayMsec(300);
 							failNotFilled.show(Page.getCurrent());
 							return;
-							
 						}	
 					}
 					
 					currentOffer.setTitle(titel.getValue());
-					
 					currentOffer.setType(type);
 					currentOffer.setInternet(internet.getValue());
 					currentOffer.setFurnished(furnished.getValue());
@@ -1214,7 +1066,6 @@ public class AngebotErstellen extends CustomHorizontalLayout implements View, Re
 					}
 					
 					if (new OfferProvider().alterOffer(currentOffer)) { //neues Angebot in die DB schreiben
-						
 						Offer o = new OfferProvider().find(currentOffer.getIdOffer());
 						
 						Notification success = new Notification("Ihre Änderungen an diesem Angebot wurden gespeichert.", Type.HUMANIZED_MESSAGE);
@@ -1227,23 +1078,18 @@ public class AngebotErstellen extends CustomHorizontalLayout implements View, Re
 						getUI().getNavigator().navigateTo(name);
 						
 					} else { //Fehler beim DB-Zugriff
-						
 						Notification failDB = new Notification("Das Angebot konnte nicht geändert werden.", Type.HUMANIZED_MESSAGE);
 						failDB.setStyleName("failure");
 						failDB.setDelayMsec(300);
 						failDB.show(Page.getCurrent());
-						
 					}
-
 				} else {
-					
 					// Sind nicht alle Mussfelder gefüllt, wird eine Nachricht
 					// auf dem Bildschirm ausgegeben
 					Notification failNotFilled = new Notification("Bitte füllen Sie alle Mussfelder*", Type.HUMANIZED_MESSAGE);
 					failNotFilled.setStyleName("failure");
 					failNotFilled.setDelayMsec(300);
 					failNotFilled.show(Page.getCurrent());
-					
 				}
 			}
 		});
@@ -1321,39 +1167,28 @@ public class AngebotErstellen extends CustomHorizontalLayout implements View, Re
 
 	@Override
 	public OutputStream receiveUpload(String filename, String mimeType) {
-		
 		try {
-			
 			if (mimeType.contains("image")) {
-				
 				tmpImg = new ByteArrayOutputStream();
 				return tmpImg;
-				
 			} else {
-				
 				Notification failFileFormat = new Notification("Bitte laden Sie eine Bilddatei hoch!", Type.HUMANIZED_MESSAGE);
 				failFileFormat.setStyleName("failure");
 				failFileFormat.setDelayMsec(300);
 				failFileFormat.show(Page.getCurrent());
 				return null;
-				
 			}
-			
 		} catch (Exception e) {
-			
 			e.printStackTrace();
 			return null;
-			
 		}
 	}
 
 	@Override
 	public void uploadSucceeded(SucceededEvent event) {
-		
 		OfferProvider offerProv = new OfferProvider();
 
 		if(offerProv.findById(currentOffer.getIdOffer()).getPhotos() == null || offerProv.findById(currentOffer.getIdOffer()).getPhotos().size() < 5 ) {
-		
 			if (tmpImg != null) { // ist null, wenn kein Bild-Dateiformat hochgeladen wurde (siehe Methode receiveUpload)
 				
 				byte[] tmpImgBytes = tmpImg.toByteArray();
@@ -1366,7 +1201,6 @@ public class AngebotErstellen extends CustomHorizontalLayout implements View, Re
 					failFileSize.setDelayMsec(300);
 					failFileSize.show(Page.getCurrent());
 					return;
-					
 				}
 				
 				Photo newPhoto = new Photo();
@@ -1386,49 +1220,28 @@ public class AngebotErstellen extends CustomHorizontalLayout implements View, Re
 				not.setStyleName("success");
 				not.setDelayMsec(300);
 				not.show(Page.getCurrent());
-				
-				OfferProvider op = new OfferProvider();
-				currentOffer = op.find(currentOffer.getIdOffer());
-				
-				Fotos newFotos = new Fotos(currentOffer, this);
-				//this.replaceComponent(f, newFotos);
-			//	this.removeComponent(fotoKomponente);
-				//fotoKomponente.setImmediate(true);
-				this.removeComponent(fotoKomponente);
-			//	this.addComponent(newFotos);
-
-			//	Page.getCurrent().reload();
-				
-				
 		    }
 			
 		} else {
-			
 			Notification not = new Notification("Sie haben bereits fünf Bilder zu diesem Angebot hochgeladen.",Type.HUMANIZED_MESSAGE);//Meldung an den Nutzer
 			not.setDelayMsec(300);
 			not.setStyleName("failure");
 			not.show(Page.getCurrent());
-			
 		} 
-			
 	}
 
+	@SuppressWarnings("unused")
 	private byte[] resizeImage(byte[] imageData) {
-		
 		ByteArrayInputStream in = new ByteArrayInputStream(imageData);
 		ByteArrayOutputStream out = new ByteArrayOutputStream();
 		Image imageWorkingCopy;
 		int width = 700;
 		int height = 483;
 		try {
-			
 			imageWorkingCopy = ImageIO.read(in);
-			
 		} catch (IOException e) {
-
 			e.printStackTrace();
 			return null;
-			
 		}
 		
 		// TODO nur wenn Bild größer ist
@@ -1437,17 +1250,11 @@ public class AngebotErstellen extends CustomHorizontalLayout implements View, Re
 		imageBuffered.getGraphics().drawImage(imageScaled, 0, 0, null);
 		
 		try {
-			
 			ImageIO.write(imageBuffered, " ", out);
-			
 		} catch (IOException e) {
-			
 			e.printStackTrace();
 			return null;
 		}
-		
 		return out.toByteArray();
-		
 	}
-
 }
