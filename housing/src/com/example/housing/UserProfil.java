@@ -1,15 +1,36 @@
 package com.example.housing;
 
+import java.lang.reflect.Method;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.List;
+import java.util.Map;
+
+import org.dom4j.Node;
+import org.hibernate.EntityMode;
+import org.hibernate.FetchMode;
+import org.hibernate.HibernateException;
+import org.hibernate.MappingException;
+import org.hibernate.engine.spi.CascadeStyle;
+import org.hibernate.engine.spi.Mapping;
+import org.hibernate.engine.spi.SessionFactoryImplementor;
+import org.hibernate.engine.spi.SessionImplementor;
+import org.hibernate.metamodel.relational.Size;
+import org.hibernate.type.AbstractComponentType;
+import org.hibernate.type.ForeignKeyDirection;
 
 import com.example.housing.data.model.User;
 import com.example.housing.data.provider.UserProvider;
+import com.vaadin.data.Property.ValueChangeEvent;
+import com.vaadin.data.Property.ValueChangeListener;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.server.Page;
 import com.vaadin.server.VaadinSession;
 import com.vaadin.ui.Button;
+import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.GridLayout;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
@@ -36,6 +57,8 @@ public class UserProfil extends CustomHorizontalLayout implements View {
 	private Label lastname;
 	private Label email;
 	private Label accessLevel;
+	private CheckBox offers;
+	private UserAngebote offersList;
 
 	public UserProfil(User u) {
 		this.u = u;
@@ -52,9 +75,13 @@ public class UserProfil extends CustomHorizontalLayout implements View {
 		title.setImmediate(false);
 		title.setWidth("-1px");
 		title.setHeight("-1px");
-		title.setValue("User-Profil, ID: " + u.getIdUser());
+		title.setValue("User-Profil");
 		title.addStyleName("title");
 		content.addComponent(title);
+		
+		Label info = new Label("Persönliche Daten");
+		info.setStyleName("AbschnittLabel");
+		content.addComponent(info);
 		
 		GridLayout gridProfile = new GridLayout(2,5);
 		
@@ -102,9 +129,7 @@ public class UserProfil extends CustomHorizontalLayout implements View {
 		gridProfile.addComponent(new Label("Berechtigungslevel: "), 0, 4);
 		gridProfile.addComponent(accessLevel, 1, 4);
 		
-		VerticalLayout buttonZeilen = new VerticalLayout();
-		
-		HorizontalLayout buttonSpalten = new HorizontalLayout();
+		content.addComponent(gridProfile);
 		
 		Button dhStud = new Button();
 		dhStud.setStyleName("BearbeitenButton");
@@ -164,7 +189,31 @@ public class UserProfil extends CustomHorizontalLayout implements View {
 			dhStud.setCaption("Als DH-Student freischalten");
 			dhStud.setEnabled(false);
 		}
-		buttonZeilen.addComponent(dhStud);
+		content.addComponent(dhStud);
+		content.addComponent(new Label());
+		
+		//Angebote des Users
+		offersList = new UserAngebote(u);
+		offersList.setVisible(false);
+		
+		offers = new CheckBox("Angebote anzeigen", false);
+		offers.addValueChangeListener(new ValueChangeListener() {
+			
+			@Override
+			public void valueChange(ValueChangeEvent event) {
+				final boolean value = (boolean) event.getProperty().getValue();
+				if(value) {
+					offersList.setVisible(true);
+				} else {
+					offersList.setVisible(false);
+				}	
+			}
+		});
+		content.addComponent(offers);
+		content.addComponent(offersList);
+		content.addComponent(new Label());
+		
+		HorizontalLayout buttons = new HorizontalLayout();
 		
 		Button contact = new Button();
 		contact.setStyleName("BearbeitenButton");
@@ -186,7 +235,7 @@ public class UserProfil extends CustomHorizontalLayout implements View {
 				
 			}
 		});
-		buttonSpalten.addComponent(contact);
+		buttons.addComponent(contact);
 		
 		Button delete = new Button();
 		delete.setStyleName("loeschen");
@@ -275,10 +324,8 @@ public class UserProfil extends CustomHorizontalLayout implements View {
 			}
 		});
 		
-		buttonSpalten.addComponent(delete);
-		
-		buttonZeilen.addComponent(buttonSpalten);
-		content.addComponent(buttonZeilen);
+		buttons.addComponent(delete);
+		content.addComponent(buttons);
 	}
 	
 	private void daten() {

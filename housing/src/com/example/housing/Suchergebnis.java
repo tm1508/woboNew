@@ -35,8 +35,8 @@ public class Suchergebnis extends CustomHorizontalLayout implements View {
 	private String sort= null;//Auswahlbox für Sortierung der Liste
 	private List<Offer> angebote;
 	final GoogleMap googleMap = new GoogleMap(null, null, null);
-	final Button karteEinblenden = new Button("Karte einblenden");
-	final Button karteausblenden = new Button("Karte ausblenden");
+//	final Button karteEinblenden = new Button("Karte einblenden");
+//	final Button karteausblenden = new Button("Karte ausblenden");
 	final CheckBox karteAnzeigen = new CheckBox("Ergebnisse auf der Karte anzeigen", false);
 
 	

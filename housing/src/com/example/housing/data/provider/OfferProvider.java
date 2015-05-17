@@ -134,7 +134,7 @@ public class OfferProvider extends BaseProvider<Offer> implements Serializable {
 	 * @param user the user
 	 * @return the list
 	 */
-	public List<Offer> findOwnOffers(User user) {
+	public List<Offer> findByUser(User user) {
 		
 		if (!em.isOpen()) {
 
@@ -145,9 +145,9 @@ public class OfferProvider extends BaseProvider<Offer> implements Serializable {
 		Query q = em.createQuery("SELECT o FROM Offer o WHERE o.offer_idUser =:user AND o.title NOT LIKE ' '");
 		q.setParameter("user", user);
 		@SuppressWarnings("unchecked")
-		List<Offer> ownOffers = (List<Offer>) q.getResultList();
+		List<Offer> offers = (List<Offer>) q.getResultList();
 		
-		return ownOffers;
+		return offers;
 		
 	}
 
