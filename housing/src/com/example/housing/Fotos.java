@@ -104,14 +104,7 @@ public class Fotos extends CustomComponent {
 		}
 		
 
-
-
 	}
-	
-	
-
-
-	
 
 	/**
 	 * Builds the main layout.

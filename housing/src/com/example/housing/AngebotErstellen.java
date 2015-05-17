@@ -22,6 +22,7 @@ import com.example.housing.data.provider.OfferProvider;
 import com.example.housing.data.provider.PhotoProvider;
 import com.example.housing.utility.Format;
 import com.example.housing.utility.MapAddressConverter;
+import com.vaadin.annotations.PreserveOnRefresh;
 import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;
 import com.vaadin.data.Validator.InvalidValueException;
@@ -43,6 +44,7 @@ import com.vaadin.ui.Label;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.RichTextArea;
 import com.vaadin.ui.TextField;
+import com.vaadin.ui.UI;
 import com.vaadin.ui.Upload;
 import com.vaadin.ui.Notification.Type;
 import com.vaadin.ui.Upload.Receiver;
@@ -55,6 +57,7 @@ import com.vaadin.ui.Button.ClickEvent;
 /**
  * The Class AngebotErstellen.
  */
+@PreserveOnRefresh
 public class AngebotErstellen extends CustomHorizontalLayout implements View, Receiver, SucceededListener {
 
 	private static final long serialVersionUID = 1L;
@@ -118,6 +121,14 @@ public class AngebotErstellen extends CustomHorizontalLayout implements View, Re
 		currentOffer.setOffer_idUser((User) VaadinSession.getCurrent().getSession().getAttribute("user"));
 		new OfferProvider().addOffer(currentOffer);
 		
+		content = super.initCustomHorizontalLayout();
+		setContent();
+	}
+	
+	public AngebotErstellen(Offer offer, boolean erstellen){
+		currentOffer = offer;
+		newPhotos = new ArrayList();
+
 		content = super.initCustomHorizontalLayout();
 		setContent();
 	}
@@ -1279,10 +1290,9 @@ public class AngebotErstellen extends CustomHorizontalLayout implements View, Re
 		buttons.addComponent(abbrechen);
 		content.addComponent(buttons);
 		content.addComponent(new Label());
-
+		
 		//Foto-Komponente
 		fotoKomponente = new Fotos(currentOffer, this);
-		fotoKomponente.setImmediate(true);
 		content.addComponent(fotoKomponente);
 			
 	}
@@ -1382,9 +1392,14 @@ public class AngebotErstellen extends CustomHorizontalLayout implements View, Re
 				
 				Fotos newFotos = new Fotos(currentOffer, this);
 				//this.replaceComponent(f, newFotos);
+			//	this.removeComponent(fotoKomponente);
+				//fotoKomponente.setImmediate(true);
 				this.removeComponent(fotoKomponente);
-				this.addComponent(newFotos);
+			//	this.addComponent(newFotos);
 
+			//	Page.getCurrent().reload();
+				
+				
 		    }
 			
 		} else {

@@ -17,24 +17,15 @@ import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Button.ClickEvent;
 
-
-/**
- * The Class Startseite.
- */
 public class Startseite extends CustomHorizontalLayout implements View{
 	private static final long serialVersionUID = 1L;
-
-	/** The content. */
-	VerticalLayout content;
+	private VerticalLayout content;
 	
 	public Startseite(){
 		content = super.initCustomHorizontalLayout();
 		setContent();
 	}
 	
-	/**
-	 * Sets the content.
-	 */
 	public void setContent(){
 				
 		// title
@@ -53,13 +44,11 @@ public class Startseite extends CustomHorizontalLayout implements View{
 		
 		//Begrüßungstext
 		Accordion textAccordion = new Accordion();
-		
 		textAccordion.setHeight("400px");
 		textAccordion.setStyleName("startseite");
-	
 		
 			//Tab 1
-			final VerticalLayout tab1Layout = new VerticalLayout();
+			VerticalLayout tab1Layout = new VerticalLayout();
 	        tab1Layout.setMargin(true);
 	        tab1Layout.addComponent(new Label("Herzlich Willkommen auf unserer Webseite!"));
 	        	Label label = new Label("Auf unserer Webseite können Sie einen Nach- oder Zwischenmieter für Ihre Wohnung oder Ihr Zimmer finden. Als duale Studentin/ dualer Student der DHBW Karlsruhe können Sie die passende Wohnung oder das passende Zimmer finden (auch zur Zwischenmiete) und den Vermieter kontaktieren.");
@@ -67,7 +56,7 @@ public class Startseite extends CustomHorizontalLayout implements View{
 	        textAccordion.addTab(tab1Layout, "Herzlich Willkommen",FontAwesome.HEART);//Tab 1 hinzufügen
          
 	        //Tab 2
-			final VerticalLayout tab2Layout = new VerticalLayout();
+			VerticalLayout tab2Layout = new VerticalLayout();
 	        tab2Layout.setMargin(true);
 		        Label label_1 = new Label("Wenn Sie eine Wohnung vermieten wollen sind Sie bei uns genau richtig! Jeder registrierte Benutzer kann Wohnungen anbieten. Ihre Wohung oder Ihr Zimmer wird ausschließlich an Studierende der DHBW Karlsruhe vermietet. Registrieren Sie sich bitte hier.");
 		        tab2Layout.addComponent(label_1);
@@ -90,11 +79,10 @@ public class Startseite extends CustomHorizontalLayout implements View{
 				});
 				
 				tab2Layout.addComponent(registrierungLink);
-				
 			textAccordion.addTab(tab2Layout, "Für Vermieter...",FontAwesome.HOME);//Tab 2 hinzufügen
         
 	        //Tab 3
-			final VerticalLayout tab3Layout = new VerticalLayout();
+			VerticalLayout tab3Layout = new VerticalLayout();
 	        tab3Layout.setMargin(true);
 	        	tab3Layout.addComponent(new Label("Für alle, die eine Wohnung suchen...: Sie studieren an der DHBW Karlsruhe? Dann finden Sie bei uns die passende Wohnung oder das passende Zimmer. Wir haben ein großes Angebot an Zimmern und Wohnungen..."));
 	
@@ -120,7 +108,7 @@ public class Startseite extends CustomHorizontalLayout implements View{
 			textAccordion.addTab(tab3Layout, "Für Mieter...",FontAwesome.SEARCH);//Tab 3 hinzufügen
         
 	        //Tab 4
-			final VerticalLayout tab3layout = new VerticalLayout();
+			VerticalLayout tab3layout = new VerticalLayout();
 	        tab3layout.setMargin(true);
 		        Label label_3 = new Label("Wir sind Studierende der DHBW Karlsruhe...");
 		        Label label_4 = new Label("Sie haben Anregungen, Wünsche oder Kritik? Bitte kontaktieren Sie uns!");
@@ -210,16 +198,10 @@ public class Startseite extends CustomHorizontalLayout implements View{
 		}
 		
         panelNeusteANgebote.setContent(layoutNuesteAnngebote);
-		
 		content.addComponent(panelNeusteANgebote);
- 
     }
  
-	/* (non-Javadoc)
-	 * @see com.vaadin.navigator.View#enter(com.vaadin.navigator.ViewChangeListener.ViewChangeEvent)
-	 */
 	@Override
 	public void enter(ViewChangeEvent event) {
-		// TODO Auto-generated method stub	
 	}   
 }

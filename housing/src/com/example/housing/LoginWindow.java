@@ -18,49 +18,25 @@ import com.vaadin.ui.Window;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Notification.Type;
 
-// TODO: Auto-generated Javadoc
-/**
- * The Class LoginWindow.
- * @author MWI Wohungsbörse 2014
- * @version 1.0
- * @see com.example.housing.Registrierung
- */
 @Theme("housing")
 public class LoginWindow extends Window{
 	private static final long serialVersionUID = 1L;
 
-	/** The title. */
-	public static Label title;
-	
-	/** The email_1. */
-	public static TextField email_1;
-	
-	/** The password_1. */
-	public static PasswordField password_1;
-	
-	/** The login button. */
-	public static Button loginButton;
-	
-	/** The link. */
-	public static Button link;
-	
-	/**
-	 * Instantiates a new login window.
-	 */
+	public Label title;
+	public TextField email_1;
+	public PasswordField password_1;
+	public Button loginButton;
+	public Button link;
+
 	public LoginWindow() {
 		super("Bitte loggen Sie sich ein...");
 		initialisieren();
 	}
 	
-	/**
-	 * Initialisieren.
-	 * @see com.vaadin.ui.Window
-	 */
 	public void initialisieren(){
 		this.center();
 		this.setHeight("50%");
 	    this.setWidth("30%");
-	    
 	    final VerticalLayout content = new VerticalLayout();
 	    content.setMargin(true);
 	    
@@ -95,7 +71,7 @@ public class LoginWindow extends Window{
 			content.addComponent(password_1);
 				
 			// loginButton
-			Button loginButton = new Button();
+			loginButton = new Button();
 			loginButton.setIcon(FontAwesome.UNLOCK_ALT);
 			loginButton.setStyleName("log");
 			loginButton.setCaption("Login");
@@ -106,10 +82,8 @@ public class LoginWindow extends Window{
 			content.addComponent(loginButton);
 			loginButton.addClickListener(new Button.ClickListener() {
 				private static final long serialVersionUID = 1L;
-
 				public void buttonClick(ClickEvent event) {
 					try{
-					
 						//1. User aus der Datenbank auslesen
 						User u = new UserProvider().findByEmail(email_1.getValue());
 						String code = GenerateCode.generateCode(email_1.getValue());
@@ -128,7 +102,6 @@ public class LoginWindow extends Window{
 									notif.show(Page.getCurrent());
 								}
 							}
-						
 						
 						//3. Prüfen ob Benutzer und Passwort stimmen (nur wenn das Konto aktiviert ist)
 						if(u.isActivated()){
@@ -190,7 +163,6 @@ public class LoginWindow extends Window{
 			link.setIcon(FontAwesome.EXTERNAL_LINK);
 			link.addClickListener(new Button.ClickListener(){
 				private static final long serialVersionUID = 1L;
-
 				public void buttonClick(ClickEvent event) {
 					ForgotPasswordWindow w = new ForgotPasswordWindow();//Intantiiert ein neues Fenster
 					UI.getCurrent().removeWindow(LoginWindow.this);//schließt das Loginfenster
@@ -199,8 +171,6 @@ public class LoginWindow extends Window{
 			});
 			
 			content.addComponent(link);
-			
 			this.setContent(content);    
-						
 	}	
 }
