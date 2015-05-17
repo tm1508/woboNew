@@ -9,41 +9,21 @@ import com.vaadin.ui.Label;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Button.ClickEvent;
 
-// TODO: Auto-generated Javadoc
-/**
- * The Class Startseite.
- */
 public class FAQ extends CustomHorizontalLayout implements View {
 	private static final long serialVersionUID = 1L;
-	/** The content. */
-	VerticalLayout content;
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * com.vaadin.navigator.View#enter(com.vaadin.navigator.ViewChangeListener
-	 * .ViewChangeEvent)
-	 */
+	private VerticalLayout content;
+
 	@Override
 	public void enter(ViewChangeEvent event) {
 	}
 
-	/**
-	 * Instantiates a new startseite.
-	 */
 	public FAQ() {
 		content = super.initCustomHorizontalLayout();
 		setContent();
 	}
 
-	/**
-	 * Sets the content.
-	 */
 	public void setContent() {
-
-	//	content = new VerticalLayout();
-	//	content.setMargin(true);
 
 		//Titel
 		Label title = new Label();
@@ -58,10 +38,8 @@ public class FAQ extends CustomHorizontalLayout implements View {
 		Accordion accordion = new Accordion();
 		accordion.setStyleName("startseite");
 
-		accordion.addTab(new Label(),
-				"Hier finden Sie häufig gestellte Fragen und Antworten",
-				FontAwesome.CHEVRON_CIRCLE_DOWN);
-		// Tab 1 ..zu Ihrem Account
+		accordion.addTab(new Label(),"Hier finden Sie häufig gestellte Fragen und Antworten",FontAwesome.CHEVRON_CIRCLE_DOWN);
+		// Tab 1 zu Ihrem Account
 		final VerticalLayout layout = new VerticalLayout();
 		layout.setMargin(true);
 
@@ -174,9 +152,7 @@ public class FAQ extends CustomHorizontalLayout implements View {
 		// Tab 4
 		final VerticalLayout layout_3 = new VerticalLayout();
 		layout_3.setMargin(true);
-		// TODO
-		final Label label_13 = new Label(
-				"Sollten Ihre Fragen nicht beantwortet sein, wenden Sie sich bitte an uns:");
+		final Label label_13 = new Label("Sollten Ihre Fragen nicht beantwortet sein, wenden Sie sich bitte an uns:");
 		//Link zum Fenster "Passwort vergessen"
 		Button link_3 = new Button();
 		link_3.setStyleName("link");
@@ -197,12 +173,8 @@ public class FAQ extends CustomHorizontalLayout implements View {
 		layout_3.addComponent(label_13);
 		layout_3.addComponent(link_3);
 
-		accordion.addTab(layout_3, "Mehr Hilfe?", FontAwesome.THUMB_TACK);// Tab
-																			// 4
-																			// hinzufügen
+		accordion.addTab(layout_3, "Mehr Hilfe?", FontAwesome.THUMB_TACK);// Tab 4 hinzufügen
 
 		content.addComponent(accordion);// verschiedene Kategorien hinzufügen
-
 	}
-
 }

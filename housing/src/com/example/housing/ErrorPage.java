@@ -6,48 +6,22 @@ import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.VerticalLayout;
 
-/**
- * The Class Error Page.
- * 
- * @author MWI Wohungsbörse 2014
- * @version 1.0
- * @see com.example.housing.HousingUI
- */
-@SuppressWarnings("serial")
 public class ErrorPage extends CustomHorizontalLayout implements View {
+	private static final long serialVersionUID = 1L;
 
-	/** The content. */
 	private VerticalLayout content;// Layout fuer den Inhalt
-
-	/** The title. */
 	private Label titleLabel;
-
-	/** The text. */
 	private Label errorTextLabel;
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * com.vaadin.navigator.View#enter(com.vaadin.navigator.ViewChangeListener
-	 * .ViewChangeEvent)
-	 */
 	@Override
 	public void enter(ViewChangeEvent event) {
-
 	}
 
-	/**
-	 * Instantiates a new ErrorPage.
-	 */
 	public ErrorPage() {
 		content = super.initCustomHorizontalLayout();
 		setContent();
 	}
 
-	/**
-	 * Sets the Content of the page.
-	 */
 	public void setContent() {
 
 		titleLabel = new Label();
@@ -65,9 +39,9 @@ public class ErrorPage extends CustomHorizontalLayout implements View {
 		errorTextLabel
 				.setValue("Das tut uns leid und hätte nicht passieren dürfen!<br/>"
 						+ "<br/><br/> Der Fehler kann unter anderem folgende Ursachen haben:"
-						+ "<br/><br/> - Sie wollten zu einer nicht verfügbaren Seite navigieren. Beispielsweise können Sie die Profilseite nur aufrufen, wenn Sie eingeloggt sind."
-						+ "<br/><br/> - Das Hochladen eines Bildes hat den Fehler verursacht. Bitte versuchen Sie es später erneut."
-						+ "<br/><br/> - Es gab einen Serverfehler. Sollte der Fehler häufiger auftreten, wenden Sie sich bitte an den Administrator.");
+						+ "<br/><br/> -   Sie wollten zu einer nicht verfügbaren Seite navigieren. Beispielsweise können Sie die Profilseite nur aufrufen, wenn Sie eingeloggt sind."
+						+ "<br/><br/> -   Das Hochladen eines Bildes hat den Fehler verursacht. Bitte versuchen Sie es später erneut."
+						+ "<br/><br/> -   Es gab einen Serverfehler. Sollte der Fehler häufiger auftreten, wenden Sie sich bitte an den Administrator.");
 		errorTextLabel.setContentMode(ContentMode.HTML);
 		content.addComponent(errorTextLabel);
 	}
