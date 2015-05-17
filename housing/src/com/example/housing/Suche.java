@@ -40,6 +40,10 @@ public class Suche extends CustomHorizontalLayout implements View {
 	private Double lon = 8.40287;
 	private Double umkreis = 5.00;
 
+	private PopupDateField zeitVon = new PopupDateField("von");
+
+	private PopupDateField zeitBis = new PopupDateField("bis");
+
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -101,10 +105,11 @@ public class Suche extends CustomHorizontalLayout implements View {
 
 		// Zeitraum
 		tabelleInnen.addComponent(new Label("Verfügbarkeit:  "), 0, 3);
-		final PopupDateField zeitVon = new PopupDateField("von");
 		tabelleInnen.addComponent(zeitVon, 1, 3);
-		final PopupDateField zeitBis = new PopupDateField("bis");
 		tabelleInnen.addComponent(zeitBis, 2, 3);
+		
+		zeitVon.setDateFormat("dd.MM.yyyy");
+		zeitBis.setDateFormat("dd.MM.yyyy");
 
 		// Art der Unterkunft
 		tabelleInnen.addComponent(new Label("Art der Unterkunft: "), 0, 4);
@@ -253,6 +258,29 @@ public class Suche extends CustomHorizontalLayout implements View {
 					
 				}
 				
+	/*			try{
+					validateDate();
+				}catch(IllegalArgumentException e){
+					Notification failNumberFormat = new Notification("Bitte überprüfen Sie Ihre Eingaben und geben Sie ein gültiges Datum ein.");
+					failNumberFormat.setDelayMsec(300);
+					failNumberFormat.setStyleName("failure");
+					failNumberFormat.show(Page.getCurrent());
+					return;
+				}catch(NullPointerException npe){
+					//tue nichts (kein Plichtfeld!)
+				}*/
+				
+				/*try{
+					validateAfter();
+				}catch(Exception e){
+					Notification failNumberFormat = new Notification("Das Enddatum muss nach dem Startsatum liegen.");
+					failNumberFormat.setDelayMsec(300);
+					failNumberFormat.setStyleName("failure");
+					failNumberFormat.show(Page.getCurrent());
+					return;
+				}*/
+				
+				
 				int a = 7;
 				if (wohnung.getValue() && zimmer.getValue() && wg.getValue()) {
 					a = 7;
@@ -295,4 +323,28 @@ public class Suche extends CustomHorizontalLayout implements View {
 
 		content.addComponent(tabelleAussen);
 	}
+	
+	private void validateDate(){
+		System.out.println(zeitVon.getValue().toString());
+		zeitVon.validate();
+		zeitVon.setConversionError("Das Format ist nicht korrekt.");
+		if(!zeitVon.getValue().toString().isEmpty() ){
+			Format.dateFormat(zeitVon.getValue());
+		}
+		/*
+		if(!zeitBis.getValue().toString().isEmpty() ){
+			Format.dateFormat(zeitBis.getValue());
+		}*/
+		
+		
+	}
+	
+	private void validateAfter() throws Exception{
+		if(!zeitVon.getValue().toString().isEmpty() && !zeitBis.getValue().toString().isEmpty()){
+			if(zeitVon.getValue().after(zeitBis.getValue())){
+				throw new Exception("Das Enddatum ist vor dem Anfangsdatum");
+			}
+		}
+	}
+
 }

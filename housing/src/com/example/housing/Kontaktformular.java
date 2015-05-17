@@ -1,6 +1,5 @@
 package com.example.housing;
 
-import com.example.housing.data.model.Offer;
 import com.example.housing.utility.SendEMail;
 import com.vaadin.data.validator.EmailValidator;
 import com.vaadin.navigator.View;
@@ -19,21 +18,16 @@ import com.vaadin.ui.Notification.Type;
 public class Kontaktformular extends CustomHorizontalLayout implements View{
 	private static final long serialVersionUID = 1L;
 
-	
 	private RichTextArea text;
-	
-	VerticalLayout content;
-	TextField prename;
-	TextField email_1;
+	private VerticalLayout content;
+	private TextField prename;
+	private TextField email_1;
 	
 	@Override
 	public void enter(ViewChangeEvent event) {
-		// TODO Auto-generated method stub
-		
 	}
 	
 	public Kontaktformular(){
-		
 		content = super.initCustomHorizontalLayout();
 		setContent();
 	}
@@ -95,14 +89,14 @@ public class Kontaktformular extends CustomHorizontalLayout implements View{
 		
 		// button
 		Button sendButton = new Button();
-		//sendButton.setIcon(FontAwesome.ENVELOPE_SQUARE);
 		sendButton.setIcon(FontAwesome.SEND);
 		sendButton.setCaption("Formular abschicken");
-		//button.setImmediate(true);
 		sendButton.setWidth("-1px");
 		sendButton.setHeight("-1px");
 		content.addComponent(sendButton);
 		sendButton.addClickListener(new Button.ClickListener() {
+			private static final long serialVersionUID = 1L;
+
 			public void buttonClick(ClickEvent event) {
 				if(validate()){//Anfrage existiert noch nicht
 					
@@ -130,10 +124,7 @@ public class Kontaktformular extends CustomHorizontalLayout implements View{
 		});
 	}
 	
-
-	
 	protected void sendEMail() {
-			
 		String bodyAnfrager = "<meta charset='utf-8'/><img src='http://193.196.7.216:8080/housing/APP/connector/0/12/source/dh.PNG'/><br/><br/><span style='color: #000000' 'font-family: Arial, sans-serif''font-size: 16pt' >Sehr geehrter Administrator,"
 				+"<br/><br/>Sie haben eine Frage zu der DHBW-Wohungsbörse erhalten:"
 				+"<br/><br/>" + text.getValue() 
@@ -143,7 +134,6 @@ public class Kontaktformular extends CustomHorizontalLayout implements View{
 			
 		//Email an Anfrager senden
 		SendEMail.sendEmailAlias("wohnungsboerse_dh@web.de", "Wohnungsboerse_DHBW", email_1.getValue(), "Kontaktfomular", bodyAnfrager);
-		
 	}
 	
 	public boolean validate(){
@@ -153,18 +143,12 @@ public class Kontaktformular extends CustomHorizontalLayout implements View{
 		} catch (Exception e) {
 			erfolgreich=false;
 		}
-		
-		
-		
 		try {
 			email_1.validate();
 		} catch (Exception e) {
 			erfolgreich=false;
 		}
-		
-		
 		return erfolgreich;
-		
 	}
 	
 }
