@@ -28,9 +28,12 @@ import com.vaadin.ui.VerticalLayout;
 /**
  * The Class Navigation.
  */
-@SuppressWarnings("serial")
 public class Navigation extends CustomComponent {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	/*- VaadinEditorProperties={"grid":"RegularGrid,20","showGrid":true,"snapToGrid":true,"snapToObject":true,"movingGuides":false,"snappingDistance":10} */
 
 	/** The main layout. */
@@ -48,7 +51,6 @@ public class Navigation extends CustomComponent {
 	/**
 	 * Instantiates a new navigation.
 	 */
-	@SuppressWarnings("unused")
 	public Navigation() {
 		buildMainLayout();
 		setCompositionRoot(mainLayout);

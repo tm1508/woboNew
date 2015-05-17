@@ -30,19 +30,19 @@ public class LoginWindow extends Window{
 	private static final long serialVersionUID = 1L;
 
 	/** The title. */
-	public static Label title;
+	public Label title;
 	
 	/** The email_1. */
-	public static TextField email_1;
+	public TextField email_1;
 	
 	/** The password_1. */
-	public static PasswordField password_1;
+	public PasswordField password_1;
 	
 	/** The login button. */
-	public static Button loginButton;
+	public Button loginButton;
 	
 	/** The link. */
-	public static Button link;
+	public Button link;
 	
 	/**
 	 * Instantiates a new login window.
@@ -143,6 +143,7 @@ public class LoginWindow extends Window{
 									VaadinSession.getCurrent().getLockInstance().lock();
 									VaadinSession.getCurrent().getSession().setAttribute("user", u);//User-Objekt in der Session speichern
 									VaadinSession.getCurrent().getSession().setAttribute("login", true);//Login-Attribut auf true setzen (wird auf jeder Seite abgefragt, um zu prüfen welche Navigationsleiste angezeigt werden soll)
+									System.out.println("******************login Session"+ VaadinSession.getCurrent().getSession().getId());
 								} finally {
 									VaadinSession.getCurrent().getLockInstance().unlock();
 								}

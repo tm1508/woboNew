@@ -39,7 +39,7 @@ public class HousingUI extends UI {
 
 	/** The navigator. */
 	Navigator navigator;
-	
+
 	/**
 	 * The Class Servlet.
 	 */
@@ -116,6 +116,7 @@ public class HousingUI extends UI {
 				
 			}
 			
+			
 		}
 	}
 
@@ -124,6 +125,7 @@ public class HousingUI extends UI {
 	 */
 	@Override
 	protected void init(VaadinRequest request) {
+		System.out.println("*************************************Session"+ VaadinSession.getCurrent().getSession().getId());
 		final VerticalLayout layout = new VerticalLayout();
 		layout.setMargin(true);
 		setContent(layout);
