@@ -22,7 +22,7 @@ public class SendEMail {
 	static Properties properties = new Properties();
 	
 	public static void main(String args[]){
-		send("julia.agricola@web.de", "test@web.de", "test", "<span>äöüß&%$§</span>");
+		send("julia.agricola@web.de", "Wohnung_DHBW", "test", "<span>äöüß&%$§</span>");
 	}
 	
 	/**

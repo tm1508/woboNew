@@ -142,7 +142,7 @@ public class Kontaktformular extends CustomHorizontalLayout implements View{
 				+"<br/>" + "Email: " + email_1.getValue() ;
 			
 		//Email an Anfrager senden
-		SendEMail.sendEmailAlias("wohnungsboerse_dh@web.de", "wohnungsboerse_dh@web.de", email_1.getValue(), "Kontaktfomular", bodyAnfrager);
+		SendEMail.sendEmailAlias("wohnungsboerse_dh@web.de", "Wohnungsboerse_DHBW", email_1.getValue(), "Kontaktfomular", bodyAnfrager);
 		
 	}
 	
