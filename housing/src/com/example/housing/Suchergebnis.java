@@ -232,10 +232,8 @@ public class Suchergebnis extends CustomHorizontalLayout implements View {
 		    			//tue nichts
 		    		}else{
 		    			karteAnzeigen.setEnabled(false);
-		    			karteAnzeigen.setDescription("Die Kartenansicht ist nur für verifizierte DH-Studenten verfügbar.");
+		    			karteAnzeigen.setDescription("Die Kartenansicht ist nur für verifizierte Studierende der DH verfügbar.");
 		    			googleMap.setVisible(false);
-//		    			Label l = new Label("Die Kartenansicht ist nur für verifizierte DH-Studenten verfügbar.");
-//		    			content.addComponent(l);
 		    		}
 		    		
 					for(Offer o : angebote) {
@@ -285,10 +283,8 @@ public class Suchergebnis extends CustomHorizontalLayout implements View {
     			//tue nichts
     		}else{
     			karteAnzeigen.setEnabled(false);
-    			karteAnzeigen.setDescription("Die Kartenansicht ist nur für verifizierte DH-Studenten verfügbar.");
+    			karteAnzeigen.setDescription("Die Kartenansicht ist nur für verifizierte Studierende der DH verfügbar.");
     			googleMap.setVisible(false);
-//    			Label l = new Label("Die Kartenansicht ist nur für verifizierte DH-Studenten verfügbar.");
-//    			content.addComponent(l);
     		}
 		
 			content.addComponent(new Label());

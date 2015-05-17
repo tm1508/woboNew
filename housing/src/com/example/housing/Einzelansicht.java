@@ -130,7 +130,7 @@ public class Einzelansicht extends CustomHorizontalLayout implements View {
 			//Info
 			Label warn = new Label(FontAwesome.WARNING.getHtml() + "&nbsp;", ContentMode.HTML);
 			
-			Label detailsAdresse = new Label(" Bitte beachten Sie: Die vollständige Adresse und die Kartenansicht sind nur für verifizierte DH-Studenten sichtbar!");
+			Label detailsAdresse = new Label(" Bitte beachten Sie: Die vollständige Adresse und die Kartenansicht sind nur für verifizierte Studierende der DH sichtbar!");
 			detailsAdresse.setImmediate(false);
 			detailsAdresse.setWidth("1000px");
 			detailsAdresse.setHeight("-1px");
@@ -569,12 +569,12 @@ public class Einzelansicht extends CustomHorizontalLayout implements View {
 
 			public void buttonClick(ClickEvent event) {
 				if(!(boolean) VaadinSession.getCurrent().getSession().getAttribute("login")) { //nicht eingeloggt
-					Notification not = new Notification("Sie müssen sich als verifizierter DH-Student einloggen, um eine Anfrage zu einem Wohnungsangebot stellen zu können!",Type.HUMANIZED_MESSAGE);//Meldung an den Nutzer
+					Notification not = new Notification("Sie müssen sich als verifizierte DH Studentin / verifizierter DH-Student einloggen, um eine Anfrage zu einem Wohnungsangebot stellen zu können!",Type.HUMANIZED_MESSAGE);//Meldung an den Nutzer
 					not.setStyleName("failure");
 					not.setDelayMsec(300);
 					not.show(Page.getCurrent());
 				} else if(((User) VaadinSession.getCurrent().getSession().getAttribute("user")).getAccessLevel() != 1) { //nicht als DH-Student verifiziert
-					Notification not = new Notification("Sie müssen sich als DH-Student verifizieren, um eine Anfrage zu einem Wohnungsangebot stellen zu können!",Type.HUMANIZED_MESSAGE);//Meldung an den Nutzer
+					Notification not = new Notification("Sie müssen sich als DH-Studentin / DH-Student verifizieren, um eine Anfrage zu einem Wohnungsangebot stellen zu können!",Type.HUMANIZED_MESSAGE);//Meldung an den Nutzer
 					not.setDelayMsec(300);
 					not.setStyleName("failure");
 					not.show(Page.getCurrent());

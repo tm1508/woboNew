@@ -169,9 +169,9 @@ public class Registrierung extends CustomHorizontalLayout implements View{
 		
 		// dhstud
 		dhstud = new CheckBox();
-		dhstud.setCaption("Ich bin Dualer Student an der DHBW Karlsruhe.");
+		dhstud.setCaption("Ich bin Duale Studentin / Dualer Student an der DHBW Karlsruhe.");
 		dhstud.setImmediate(false);
-		dhstud.setDescription("Als Dualer Student können Sie mehr Funktionen nutzen. Moodle Anmeldedaten zur Validierung erforderlich");
+		dhstud.setDescription("Als Duale Studentin / Dualer Student können Sie mehr Funktionen nutzen. Moodle Anmeldedaten zur Validierung erforderlich");
 		dhstud.setWidth("-1px");
 		dhstud.setHeight("-1px");
 		content.addComponent(dhstud);
