@@ -1,12 +1,15 @@
 package com.example.housing;
 
 import java.util.List;
+
 import com.example.housing.data.model.Offer;
+import com.example.housing.data.model.User;
 import com.example.housing.data.provider.OfferProvider;
 import com.example.housing.utility.Format;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.server.FontAwesome;
+import com.vaadin.server.VaadinSession;
 import com.vaadin.ui.Accordion;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.HorizontalLayout;
@@ -164,12 +167,13 @@ public class Startseite extends CustomHorizontalLayout implements View{
 					ergebnisse =
 							of.filter(null,null,
 							(Format.floatFormat("0.0")),
-									(Format.floatFormat("0.0")), 
-									(Format.floatFormat("0.0")),
-									(Format.floatFormat("0.0")),
-									7, 
-									false, false, false, false,false,
-							suchfeld.getValue());
+							(Format.floatFormat("0.0")), 
+							(Format.floatFormat("0.0")),
+							(Format.floatFormat("0.0")),
+							7, 
+							false, false, false, false,false,
+							suchfeld.getValue(),
+							-1); //deaktivierte Angebote ausblenden
 					
 					String name = "AngebotAnzeigen";
 					getUI().getNavigator().addView(name, new Suchergebnis(ergebnisse));

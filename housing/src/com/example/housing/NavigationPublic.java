@@ -122,7 +122,7 @@ public class NavigationPublic extends CustomComponent {
 		MenuBar.Command alleAngebote = new MenuBar.Command() {
 			public void menuSelected(MenuItem selectedItem) {
 				
-				List<Offer> allOffers = new OfferProvider().getAllOffers();
+				List<Offer> allOffers = new OfferProvider().getAllOffers(-1); //kein AccessLevel, da kein User eingeloggt ist
 				
 				String name = "Angebotsliste";
 				getUI().getNavigator().addView(name, new Suchergebnis(allOffers));

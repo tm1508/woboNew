@@ -171,10 +171,14 @@ public class OfferProvider extends BaseProvider<Offer> implements Serializable {
 	 */
 	public List<Offer> filter(Date startDate, Date endDate, float minSquareMetre, float maxSquareMetre, float minPrice,
 			float maxPrice, int type, boolean internet, boolean furnished, boolean kitchen, boolean smoker,
-			boolean pets, String city) {
+			boolean pets, String city, int accessLevel) {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		StringBuffer filter = new StringBuffer();
-		filter.append("SELECT o FROM Offer o WHERE o.inactive = false AND ");
+		if(accessLevel == 2) { //für Admin deaktivierte Angebote miteinbeziehen
+			filter.append("SELECT o FROM Offer o WHERE ");
+		} else {
+			filter.append("SELECT o FROM Offer o WHERE o.inactive = false AND ");
+		}
 		if (startDate != null && !startDate.equals(new Date(0))) {
 			filter.append("o.startDate >= '" + sdf.format(startDate) + "' AND "); // Formatierung?
 		}
@@ -242,7 +246,7 @@ public class OfferProvider extends BaseProvider<Offer> implements Serializable {
 		return filterErgebnis;
 	}
 	
-	public List<Offer> getAllOffers() {
+	public List<Offer> getAllOffers(int accessLevel) {
 		
 		if (!em.isOpen()) {
 
@@ -250,7 +254,14 @@ public class OfferProvider extends BaseProvider<Offer> implements Serializable {
 
 		}
 		
-		Query allAbfrage = em.createQuery("SELECT o FROM Offer o WHERE o.inactive = false ORDER BY o.offerTime DESC");
+		String queryString = "";
+		if(accessLevel == 2) { //für Admin auch deaktivierte Angebote anzeigen
+			queryString = "SELECT o FROM Offer o ORDER BY o.offerTime DESC";	
+		} else {	
+			queryString = "SELECT o FROM Offer o WHERE o.inactive = false ORDER BY o.offerTime DESC";
+		}
+		
+		Query allAbfrage = em.createQuery(queryString);
 		@SuppressWarnings("unchecked")
 		List<Offer> allOffers = (List<Offer>) allAbfrage.getResultList();
 		return (List<Offer>) allOffers;

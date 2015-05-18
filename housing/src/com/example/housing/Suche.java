@@ -1,6 +1,7 @@
 package com.example.housing;
 
 import com.example.housing.data.model.Offer;
+import com.example.housing.data.model.User;
 import com.example.housing.data.provider.OfferProvider;
 import com.example.housing.utility.Format;
 import com.vaadin.data.Property.ValueChangeEvent;
@@ -9,6 +10,7 @@ import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.server.Page;
+import com.vaadin.server.VaadinSession;
 import com.vaadin.tapio.googlemaps.GoogleMap;
 import com.vaadin.tapio.googlemaps.client.LatLon;
 import com.vaadin.tapio.googlemaps.client.events.MarkerDragListener;
@@ -296,6 +298,11 @@ public class Suche extends CustomHorizontalLayout implements View {
 				} else if (wg.getValue()) {
 					a = 3;
 				}
+				
+				int accessLevel =  -1;
+				if((boolean) VaadinSession.getCurrent().getSession().getAttribute("login")) {
+					accessLevel = ((User) VaadinSession.getCurrent().getSession().getAttribute("user")).getAccessLevel();
+				}
 
 				OfferProvider of = new OfferProvider();
 				List<Offer> ergebnisse;
@@ -306,7 +313,8 @@ public class Suche extends CustomHorizontalLayout implements View {
 						(Format.floatFormat(preisBis.getValue())), a,
 						internet.getValue(), moebliert.getValue(),
 						kueche.getValue(), rauchen.getValue(),
-						haustiere.getValue(), stadt.getValue());
+						haustiere.getValue(), stadt.getValue(),
+						accessLevel);
 
 				//nur bei Suche über Karte
 				if (mitKarteSuchen.booleanValue()) {

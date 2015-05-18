@@ -176,7 +176,7 @@ public class Navigation extends CustomComponent {
 			private static final long serialVersionUID = 1L;
 
 			public void menuSelected(MenuItem selectedItem) {
-				List<Offer> allOffers = new OfferProvider().getAllOffers();
+				List<Offer> allOffers = new OfferProvider().getAllOffers(((User) VaadinSession.getCurrent().getSession().getAttribute("user")).getAccessLevel()); //AccessLevel 0 oder 1
 				String name = "Angebotsliste";
 				getUI().getNavigator().addView(name, new Suchergebnis(allOffers));
 				getUI().getNavigator().navigateTo(name);	

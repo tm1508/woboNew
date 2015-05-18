@@ -34,6 +34,7 @@ import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Image;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Notification;
+import com.vaadin.ui.RichTextArea;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.Notification.*;
 import com.vaadin.ui.TextArea;
@@ -253,7 +254,7 @@ public class Einzelansicht extends CustomHorizontalLayout implements View {
         }
         content.addComponent(new Label());
         
-		final GridLayout gridInfos = new GridLayout(2,17); 
+		final GridLayout gridInfos = new GridLayout(2,18); 
 		content.addComponent(gridInfos);
 		
 		//Date	
@@ -361,11 +362,14 @@ public class Einzelansicht extends CustomHorizontalLayout implements View {
         gridInfos.addComponent(new Label(""), 0, 12);
         gridInfos.addComponent(petsAllowed, 1,12);
         petsAllowed.setEnabled(false);
-        petsAllowed.setValue(angebot.isPets());        
+        petsAllowed.setValue(angebot.isPets());
         
         //text
-        TextArea t = new TextArea();
+//        RichTextArea t = new RichTextArea();
+        Label t = new Label();
         String text = angebot.getText();
+        t.setEnabled(false);
+        t.setContentMode(ContentMode.HTML);
         t.setValue(text);
         t.setEnabled(false);
         t.setWidth("338px");
@@ -512,7 +516,7 @@ public class Einzelansicht extends CustomHorizontalLayout implements View {
 						not.setDelayMsec(300);
 						not.show(Page.getCurrent());
 						
-						List<Offer> allOffers = new OfferProvider().getAllOffers();
+						List<Offer> allOffers = new OfferProvider().getAllOffers(((User) VaadinSession.getCurrent().getSession().getAttribute("user")).getAccessLevel());
 						
 						String name = "Angebotsliste";
 						getUI().getNavigator().addView(name, new Suchergebnis(allOffers));
@@ -533,7 +537,7 @@ public class Einzelansicht extends CustomHorizontalLayout implements View {
 				adminButtons.addComponent(deacitvate);
 			}
 			adminButtons.addComponent(delete);
-			gridInfos.addComponent(adminButtons, 0 , 14);
+			gridInfos.addComponent(adminButtons, 0 , 15);
 		
     	}
         
@@ -682,10 +686,10 @@ public class Einzelansicht extends CustomHorizontalLayout implements View {
             	  
             	Label anfrageTitel = new Label("Gesendete Anfrage");
             	anfrageTitel.setStyleName("ImportantTitle");
-                gridInfos.addComponent(anfrageTitel,0,15);
+                gridInfos.addComponent(anfrageTitel,0,16);
                 
                 Label anfrageText = new Label("Sie haben folgenden Text an den Anbieter geschickt:");
-                gridInfos.addComponent(anfrageText,0,16);
+                gridInfos.addComponent(anfrageText,0,17);
                 
                 TextArea anfrageMessage = new TextArea();
                 String message = requests.get(in).getMessage();
@@ -694,7 +698,7 @@ public class Einzelansicht extends CustomHorizontalLayout implements View {
                 anfrageMessage.setEnabled(false);
                 anfrageMessage.setWidth("338px");
                 
-                gridInfos.addComponent(anfrageMessage,1,16);
+                gridInfos.addComponent(anfrageMessage,1,17);
                 
               }
         }
@@ -704,13 +708,9 @@ public class Einzelansicht extends CustomHorizontalLayout implements View {
 			
         	HorizontalLayout vl = new HorizontalLayout();
         	
-        	Label titel = new Label("Dieses Angebot wurde von folgendem Nutzer eingestellt: ");
-  	        vl.addComponent(titel);
-  	        titel.setStyleName("footer");
-  	        
-	        Label UserID = new Label(" User-ID: "+ angebot.getOffer_idUser().getIdUser());
-	        vl.addComponent(UserID);
-	        UserID.setStyleName("footer");
+        	Label user = new Label("Dieses Angebot wurde von folgendem Nutzer eingestellt: User-ID "+ angebot.getOffer_idUser().getIdUser());
+  	        vl.addComponent(user);
+  	        user.setStyleName("footer");
 	        
 			Button kontaktformularLink = new Button();
 			kontaktformularLink.setStyleName("link");

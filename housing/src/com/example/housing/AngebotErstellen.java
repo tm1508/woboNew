@@ -526,9 +526,10 @@ public class AngebotErstellen extends CustomHorizontalLayout implements View, Re
 					currentOffer.setGender(gender);
 					
 					//Beschreibungstext aufbereiten
-			        String t = text.getValue().replace("<br>", "\n");
-			        String tx = Jsoup.parse(t).text();
-					currentOffer.setText(tx);
+//			        String t = text.getValue().replace("<br>", "\n");
+//			        String tx = Jsoup.parse(t).text();
+//					currentOffer.setText(tx);
+					currentOffer.setText(text.getValue());
 					currentOffer.setInactive(inactive.getValue());
 					
 					if(lat != null){
@@ -1048,9 +1049,10 @@ public class AngebotErstellen extends CustomHorizontalLayout implements View, Re
 					currentOffer.setSmoker(smoker.getValue());
 					currentOffer.setPets(pets.getValue());
 					currentOffer.setGender(gender);
-			        String t = text.getValue().replace("<br>", "\n");
-			        String tx = Jsoup.parse(t).text();
-					currentOffer.setText(tx);
+//			        String t = text.getValue().replace("<br>", "\n");
+//			        String tx = Jsoup.parse(t).text();
+//					currentOffer.setText(tx);
+					currentOffer.setText(text.getValue());
 					currentOffer.setInactive(inactive.getValue());
 
 					if(lat != null){
