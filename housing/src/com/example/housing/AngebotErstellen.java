@@ -448,6 +448,17 @@ public class AngebotErstellen extends CustomHorizontalLayout implements View, Re
 
 				if (valid) {// sind alle Mussfelder gefüllt, wird ein neues
 							// Angebot erstellt
+					
+					if(titel.getValue().length() > 75) {
+						
+						Notification failTooLong = new Notification("Der eingegebene Titel ist zu lang.");
+						failTooLong.setDelayMsec(300);
+						failTooLong.setStyleName("failure");
+						failTooLong.show(Page.getCurrent());
+						return;
+						
+					}
+					
 					try { //falls in Zahlenfeder keine Zahlen eingetragen wurden
 						
 						currentOffer.setSquareMetre(Format.floatFormat(squareMetre.getValue()));
