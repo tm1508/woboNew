@@ -121,7 +121,7 @@ public class Anfrageformular extends CustomHorizontalLayout implements View{
 		String bodyAnbieter = "<meta charset='utf-8'/><img src='http://193.196.7.216:8080/housing/APP/connector/0/12/source/dh.PNG'/><br/><br/><span style='color: #000000' 'font-family: Arial, sans-serif''font-size: 16pt' >Sehr geehrte Nutzerin, sehr geehrter Nutzer,"
 				+"<br/><br/>Sie haben eine Anfrage zu Ihrem Angebot \"" + requestedOffer.getTitle() + "\" in der Wohnungsbörse der DHBW erhalten:"
 				+"<br/><br/> <span style='color: #e2001a' 'font-family: Arial, sans-serif''font-size: 16pt''font-weight: bold'> &raquo; </span>"
-				+"<br/>" + text.getValue() 
+				+text.getValue() 
 				+"<span style='color: #e2001a' 'font-family: Arial, sans-serif''font-size: 16pt''font-weight: bold'> &laquo; </span>" 
 				+"<br/><br/>" + "Kontaktdaten des Anfragenden: "
 				+"<br/>Name: " + ((User) VaadinSession.getCurrent().getSession().getAttribute("user")).getFirstname()+ " " + ((User) VaadinSession.getCurrent().getSession().getAttribute("user")).getLastname() 
@@ -132,7 +132,7 @@ public class Anfrageformular extends CustomHorizontalLayout implements View{
 		String bodyAnfrager = "<meta charset='utf-8'/><img src='http://193.196.7.216:8080/housing/APP/connector/0/12/source/dh.PNG'/><br/><br/><span style='color: #000000' 'font-family: Arial, sans-serif''font-size: 16pt' >Sehr geehrte Nutzerin, sehr geehrter Nutzer,"
 				+"<br/><br/>Sie haben eine Anfrage zum Angebot \"" + requestedOffer.getTitle() + "\" in der DHBW-Wohnungsbörse versendet:"
 				+"<br/><br/> <span style='color: #e2001a' 'font-family: Arial, sans-serif''font-size: 16pt''font-weight: bold'> &raquo; </span>"
-				+"<br/>" + text.getValue() 
+				+text.getValue() 
 				+"<span style='color: #e2001a' 'font-family: Arial, sans-serif''font-size: 16pt''font-weight: bold'> &laquo; </span>" 
 				+"<br/><br/>Ihre Kontaktdaten: "
 				+"<br/>Name: " + ((User) VaadinSession.getCurrent().getSession().getAttribute("user")).getFirstname()+ " " + ((User) VaadinSession.getCurrent().getSession().getAttribute("user")).getLastname() 
