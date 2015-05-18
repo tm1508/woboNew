@@ -17,12 +17,14 @@ import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.server.VaadinSession;
+import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.tapio.googlemaps.GoogleMap;
 import com.vaadin.tapio.googlemaps.client.LatLon;
 import com.vaadin.tapio.googlemaps.client.events.MarkerClickListener;
 import com.vaadin.tapio.googlemaps.client.overlays.GoogleMapMarker;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.CheckBox;
+import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.NativeSelect;
 import com.vaadin.ui.VerticalLayout;
@@ -30,32 +32,19 @@ import com.vaadin.ui.Button.ClickEvent;
 
 public class Suchergebnis extends CustomHorizontalLayout implements View {
 	private static final long serialVersionUID = 1L;
-
 	private VerticalLayout content;
 	private String sort= null;//Auswahlbox für Sortierung der Liste
 	private List<Offer> angebote;
 	final GoogleMap googleMap = new GoogleMap(null, null, null);
-//	final Button karteEinblenden = new Button("Karte einblenden");
-//	final Button karteausblenden = new Button("Karte ausblenden");
 	final CheckBox karteAnzeigen = new CheckBox("Ergebnisse auf der Karte anzeigen", false);
 
-	
 	//Übergabe der Ergebnis aus der Suche
-	/**
-	 * Instantiates a new suchergebnis.
-	 *
-	 * @param offers the offers
-	 */
 	public Suchergebnis(List<Offer> offers){
 		this.angebote = offers;
-		
 		content = super.initCustomHorizontalLayout();
 		setContent();
 	}
 
-	/**
-	 * Sets the content.
-	 */
 	public void setContent(){
 		
 		Label title = new Label();
@@ -153,6 +142,24 @@ public class Suchergebnis extends CustomHorizontalLayout implements View {
             googleMap.setVisible(false);
             
             content.addComponent(googleMap);
+            
+            if((boolean) VaadinSession.getCurrent().getSession().getAttribute("login") && ((User) VaadinSession.getCurrent().getSession().getAttribute("user")).getAccessLevel() != 0) {
+            	
+            }else{
+            	//Info
+    			Label warn = new Label(FontAwesome.WARNING.getHtml() + "&nbsp;", ContentMode.HTML);
+    			
+    			Label detailsAdresse = new Label(" Bitte beachten Sie: Die Kartenansicht ist nur für verifizierte Studierende der DH sichtbar!");
+    			detailsAdresse.setImmediate(false);
+    			detailsAdresse.setWidth("1000px");
+    			detailsAdresse.setHeight("-1px");
+    			
+    			HorizontalLayout warnAdresse = new HorizontalLayout();
+    			warnAdresse.addComponent(warn);
+    			warnAdresse.addComponent(detailsAdresse);
+    			content.addComponent(warnAdresse);
+            }
+            
             content.addComponent(new Label());
 			
 			//Sortieren der Liste
@@ -213,7 +220,6 @@ public class Suchergebnis extends CustomHorizontalLayout implements View {
 					boolean showMap = karteAnzeigen.getValue();
 					content.removeAllComponents();
 					content.addComponent(ergebnisString);
-//					content.addComponent(new Label());
 					karteAnzeigen.setValue(showMap);
 					content.addComponent(karteAnzeigen);
 					googleMap.setVisible(showMap);
@@ -221,11 +227,6 @@ public class Suchergebnis extends CustomHorizontalLayout implements View {
 					content.addComponent(new Label());
 					content.addComponent(sortBy);
 					content.addComponent(new Label());
-//					content.addComponent(karteEinblenden);
-//					karteEinblenden.setVisible(true);
-//					karteausblenden.setVisible(false);
-//					content.addComponent(karteausblenden);
-//					content.addComponent(new Label());
 
 		        	//Button wird deaktiviert, wenn der Nutzer kein DH Stud. ist
 		    		if((boolean) VaadinSession.getCurrent().getSession().getAttribute("login") && ((User) VaadinSession.getCurrent().getSession().getAttribute("user")).getAccessLevel() != 0) {
@@ -242,42 +243,6 @@ public class Suchergebnis extends CustomHorizontalLayout implements View {
 				}
 			});
          	
-//         	karteEinblenden.setIcon(FontAwesome.MAP_MARKER);
-//         	content.addComponent(karteEinblenden);
-//         	karteEinblenden.setVisible(false);
-//             
-//    		
-//    		karteausblenden.setIcon(FontAwesome.MAP_MARKER);
-//    		content.addComponent(karteausblenden);
-//    		karteausblenden.addClickListener(new Button.ClickListener() {
-//    			private static final long serialVersionUID = 1L;
-//
-//    			@Override
-//    			public void buttonClick(ClickEvent event) {
-//    				
-//    				
-//    					googleMap.setVisible(false);
-//    					karteausblenden.setVisible(false);
-//    			
-//    					karteEinblenden.setVisible(true);
-//  
-//    				
-//    			}
-//    		});
-//    		
-//    		
-//    		karteEinblenden.addClickListener(new Button.ClickListener() {
-//    			private static final long serialVersionUID = 1L;
-//
-//
-//    			@Override
-//    			public void buttonClick(ClickEvent event) {
-//    					googleMap.setVisible(true);
-//    					karteausblenden.setVisible(true);
-//    					karteEinblenden.setVisible(false);
-//    			}
-//    		});
-        	
         	//Button wird deaktiviert, wenn der Nutzer kein DH Stud. ist
     		if((boolean) VaadinSession.getCurrent().getSession().getAttribute("login") && ((User) VaadinSession.getCurrent().getSession().getAttribute("user")).getAccessLevel() != 0) {
     			//tue nichts
@@ -291,8 +256,8 @@ public class Suchergebnis extends CustomHorizontalLayout implements View {
 			
 			for(Offer o : angebote) {
 				content.addComponent(new Listenzeile(o));
+				content.addComponent(new Label());
 			}
-		
 		}
 	}
 

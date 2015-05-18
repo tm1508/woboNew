@@ -11,7 +11,6 @@ import com.vaadin.ui.Accordion;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
-import com.vaadin.ui.Link;
 import com.vaadin.ui.Panel;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
@@ -114,14 +113,23 @@ public class Startseite extends CustomHorizontalLayout implements View{
 		        tab3layout.addComponent(label_3);
 		        tab3layout.addComponent(label_4);
 		        
-		        Link link_3 = new Link();
-				link_3.setStyleName("text");
-				link_3.setCaption("Kontakt");
-				link_3.setImmediate(false);
-				link_3.setWidth("-1px");
-				link_3.setHeight("-1px");
-				link_3.setIcon(FontAwesome.EXTERNAL_LINK);
-				tab3layout.addComponent(link_3);
+		      //Link zu Registrierung
+				Button kontaktLink = new Button();
+				kontaktLink.setStyleName("link");
+				kontaktLink.setCaption("Kontakt");
+				kontaktLink.setImmediate(false);
+				kontaktLink.setWidth("-1px");
+				kontaktLink.setHeight("-1px");
+				kontaktLink.setIcon(FontAwesome.EXTERNAL_LINK);
+				kontaktLink.addClickListener(new Button.ClickListener(){
+					private static final long serialVersionUID = 1L;
+					public void buttonClick(ClickEvent event) {
+						String name = "Kontaktformular";
+						getUI().getNavigator().addView(name, new Kontaktformular());
+						getUI().getNavigator().navigateTo(name);
+					}
+				});
+				tab3layout.addComponent(kontaktLink);
 	        textAccordion.addTab(tab3layout, "Über uns...",FontAwesome.ENVELOPE);//Tab 4 hinzufügen
 		layoutTextUndSuche.addComponent(textAccordion);//Begrüßungstext hinzufügen
 		
