@@ -39,7 +39,7 @@ public class SendEMail {
 			message.setFrom(new InternetAddress(from));// E-Mail-Adresse des Benutzers
 			message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(to));// E-Mail-Adresse des Empfängers
 			message.setSubject(subject);// Betreff
-			message.setContent(text, "text/html");// Text der E-Mail (mit html Code für den Style)
+			message.setContent(text, "text/html; charset=UTF-8");// Text der E-Mail (mit html Code für den Style)
 			//message.setAllow8bitMIME(true);
 			// E-Mail senden
 			Transport.send(message);
@@ -75,7 +75,7 @@ public class SendEMail {
 			message.setFrom(new InternetAddress(alias));// E-Mail-Adresse des Benutzers
 			message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(to));// E-Mail-Adresse des Empfängers
 			message.setSubject(subject);// Betreff
-			message.setContent(text, "text/html");// Text der E-Mail (mit html Code für den Style)
+			message.setContent(text, "text/html; charset=UTF-8");// Text der E-Mail (mit html Code für den Style)
 			
 			// E-Mail senden
 			Transport.send(message);
