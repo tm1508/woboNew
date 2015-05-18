@@ -1,15 +1,12 @@
 package com.example.housing;
 
 import java.util.List;
-
 import com.example.housing.data.model.Offer;
-import com.example.housing.data.model.User;
 import com.example.housing.data.provider.OfferProvider;
 import com.example.housing.utility.Format;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.server.FontAwesome;
-import com.vaadin.server.VaadinSession;
 import com.vaadin.ui.Accordion;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.HorizontalLayout;
@@ -30,7 +27,6 @@ public class Startseite extends CustomHorizontalLayout implements View{
 	}
 	
 	public void setContent(){
-				
 		// title
 		Label title = new Label();
 		title.setImmediate(false);
@@ -127,13 +123,11 @@ public class Startseite extends CustomHorizontalLayout implements View{
 				link_3.setIcon(FontAwesome.EXTERNAL_LINK);
 				tab3layout.addComponent(link_3);
 	        textAccordion.addTab(tab3layout, "Über uns...",FontAwesome.ENVELOPE);//Tab 4 hinzufügen
-         
 		layoutTextUndSuche.addComponent(textAccordion);//Begrüßungstext hinzufügen
 		
 		//Panel für Suchfeld
 		Panel suchePanel = new Panel("Suche");
 		suchePanel.setStyleName("startseite");
-		//suchePanel.setWidth("632px");
 		suchePanel.setHeight("400px");
 		suchePanel.setIcon(FontAwesome.SEARCH);
 		VerticalLayout suche = new VerticalLayout();
@@ -200,7 +194,6 @@ public class Startseite extends CustomHorizontalLayout implements View{
 			layoutNuesteAnngebote.addComponent(new Listenzeile(o));
 			layoutNuesteAnngebote.addComponent(new Label());
 		}
-		
         panelNeusteANgebote.setContent(layoutNuesteAnngebote);
 		content.addComponent(panelNeusteANgebote);
     }

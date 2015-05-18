@@ -18,17 +18,9 @@ import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Button.ClickEvent;
 
 public class UserSucheNachId extends CustomHorizontalLayout implements View {
-	
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
+	private VerticalLayout content;
 	
-	VerticalLayout content;
-	
-	/**
-	 * Instantiates a new sucheNachId.
-	 */
 	public UserSucheNachId() {
 		content = super.initCustomHorizontalLayout();
 		setContent();
@@ -36,7 +28,6 @@ public class UserSucheNachId extends CustomHorizontalLayout implements View {
 
 	@Override
 	public void setContent() {
-		
 		// Titel
 		Label title = new Label();
 		title.setImmediate(false);
@@ -61,7 +52,8 @@ public class UserSucheNachId extends CustomHorizontalLayout implements View {
 		suchButton.addStyleName("SuchButton");
 		tabelle.addComponent(suchButton, 0, 1);
 		suchButton.addClickListener(new Button.ClickListener() {
-			
+			private static final long serialVersionUID = 1L;
+
 			@Override
 			public void buttonClick(ClickEvent event) {
 				
@@ -123,8 +115,6 @@ public class UserSucheNachId extends CustomHorizontalLayout implements View {
 	
 	@Override
 	public void enter(ViewChangeEvent event) {
-		// TODO Auto-generated method stub
-		
 	}
 
 }

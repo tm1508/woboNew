@@ -15,54 +15,23 @@ import com.example.housing.data.model.Photo;
 import com.example.housing.data.model.Request;
 import com.example.housing.data.model.User;
 
-// TODO: Auto-generated Javadoc
-/**
- * The Class OfferProvider.
- */
 public class OfferProvider extends BaseProvider<Offer> implements Serializable {
-
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see com.example.housing.data.provider.BaseProvider#getEntityClass()
-	 */
 	@Override
 	protected Class<Offer> getEntityClass() {
 		return Offer.class;
 	}
 
-	/**
-	 * Adds the offer.
-	 *
-	 * @param newOffer the new offer
-	 */
 	public void addOffer(Offer newOffer) {
 		if (!super.save(newOffer)) {
-
 			System.out.println("Neues Angebot konnte nicht in die Datenbank gespeichert werden!");
-
 		}
-
 	}
 
-	/**
-	 * Alter offer.
-	 *
-	 * @param offer the offer
-	 * @return true, if successful
-	 */
 	public boolean alterOffer(Offer offer) {
-		
 		if(!em.isOpen()) {
-			
 			em = getEmf().createEntityManager();
-		
 		}
 		try {
 			Offer persistedOffer = this.findById(offer.getIdOffer());
@@ -72,25 +41,13 @@ public class OfferProvider extends BaseProvider<Offer> implements Serializable {
 			System.out.println(e);
 			return false;
 		}
-
 		return super.update(offer); // true bei Erfolg, false bei Fehler
-
 	}
 
-	/**
-	 * Removes the offer.
-	 *
-	 * @param offer the offer
-	 * @return true, if successful
-	 */
 	public boolean removeOffer(Offer offer) {
-
 		List<Request> requests = offer.getRequests();
-		RequestProvider reqProv = new RequestProvider();
 		List<Favorit> favorits = offer.getFavorits();
-		FavoritProvider favProv = new FavoritProvider();
 		List<Photo> photos = offer.getPhotos();
-		PhotoProvider photoProv = new PhotoProvider();
 		boolean success = true;
 		
 		try {
@@ -117,29 +74,13 @@ public class OfferProvider extends BaseProvider<Offer> implements Serializable {
 
 	}
 
-	/**
-	 * Find by id.
-	 *
-	 * @param id
-	 *            the id
-	 * @return the offer
-	 */
 	public Offer findById(Integer id) {
 		return (Offer) super.find(id);
 	}
 
-	/**
-	 * Own offers.
-	 *
-	 * @param user the user
-	 * @return the list
-	 */
 	public List<Offer> findByUser(User user) {
-		
 		if (!em.isOpen()) {
-
 			em = getEmf().createEntityManager();
-
 		}
 		
 		Query q = em.createQuery("SELECT o FROM Offer o WHERE o.offer_idUser =:user AND o.title NOT LIKE ' '");
@@ -148,27 +89,8 @@ public class OfferProvider extends BaseProvider<Offer> implements Serializable {
 		List<Offer> offers = (List<Offer>) q.getResultList();
 		
 		return offers;
-		
 	}
 
-	/**
-	 * Filter.
-	 *
-	 * @param startDate the start date
-	 * @param endDate the end date
-	 * @param minSquareMetre the min square metre
-	 * @param maxSquareMetre the max square metre
-	 * @param minPrice the min price
-	 * @param maxPrice the max price
-	 * @param type the type
-	 * @param internet the internet
-	 * @param furnished the furnished
-	 * @param kitchen the kitchen
-	 * @param smoker the smoker
-	 * @param pets the pets
-	 * @param city the city
-	 * @return the list
-	 */
 	public List<Offer> filter(Date startDate, Date endDate, float minSquareMetre, float maxSquareMetre, float minPrice,
 			float maxPrice, int type, boolean internet, boolean furnished, boolean kitchen, boolean smoker,
 			boolean pets, String city, int accessLevel) {
@@ -268,17 +190,9 @@ public class OfferProvider extends BaseProvider<Offer> implements Serializable {
 		
 	}
 	
-	/**
-	 * Gets the latest offers.
-	 *
-	 * @return the latest offers
-	 */
 	public List<Offer> getLatestOffers() {
-		
 		if (!em.isOpen()) {
-
 			em = getEmf().createEntityManager();
-
 		}
 		
 		Query latestAbfrage = em.createQuery("SELECT o FROM Offer o WHERE o.inactive = false ORDER BY o.offerTime DESC");
@@ -343,6 +257,4 @@ public class OfferProvider extends BaseProvider<Offer> implements Serializable {
 		double distance = Math.sqrt(dx * dx + dy * dy);
 		return distance;
 	}
-
-
 }

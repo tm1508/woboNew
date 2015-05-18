@@ -27,7 +27,6 @@ import com.vaadin.ui.VerticalLayout;
 
 public class Listenzeile extends CustomComponent {
 	private static final long serialVersionUID = 1L;
-
 	private VerticalLayout mainLayout;
 
 	public Listenzeile(final Offer o) {
@@ -46,16 +45,13 @@ public class Listenzeile extends CustomComponent {
 		
 		// falls Bilder zu der Wohnung vorhanden sind
 		if (pictures.size() > 0) {
-			
 			StreamResource resource = new StreamResource(new StreamResource.StreamSource() {
 				private static final long serialVersionUID = 1L;
-
 				@Override
 				public InputStream getStream(){
 					InputStream bais = new ByteArrayInputStream(pictures.get(0).getPicture());
 					return bais;
 				}
-												
 			}, "Bild_1");
 			resource.setCacheTime(0);
 			VerticalLayout imageLayout = new VerticalLayout();
@@ -70,9 +66,7 @@ public class Listenzeile extends CustomComponent {
 			Component c = ergebnisLayout.getComponent(0, 2);
 			c.setHeight("100%");
 			c.setWidth("70%");
-			
 		} else {
-			
 			VerticalLayout imageLayout = new VerticalLayout();
 			String basepath = VaadinService.getCurrent().getBaseDirectory().getAbsolutePath();
 			FileResource resource = new FileResource(new File(basepath + "/WEB-INF/image/DefaultBild.jpg"));
@@ -84,7 +78,6 @@ public class Listenzeile extends CustomComponent {
 			Component c = ergebnisLayout.getComponent(0, 2);
 			c.setWidth("100%");
 			c.setHeight("70%");
-			
 		}
 
 		String title = o.getTitle();
@@ -100,7 +93,6 @@ public class Listenzeile extends CustomComponent {
 			warn.addStyleName("redText");
 			Label inactive= new Label("   Achtung: Dieses Angebot ist deaktiviert!");
 			inactive.addStyleName("redText");
-			
 			HorizontalLayout warnInactive = new HorizontalLayout();
 			warnInactive.addComponent(warn);
 			warnInactive.addComponent(inactive);
@@ -133,7 +125,6 @@ public class Listenzeile extends CustomComponent {
 		ls.setWidth("100px");
 		ergebnisLayout.addComponent(ls, 5, 1);
 
-	
 		Date start = (java.util.Date) o.getStartDate();
 		String dateS = Format.dateFormat(start);
 		ergebnisLayout.addComponent(new Label("Startdatum: " +  dateS ), 3, 2);

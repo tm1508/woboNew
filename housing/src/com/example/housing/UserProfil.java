@@ -1,25 +1,6 @@
 package com.example.housing;
 
-import java.lang.reflect.Method;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.List;
-import java.util.Map;
-
-import org.dom4j.Node;
-import org.hibernate.EntityMode;
-import org.hibernate.FetchMode;
-import org.hibernate.HibernateException;
-import org.hibernate.MappingException;
-import org.hibernate.engine.spi.CascadeStyle;
-import org.hibernate.engine.spi.Mapping;
-import org.hibernate.engine.spi.SessionFactoryImplementor;
-import org.hibernate.engine.spi.SessionImplementor;
-import org.hibernate.metamodel.relational.Size;
-import org.hibernate.type.AbstractComponentType;
-import org.hibernate.type.ForeignKeyDirection;
-
 import com.example.housing.data.model.User;
 import com.example.housing.data.provider.UserProvider;
 import com.vaadin.data.Property.ValueChangeEvent;
@@ -28,14 +9,12 @@ import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.server.Page;
-import com.vaadin.server.VaadinSession;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.GridLayout;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Notification;
-import com.vaadin.ui.TextField;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
@@ -43,15 +22,9 @@ import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Notification.Type;
 
 public class UserProfil extends CustomHorizontalLayout implements View {
-	
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
-	
 	private VerticalLayout content;
 	private User u;
-	
 	private Label id;
 	private Label prename;
 	private Label lastname;
@@ -62,14 +35,12 @@ public class UserProfil extends CustomHorizontalLayout implements View {
 
 	public UserProfil(User u) {
 		this.u = u;
-		
 		content = super.initCustomHorizontalLayout();
 		setContent();
 	}
 
 	@Override
 	public void setContent() {
-		
 		// title
 		Label title = new Label();
 		title.setImmediate(false);
@@ -85,8 +56,6 @@ public class UserProfil extends CustomHorizontalLayout implements View {
 		
 		GridLayout gridProfile = new GridLayout(2,5);
 		
-		HorizontalLayout name = new HorizontalLayout();
-
 		//id
 		id = new Label();
 		id.setValue(u.getIdUser().toString());
@@ -142,10 +111,9 @@ public class UserProfil extends CustomHorizontalLayout implements View {
 		if(u.getAccessLevel() == 0) {
 			dhStud.setCaption("Als DH-Studentin / DH-Student freischalten");
 			dhStud.addClickListener(new Button.ClickListener() {
-				
+				private static final long serialVersionUID = 1L;
 				@Override
 				public void buttonClick(ClickEvent event) {
-					
 					u.setAccessLevel(1);
 					new UserProvider().alterUser(u);
 					
@@ -159,16 +127,14 @@ public class UserProfil extends CustomHorizontalLayout implements View {
 					String name = "UserProfil";
 					getUI().getNavigator().addView(name, new UserProfil(uNew));
 					getUI().getNavigator().navigateTo(name);
-					
 				}
 			});
 		} else if (u.getAccessLevel() == 1) {
 			dhStud.setCaption("DH-Studentin-Level / DH-Studenten-Level widerrufen");
 			dhStud.addClickListener(new Button.ClickListener() {
-				
+				private static final long serialVersionUID = 1L;
 				@Override
 				public void buttonClick(ClickEvent event) {
-					
 					u.setAccessLevel(0);
 					new UserProvider().alterUser(u);
 					
@@ -182,7 +148,6 @@ public class UserProfil extends CustomHorizontalLayout implements View {
 					String name = "UserProfil";
 					getUI().getNavigator().addView(name, new UserProfil(uNew));
 					getUI().getNavigator().navigateTo(name);
-					
 				}
 			});
 		} else {
@@ -198,7 +163,7 @@ public class UserProfil extends CustomHorizontalLayout implements View {
 		
 		offers = new CheckBox("Angebote anzeigen", false);
 		offers.addValueChangeListener(new ValueChangeListener() {
-			
+			private static final long serialVersionUID = 1L;
 			@Override
 			public void valueChange(ValueChangeEvent event) {
 				final boolean value = (boolean) event.getProperty().getValue();
@@ -225,14 +190,12 @@ public class UserProfil extends CustomHorizontalLayout implements View {
 		contact.setVisible(true);
 		contact.setIcon(FontAwesome.MAIL_FORWARD);
 		contact.addClickListener(new Button.ClickListener() {
-			
+			private static final long serialVersionUID = 1L;
 			@Override
 			public void buttonClick(ClickEvent event) {
-				
 				String name = "AnfrageUser";
 				getUI().getNavigator().addView(name, new AdminAnfrageUser(u));
 				getUI().getNavigator().navigateTo(name);
-				
 			}
 		});
 		buttons.addComponent(contact);
@@ -247,6 +210,7 @@ public class UserProfil extends CustomHorizontalLayout implements View {
 		delete.setVisible(true);
 		delete.setIcon(FontAwesome.TRASH_O);
 		delete.addClickListener(new Button.ClickListener() {
+			private static final long serialVersionUID = 1L;
 			public void buttonClick(ClickEvent event) {
 				CheckWindow w = new CheckWindow();// Wollen Sie Ihr Profil
 													// wirklich löschen?
@@ -255,6 +219,7 @@ public class UserProfil extends CustomHorizontalLayout implements View {
 
 			// Check Window
 			class CheckWindow extends Window {
+				private static final long serialVersionUID = 1L;
 
 				public CheckWindow() {
 					super("Wollen Sie diesen User wirklich löschen?");
@@ -281,6 +246,8 @@ public class UserProfil extends CustomHorizontalLayout implements View {
 					yes.setHeight("-1px");
 					content.addComponent(yes);
 					yes.addClickListener(new Button.ClickListener() {
+						private static final long serialVersionUID = 1L;
+
 						public void buttonClick(ClickEvent event) {
 							
 							new UserProvider().removeUser(u);// User in der DB
@@ -313,6 +280,8 @@ public class UserProfil extends CustomHorizontalLayout implements View {
 					no.setHeight("-1px");
 					content.addComponent(no);
 					no.addClickListener(new Button.ClickListener() {
+						private static final long serialVersionUID = 1L;
+
 						public void buttonClick(ClickEvent event) {
 							CheckWindow.this.close();// Fenster schließen
 						}
@@ -328,14 +297,11 @@ public class UserProfil extends CustomHorizontalLayout implements View {
 		content.addComponent(buttons);
 	}
 	
-	private void daten() {
-		prename.setValue(((User) VaadinSession.getCurrent().getSession().getAttribute("user")).getFirstname());
-	}
+//	private void daten() {
+//		prename.setValue(((User) VaadinSession.getCurrent().getSession().getAttribute("user")).getFirstname());
+//	}
 	
 	@Override
 	public void enter(ViewChangeEvent event) {
-		// TODO Auto-generated method stub
-		
 	}
-
 }

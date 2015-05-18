@@ -28,48 +28,26 @@ import com.vaadin.ui.VerticalLayout;
 
 import java.util.List;
 
-/**
- * The Class Suche.
- */
 public class Suche extends CustomHorizontalLayout implements View {
 	private static final long serialVersionUID = 1L;
 
-	/** The content. */
-	VerticalLayout content;
-
+	private VerticalLayout content;
 	private Double lat = 49.00705;
 	private Double lon = 8.40287;
 	private Double umkreis = 5.00;
-
 	private PopupDateField zeitVon = new PopupDateField("von");
-
 	private PopupDateField zeitBis = new PopupDateField("bis");
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * com.vaadin.navigator.View#enter(com.vaadin.navigator.ViewChangeListener
-	 * .ViewChangeEvent)
-	 */
 	@Override
 	public void enter(ViewChangeEvent event) {
-		// TODO Auto-generated method stub
 	}
 
-	/**
-	 * Instantiates a new suche.
-	 */
 	public Suche() {
 		content = super.initCustomHorizontalLayout();
 		setContent();
 	}
 
-	/**
-	 * Sets the content.
-	 */
 	public void setContent() {
-
 		// Titel
 		Label title = new Label();
 		title.setImmediate(false);
@@ -148,8 +126,7 @@ public class Suche extends CustomHorizontalLayout implements View {
 		tabelleInnen.addComponent(suchButton, 0, 6);
 
 		// Marker
-		GoogleMapMarker kakolaMarker = new GoogleMapMarker("Karlsruhe",
-				new LatLon(49.00705, 8.40287), true, null);
+		GoogleMapMarker kakolaMarker = new GoogleMapMarker("Karlsruhe",new LatLon(49.00705, 8.40287), true, null);
 
 		// Maps
 		final GoogleMap googleMap = new GoogleMap(null, null, null);
@@ -194,7 +171,6 @@ public class Suche extends CustomHorizontalLayout implements View {
 		selectUmkreis.setImmediate(true);
 		selectUmkreis.addValueChangeListener(new ValueChangeListener() {
 			private static final long serialVersionUID = 1L;
-
 			@Override
 			public void valueChange(final ValueChangeEvent event) {
 				umkreis = (Double) event.getProperty().getValue();
@@ -202,11 +178,9 @@ public class Suche extends CustomHorizontalLayout implements View {
 		});
 
 		// Checkbox: Mit Karte suchen
-		final CheckBox mitKarteSuchen = new CheckBox(
-						"Alternativ auf der Karte suchen", false);
+		final CheckBox mitKarteSuchen = new CheckBox("Alternativ auf der Karte suchen", false);
 		mitKarteSuchen.addValueChangeListener(new ValueChangeListener() {
 			private static final long serialVersionUID = 1L;
-
 			@Override
 			public void valueChange(final ValueChangeEvent event) {
 				final boolean value = (boolean) event.getProperty().getValue();
@@ -223,8 +197,6 @@ public class Suche extends CustomHorizontalLayout implements View {
 			}
 		});
 		
-
-		
 		VerticalLayout verticalLayoutMaps = new VerticalLayout();
 		verticalLayoutMaps.setSpacing(true);
 		verticalLayoutMaps.addComponent(mitKarteSuchen);
@@ -235,52 +207,20 @@ public class Suche extends CustomHorizontalLayout implements View {
 		// Suchfunktion
 		suchButton.addClickListener(new Button.ClickListener() {
 			private static final long serialVersionUID = 1L;
-
 			@SuppressWarnings("deprecation")
 			public void buttonClick(ClickEvent event) {
-				
 				try { //falls in Zahlenfeder keine Zahlen eingetragen wurden
-					
 					Format.floatFormat(sucheVon.getValue());
 					Format.floatFormat(sucheBis.getValue());
 					Format.floatFormat(preisVon.getValue());
 					Format.floatFormat(preisBis.getValue());
-					
 				} catch (NumberFormatException nfe) {
-					
 					Notification failNumberFormat = new Notification("Bitte überprüfen Sie Ihre Eingaben und benutzen Sie gültige Zahlenformate.");
 					failNumberFormat.setDelayMsec(300);
 					failNumberFormat.setStyleName("failure");
 					failNumberFormat.show(Page.getCurrent());
 					return;
-					
 				}
-				
-				//System.out.println(zeitVon.getValue().toString());
-				//System.out.println(zeitBis.getValue().toString());
-				
-	/*			try{
-					validateDate();
-				}catch(IllegalArgumentException e){
-					Notification failNumberFormat = new Notification("Bitte überprüfen Sie Ihre Eingaben und geben Sie ein gültiges Datum ein.");
-					failNumberFormat.setDelayMsec(300);
-					failNumberFormat.setStyleName("failure");
-					failNumberFormat.show(Page.getCurrent());
-					return;
-				}catch(NullPointerException npe){
-					//tue nichts (kein Plichtfeld!)
-				}*/
-				
-				/*try{
-					validateAfter();
-				}catch(Exception e){
-					Notification failNumberFormat = new Notification("Das Enddatum muss nach dem Startsatum liegen.");
-					failNumberFormat.setDelayMsec(300);
-					failNumberFormat.setStyleName("failure");
-					failNumberFormat.show(Page.getCurrent());
-					return;
-				}*/
-				
 				
 				int a = 7;
 				if (wohnung.getValue() && zimmer.getValue() && wg.getValue()) {
@@ -322,36 +262,10 @@ public class Suche extends CustomHorizontalLayout implements View {
 				}
 
 				String name = "AngebotAnzeigen";
-				getUI().getNavigator().addView(name,
-						new Suchergebnis(ergebnisse));
+				getUI().getNavigator().addView(name,new Suchergebnis(ergebnisse));
 				getUI().getNavigator().navigateTo(name);
 			}
 		});
-
 		content.addComponent(tabelleAussen);
 	}
-	
-	private void validateDate(){
-		System.out.println(zeitVon.getValue().toString());
-		zeitVon.validate();
-		zeitVon.setConversionError("Das Format ist nicht korrekt.");
-		if(!zeitVon.getValue().toString().isEmpty() ){
-			Format.dateFormat(zeitVon.getValue());
-		}
-		/*
-		if(!zeitBis.getValue().toString().isEmpty() ){
-			Format.dateFormat(zeitBis.getValue());
-		}*/
-		
-		
-	}
-	
-	private void validateAfter() throws Exception{
-		if(!zeitVon.getValue().toString().isEmpty() && !zeitBis.getValue().toString().isEmpty()){
-			if(zeitVon.getValue().after(zeitBis.getValue())){
-				throw new Exception("Das Enddatum ist vor dem Anfangsdatum");
-			}
-		}
-	}
-
 }

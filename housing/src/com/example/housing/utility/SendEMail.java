@@ -1,6 +1,7 @@
 package com.example.housing.utility;
 
 import java.util.Properties;
+
 import javax.mail.Authenticator;
 import javax.mail.Message;
 import javax.mail.MessagingException;
@@ -8,16 +9,17 @@ import javax.mail.PasswordAuthentication;
 import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
+
+import static com.example.housing.WOBOConstants.*;
 import com.sun.mail.smtp.SMTPMessage;
 
 public class SendEMail {
 	public static void send(String to, String from, String subject, String text){
 		Properties properties = new Properties();
 		Session session = initialize(properties);
-		// neue Message erzeugen
 		SMTPMessage message = (SMTPMessage) new SMTPMessage(session);
 		try {
-			message.setEnvelopeFrom("wohnungsboerse_dh@web.de");// tatsächlicher Absender (E-Mail wird von uns an uns selbst geschickt, unter dem Namen bzw. der E-Mail-Adresse des Nutzers)
+			message.setEnvelopeFrom(EMailBenutzername);// tatsächlicher Absender (E-Mail wird von uns an uns selbst geschickt, unter dem Namen bzw. der E-Mail-Adresse des Nutzers)
 			message.setFrom(new InternetAddress(from));// E-Mail-Adresse des Benutzers
 			message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(to));// E-Mail-Adresse des Empfängers
 			message.setSubject(subject);// Betreff
@@ -32,7 +34,6 @@ public class SendEMail {
 	public static void sendEmailAlias(String to, String from, String alias, String subject, String text){
 		Properties properties = new Properties();
 		Session session = initialize(properties);
-		// neue Message erzeugen
 		SMTPMessage message = (SMTPMessage) new SMTPMessage(session);
 		try {
 			message.setEnvelopeFrom(from);// tatsächlicher Absender (E-Mail wird von uns an uns selbst geschickt, unter dem Namen bzw. der E-Mail-Adresse des Nutzers)
@@ -57,7 +58,7 @@ public class SendEMail {
 		Authenticator auth = new javax.mail.Authenticator() {
 			@Override
 			public PasswordAuthentication getPasswordAuthentication() {
-				return new PasswordAuthentication("wohnungsboerse_dh@web.de", "wohnungsboerse");// Unsere E-Mail-Adresse und unser Passwort
+				return new PasswordAuthentication(EMailBenutzername, EMailPasswort);// Unsere E-Mail-Adresse und unser Passwort
 			}
 		};
 		// Session erstellen mit den oben gesetzten Properties und der Authentifikation
