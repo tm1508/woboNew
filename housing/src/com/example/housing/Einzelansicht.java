@@ -56,11 +56,12 @@ public class Einzelansicht extends CustomHorizontalLayout implements View {
 	public void setContent(){
 		if(angebot.isInactive()){
 			Label warn = new Label(FontAwesome.WARNING.getHtml() + "&nbsp;", ContentMode.HTML);
-			
+			warn.setStyleName("redText");
 			Label inactive = new Label(" Bitte beachten Sie: Dieses Angebot ist gerade deaktiviert und kann von anderen Nutzeren nicht angesehen werden!");
 			inactive.setImmediate(false);
 			inactive.setWidth("1000px");
 			inactive.setHeight("-1px");
+			inactive.setStyleName("redText");
 			
 			HorizontalLayout warnInactive = new HorizontalLayout();
 			warnInactive.addComponent(warn);
