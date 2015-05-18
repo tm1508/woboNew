@@ -34,7 +34,6 @@ import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Image;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Notification;
-import com.vaadin.ui.RichTextArea;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.Notification.*;
 import com.vaadin.ui.TextArea;
@@ -45,8 +44,7 @@ public class Einzelansicht extends CustomHorizontalLayout implements View {
 	private static final long serialVersionUID = 1L;
 	
 	private VerticalLayout content;
-	
-	Offer angebot;
+	private Offer angebot;
 
 	public Einzelansicht(Offer einzelAngebot){
 		this.angebot = einzelAngebot;

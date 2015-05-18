@@ -10,11 +10,7 @@ import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
 import javax.imageio.ImageIO;
-
-import org.jsoup.Jsoup;
-
 import com.example.housing.data.model.Offer;
 import com.example.housing.data.model.Photo;
 import com.example.housing.data.model.User;
