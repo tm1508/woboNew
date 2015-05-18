@@ -130,7 +130,7 @@ public class Startseite extends CustomHorizontalLayout implements View{
 		//Panel für Suchfeld
 		Panel suchePanel = new Panel("Suche");
 		suchePanel.setStyleName("startseite");
-		suchePanel.setWidth("632px");
+		//suchePanel.setWidth("632px");
 		suchePanel.setHeight("400px");
 		suchePanel.setIcon(FontAwesome.SEARCH);
 		VerticalLayout suche = new VerticalLayout();

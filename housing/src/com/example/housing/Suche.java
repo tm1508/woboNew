@@ -5,7 +5,6 @@ import com.example.housing.data.provider.OfferProvider;
 import com.example.housing.utility.Format;
 import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;
-import com.vaadin.data.Validator.InvalidValueException;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.server.FontAwesome;
@@ -108,9 +107,6 @@ public class Suche extends CustomHorizontalLayout implements View {
 		tabelleInnen.addComponent(zeitVon, 1, 3);
 		tabelleInnen.addComponent(zeitBis, 2, 3);
 		
-		zeitVon.setDateFormat("dd.MM.yyyy");
-		zeitBis.setDateFormat("dd.MM.yyyy");
-
 		// Art der Unterkunft
 		tabelleInnen.addComponent(new Label("Art der Unterkunft: "), 0, 4);
 		final CheckBox wohnung = new CheckBox("Wohnung");
@@ -257,6 +253,9 @@ public class Suche extends CustomHorizontalLayout implements View {
 					return;
 					
 				}
+				
+				//System.out.println(zeitVon.getValue().toString());
+				//System.out.println(zeitBis.getValue().toString());
 				
 	/*			try{
 					validateDate();

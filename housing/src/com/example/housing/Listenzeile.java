@@ -74,7 +74,7 @@ public class Listenzeile extends CustomComponent {
 			
 			Image image = new Image(null, resource);
 			image.setHeight("146px"); //100% der Listenzeilen-Höhe
-			image.setWidth("146px");
+			image.setWidth("170px");
 			image.markAsDirty();
 			imageLayout.addComponent(image);
 			ergebnisLayout.addComponent(imageLayout, 0, 0, 2, 2);
