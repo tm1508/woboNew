@@ -86,6 +86,7 @@ public class Kontaktformular extends CustomHorizontalLayout implements View{
 		text.setWidth("100%");
 		content.addComponent(anfrage);
 		content.addComponent(text);
+		content.addComponent(new Label());
 		
 		// button
 		Button sendButton = new Button();
@@ -128,9 +129,9 @@ public class Kontaktformular extends CustomHorizontalLayout implements View{
 				+"<br/><br/>Sie haben eine Nachricht eines Nutzers der DHBW-Wohungsbörse erhalten:"
 				+"<br/><br/> <span style='color: #e2001a' 'font-family: Arial, sans-serif''font-size: 16pt''font-weight: bold'> &raquo; </span>"
 				+"<br/>" + text.getValue() 
-				+"<br/><span style='color: #e2001a' 'font-family: Arial, sans-serif''font-size: 16pt''font-weight: bold'> &laquo; </span>" 
+				+"<span style='color: #e2001a' 'font-family: Arial, sans-serif''font-size: 16pt''font-weight: bold'> &laquo; </span>" 
 				+"<br/><br/>" + "Kontaktdaten des Absenders: "
-				+"<br/>Name:" + prename.getValue()
+				+"<br/>Name: " + prename.getValue()
 				+"<br/>Email: " + email_1.getValue() + "</span>";
 			
 		//Email an Anfrager senden

@@ -122,7 +122,7 @@ public class Anfrageformular extends CustomHorizontalLayout implements View{
 				+"<br/><br/>Sie haben eine Anfrage zu Ihrem Angebot \"" + requestedOffer.getTitle() + "\" in der Wohnungsbörse der DHBW erhalten:"
 				+"<br/><br/> <span style='color: #e2001a' 'font-family: Arial, sans-serif''font-size: 16pt''font-weight: bold'> &raquo; </span>"
 				+"<br/>" + text.getValue() 
-				+"<br/><span style='color: #e2001a' 'font-family: Arial, sans-serif''font-size: 16pt''font-weight: bold'> &laquo; </span>" 
+				+"<span style='color: #e2001a' 'font-family: Arial, sans-serif''font-size: 16pt''font-weight: bold'> &laquo; </span>" 
 				+"<br/><br/>" + "Kontaktdaten des Anfragenden: "
 				+"<br/>Name: " + ((User) VaadinSession.getCurrent().getSession().getAttribute("user")).getFirstname()+ " " + ((User) VaadinSession.getCurrent().getSession().getAttribute("user")).getLastname() 
 				+"<br/>Email: " + ((User) VaadinSession.getCurrent().getSession().getAttribute("user")).getEmail() 
@@ -133,7 +133,7 @@ public class Anfrageformular extends CustomHorizontalLayout implements View{
 				+"<br/><br/>Sie haben eine Anfrage zum Angebot \"" + requestedOffer.getTitle() + "\" in der DHBW-Wohnungsbörse versendet:"
 				+"<br/><br/> <span style='color: #e2001a' 'font-family: Arial, sans-serif''font-size: 16pt''font-weight: bold'> &raquo; </span>"
 				+"<br/>" + text.getValue() 
-				+"<br/><span style='color: #e2001a' 'font-family: Arial, sans-serif''font-size: 16pt''font-weight: bold'> &laquo; </span>" 
+				+"<span style='color: #e2001a' 'font-family: Arial, sans-serif''font-size: 16pt''font-weight: bold'> &laquo; </span>" 
 				+"<br/><br/>Ihre Kontaktdaten: "
 				+"<br/>Name: " + ((User) VaadinSession.getCurrent().getSession().getAttribute("user")).getFirstname()+ " " + ((User) VaadinSession.getCurrent().getSession().getAttribute("user")).getLastname() 
 				+"<br/>Email: " + ((User) VaadinSession.getCurrent().getSession().getAttribute("user")).getEmail() 
@@ -143,6 +143,7 @@ public class Anfrageformular extends CustomHorizontalLayout implements View{
 		
 		//Email an Anfrager senden
 		SendEMail.send(((User) VaadinSession.getCurrent().getSession().getAttribute("user")).getEmail(), "wohnungsboerse_dh@web.de", "Ihre Anfrage in der DHBW-Wohnungsbörse", bodyAnfrager);
+		
 		//Email an Anbieter senden
 		SendEMail.send(requestedOffer.getOffer_idUser().getEmail(), "Wohnungsboerse_DHBW", "Neue Anfrage zu Ihrem Angebot in der DHBW-Wohnungsbörse", bodyAnbieter);
 	

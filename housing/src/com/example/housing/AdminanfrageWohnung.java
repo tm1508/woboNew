@@ -1,11 +1,13 @@
 package com.example.housing;
 
 import com.example.housing.data.model.Offer;
+import com.example.housing.data.model.User;
 import com.example.housing.utility.SendEMail;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.server.Page;
+import com.vaadin.server.VaadinSession;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Notification;
@@ -90,20 +92,20 @@ public class AdminanfrageWohnung extends CustomHorizontalLayout implements View 
 				+"<br/><br/>Sie haben eine Nachricht eines Portal-Administrators zu Ihrem Angebot \"" + angebot.getTitle() + "\" in der Wohnungsbörse der DHBW erhalten:"
 				+"<br/><br/> <span style='color: #e2001a' 'font-family: Arial, sans-serif''font-size: 16pt''font-weight: bold'> &raquo; </span>"
 				+"<br/>" + text.getValue() 
-				+"<br/><span style='color: #e2001a' 'font-family: Arial, sans-serif''font-size: 16pt''font-weight: bold'> &laquo; </span>"
+				+"<span style='color: #e2001a' 'font-family: Arial, sans-serif''font-size: 16pt''font-weight: bold'> &laquo; </span>"
 				+"<br/><br/>Mit freundlichen Grüßen<br/>Ihr DHBW Wohnungsbörsen-Team<p/><span style='color: #e2001a' 'font-family: Arial, sans-serif''font-size: 8pt' >Anschrift:<br/>DHBW Karlsruhe<br/>Baden-Wuerttemberg Cooperative State University Karlsruhe<br />Erzbergerstraße 121 . 76133 Karlsruhe <br />Postfach 10 01 36 . 76231 Karlsruhe   <br />Telefon +49.721.9735-5 <br />Telefax +49.721.9735-600 <br />E-Mail: dreischer@dhbw-karlsruhe.de<br /><br/><br/>Ansprechpartner:<br/> <br />Dr. Anita Dreischer<br /><br/><b>Copyright DHBW Karlsruhe. Alle Rechte vorbehalten.</b></span>";
 		
 		String copy = "<meta charset='utf-8'/><span style='color: #000000' 'font-family: Arial, sans-serif''font-size: 16pt' >Hallo,"
 				+"<br/><br/>es wurde folgende Nachricht an den Anbieter der Wohnung mit ID " + angebot.getIdOffer() + " verschickt: "
 				+"<br/><br/> <span style='color: #e2001a' 'font-family: Arial, sans-serif''font-size: 16pt''font-weight: bold'> &raquo; </span>"
 				+"<br/>" + text.getValue() 
-				+"<br/><span style='color: #e2001a' 'font-family: Arial, sans-serif''font-size: 16pt''font-weight: bold'> &laquo; </span>";
+				+"<span style='color: #e2001a' 'font-family: Arial, sans-serif''font-size: 16pt''font-weight: bold'> &laquo; </span>";
 		
 		//Email an Anbieter senden
 		SendEMail.send(angebot.getOffer_idUser().getEmail(), "Wohnungsboerse_DHBW", "Benachrichtigung zu Ihrem Angebot in der DHBW-Wohnungsbörse", message);
 	
 		//Email an Admin (CC)
-		SendEMail.sendEmailAlias("wohnungsboerse_dh@web.de", "Wohnungsboerse_DHBW", "Wohnungsboerse_DHBW_Admin","Kopie der Administratoren-Nachricht zum Angebot mit Offer-ID" + angebot.getIdOffer(), copy);
+		SendEMail.sendEmailAlias("wohnungsboerse_dh@web.de", "wohnungsboerse_dh@web.de", "Admin_Wohnungsboerse_DHBW", "Offer-ID " + angebot.getIdOffer() + ": Kopie der Administratoren-Nachricht zum Angebot", copy);
 	}
 
 	@Override
