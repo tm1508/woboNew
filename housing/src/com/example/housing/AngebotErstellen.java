@@ -109,7 +109,7 @@ public class AngebotErstellen extends CustomHorizontalLayout implements View, Re
 		newPhotos = new ArrayList<Photo>();
 
 		content = super.initCustomHorizontalLayout();
-		setContent(offer);
+		setContent(currentOffer);
 	}
 
 	// Inhalt der Seite für neues Angebot
@@ -638,7 +638,7 @@ public class AngebotErstellen extends CustomHorizontalLayout implements View, Re
 		ltitel.setWidth("10%");
 		ltitel.addStyleName("AbschnittLabel");
 		final TextField titel = new TextField();
-		titel.setValue(offer.getTitle());
+		titel.setValue(currentOffer.getTitle());
 		titel.setRequired(true);
 		titel.setRequiredError("Bitte geben Sie einen Titel an.");
 		titel.setWidth("80%");
@@ -646,7 +646,7 @@ public class AngebotErstellen extends CustomHorizontalLayout implements View, Re
 		Label adress = new Label("Adresse");
 		adress.addStyleName("AbschnittLabel");
 		final TextField street = new TextField("Straße, Hausnummer");
-		street.setValue(offer.getStreet());
+		street.setValue(currentOffer.getStreet());
 		street.setRequired(true);
 		street.setRequiredError("Bitte geben Sie Straße und Hausnummer an.");
 		street.addStyleName("AngeboteTextField");
@@ -654,14 +654,14 @@ public class AngebotErstellen extends CustomHorizontalLayout implements View, Re
 		HorizontalLayout hl0 = new HorizontalLayout();
 		hl0.setWidth("50%");
 		final TextField zip = new TextField("PLZ");
-		zip.setValue(offer.getZip());
+		zip.setValue(currentOffer.getZip());
 		zip.setRequired(true);
 		zip.setRequiredError("Bitte geben Sie die Postleitzahl an.");
 		zip.setWidth("50%");
 		zip.addStyleName("AngeboteTextField");
 		zip.setEnabled(false); //nicht mehr zu ändern
 		final TextField city = new TextField("Ort");
-		city.setValue(offer.getCity());
+		city.setValue(currentOffer.getCity());
 		city.setRequired(true);
 		city.setRequiredError("Bitte geben Sie den Ort an.");
 		city.addStyleName("AngeboteTextField");
@@ -679,15 +679,15 @@ public class AngebotErstellen extends CustomHorizontalLayout implements View, Re
 		content.addComponent(new Label());
 		
 		//GoogleMaps
-		if(offer.getLatitude()!=null && offer.getLatitude()!=BigDecimal.valueOf(0.0)){
+		if(currentOffer.getLatitude()!=null && currentOffer.getLatitude()!=BigDecimal.valueOf(0.0)){
 		
 		//Marker
 	    GoogleMapMarker kakolaMarker = new GoogleMapMarker(
-		            "Hier befindet sich die Wohnung", new LatLon(offer.getLatitude().doubleValue(), offer.getLongitude().doubleValue()),
+		            "Hier befindet sich die Wohnung", new LatLon(currentOffer.getLatitude().doubleValue(), currentOffer.getLongitude().doubleValue()),
 		            false, null);
 	        
         GoogleMap googleMap = new GoogleMap(null, null, null);
-        googleMap.setCenter(new LatLon(offer.getLatitude().doubleValue(), offer.getLongitude().doubleValue()));
+        googleMap.setCenter(new LatLon(currentOffer.getLatitude().doubleValue(), currentOffer.getLongitude().doubleValue()));
         googleMap.setZoom(10);
         googleMap.setSizeFull();
         kakolaMarker.setAnimationEnabled(false);
@@ -757,29 +757,29 @@ public class AngebotErstellen extends CustomHorizontalLayout implements View, Re
 		isShared.addItem("Zimmer");
 		isShared.addItem("WG-Zimmer");
 		isShared.addStyleName("AngeboteTextField");
-		isShared.select(decodeType(offer));
+		isShared.select(decodeType(currentOffer));
 		z1.addComponent(isShared);
 		final TextField squareMetre = new TextField("Größe (in m²):");
-		squareMetre.setValue(Format.stringFormat(offer.getSquareMetre()));
+		squareMetre.setValue(Format.stringFormat(currentOffer.getSquareMetre()));
 		squareMetre.setRequired(true);
 		squareMetre.setRequiredError("Bitte geben Sie die Größe in m² an.");
 		z2.addComponent(squareMetre);
 		final TextField roomMates = new TextField("Anzahl Mitbewohner:");
-		roomMates.setValue(String.valueOf(offer.getNumberOfRoommate()));
+		roomMates.setValue(String.valueOf(currentOffer.getNumberOfRoommate()));
 		roomMates.setRequired(true);
 		roomMates.setRequiredError("Bitte geben Sie die Anzahl an Mitbewohner an.");
-		roomMates.setValue(String.valueOf(offer.getNumberOfRoommate()));
+		roomMates.setValue(String.valueOf(currentOffer.getNumberOfRoommate()));
 		roomMates.addStyleName("AngeboteTextField");
 		z3.addComponent(roomMates);
 		Label date = new Label("Verfügbarkeit");
 		date.addStyleName("AbschnittLabel");
 		final DateField startDate = new DateField("von:");
-		startDate.setValue(offer.getStartDate());
+		startDate.setValue(currentOffer.getStartDate());
 		startDate.setRequired(true);
 		startDate.setRequiredError("Bitte geben Sie ein Startdatum an.");
 		final DateField endDate = new DateField("bis:");
 		try {
-			endDate.setValue(offer.getEndDate());
+			endDate.setValue(currentOffer.getEndDate());
 		} catch (Exception e) {
 		}
 		HorizontalLayout hl1 = new HorizontalLayout();
@@ -794,14 +794,14 @@ public class AngebotErstellen extends CustomHorizontalLayout implements View, Re
 		costs.addStyleName("AbschnittLabel");
 		label.addComponent(costs);
 		final TextField price = new TextField("Warmmiete inkl. Nebenkosten (in €):");
-		price.setValue(Format.euroFormat(offer.getPrice()));
+		price.setValue(Format.euroFormat(currentOffer.getPrice()));
 		price.setRequired(true);
 		price.setRequiredError("Bitte geben Sie die Warmmiete an.");
 		price.addStyleName("AngeboteTextField");
 		z1.addComponent(price);
 		final TextField bond = new TextField("Kaution (in €):");
 		try {
-			bond.setValue(Format.euroFormat(offer.getBond()));
+			bond.setValue(Format.euroFormat(currentOffer.getBond()));
 		} catch (Exception e) {
 		}
 		bond.addStyleName("AngeboteTextField");
@@ -822,23 +822,23 @@ public class AngebotErstellen extends CustomHorizontalLayout implements View, Re
 		HorizontalLayout hl2 = new HorizontalLayout();
 		hl2.setWidth("100%");
 		final CheckBox internet = new CheckBox("Internetanschluss vorhanden");
-		internet.setValue(offer.isInternet());
+		internet.setValue(currentOffer.isInternet());
 		internet.setWidth("20%");
 		internet.addStyleName("AngeboteTextField");
 		final CheckBox furnished = new CheckBox("Möblierte Wohnung");
-		furnished.setValue(offer.isFurnished());
+		furnished.setValue(currentOffer.isFurnished());
 		furnished.setWidth("20%");
 		furnished.addStyleName("AngeboteTextField");
 		final CheckBox kitchen = new CheckBox("Küche vorhanden");
-		kitchen.setValue(offer.isKitchen());
+		kitchen.setValue(currentOffer.isKitchen());
 		kitchen.setWidth("20%");
 		kitchen.addStyleName("AngeboteTextField");
 		final CheckBox smoker = new CheckBox("Raucher-Wohnung");
-		smoker.setValue(offer.isSmoker());
+		smoker.setValue(currentOffer.isSmoker());
 		smoker.setWidth("20%");
 		smoker.addStyleName("AngeboteTextField");
 		final CheckBox pets = new CheckBox("Haustiere erlaubt");
-		pets.setValue(offer.isPets());
+		pets.setValue(currentOffer.isPets());
 		pets.setWidth("20%");
 		pets.addStyleName("AngeboteTextField");
 		final ComboBox genders = new ComboBox("Bevorzugtes Geschlecht:");
@@ -847,7 +847,7 @@ public class AngebotErstellen extends CustomHorizontalLayout implements View, Re
 		genders.addItem("egal");
 		genders.addItem("männlich");
 		genders.addItem("weiblich");
-		genders.select(decodeGender(offer));
+		genders.select(decodeGender(currentOffer));
 		genders.addStyleName("AngeboteTextField");
 
 		hl2.addComponent(internet);
@@ -865,7 +865,7 @@ public class AngebotErstellen extends CustomHorizontalLayout implements View, Re
 		Label anzeigetext = new Label("Beschreibung");
 		anzeigetext.addStyleName("AbschnittLabel");
 		final RichTextArea text = new RichTextArea();
-		text.setValue(offer.getText());
+		text.setValue(currentOffer.getText());
 		text.setRequired(true);
 		text.setRequiredError("Bitte geben Sie eine kurze Beschreibung des Angebots an.");
 		text.setWidth("100%");
@@ -877,7 +877,7 @@ public class AngebotErstellen extends CustomHorizontalLayout implements View, Re
 
 		// Button speichern/aktivieren/deaktivieren
 		final CheckBox inactive = new CheckBox("deaktivieren");
-		inactive.setValue(offer.isInactive());
+		inactive.setValue(currentOffer.isInactive());
 		
 		content.addComponent(inactive);
 		content.addComponent(new Label());
