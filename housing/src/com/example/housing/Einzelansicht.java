@@ -559,9 +559,10 @@ public class Einzelansicht extends CustomHorizontalLayout implements View {
         	buttons.addComponent(anbieter);	
         }
         
-        //Anfrage-Button deaktivieren bei deaktivierten Angeboten
-        if(angebot.isInactive()){
+        //Anfrage-Button deaktivieren bei deaktivierten Angebot oder bei eigenem Angebot
+        if(angebot.isInactive() || angebot.getOffer_idUser().getIdUser().equals(((User) VaadinSession.getCurrent().getSession().getAttribute("user")).getIdUser())){
         	anfrage.setEnabled(false);
+        	anfrage.setDescription("Sie können keine Anfrage für eigene sowie für deaktivierte Angebote versenden");
         }
         
         anfrage.addClickListener(new Button.ClickListener() {
@@ -611,6 +612,11 @@ public class Einzelansicht extends CustomHorizontalLayout implements View {
         	Button favorit = new Button("Favorit hinzufügen");
         	favorit.setIcon(FontAwesome.PLUS_SQUARE_O);
         	favorit.addStyleName("AnfrageButton");
+        	//Deaktivieren für eigene Angebote
+        	if(angebot.getOffer_idUser().getIdUser().equals(((User) VaadinSession.getCurrent().getSession().getAttribute("user")).getIdUser())) {
+        		favorit.setEnabled(false);
+        		favorit.setDescription("Sie können eigene Angebote nicht zu Ihren Favoriten hinzufügen");
+        	}
         	buttons.addComponent(favorit);
         	
         	favorit.addClickListener(new Button.ClickListener() {
