@@ -560,7 +560,7 @@ public class Einzelansicht extends CustomHorizontalLayout implements View {
         }
         
         //Anfrage-Button deaktivieren bei deaktivierten Angebot oder bei eigenem Angebot
-        if(angebot.isInactive() || angebot.getOffer_idUser().getIdUser().equals(((User) VaadinSession.getCurrent().getSession().getAttribute("user")).getIdUser())){
+        if(angebot.isInactive() || ( (boolean) VaadinSession.getCurrent().getSession().getAttribute("login") && angebot.getOffer_idUser().getIdUser().equals(((User) VaadinSession.getCurrent().getSession().getAttribute("user")).getIdUser()))){
         	anfrage.setEnabled(false);
         	anfrage.setDescription("Sie können keine Anfrage für eigene sowie für deaktivierte Angebote versenden");
         }
