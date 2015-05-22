@@ -6,6 +6,7 @@ import com.example.housing.data.provider.OfferProvider;
 import com.example.housing.utility.Format;
 import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;
+import com.vaadin.data.Validator.InvalidValueException;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.server.FontAwesome;
@@ -25,7 +26,6 @@ import com.vaadin.ui.Notification;
 import com.vaadin.ui.PopupDateField;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
-
 import java.util.List;
 
 public class Suche extends CustomHorizontalLayout implements View {
@@ -85,7 +85,9 @@ public class Suche extends CustomHorizontalLayout implements View {
 		// Zeitraum
 		tabelleInnen.addComponent(new Label("Verfügbarkeit:  "), 0, 3);
 		tabelleInnen.addComponent(zeitVon, 1, 3);
+		zeitVon.setParseErrorMessage("Bitte geben Sie ein korrektes Datum ein!");
 		tabelleInnen.addComponent(zeitBis, 2, 3);
+		zeitBis.setParseErrorMessage("Bitte geben Sie ein korrektes Datum ein!");
 		
 		// Art der Unterkunft
 		tabelleInnen.addComponent(new Label("Art der Unterkunft: "), 0, 4);
@@ -222,50 +224,79 @@ public class Suche extends CustomHorizontalLayout implements View {
 					return;
 				}
 				
-				int a = 7;
-				if (wohnung.getValue() && zimmer.getValue() && wg.getValue()) {
-					a = 7;
-				} else if (wohnung.getValue() && zimmer.getValue()) {
-					a = 4;
-				} else if (zimmer.getValue() && wg.getValue()) {
-					a = 5;
-				} else if (wg.getValue() && wohnung.getValue()) {
-					a = 6;
-				} else if (wohnung.getValue()) {
-					a = 1;
-				} else if (zimmer.getValue()) {
-					a = 2;
-				} else if (wg.getValue()) {
-					a = 3;
-				}
 				
-				int accessLevel =  -1;
-				if((boolean) VaadinSession.getCurrent().getSession().getAttribute("login")) {
-					accessLevel = ((User) VaadinSession.getCurrent().getSession().getAttribute("user")).getAccessLevel();
+				boolean fehler = validate();
+				if(fehler){
+					int a = 7;
+					if (wohnung.getValue() && zimmer.getValue() && wg.getValue()) {
+						a = 7;
+					} else if (wohnung.getValue() && zimmer.getValue()) {
+						a = 4;
+					} else if (zimmer.getValue() && wg.getValue()) {
+						a = 5;
+					} else if (wg.getValue() && wohnung.getValue()) {
+						a = 6;
+					} else if (wohnung.getValue()) {
+						a = 1;
+					} else if (zimmer.getValue()) {
+						a = 2;
+					} else if (wg.getValue()) {
+						a = 3;
+					}
+					
+					int accessLevel =  -1;
+					if((boolean) VaadinSession.getCurrent().getSession().getAttribute("login")) {
+						accessLevel = ((User) VaadinSession.getCurrent().getSession().getAttribute("user")).getAccessLevel();
+					}
+	
+					OfferProvider of = new OfferProvider();
+					List<Offer> ergebnisse;
+					ergebnisse = of.filter(zeitVon.getValue(), zeitBis.getValue(),
+							(Format.floatFormat(sucheVon.getValue())),
+							(Format.floatFormat(sucheBis.getValue())),
+							(Format.floatFormat(preisVon.getValue())),
+							(Format.floatFormat(preisBis.getValue())), a,
+							internet.getValue(), moebliert.getValue(),
+							kueche.getValue(), rauchen.getValue(),
+							haustiere.getValue(), stadt.getValue(),
+							accessLevel);
+	
+					//nur bei Suche über Karte
+					if (mitKarteSuchen.booleanValue()) {
+						ergebnisse = of.filterMaps(ergebnisse, umkreis, lat, lon);
+					}
+	
+					String name = "AngebotAnzeigen";
+					getUI().getNavigator().addView(name,new Suchergebnis(ergebnisse));
+					getUI().getNavigator().navigateTo(name);
+				}else{
+					Notification failNumberFormat = new Notification("Bitte überprüfen Sie Ihre Eingaben und geben Sie ein gültiges Datum ein.");
+					failNumberFormat.setDelayMsec(300);
+					failNumberFormat.setStyleName("failure");
+					failNumberFormat.show(Page.getCurrent());
 				}
-
-				OfferProvider of = new OfferProvider();
-				List<Offer> ergebnisse;
-				ergebnisse = of.filter(zeitVon.getValue(), zeitBis.getValue(),
-						(Format.floatFormat(sucheVon.getValue())),
-						(Format.floatFormat(sucheBis.getValue())),
-						(Format.floatFormat(preisVon.getValue())),
-						(Format.floatFormat(preisBis.getValue())), a,
-						internet.getValue(), moebliert.getValue(),
-						kueche.getValue(), rauchen.getValue(),
-						haustiere.getValue(), stadt.getValue(),
-						accessLevel);
-
-				//nur bei Suche über Karte
-				if (mitKarteSuchen.booleanValue()) {
-					ergebnisse = of.filterMaps(ergebnisse, umkreis, lat, lon);
-				}
-
-				String name = "AngebotAnzeigen";
-				getUI().getNavigator().addView(name,new Suchergebnis(ergebnisse));
-				getUI().getNavigator().navigateTo(name);
 			}
+				
 		});
 		content.addComponent(tabelleAussen);
+		
+	}
+	
+	
+	public boolean validate(){
+		boolean erfolgreich=true;//wird auf false gesetzt, falls ein Wert nicht richtig ist
+		try {
+			zeitVon.validate();
+		} catch (InvalidValueException e) {
+			erfolgreich=false;
+		}
+		
+		try {
+			zeitBis.validate();
+		} catch (InvalidValueException e) {
+			erfolgreich=false;
+		}
+		
+		return erfolgreich;
 	}
 }

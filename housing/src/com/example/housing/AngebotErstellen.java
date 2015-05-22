@@ -59,6 +59,9 @@ public class AngebotErstellen extends CustomHorizontalLayout implements View, Re
     private Fotos fotoKomponente;
 	private Offer currentOffer;
 	private List<Photo> newPhotos;
+	
+	private DateField startDate;
+	private DateField endDate;
 
 	public Offer getCurrentOffer() {
 		return currentOffer;
@@ -255,10 +258,12 @@ public class AngebotErstellen extends CustomHorizontalLayout implements View, Re
 		z3.addComponent(roomMates);
 		Label date = new Label("Verfügbarkeit");
 		date.addStyleName("AbschnittLabel");
-		final DateField startDate = new DateField("von:");
+		startDate = new DateField("von:");
+		startDate.setParseErrorMessage("Bitte geben Sie ein korrektes Datum ein!");
 		startDate.setRequired(true);
 		startDate.setRequiredError("Bitte geben Sie ein Startdatum an.");
-		final DateField endDate = new DateField("bis:");
+		endDate = new DateField("bis:");
+		endDate.setParseErrorMessage("Bitte geben Sie ein korrektes Datum ein!");
 		HorizontalLayout hl1 = new HorizontalLayout();
 		startDate.addStyleName("AngeboteTextField");
 		endDate.addStyleName("AngeboteTextField");
@@ -595,30 +600,31 @@ public class AngebotErstellen extends CustomHorizontalLayout implements View, Re
 		abbrechen.setCaption("Abbrechen");
 		abbrechen.setImmediate(true);
 		abbrechen.setDescription("Abbrechen der Bearbeitung. Ihre Änderungen werden nicht gespeichert.");
-		abbrechen.addClickListener(new Button.ClickListener() {
-			private static final long serialVersionUID = 1L;
-
-			public void buttonClick(ClickEvent event) {
-
-				new OfferProvider().removeOffer(currentOffer);
-				
-				Notification success = new Notification("Ihr Angebot wurde nicht gespeichert.", Type.HUMANIZED_MESSAGE);
-				success.setStyleName("success");
-				success.setDelayMsec(300);
-				success.show(Page.getCurrent());
-				
-				try {
-					VaadinSession.getCurrent().getLockInstance().lock();
-					VaadinSession.getCurrent().getSession().setAttribute("buttonClicked", true);
-				} finally {
-					VaadinSession.getCurrent().getLockInstance().unlock();
+	
+			abbrechen.addClickListener(new Button.ClickListener() {
+				private static final long serialVersionUID = 1L;
+	
+				public void buttonClick(ClickEvent event) {
+	
+					new OfferProvider().removeOffer(currentOffer);
+					
+					Notification success = new Notification("Ihr Angebot wurde nicht gespeichert.", Type.HUMANIZED_MESSAGE);
+					success.setStyleName("success");
+					success.setDelayMsec(300);
+					success.show(Page.getCurrent());
+					
+					try {
+						VaadinSession.getCurrent().getLockInstance().lock();
+						VaadinSession.getCurrent().getSession().setAttribute("buttonClicked", true);
+					} finally {
+						VaadinSession.getCurrent().getLockInstance().unlock();
+					}
+	
+					String name = "Startseite";
+					getUI().getNavigator().addView(name, new Startseite());
+					getUI().getNavigator().navigateTo(name);
 				}
-
-				String name = "Startseite";
-				getUI().getNavigator().addView(name, new Startseite());
-				getUI().getNavigator().navigateTo(name);
-			}
-		});
+			});
 		
 		HorizontalLayout buttons = new HorizontalLayout();
 		buttons.addComponent(save);
@@ -780,11 +786,13 @@ public class AngebotErstellen extends CustomHorizontalLayout implements View, Re
 		z3.addComponent(roomMates);
 		Label date = new Label("Verfügbarkeit");
 		date.addStyleName("AbschnittLabel");
-		final DateField startDate = new DateField("von:");
+		startDate = new DateField("von:");
+		startDate.setParseErrorMessage("Bitte geben Sie ein korrektes Datum ein!");
 		startDate.setValue(currentOffer.getStartDate());
 		startDate.setRequired(true);
 		startDate.setRequiredError("Bitte geben Sie ein Startdatum an.");
-		final DateField endDate = new DateField("bis:");
+		endDate = new DateField("bis:");
+		endDate.setParseErrorMessage("Bitte geben Sie ein korrektes Datum ein!");
 		try {
 			endDate.setValue(currentOffer.getEndDate());
 		} catch (Exception e) {
@@ -1109,36 +1117,46 @@ public class AngebotErstellen extends CustomHorizontalLayout implements View, Re
 		abbrechen.setCaption("Abbrechen");
 		abbrechen.setImmediate(true);
 		abbrechen.setDescription("Abbrechen der Bearbeitung. Ihre Änderungen werden nicht gespeichert.");
-		abbrechen.addClickListener(new Button.ClickListener() {
-			private static final long serialVersionUID = 1L;
-
-			public void buttonClick(ClickEvent event) {
-
-				PhotoProvider photoProv = new PhotoProvider();
-				for (Photo p : newPhotos) {
-					photoProv.removePhoto(p);
+		
+		boolean fehler = validate();
+		if(fehler){
+			abbrechen.addClickListener(new Button.ClickListener() {
+				private static final long serialVersionUID = 1L;
+	
+				public void buttonClick(ClickEvent event) {
+	
+					PhotoProvider photoProv = new PhotoProvider();
+					for (Photo p : newPhotos) {
+						photoProv.removePhoto(p);
+					}
+					
+					try {
+						VaadinSession.getCurrent().getLockInstance().lock();
+						VaadinSession.getCurrent().getSession().setAttribute("buttonClicked", true);
+					} finally {
+						VaadinSession.getCurrent().getLockInstance().unlock();
+					}
+					
+					Notification success = new Notification("Ihre Änderungen an diesem Angebot wurden nicht gespeichert.", Type.HUMANIZED_MESSAGE);
+					success.setStyleName("success");
+					success.setDelayMsec(300);
+					success.show(Page.getCurrent());
+					
+					Offer o = new OfferProvider().findById(currentOffer.getIdOffer());
+					
+					String name = "Einzelansicht";
+					getUI().getNavigator().addView(name, new Einzelansicht(o));
+					getUI().getNavigator().navigateTo(name);
+	
 				}
-				
-				try {
-					VaadinSession.getCurrent().getLockInstance().lock();
-					VaadinSession.getCurrent().getSession().setAttribute("buttonClicked", true);
-				} finally {
-					VaadinSession.getCurrent().getLockInstance().unlock();
-				}
-				
-				Notification success = new Notification("Ihre Änderungen an diesem Angebot wurden nicht gespeichert.", Type.HUMANIZED_MESSAGE);
-				success.setStyleName("success");
-				success.setDelayMsec(300);
-				success.show(Page.getCurrent());
-				
-				Offer o = new OfferProvider().findById(currentOffer.getIdOffer());
-				
-				String name = "Einzelansicht";
-				getUI().getNavigator().addView(name, new Einzelansicht(o));
-				getUI().getNavigator().navigateTo(name);
-
-			}
-		});
+			
+			});
+		}else{
+			Notification failNumberFormat = new Notification("Bitte überprüfen Sie Ihre Eingaben und geben Sie ein gültiges Datum ein.");
+			failNumberFormat.setDelayMsec(300);
+			failNumberFormat.setStyleName("failure");
+			failNumberFormat.show(Page.getCurrent());
+		}
 		
 		HorizontalLayout buttons = new HorizontalLayout();
 		buttons.addComponent(save);
@@ -1265,5 +1283,22 @@ public class AngebotErstellen extends CustomHorizontalLayout implements View, Re
 			return null;
 		}
 		return out.toByteArray();
+	}
+	
+	public boolean validate(){
+		boolean erfolgreich=true;//wird auf false gesetzt, falls ein Wert nicht richtig ist
+		try {
+			startDate.validate();
+		} catch (InvalidValueException e) {
+			erfolgreich=false;
+		}
+		
+		try {
+			endDate.validate();
+		} catch (InvalidValueException e) {
+			erfolgreich=false;
+		}
+		
+		return erfolgreich;
 	}
 }
