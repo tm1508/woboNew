@@ -314,13 +314,15 @@ public class Profile extends CustomHorizontalLayout implements View {
 					u.setEmail(email_1.getValue());
 					u.setPassword(password_1.getValue());
 					u.setMobile(handy.getValue());
-					if (DHStudValidator.validate(moodlename.getValue(), passwordmoodle.getValue())) {
-						u.setAccessLevel(1);
-					}else{
-						Notification not = new Notification("Dies Moodle Anmeldedaten konnten nicht verifiziert werden.", Type.HUMANIZED_MESSAGE);
-						not.setDelayMsec(300);
-						not.setStyleName("failure");
-						not.show(Page.getCurrent());
+					if(u.getAccessLevel() == 0 && !(moodlename.getValue().toString().isEmpty())){
+						if (DHStudValidator.validate(moodlename.getValue(), passwordmoodle.getValue())) {
+							u.setAccessLevel(1);
+						}else{
+							Notification not = new Notification("Dies Moodle Anmeldedaten konnten nicht verifiziert werden.", Type.HUMANIZED_MESSAGE);
+							not.setDelayMsec(300);
+							not.setStyleName("failure");
+							not.show(Page.getCurrent());
+						}
 					}
 					if (!prüf.getEmail().equals(u.getEmail())) {
 						if (new UserProvider().userExists(email_1.getValue())) {
